@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reckoning Figures - Algebra Regents Prep</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { font-family: 'Nunito', sans-serif; background: #1F2937; color: white; min-height: 100vh; overflow-x: hidden; padding-bottom: 80px; }
+        
+        #header { padding: 20px; background: #1F2937; border-bottom: 2px solid #374151; }
+        .user-greeting { font-size: 18px; font-weight: 700; color: #9CA3AF; margin-bottom: 12px; }
+        .user-greeting .name { color: white; font-weight: 900; }
+        .header-stats { display: flex; gap: 12px; }
+        .stat-badge { flex: 1; background: #2D3748; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; }
+        .stat-icon { width: 24px; height: 24px; }
+        .stat-badge span { font-size: 18px; font-weight: 900; }
+        
+        #logo-section { padding: 40px 20px 20px; text-align: center; }
+        .app-logo { max-width: 280px; margin-bottom: 8px; }
+        .tagline { font-size: 14px; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .progress-banner { margin: 20px; background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%); border: 3px solid #8B5CF6; border-radius: 20px; padding: 20px; }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .progress-title { font-size: 14px; font-weight: 800; color: #DDD6FE; text-transform: uppercase; }
+        .progress-percent { font-size: 24px; font-weight: 900; color: white; }
+        .progress-bar { width: 100%; height: 12px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #FFA500 0%, #FF6B00 100%); border-radius: 10px; transition: width 0.5s ease; }
+        .progress-text { font-size: 12px; font-weight: 700; color: #C4B5FD; }
+        
+        .modules-container { padding: 0 20px 20px; }
+        .section-header { font-size: 18px; font-weight: 900; color: white; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .module-card { background: #2D3748; border: 3px solid #4A5568; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; }
+        .module-card:hover { transform: translateY(-4px); border-color: #58CC02; }
+        .module-card.locked { opacity: 0.6; cursor: not-allowed; }
+        .module-card.locked:hover { transform: none; border-color: #4A5568; }
+        
+        .module-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .module-number { font-size: 14px; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; }
+        .module-badge { padding: 6px 12px; background: #58CC02; border-radius: 20px; font-size: 12px; font-weight: 900; color: white; text-transform: uppercase; }
+        .module-badge.locked { background: #6B7280; }
+        
+        .module-title { font-size: 22px; font-weight: 900; color: white; margin-bottom: 8px; }
+        .module-desc { font-size: 14px; font-weight: 700; color: #9CA3AF; line-height: 1.5; margin-bottom: 16px; }
+        .module-stats { display: flex; gap: 20px; }
+        .module-stat { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #D1D5DB; }
+        .module-stat svg { width: 16px; height: 16px; }
+        
+        .module-progress-bar { width: 100%; height: 8px; background: #374151; border-radius: 10px; overflow: hidden; margin-top: 12px; }
+        .module-progress-fill { height: 100%; background: #58CC02; border-radius: 10px; transition: width 0.5s ease; }
+        
+        #bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #2D3748; border-top: 2px solid #374151; display: flex; justify-content: space-around; padding: 12px 20px; max-width: 600px; margin: 0 auto; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #9CA3AF; text-decoration: none; font-size: 12px; font-weight: 800; cursor: pointer; }
+        .nav-item.active { color: #58CC02; }
+        .nav-icon { width: 28px; height: 28px; }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div class="user-greeting">Hi, <span class="name" id="user-name">Player</span></div>
+        <div class="header-stats">
+            <div class="stat-badge streak">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path fill="#FFA500" d="M12 3c-1.5 4-4 6-4 10 0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-2.5-6-4-10z"/>
+                    <path fill="#FF6B00" d="M12 7c-1 2.5-2.5 4-2.5 6.5 0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5c0-2.5-1.5-4-2.5-6.5z"/>
+                    <path fill="#FFD700" d="M12 10c-0.5 1.5-1.5 2.5-1.5 4 0 0.8 0.7 1.5 1.5 1.5s1.5-0.7 1.5-1.5c0-1.5-1-2.5-1.5-4z"/>
+                </svg>
+                <span id="header-streak">0</span>
+            </div>
+            <div class="stat-badge xp">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path fill="#58CC02" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                </svg>
+                <span id="header-xp">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="logo-section">
+        <svg class="app-logo" viewBox="0 0 200 80">
+            <defs>
+                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#FFA500;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#FF6B00;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <text x="100" y="35" font-family="Nunito" font-size="28" font-weight="900" fill="url(#logoGradient)" text-anchor="middle">RECKONING</text>
+            <text x="100" y="58" font-family="Nunito" font-size="20" font-weight="900" fill="#9CA3AF" text-anchor="middle">FIGURES</text>
+        </svg>
+        <div class="tagline">NYS Algebra Regents Prep</div>
+    </div>
+
+    <div class="progress-banner">
+        <div class="progress-header">
+            <div class="progress-title">Overall Progress</div>
+            <div class="progress-percent" id="overall-percent">7%</div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="overall-fill" style="width: 7%"></div>
+        </div>
+        <div class="progress-text" id="progress-figures">5 of 70 figures complete</div>
+    </div>
+
+    <div class="modules-container">
+        <div class="section-header">Modules</div>
+
+        <div class="module-card" onclick="openModule(1)">
+            <div class="module-header">
+                <div class="module-number">Module 1</div>
+                <div class="module-badge">Free</div>
+            </div>
+            <div class="module-title">Linear Equations</div>
+            <div class="module-desc">Master one-step, two-step, and multi-step equations. Foundation for all algebra.</div>
+            <div class="module-stats">
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span id="mod1-progress">5/12</span>
+                </div>
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~45 min</span>
+                </div>
+            </div>
+            <div class="module-progress-bar">
+                <div class="module-progress-fill" id="mod1-fill" style="width: 42%"></div>
+            </div>
+        </div>
+
+        <div class="module-card locked">
+            <div class="module-header">
+                <div class="module-number">Module 2</div>
+                <div class="module-badge locked">
+                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; margin-right: 4px; display: inline-block; vertical-align: middle;" fill="currentColor">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                    Locked
+                </div>
+            </div>
+            <div class="module-title">Linear Inequalities</div>
+            <div class="module-desc">Solve and graph inequalities. Learn compound inequalities and word problems.</div>
+            <div class="module-stats">
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>0/6</span>
+                </div>
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~30 min</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-card locked">
+            <div class="module-header">
+                <div class="module-number">Module 3</div>
+                <div class="module-badge locked">
+                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; margin-right: 4px; display: inline-block; vertical-align: middle;" fill="currentColor">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                    Premium
+                </div>
+            </div>
+            <div class="module-title">Systems of Equations</div>
+            <div class="module-desc">Solve systems by graphing, substitution, and elimination.</div>
+            <div class="module-stats">
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>0/8</span>
+                </div>
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~40 min</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-card locked">
+            <div class="module-header">
+                <div class="module-number">Module 4</div>
+                <div class="module-badge locked">
+                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; margin-right: 4px; display: inline-block; vertical-align: middle;" fill="currentColor">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                    Premium
+                </div>
+            </div>
+            <div class="module-title">Quadratic Equations</div>
+            <div class="module-desc">Factor, complete the square, quadratic formula. Graphing parabolas.</div>
+            <div class="module-stats">
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>0/12</span>
+                </div>
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~60 min</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 40px 20px;">
+            <div style="font-size: 16px; font-weight: 900; color: #9CA3AF; margin-bottom: 8px;">4 More Modules Coming Soon!</div>
+            <div style="font-size: 14px; font-weight: 700; color: #6B7280;">Exponents, Polynomials, Functions & Statistics</div>
+        </div>
+    </div>
+
+    <div id="bottom-nav">
+        <div class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+            </svg>
+            <div>Learn</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('leaderboard.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
+            </svg>
+            <div>Leaderboard</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('friends.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+            <div>Friends</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <div>Profile</div>
+        </div>
+    </div>
+
+    <script>
+        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": [], "userName": "Player"}');
+
+        document.getElementById('user-name').textContent = userProgress.userName || 'Player';
+        document.getElementById('header-streak').textContent = userProgress.streak || 0;
+        document.getElementById('header-xp').textContent = userProgress.xp || 0;
+
+        const totalFigures = 70;
+        const completedFigures = userProgress.completed ? userProgress.completed.length : 0;
+        const overallPercent = Math.round((completedFigures / totalFigures) * 100);
+
+        document.getElementById('overall-percent').textContent = overallPercent + '%';
+        document.getElementById('overall-fill').style.width = overallPercent + '%';
+        document.getElementById('progress-figures').textContent = `${completedFigures} of ${totalFigures} figures complete`;
+
+        const module1Figures = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        const module1Complete = module1Figures.filter(f => userProgress.completed?.includes(f)).length;
+        const module1Percent = Math.round((module1Complete / module1Figures.length) * 100);
+
+        document.getElementById('mod1-progress').textContent = `${module1Complete}/12`;
+        document.getElementById('mod1-fill').style.width = module1Percent + '%';
+
+        function openModule(moduleNum) {
+            if (moduleNum === 1) {
+                window.location.href = 'main-menu.html';
+            } else {
+                alert('This module is locked!\n\nUpgrade to Premium to unlock all 70 figures.\n\nOnly $7.99/month or $49/year');
+            }
+        }
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

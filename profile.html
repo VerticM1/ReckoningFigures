@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Reckoning Figures</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1F2937;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        #header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #1F2937;
+            border-bottom: 2px solid #374151;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+        }
+
+        /* Profile Section */
+        #profile-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px 20px 20px;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #2D3748 0%, #374151 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid #4A5568;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px auto;
+        }
+
+        .username {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .user-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #FFA500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #2D3748;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 2px solid #4A5568;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 12px auto;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card.highlight {
+            border-color: #FFA500;
+            background: linear-gradient(135deg, #2D3748 0%, #3a2f1f 100%);
+        }
+
+        .stat-card.highlight .stat-value {
+            color: #FFA500;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .achievement {
+            background: #2D3748;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #4A5568;
+            transition: transform 0.2s ease;
+        }
+
+        .achievement.unlocked {
+            border-color: #58CC02;
+        }
+
+        .achievement.locked {
+            opacity: 0.5;
+        }
+
+        .achievement:hover {
+            transform: scale(1.02);
+        }
+
+        .achievement-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .achievement-name {
+            font-size: 14px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .achievement-desc {
+            font-size: 12px;
+            font-weight: 700;
+            color: #9CA3AF;
+        }
+
+        .achievement.unlocked .achievement-name {
+            color: #58CC02;
+        }
+
+        /* Progress Bars */
+        .progress-item {
+            background: #2D3748;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 2px solid #4A5568;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .progress-value {
+            font-size: 14px;
+            font-weight: 900;
+            color: #58CC02;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #1F2937;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #58CC02 0%, #4CAE00 100%);
+            border-radius: 8px;
+            transition: width 0.3s ease;
+        }
+
+        /* Settings */
+        .settings-list {
+            margin-bottom: 30px;
+        }
+
+        .setting-item {
+            background: #2D3748;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #4A5568;
+        }
+
+        .setting-label {
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .toggle {
+            width: 60px;
+            height: 32px;
+            background: #4A5568;
+            border-radius: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle.active {
+            background: #58CC02;
+        }
+
+        .toggle-slider {
+            width: 26px;
+            height: 26px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle.active .toggle-slider {
+            transform: translateX(28px);
+        }
+
+        /* Bottom Navigation */
+        #bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #2D3748;
+            border-top: 2px solid #374151;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #9CA3AF;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #58CC02;
+        }
+
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="header-title">Profile</div>
+    </div>
+
+    <!-- Profile Section -->
+    <div id="profile-section">
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <svg class="avatar" viewBox="0 0 120 120">
+                <!-- User avatar circle with initial -->
+                <circle cx="60" cy="60" r="55" fill="#374151" stroke="#FFA500" stroke-width="4"/>
+                <text x="60" y="75" font-family="Nunito" font-size="48" font-weight="900" 
+                      fill="#FFA500" text-anchor="middle" id="avatar-initial">P</text>
+            </svg>
+            <div class="username" id="username">Player</div>
+            <div class="user-title" id="user-title">Math Apprentice</div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card highlight">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path fill="#FFA500" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                </svg>
+                <div class="stat-value" id="total-xp">0</div>
+                <div class="stat-label">Total XP</div>
+            </div>
+
+            <div class="stat-card">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path fill="#FFA500" d="M12 2c-1.5 4-4 6-4 10 0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-2.5-6-4-10z"/>
+                    <path fill="#FF6B00" d="M12 6c-1 2.5-2.5 4-2.5 6.5 0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5c0-2.5-1.5-4-2.5-6.5z"/>
+                    <path fill="#FFD700" d="M12 9c-0.5 1.5-1.5 2.5-1.5 4 0 0.8 0.7 1.5 1.5 1.5s1.5-0.7 1.5-1.5c0-1.5-1-2.5-1.5-4z"/>
+                </svg>
+                <div class="stat-value" id="current-streak">0</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+
+            <div class="stat-card">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path fill="#58CC02" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                </svg>
+                <div class="stat-value" id="lessons-completed">0</div>
+                <div class="stat-label">Lessons Done</div>
+            </div>
+
+            <div class="stat-card">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="none" stroke="#3B82F6" stroke-width="2"/>
+                    <path fill="#3B82F6" d="M12 6v6l4 2"/>
+                </svg>
+                <div class="stat-value" id="best-streak">0</div>
+                <div class="stat-label">Best Streak</div>
+            </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="section-header">Achievements</div>
+        <div class="achievements-grid" id="achievements-grid">
+            <!-- Achievements will be populated here -->
+        </div>
+
+        <!-- Progress -->
+        <div class="section-header">Progress</div>
+        <div class="progress-list">
+            <div class="progress-item">
+                <div class="progress-header">
+                    <div class="progress-title">Figures Mastered</div>
+                    <div class="progress-value"><span id="figures-progress">0</span>/7</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="figures-bar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-header">
+                    <div class="progress-title">XP to Next Level</div>
+                    <div class="progress-value"><span id="xp-to-level">100</span> XP</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="xp-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="section-header">Settings</div>
+        <div class="settings-list">
+            <div class="setting-item">
+                <div class="setting-label">Background Music</div>
+                <div class="toggle" id="music-toggle" onclick="toggleSetting(this, 'music')">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">Sound Effects</div>
+                <div class="toggle active" onclick="toggleSetting(this, 'sound')">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">Streak Reminders</div>
+                <div class="toggle active" onclick="toggleSetting(this, 'reminders')">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-label">Celebration Animations</div>
+                <div class="toggle active" onclick="toggleSetting(this, 'animations')">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-item" onclick="navigateTo('themes.html')" style="cursor: pointer;">
+                <div class="setting-label">Theme</div>
+                <div style="color: #58CC02; font-weight: 900; font-size: 14px;">
+                    <span id="current-theme">Dark</span> →
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('main-menu.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+            </svg>
+            <div>Learn</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('leaderboard.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
+            </svg>
+            <div>Leaderboard</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('friends.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+            <div>Friends</div>
+        </div>
+        <div class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <div>Profile</div>
+        </div>
+    </div>
+
+    <script>
+        // Load user progress
+        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": [], "userName": "Player", "bestStreak": 0}');
+
+        // Update profile info
+        document.getElementById('username').textContent = userProgress.userName || 'Player';
+        document.getElementById('avatar-initial').textContent = (userProgress.userName || 'P')[0].toUpperCase();
+
+        // Update stats
+        const totalXP = userProgress.xp || 0;
+        document.getElementById('total-xp').textContent = totalXP;
+        document.getElementById('current-streak').textContent = userProgress.streak || 0;
+        document.getElementById('lessons-completed').textContent = userProgress.completed?.length || 0;
+        document.getElementById('best-streak').textContent = userProgress.bestStreak || userProgress.streak || 0;
+
+        // Update title based on XP
+        let title = 'Math Apprentice';
+        if (totalXP >= 500) title = 'Equation Master';
+        else if (totalXP >= 300) title = 'Balance Keeper';
+        else if (totalXP >= 100) title = 'Number Solver';
+        document.getElementById('user-title').textContent = title;
+
+        // Achievements
+        const achievements = [
+            { 
+                id: 'first-lesson', 
+                name: 'First Steps', 
+                desc: 'Complete your first lesson', 
+                icon: '<svg viewBox="0 0 60 60" width="48" height="48"><circle cx="30" cy="30" r="25" fill="#58CC02"/><path d="M 20 30 L 27 37 L 42 22" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                requirement: () => userProgress.completed?.length >= 1 
+            },
+            { 
+                id: 'streak-3', 
+                name: 'On Fire', 
+                desc: 'Get a 3 answer streak', 
+                icon: '<svg viewBox="0 0 60 60" width="48" height="48"><path fill="#FFA500" d="M 30 10 c-3 8-8 12-8 20 c0 4.4 3.6 8 8 8s8-3.6 8-8c0-8-5-12-8-20z"/><path fill="#FF6B00" d="M 30 18 c-2 5-5 8-5 13 c0 2.8 2.2 5 5 5s5-2.2 5-5c0-5-3-8-5-13z"/><path fill="#FFD700" d="M 30 24 c-1 3-3 5-3 8 c0 1.7 1.3 3 3 3s3-1.3 3-3c0-3-2-5-3-8z"/></svg>',
+                requirement: () => userProgress.bestStreak >= 3 
+            },
+            { 
+                id: 'streak-5', 
+                name: 'Blazing', 
+                desc: 'Get a 5 answer streak', 
+                icon: '<svg viewBox="0 0 60 60" width="48" height="48"><path d="M 20 10 L 25 25 L 10 25 L 30 50 L 28 32 L 42 32 Z" fill="#FFD700" stroke="#FFA500" stroke-width="2"/></svg>',
+                requirement: () => userProgress.bestStreak >= 5 
+            },
+            { 
+                id: 'perfect', 
+                name: 'Flawless', 
+                desc: 'Complete a lesson with 100%', 
+                icon: '<svg viewBox="0 0 60 60" width="48" height="48"><path d="M 30 8 L 35 22 L 50 22 L 38 32 L 43 46 L 30 37 L 17 46 L 22 32 L 10 22 L 25 22 Z" fill="#3B82F6" stroke="#60A5FA" stroke-width="2"/></svg>',
+                requirement: () => userProgress.perfect || false 
+            },
+            { 
+                id: 'xp-100', 
+                name: 'Century', 
+                desc: 'Earn 100 total XP', 
+                icon: '<svg viewBox="0 0 60 60" width="48" height="48"><circle cx="30" cy="30" r="22" fill="#8B5CF6" stroke="#A78BFA" stroke-width="3"/><text x="30" y="38" font-family="Nunito" font-size="20" font-weight="900" fill="white" text-anchor="middle">100</text></svg>',
+                requirement: () => totalXP >= 100 
+            },
+            { 
+                id: 'xp-500', 
+                name: 'Legend', 
+                desc: 'Earn 500 total XP', 
+                icon: '<svg viewBox="0 0 60 60" width="48" height="48"><path d="M 30 8 L 20 25 L 10 28 L 20 38 L 18 50 L 30 43 L 42 50 L 40 38 L 50 28 L 40 25 Z" fill="#FFA500"/><path d="M 30 15 L 24 26 L 18 28 L 24 34 L 23 42 L 30 38 L 37 42 L 36 34 L 42 28 L 36 26 Z" fill="#FFD700"/></svg>',
+                requirement: () => totalXP >= 500 
+            }
+        ];
+
+        const achievementsGrid = document.getElementById('achievements-grid');
+        achievements.forEach(achievement => {
+            const unlocked = achievement.requirement();
+            const div = document.createElement('div');
+            div.className = `achievement ${unlocked ? 'unlocked' : 'locked'}`;
+            div.innerHTML = `
+                <div class="achievement-icon">${achievement.icon}</div>
+                <div class="achievement-name">${achievement.name}</div>
+                <div class="achievement-desc">${achievement.desc}</div>
+            `;
+            achievementsGrid.appendChild(div);
+        });
+
+        // Progress bars
+        const figuresCompleted = userProgress.completed?.length || 0;
+        document.getElementById('figures-progress').textContent = figuresCompleted;
+        document.getElementById('figures-bar').style.width = (figuresCompleted / 7 * 100) + '%';
+
+        // XP to next level (levels every 100 XP)
+        const currentLevel = Math.floor(totalXP / 100);
+        const xpInCurrentLevel = totalXP % 100;
+        const xpToNextLevel = 100 - xpInCurrentLevel;
+        document.getElementById('xp-to-level').textContent = xpToNextLevel;
+        document.getElementById('xp-bar').style.width = xpInCurrentLevel + '%';
+
+        // Settings
+        const settings = JSON.parse(localStorage.getItem('reckonSettings') || '{"sound": true, "reminders": true, "animations": true}');
+
+        function toggleSetting(element, setting) {
+            element.classList.toggle('active');
+            settings[setting] = element.classList.contains('active');
+            localStorage.setItem('reckonSettings', JSON.stringify(settings));
+        }
+
+        function goBack() {
+            window.location.href = 'main-menu.html';
+        }
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+
+        // Display current theme
+        const currentTheme = localStorage.getItem('reckonTheme') || 'dark';
+        const themeNames = {
+            'dark': 'Dark',
+            'light': 'Light',
+            'ocean': 'Ocean',
+            'sunset': 'Sunset',
+            'forest': 'Forest',
+            'purple': 'Purple'
+        };
+        document.getElementById('current-theme').textContent = themeNames[currentTheme] || 'Dark';
+
+        // Load settings state
+        const currentSettings = JSON.parse(localStorage.getItem('reckonSettings') || '{"sound": true, "reminders": true, "animations": true, "music": true}');
+        if (currentSettings.music) {
+            document.getElementById('music-toggle').classList.add('active');
+        }
+    </script>
+</body>
+</html>

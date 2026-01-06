@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Challenge - Reckoning Figures</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1F2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        #header {
+            padding: 20px;
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            border-bottom: 3px solid #8B5CF6;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .daily-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .header-title {
+            flex: 1;
+        }
+
+        .title-main {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .title-sub {
+            font-size: 14px;
+            font-weight: 800;
+            color: #DDD6FE;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timer-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .timer-icon {
+            font-size: 20px;
+        }
+
+        .timer-text {
+            font-size: 16px;
+            font-weight: 900;
+            color: #DDD6FE;
+        }
+
+        /* Content */
+        #content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .challenge-info {
+            background: linear-gradient(135deg, #4C1D95 0%, #5B21B6 100%);
+            border: 2px solid #8B5CF6;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .challenge-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #DDD6FE;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reward-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 32px;
+            font-weight: 900;
+            color: #FFA500;
+        }
+
+        .reward-icon {
+            font-size: 40px;
+        }
+
+        #question-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            width: 100%;
+        }
+
+        #equation {
+            background: #2D3748;
+            border: 2px solid #8B5CF6;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 40px;
+            font-weight: 900;
+            color: white;
+            width: 100%;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .choice {
+            width: 100%;
+            padding: 20px 24px;
+            background: #2D3748;
+            border: 3px solid #4A5568;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .choice:hover {
+            border-color: #8B5CF6;
+            background: #374151;
+        }
+
+        .choice.selected {
+            border-color: #10b981;
+            background: #065f46;
+        }
+
+        .choice.correct {
+            border-color: #10b981;
+            background: #065f46;
+        }
+
+        .choice.incorrect {
+            border-color: #ef4444;
+            background: #7f1d1d;
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        /* Bottom Section */
+        #bottom-section {
+            padding: 20px;
+            background: #1F2937;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 40px;
+            height: 40px;
+            background: #10b981;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .check-icon.show {
+            display: flex;
+        }
+
+        #feedback-text {
+            font-size: 22px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            border: none;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: none;
+        }
+
+        #continue-btn.show {
+            display: block;
+        }
+
+        #continue-btn:hover {
+            background: linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%);
+        }
+
+        /* Victory Screen */
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1F2937;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 40px;
+        }
+
+        #victory.show {
+            display: flex;
+        }
+
+        .victory-icon {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .victory-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #8B5CF6;
+            margin-bottom: 16px;
+        }
+
+        .victory-msg {
+            font-size: 20px;
+            font-weight: 800;
+            color: #9CA3AF;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .reward-card {
+            background: linear-gradient(135deg, #4C1D95 0%, #5B21B6 100%);
+            border: 3px solid #8B5CF6;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .reward-label {
+            font-size: 16px;
+            font-weight: 800;
+            color: #DDD6FE;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .reward-amount {
+            font-size: 64px;
+            font-weight: 900;
+            color: #FFA500;
+        }
+
+        .return-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 18px;
+            background: #58CC02;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .return-btn:hover {
+            background: #4CAE00;
+        }
+
+        /* Already Completed Screen */
+        #completed-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1F2937;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        #completed-screen.show {
+            display: flex;
+        }
+
+        .completed-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+
+        .completed-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .completed-msg {
+            font-size: 18px;
+            font-weight: 700;
+            color: #9CA3AF;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .countdown {
+            background: #2D3748;
+            border: 2px solid #4A5568;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #9CA3AF;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .countdown-time {
+            font-size: 48px;
+            font-weight: 900;
+            color: #8B5CF6;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Header -->
+        <div id="header">
+            <div class="header-top">
+                <button class="back-btn" onclick="goBack()">←</button>
+                <svg class="daily-icon" viewBox="0 0 48 48">
+                    <circle cx="24" cy="24" r="20" fill="#FFA500" stroke="#FFD700" stroke-width="2"/>
+                    <path d="M 24 8 L 26 18 L 32 12 L 28 22 L 38 20 L 30 26 L 40 32 L 28 30 L 32 40 L 24 32 L 16 40 L 20 30 L 8 32 L 18 26 L 10 20 L 20 22 L 16 12 L 22 18 Z" fill="#FFD700"/>
+                </svg>
+                <div class="header-title">
+                    <div class="title-main">Daily Challenge</div>
+                    <div class="title-sub" id="date-display"></div>
+                </div>
+            </div>
+            <div class="timer-container">
+                <span class="timer-icon">⏰</span>
+                <span class="timer-text" id="timer">New challenge in 23:45:12</span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div id="content">
+            <div class="challenge-info">
+                <div class="challenge-title">Bonus Reward</div>
+                <div class="reward-display">
+                    <span class="reward-icon">💎</span>
+                    <span>+50 XP</span>
+                </div>
+            </div>
+
+            <div id="question-text"></div>
+            <div id="equation"></div>
+            <div id="choices"></div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div id="bottom-section">
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <!-- Victory Screen -->
+        <div id="victory">
+            <div class="victory-icon">🏆</div>
+            <div class="victory-title">Challenge Complete!</div>
+            <div class="victory-msg">You crushed today's daily challenge!</div>
+            <div class="reward-card">
+                <div class="reward-label">Bonus XP Earned</div>
+                <div class="reward-amount">+50</div>
+            </div>
+            <button class="return-btn" onclick="returnToMenu()">Return to Menu</button>
+        </div>
+
+        <!-- Already Completed Screen -->
+        <div id="completed-screen">
+            <div class="completed-icon">✅</div>
+            <div class="completed-title">Challenge Already Completed!</div>
+            <div class="completed-msg">You've already completed today's daily challenge.<br>Come back tomorrow for a new one!</div>
+            <div class="countdown">
+                <div class="countdown-label">Next Challenge In</div>
+                <div class="countdown-time" id="countdown-display">23:45:12</div>
+            </div>
+            <button class="return-btn" onclick="returnToMenu()">Return to Menu</button>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            solved: false,
+            startTime: Date.now()
+        };
+
+        // Generate daily challenge based on date (same problem for everyone on same day)
+        function getDailyChallenge() {
+            const today = new Date().toDateString();
+            const seed = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            
+            // Use seed to generate consistent problem for the day
+            const problems = [
+                { eq: '3x + 7 = 22', q: 'Solve for <span style="font-style:italic">x</span>', choices: ['x = 4', 'x = 5', 'x = 6'], answer: 1 },
+                { eq: '5x - 12 = 23', q: 'Solve for <span style="font-style:italic">x</span>', choices: ['x = 6', 'x = 7', 'x = 8'], answer: 1 },
+                { eq: '2x + 15 = 31', q: 'Solve for <span style="font-style:italic">x</span>', choices: ['x = 7', 'x = 8', 'x = 9'], answer: 1 },
+                { eq: '4x - 9 = 19', q: 'Solve for <span style="font-style:italic">x</span>', choices: ['x = 5', 'x = 6', 'x = 7'], answer: 2 },
+                { eq: '6x + 8 = 44', q: 'Solve for <span style="font-style:italic">x</span>', choices: ['x = 5', 'x = 6', 'x = 7'], answer: 1 }
+            ];
+            
+            return problems[seed % problems.length];
+        }
+
+        // Check if already completed today
+        function checkIfCompleted() {
+            const progress = JSON.parse(localStorage.getItem('reckonProgress') || '{}');
+            const today = new Date().toDateString();
+            
+            if (progress.dailyChallengeDate === today) {
+                document.getElementById('completed-screen').classList.add('show');
+                updateCountdown();
+                return true;
+            }
+            return false;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            const diff = tomorrow - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer').textContent = `New challenge in ${timeString}`;
+            document.getElementById('countdown-display').textContent = timeString;
+        }
+
+        // Update timer every second
+        setInterval(updateCountdown, 1000);
+
+        // Display current date
+        const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+        document.getElementById('date-display').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+
+        // Load challenge
+        if (!checkIfCompleted()) {
+            const problem = getDailyChallenge();
+            document.getElementById('question-text').innerHTML = problem.q;
+            document.getElementById('equation').textContent = problem.eq;
+            
+            const choicesContainer = document.getElementById('choices');
+            problem.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice';
+                btn.textContent = choice;
+                btn.onclick = () => selectChoice(index, problem.answer);
+                choicesContainer.appendChild(btn);
+            });
+        }
+
+        function selectChoice(choiceIndex, correctAnswer) {
+            if (state.solved) return;
+            
+            state.solved = true;
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === choiceIndex) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choiceIndex === correctAnswer) {
+                            btn.classList.add('correct');
+                            document.getElementById('feedback-text').textContent = 'Perfect!';
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.solved = false;
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', () => {
+            // Save completion
+            const progress = JSON.parse(localStorage.getItem('reckonProgress') || '{}');
+            const today = new Date().toDateString();
+            
+            progress.dailyChallengeDate = today;
+            progress.xp = (progress.xp || 0) + 50;
+            
+            // Track best streak if applicable
+            if (progress.bestStreak === undefined || progress.streak > (progress.bestStreak || 0)) {
+                progress.bestStreak = progress.streak;
+            }
+            
+            localStorage.setItem('reckonProgress', JSON.stringify(progress));
+            
+            // Show victory
+            document.getElementById('victory').classList.add('show');
+        });
+
+        function goBack() {
+            window.location.href = 'main-menu.html';
+        }
+
+        function returnToMenu() {
+            window.location.href = 'main-menu.html';
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>

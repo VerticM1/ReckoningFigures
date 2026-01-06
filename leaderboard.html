@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Reckoning Figures</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1F2937;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        #header {
+            padding: 20px;
+            background: #1F2937;
+            border-bottom: 2px solid #374151;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        /* Time Period Tabs */
+        .time-tabs {
+            display: flex;
+            gap: 8px;
+            background: #2D3748;
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .time-tab {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: #9CA3AF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .time-tab.active {
+            background: #58CC02;
+            color: white;
+        }
+
+        /* Main Content */
+        #content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* User Position Card */
+        .user-position-card {
+            background: linear-gradient(135deg, #FFA500 0%, #FF6B00 100%);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 3px solid #FFD700;
+        }
+
+        .position-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .your-rank {
+            font-size: 16px;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rank-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .rank-suffix {
+            font-size: 24px;
+            vertical-align: super;
+        }
+
+        .your-xp {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Leaderboard List */
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .leaderboard-item {
+            background: #2D3748;
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 2px solid #4A5568;
+            transition: transform 0.2s ease;
+        }
+
+        .leaderboard-item:hover {
+            transform: scale(1.02);
+        }
+
+        .leaderboard-item.top-3 {
+            background: linear-gradient(135deg, #2D3748 0%, #3a3748 100%);
+        }
+
+        .leaderboard-item.rank-1 {
+            border-color: #FFD700;
+        }
+
+        .leaderboard-item.rank-2 {
+            border-color: #C0C0C0;
+        }
+
+        .leaderboard-item.rank-3 {
+            border-color: #CD7F32;
+        }
+
+        .leaderboard-item.current-user {
+            border-color: #FFA500;
+            background: linear-gradient(135deg, #3a2f1f 0%, #2D3748 100%);
+        }
+
+        .rank {
+            width: 40px;
+            font-size: 24px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .rank-1 .rank {
+            color: #FFD700;
+        }
+
+        .rank-2 .rank {
+            color: #C0C0C0;
+        }
+
+        .rank-3 .rank {
+            color: #CD7F32;
+        }
+
+        .medal {
+            width: 32px;
+            height: 32px;
+        }
+
+        .player-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-small {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #374151;
+            border: 2px solid #4A5568;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 900;
+            color: #9CA3AF;
+        }
+
+        .current-user .avatar-small {
+            border-color: #FFA500;
+            color: #FFA500;
+        }
+
+        .rank-1 .avatar-small {
+            border-color: #FFD700;
+        }
+
+        .rank-2 .avatar-small {
+            border-color: #C0C0C0;
+        }
+
+        .rank-3 .avatar-small {
+            border-color: #CD7F32;
+        }
+
+        .player-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .country-flag {
+            font-size: 20px;
+        }
+
+        .current-user .player-name {
+            color: #FFA500;
+        }
+
+        .player-xp {
+            font-size: 20px;
+            font-weight: 900;
+            color: #58CC02;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .xp-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-text {
+            font-size: 18px;
+            font-weight: 800;
+            color: #9CA3AF;
+        }
+
+        /* Stats Footer */
+        .stats-footer {
+            background: #2D3748;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 24px;
+            border: 2px solid #4A5568;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Bottom Navigation */
+        #bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #2D3748;
+            border-top: 2px solid #374151;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #9CA3AF;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #58CC02;
+        }
+
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <div class="header-title">Leaderboard</div>
+        <div class="time-tabs">
+            <button class="time-tab active" onclick="switchPeriod('week')">This Week</button>
+            <button class="time-tab" onclick="switchPeriod('month')">This Month</button>
+            <button class="time-tab" onclick="switchPeriod('all')">All Time</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content">
+        <!-- League Badge -->
+        <div style="background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%); border: 3px solid #8B5CF6; border-radius: 20px; padding: 20px; margin-bottom: 20px; text-align: center;">
+            <div style="font-size: 14px; font-weight: 800; color: #DDD6FE; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Your League</div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                <svg id="league-icon" viewBox="0 0 24 24" style="width: 48px; height: 48px;">
+                    <path fill="#CD7F32" d="M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z"/>
+                </svg>
+                <div>
+                    <div style="font-size: 28px; font-weight: 900; color: white;" id="league-name">Bronze League</div>
+                    <div style="font-size: 14px; font-weight: 700; color: #C4B5FD;">Top 10 advance to Silver!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Position Card -->
+        <div class="user-position-card">
+            <div class="position-header">
+                <div class="your-rank">Your Rank</div>
+            </div>
+            <div class="rank-number">
+                <span id="user-rank">12</span><span class="rank-suffix">th</span>
+            </div>
+            <div class="your-xp">
+                <span id="user-xp-display">0</span> XP this week
+            </div>
+        </div>
+
+        <!-- Top Players -->
+        <div class="section-header">Top Players</div>
+        <div class="leaderboard-list" id="leaderboard-list">
+            <!-- Leaderboard items will be populated here -->
+        </div>
+
+        <!-- Stats Footer -->
+        <div class="stats-footer">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-players">47</div>
+                    <div class="stat-label">Players</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="avg-xp">284</div>
+                    <div class="stat-label">Avg XP</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="top-xp">1,250</div>
+                    <div class="stat-label">Top XP</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('main-menu.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+            </svg>
+            <div>Learn</div>
+        </div>
+        <div class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
+            </svg>
+            <div>Leaderboard</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('friends.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </svg>
+            <div>Friends</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <div>Profile</div>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+        
+        // Load user progress
+        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "userName": "Player"}');
+
+        // League System
+        function getLeague(xp) {
+            if (xp >= 1000) return { name: 'Diamond League', color: '#60A5FA', next: null };
+            if (xp >= 500) return { name: 'Gold League', color: '#FFA500', next: 'Diamond' };
+            if (xp >= 200) return { name: 'Silver League', color: '#9CA3AF', next: 'Gold' };
+            return { name: 'Bronze League', color: '#CD7F32', next: 'Silver' };
+        }
+
+        const userLeague = getLeague(userProgress.xp || 0);
+        document.getElementById('league-name').textContent = userLeague.name;
+        
+        // Update icon color based on league
+        const leagueIcon = document.getElementById('league-icon');
+        const iconPath = leagueIcon.querySelector('path');
+        iconPath.setAttribute('fill', userLeague.color);
+        const userName = userProgress.userName || 'Player';
+        const userXP = userProgress.xp || 0;
+
+        // Generate mock leaderboard data (in real app, this would come from server)
+        function generateLeaderboard() {
+            const fullNames = [
+                'Alex Rivera', 'Jordan Chen', 'Taylor Kim', 'Morgan Patel', 'Casey Johnson', 
+                'Riley Martinez', 'Avery Singh', 'Quinn O\'Brien', 'Blake Anderson', 'Drew Williams',
+                'Reese Thompson', 'Sage Davis', 'Skylar Rodriguez', 'River Jackson'
+            ];
+
+            const usernames = [
+                'MathWiz47', 'AlgebraPro', 'EquationKing99', 'NumberNinja', 'CalcMaster23',
+                'FormulaFox', 'BrainiacBob', 'QuickSolver', 'LogicLuna88', 'TheoremThief',
+                'BalanceGuru42', 'FigureHunter', 'XPChaser', 'StreakSeeker7'
+            ];
+
+            const countries = [
+                { code: 'US', flag: '🇺🇸' },
+                { code: 'CA', flag: '🇨🇦' },
+                { code: 'GB', flag: '🇬🇧' },
+                { code: 'MX', flag: '🇲🇽' },
+                { code: 'BR', flag: '🇧🇷' },
+                { code: 'FR', flag: '🇫🇷' },
+                { code: 'DE', flag: '🇩🇪' },
+                { code: 'IT', flag: '🇮🇹' },
+                { code: 'ES', flag: '🇪🇸' },
+                { code: 'JP', flag: '🇯🇵' },
+                { code: 'KR', flag: '🇰🇷' },
+                { code: 'IN', flag: '🇮🇳' },
+                { code: 'AU', flag: '🇦🇺' },
+                { code: 'PL', flag: '🇵🇱' },
+                { code: 'PH', flag: '🇵🇭' }
+            ];
+
+            const leaderboard = [];
+            const usedNames = new Set();
+            
+            // Generate 19 random players (so with current user = 20 total)
+            for (let i = 0; i < 19; i++) {
+                let name;
+                let namePool;
+                
+                // Mix between full names and usernames
+                if (Math.random() > 0.5) {
+                    namePool = fullNames;
+                } else {
+                    namePool = usernames;
+                }
+                
+                do {
+                    name = namePool[Math.floor(Math.random() * namePool.length)];
+                } while (usedNames.has(name));
+                usedNames.add(name);
+                
+                const xp = Math.floor(Math.random() * 1200) + 50;
+                
+                // 70% chance to show country flag
+                let country = null;
+                if (Math.random() > 0.3) {
+                    country = countries[Math.floor(Math.random() * countries.length)].flag;
+                }
+                
+                leaderboard.push({ name, xp, country });
+            }
+
+            // Add current user (without flag by default, they're local)
+            leaderboard.push({ name: userName, xp: userXP, isCurrentUser: true });
+
+            // Sort by XP
+            leaderboard.sort((a, b) => b.xp - a.xp);
+
+            return leaderboard;
+        }
+
+        let currentLeaderboard = generateLeaderboard();
+
+        function getRankSuffix(rank) {
+            if (rank === 1) return 'st';
+            if (rank === 2) return 'nd';
+            if (rank === 3) return 'rd';
+            return 'th';
+        }
+
+        function renderLeaderboard() {
+            const list = document.getElementById('leaderboard-list');
+            list.innerHTML = '';
+
+            // Find user's rank
+            const userRank = currentLeaderboard.findIndex(p => p.isCurrentUser) + 1;
+            document.getElementById('user-rank').textContent = userRank;
+            document.querySelector('.rank-suffix').textContent = getRankSuffix(userRank);
+            document.getElementById('user-xp-display').textContent = userXP;
+
+            // Render top 20
+            currentLeaderboard.slice(0, 20).forEach((player, index) => {
+                const rank = index + 1;
+                const div = document.createElement('div');
+                
+                let classes = 'leaderboard-item';
+                if (rank <= 3) classes += ' top-3 rank-' + rank;
+                if (player.isCurrentUser) classes += ' current-user';
+                
+                div.className = classes;
+
+                let medalHTML = '';
+                if (rank === 1) {
+                    medalHTML = '<svg class="medal" viewBox="0 0 32 32"><path d="M 16 4 L 11 14 L 6 14 L 11 19 L 9 26 L 16 21 L 23 26 L 21 19 L 26 14 L 21 14 Z" fill="#FFD700"/></svg>';
+                } else if (rank === 2) {
+                    medalHTML = '<svg class="medal" viewBox="0 0 32 32"><path d="M 16 4 L 11 14 L 6 14 L 11 19 L 9 26 L 16 21 L 23 26 L 21 19 L 26 14 L 21 14 Z" fill="#C0C0C0"/></svg>';
+                } else if (rank === 3) {
+                    medalHTML = '<svg class="medal" viewBox="0 0 32 32"><path d="M 16 4 L 11 14 L 6 14 L 11 19 L 9 26 L 16 21 L 23 26 L 21 19 L 26 14 L 21 14 Z" fill="#CD7F32"/></svg>';
+                }
+
+                div.innerHTML = `
+                    ${medalHTML || `<div class="rank">${rank}</div>`}
+                    <div class="player-info">
+                        <div class="avatar-small">${player.name[0].toUpperCase()}</div>
+                        <div class="player-name">
+                            ${player.name}
+                            ${player.country ? `<span class="country-flag">${player.country}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="player-xp">
+                        <svg class="xp-icon" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                        </svg>
+                        ${player.xp.toLocaleString()}
+                    </div>
+                `;
+
+                list.appendChild(div);
+            });
+
+            // Update footer stats
+            document.getElementById('total-players').textContent = currentLeaderboard.length;
+            const avgXP = Math.floor(currentLeaderboard.reduce((sum, p) => sum + p.xp, 0) / currentLeaderboard.length);
+            document.getElementById('avg-xp').textContent = avgXP.toLocaleString();
+            document.getElementById('top-xp').textContent = currentLeaderboard[0].xp.toLocaleString();
+        }
+
+        function switchPeriod(period) {
+            // Update tab styles
+            document.querySelectorAll('.time-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // In real app, would fetch different data
+            // For now, just regenerate with different multipliers
+            if (period === 'week') {
+                currentLeaderboard = generateLeaderboard();
+            } else if (period === 'month') {
+                currentLeaderboard = generateLeaderboard();
+                currentLeaderboard.forEach(p => p.xp = Math.floor(p.xp * 3.5));
+                currentLeaderboard.sort((a, b) => b.xp - a.xp);
+            } else {
+                currentLeaderboard = generateLeaderboard();
+                currentLeaderboard.forEach(p => p.xp = Math.floor(p.xp * 8));
+                currentLeaderboard.sort((a, b) => b.xp - a.xp);
+            }
+
+            renderLeaderboard();
+        }
+
+        // Initial render
+        renderLeaderboard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reckon - Learn Math</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1F2937;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            animation: pageEnter 0.4s ease-out;
+        }
+
+        @keyframes pageEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Page exit animation */
+        body.page-exit {
+            animation: pageExit 0.3s ease-in forwards;
+        }
+
+        @keyframes pageExit {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(1.02);
+            }
+        }
+
+        /* Header */
+        #header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1F2937;
+            border-bottom: 2px solid #374151;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .user-greeting {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+        }
+
+        .user-greeting .name {
+            color: #FFA500;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #2D3748;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        .stat-badge.streak {
+            color: #FFA500;
+            border: 2px solid #FFA500;
+        }
+
+        .stat-badge.xp {
+            color: #58CC02;
+            border: 2px solid #58CC02;
+        }
+
+        .stat-icon {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+
+        /* Logo Section */
+        #logo-section {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            background: linear-gradient(to bottom, #1F2937 0%, #1F2937 100%);
+        }
+
+        .app-logo {
+            width: 200px;
+            height: 80px;
+            margin: 0 auto 16px auto;
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: 700;
+            color: #9CA3AF;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Learning Path Container */
+        #path-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px 100px 20px;
+            position: relative;
+            min-height: 1400px;
+        }
+
+        /* Organic winding path */
+        .path-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .main-path {
+            fill: none;
+            stroke: #374151;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .branch-path {
+            fill: none;
+            stroke: #2D3748;
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-dasharray: 8, 4;
+        }
+
+        /* Path decorations - dots along the path */
+        .path-dot {
+            fill: #4A5568;
+        }
+
+        /* Lesson nodes */
+        /* Daily Challenge Card */
+        #daily-challenge-card {
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            border: 3px solid #8B5CF6;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 0 20px 30px 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #daily-challenge-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .daily-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .daily-icon-large {
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+        }
+
+        .daily-text {
+            flex: 1;
+        }
+
+        .daily-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .daily-subtitle {
+            font-size: 14px;
+            font-weight: 800;
+            color: #DDD6FE;
+        }
+
+        .daily-subtitle.completed {
+            color: #6EE7B7;
+        }
+
+        .daily-timer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #DDD6FE;
+        }
+
+        .lesson-node {
+            position: absolute;
+            z-index: 1;
+            width: 180px;
+        }
+
+        .lesson-node.align-left {
+            left: 10%;
+        }
+
+        .lesson-node.align-center {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .lesson-node.align-right {
+            right: 10%;
+        }
+
+        .lesson-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s ease;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .lesson-button:hover {
+            transform: scale(1.05);
+        }
+
+        .lesson-button.unlocked {
+            background: linear-gradient(135deg, #58CC02 0%, #4CAE00 100%);
+            box-shadow: 0 8px 0 #3B8700, 0 12px 20px rgba(88, 204, 2, 0.4);
+        }
+
+        .lesson-button.unlocked:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #3B8700, 0 8px 16px rgba(88, 204, 2, 0.4);
+        }
+
+        .lesson-button.locked {
+            background: linear-gradient(135deg, #4A5568 0%, #374151 100%);
+            box-shadow: 0 8px 0 #2D3748, 0 12px 20px rgba(0, 0, 0, 0.3);
+            cursor: not-allowed;
+        }
+
+        .lesson-button.completed {
+            background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+            box-shadow: 0 8px 0 #CC7000, 0 12px 20px rgba(255, 165, 0, 0.4);
+        }
+
+        .lesson-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+        }
+
+        .lock-icon {
+            width: 50px;
+            height: 50px;
+            fill: #9CA3AF;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .check-icon-svg {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .lesson-info {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .lesson-number {
+            font-size: 14px;
+            font-weight: 900;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .lesson-progress {
+            font-size: 14px;
+            font-weight: 700;
+            color: #58CC02;
+        }
+
+        .lesson-progress.locked {
+            color: #6B7280;
+        }
+
+        /* Progress bar in node */
+        .node-progress {
+            width: 80px;
+            height: 8px;
+            background: #374151;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 8px auto 0 auto;
+        }
+
+        .node-progress-fill {
+            height: 100%;
+            background: #58CC02;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Stars for completed lessons */
+        .stars {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .star {
+            color: #FFA500;
+            font-size: 16px;
+        }
+
+        .star.empty {
+            color: #374151;
+        }
+
+        /* Bottom nav */
+        #bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #2D3748;
+            border-top: 2px solid #374151;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #9CA3AF;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #58CC02;
+        }
+
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* Unlock Animation */
+        @keyframes lockMelt {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5) translateY(20px);
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 8px 0 #3B8700, 0 12px 20px rgba(88, 204, 2, 0.4);
+            }
+            50% {
+                box-shadow: 0 8px 0 #3B8700, 0 12px 40px rgba(88, 204, 2, 0.8), 0 0 60px rgba(88, 204, 2, 0.6);
+            }
+        }
+
+        @keyframes iconReveal {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            60% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .unlocking .lock-icon {
+            animation: lockMelt 0.6s ease-out forwards;
+        }
+
+        .unlocking {
+            animation: glowPulse 1.5s ease-in-out !important;
+        }
+
+        .unlock-text {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: 900;
+            color: #58CC02;
+            text-transform: uppercase;
+            opacity: 0;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        @keyframes unlockTextPop {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px) scale(0.8);
+            }
+            20% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1.1);
+            }
+            80% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-10px) scale(0.9);
+            }
+        }
+
+        .unlock-text.show {
+            animation: unlockTextPop 1.5s ease-out;
+        }
+
+        /* Unlock particles */
+        .unlock-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #58CC02;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes particleBurst {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        /* Streak Celebration on Return */
+        .streak-celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .streak-celebration.active {
+            display: block;
+        }
+
+        .flame-particle {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+        }
+
+        @keyframes flameRise {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) scale(1.5) rotate(var(--rotate));
+            }
+        }
+
+        .streak-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: 900;
+            color: #FFA500;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10000;
+            text-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
+        }
+
+        @keyframes messagePopIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes messageFadeOut {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
+
+        .streak-message.show {
+            animation: messagePopIn 0.5s ease-out forwards;
+        }
+
+        .streak-message.hide {
+            animation: messageFadeOut 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <div class="user-greeting">Hi, <span class="name" id="user-name">Player</span></div>
+        <div class="header-stats">
+            <div class="stat-badge streak">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <!-- Dynamic flame icon - adjusted positioning -->
+                    <path fill="#FFA500" d="M12 3c-1.5 4-4 6-4 10 0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-2.5-6-4-10z"/>
+                    <path fill="#FF6B00" d="M12 7c-1 2.5-2.5 4-2.5 6.5 0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5c0-2.5-1.5-4-2.5-6.5z"/>
+                    <path fill="#FFD700" d="M12 10c-0.5 1.5-1.5 2.5-1.5 4 0 0.8 0.7 1.5 1.5 1.5s1.5-0.7 1.5-1.5c0-1.5-1-2.5-1.5-4z"/>
+                    <!-- Spark effect -->
+                    <circle fill="#FFD700" cx="8" cy="9" r="1" opacity="0.8"/>
+                    <circle fill="#FFA500" cx="16" cy="7" r="0.8" opacity="0.7"/>
+                    <circle fill="#FF6B00" cx="14" cy="13" r="0.6" opacity="0.6"/>
+                </svg>
+                <span id="header-streak">0</span>
+            </div>
+            <div class="stat-badge xp">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path fill="#58CC02" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                </svg>
+                <span id="header-xp">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logo Section -->
+    <div id="logo-section">
+        <svg class="app-logo" viewBox="0 0 200 80">
+            <!-- "RECKONING" text -->
+            <defs>
+                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#FFA500;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#FF6B00;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Main title -->
+            <text x="100" y="35" font-family="Nunito, sans-serif" font-size="28" font-weight="900" 
+                  fill="url(#logoGradient)" text-anchor="middle">RECKONING</text>
+            
+            <!-- Subtitle -->
+            <text x="100" y="55" font-family="Nunito, sans-serif" font-size="14" font-weight="800" 
+                  fill="#9CA3AF" text-anchor="middle" letter-spacing="3">FIGURES</text>
+        </svg>
+        <div class="tagline">Master the Balance</div>
+    </div>
+
+    <!-- Daily Challenge Card -->
+    <div id="daily-challenge-card" onclick="navigateTo('daily-challenge.html')">
+        <div class="daily-header">
+            <svg class="daily-icon-large" viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="20" fill="#8B5CF6" stroke="#A78BFA" stroke-width="2"/>
+                <path d="M 24 8 L 26 18 L 32 12 L 28 22 L 38 20 L 30 26 L 40 32 L 28 30 L 32 40 L 24 32 L 16 40 L 20 30 L 8 32 L 18 26 L 10 20 L 20 22 L 16 12 L 22 18 Z" fill="#DDD6FE"/>
+            </svg>
+            <div class="daily-text">
+                <div class="daily-title">Daily Challenge</div>
+                <div class="daily-subtitle" id="daily-status">Complete for +50 XP!</div>
+            </div>
+        </div>
+        <div class="daily-timer" id="daily-timer">
+            <span>⏰</span>
+            <span id="timer-text">23:45:12</span>
+        </div>
+    </div>
+
+    <!-- Learning Path -->
+    <div id="path-container">
+        <!-- Organic winding path SVG -->
+        <svg class="path-svg" viewBox="0 0 600 1400" preserveAspectRatio="xMidYMin meet">
+            <!-- Main winding path that connects all nodes perfectly -->
+            <path class="main-path" d="
+                M 300 70
+                C 300 120, 300 140, 280 160
+                C 260 180, 220 190, 180 200
+                C 140 210, 110 220, 100 240
+                C 90 260, 100 280, 130 310
+                C 160 340, 210 360, 260 370
+                C 310 380, 350 385, 380 400
+                C 410 415, 440 440, 460 470
+                C 480 500, 490 530, 485 560
+                C 480 590, 460 610, 430 630
+                C 400 650, 360 665, 320 680
+                C 280 695, 250 710, 240 740
+                C 230 770, 240 800, 260 830
+                C 280 860, 300 880, 300 910
+                C 300 940, 280 960, 250 980
+                C 220 1000, 180 1015, 140 1030
+                C 100 1045, 70 1060, 65 1085
+                C 60 1110, 80 1130, 120 1150
+                C 160 1170, 220 1185, 270 1195
+                C 320 1205, 360 1210, 380 1230
+                C 400 1250, 400 1270, 380 1290
+                C 360 1310, 330 1320, 300 1330
+            " stroke-linecap="round" stroke-linejoin="round"/>
+            
+            <!-- Decorative dots along path -->
+            <circle class="path-dot" cx="290" cy="110" r="4"/>
+            <circle class="path-dot" cx="200" cy="180" r="4"/>
+            <circle class="path-dot" cx="320" cy="360" r="4"/>
+            <circle class="path-dot" cx="475" cy="520" r="4"/>
+            <circle class="path-dot" cx="280" cy="710" r="4"/>
+            <circle class="path-dot" cx="200" cy="1000" r="4"/>
+            <circle class="path-dot" cx="340" cy="1200" r="4"/>
+        </svg>
+
+        <!-- Figure 001 - Unlocked (top center) -->
+        <div class="lesson-node align-center" style="top: 10px;">
+            <button class="lesson-button unlocked" onclick="startLesson(1)">
+                <svg class="lesson-icon" viewBox="0 0 60 60">
+                    <!-- Triangle/ruler icon -->
+                    <path fill="white" d="M 30 10 L 50 45 L 10 45 Z" stroke="white" stroke-width="2"/>
+                    <line x1="30" y1="10" x2="30" y2="45" stroke="white" stroke-width="1.5"/>
+                    <line x1="10" y1="45" x2="50" y2="45" stroke="white" stroke-width="2"/>
+                </svg>
+            </button>
+            <div class="lesson-info">
+                <div class="lesson-number">Figure 001</div>
+                <div class="lesson-title">The First Imbalance</div>
+                <div class="lesson-progress">Start</div>
+            </div>
+        </div>
+
+        <!-- Figure 002 - Locked (left side) -->
+        <div class="lesson-node align-left" style="top: 170px;">
+            <button class="lesson-button locked">
+                <svg class="lock-icon" viewBox="0 0 50 50">
+                    <rect x="10" y="22" width="30" height="20" rx="2" fill="#9CA3AF"/>
+                    <path d="M 15 22 V 15 Q 15 8, 25 8 Q 35 8, 35 15 V 22" fill="none" stroke="#9CA3AF" stroke-width="4"/>
+                    <circle cx="25" cy="32" r="3" fill="#6B7280"/>
+                </svg>
+            </button>
+            <div class="lesson-info">
+                <div class="lesson-number">Figure 002</div>
+                <div class="lesson-title">Double Trouble</div>
+                <div class="lesson-progress locked">Locked</div>
+            </div>
+        </div>
+
+        <!-- Figure 003 - Locked (center) -->
+        <div class="lesson-node align-center" style="top: 340px;">
+            <button class="lesson-button locked">
+                <svg class="lock-icon" viewBox="0 0 50 50">
+                    <rect x="10" y="22" width="30" height="20" rx="2" fill="#9CA3AF"/>
+                    <path d="M 15 22 V 15 Q 15 8, 25 8 Q 35 8, 35 15 V 22" fill="none" stroke="#9CA3AF" stroke-width="4"/>
+                    <circle cx="25" cy="32" r="3" fill="#6B7280"/>
+                </svg>
+            </button>
+            <div class="lesson-info">
+                <div class="lesson-number">Figure 003</div>
+                <div class="lesson-title">The Split</div>
+                <div class="lesson-progress locked">Locked</div>
+            </div>
+        </div>
+
+        <!-- Figure 004 - Locked (right side) -->
+        <div class="lesson-node align-right" style="top: 510px;">
+            <button class="lesson-button locked">
+                <svg class="lock-icon" viewBox="0 0 50 50">
+                    <rect x="10" y="22" width="30" height="20" rx="2" fill="#9CA3AF"/>
+                    <path d="M 15 22 V 15 Q 15 8, 25 8 Q 35 8, 35 15 V 22" fill="none" stroke="#9CA3AF" stroke-width="4"/>
+                    <circle cx="25" cy="32" r="3" fill="#6B7280"/>
+                </svg>
+            </button>
+            <div class="lesson-info">
+                <div class="lesson-number">Figure 004</div>
+                <div class="lesson-title">Powers Awaken</div>
+                <div class="lesson-progress locked">Locked</div>
+            </div>
+        </div>
+
+        <!-- Figure 005 - Locked (center) -->
+        <div class="lesson-node align-center" style="top: 680px;">
+            <button class="lesson-button locked">
+                <svg class="lock-icon" viewBox="0 0 50 50">
+                    <rect x="10" y="22" width="30" height="20" rx="2" fill="#9CA3AF"/>
+                    <path d="M 15 22 V 15 Q 15 8, 25 8 Q 35 8, 35 15 V 22" fill="none" stroke="#9CA3AF" stroke-width="4"/>
+                    <circle cx="25" cy="32" r="3" fill="#6B7280"/>
+                </svg>
+            </button>
+            <div class="lesson-info">
+                <div class="lesson-number">Figure 005</div>
+                <div class="lesson-title">Root Discovery</div>
+                <div class="lesson-progress locked">Locked</div>
+            </div>
+        </div>
+
+        <!-- Figure 006 - Locked (left side) -->
+        <div class="lesson-node align-left" style="top: 990px;">
+            <button class="lesson-button locked">
+                <svg class="lock-icon" viewBox="0 0 50 50">
+                    <rect x="10" y="22" width="30" height="20" rx="2" fill="#9CA3AF"/>
+                    <path d="M 15 22 V 15 Q 15 8, 25 8 Q 35 8, 35 15 V 22" fill="none" stroke="#9CA3AF" stroke-width="4"/>
+                    <circle cx="25" cy="32" r="3" fill="#6B7280"/>
+                </svg>
+            </button>
+            <div class="lesson-info">
+                <div class="lesson-number">Figure 006</div>
+                <div class="lesson-title">The Quadratic</div>
+                <div class="lesson-progress locked">Locked</div>
+            </div>
+        </div>
+
+        <!-- Figure 007 - Locked (center bottom) -->
+        <div class="lesson-node align-center" style="top: 1200px;">
+            <button class="lesson-button locked">
+                <svg class="lock-icon" viewBox="0 0 50 50">
+                    <rect x="10" y="22" width="30" height="20" rx="2" fill="#9CA3AF"/>
+                    <path d="M 15 22 V 15 Q 15 8, 25 8 Q 35 8, 35 15 V 22" fill="none" stroke="#9CA3AF" stroke-width="4"/>
+                    <circle cx="25" cy="32" r="3" fill="#6B7280"/>
+                </svg>
+            </button>
+            <div class="lesson-info">
+                <div class="lesson-number">Figure 007</div>
+                <div class="lesson-title">Master Equations</div>
+                <div class="lesson-progress locked">Locked</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-nav">
+        <div class="nav-item active" onclick="navigateTo('main-menu.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+            </svg>
+            <div>Learn</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('leaderboard.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
+            </svg>
+            <div>Leaderboard</div>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <div>Profile</div>
+        </div>
+    </div>
+
+    <!-- Streak Celebration -->
+    <div class="streak-celebration" id="streak-celebration"></div>
+    <div class="streak-message" id="streak-message"></div>
+
+    <script>
+        // Continuous Background Music System for Main Menu
+        let bgMusicContext = null;
+        let bgOscillators = [];
+        let isPlaying = false;
+
+        function playBackgroundMusic() {
+            const settings = JSON.parse(localStorage.getItem('reckonSettings') || '{"music": true}');
+            if (!settings.music || isPlaying) return;
+            
+            isPlaying = true;
+            bgMusicContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Continuous ambient pad with slow chord progression
+            const chordProgression = [
+                [261.63, 329.63, 392.00, 493.88],  // C major 7
+                [293.66, 369.99, 440.00, 554.37],  // D minor 7
+                [392.00, 493.88, 587.33, 739.99],  // G major 7
+                [220.00, 277.18, 329.63, 415.30]   // A minor 7
+            ];
+            
+            let chordIndex = 0;
+            
+            function playChord() {
+                if (!isPlaying) return;
+                
+                // Stop previous chord
+                bgOscillators.forEach(osc => {
+                    try {
+                        osc.stop();
+                    } catch(e) {}
+                });
+                bgOscillators = [];
+                
+                const chord = chordProgression[chordIndex];
+                const masterGain = bgMusicContext.createGain();
+                masterGain.connect(bgMusicContext.destination);
+                masterGain.gain.setValueAtTime(0, bgMusicContext.currentTime);
+                masterGain.gain.linearRampToValueAtTime(0.06, bgMusicContext.currentTime + 1.5);
+                
+                chord.forEach((freq, i) => {
+                    const osc = bgMusicContext.createOscillator();
+                    const gain = bgMusicContext.createGain();
+                    
+                    osc.connect(gain);
+                    gain.connect(masterGain);
+                    
+                    osc.type = i < 2 ? 'sine' : 'triangle';  // Mix of sine and triangle for warmth
+                    osc.frequency.setValueAtTime(freq, bgMusicContext.currentTime);
+                    
+                    gain.gain.setValueAtTime(0.25, bgMusicContext.currentTime);
+                    
+                    osc.start();
+                    bgOscillators.push(osc);
+                });
+                
+                // Add subtle high melody note
+                const melodyFreqs = [523.25, 587.33, 659.25, 783.99];
+                const melody = bgMusicContext.createOscillator();
+                const melodyGain = bgMusicContext.createGain();
+                
+                melody.connect(melodyGain);
+                melodyGain.connect(masterGain);
+                
+                melody.type = 'sine';
+                melody.frequency.setValueAtTime(melodyFreqs[chordIndex], bgMusicContext.currentTime);
+                
+                melodyGain.gain.setValueAtTime(0, bgMusicContext.currentTime);
+                melodyGain.gain.linearRampToValueAtTime(0.08, bgMusicContext.currentTime + 0.5);
+                melodyGain.gain.linearRampToValueAtTime(0, bgMusicContext.currentTime + 6);
+                
+                melody.start();
+                bgOscillators.push(melody);
+                
+                // Fade out before next chord
+                setTimeout(() => {
+                    masterGain.gain.linearRampToValueAtTime(0, bgMusicContext.currentTime + 1.5);
+                }, 4500);
+                
+                chordIndex = (chordIndex + 1) % chordProgression.length;
+                setTimeout(playChord, 6000);  // Slower chord changes for smoother feel
+            }
+            
+            playChord();
+        }
+
+        // Start music on first click
+        const settings = JSON.parse(localStorage.getItem('reckonSettings') || '{"music": true}');
+        if (settings.music) {
+            document.addEventListener('click', playBackgroundMusic, { once: true });
+        }
+
+        // Check if user needs onboarding
+        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": [], "userName": "Player", "onboarded": false}');
+
+        // Update Daily Challenge status
+        function updateDailyChallenge() {
+            const today = new Date().toDateString();
+            const dailyStatus = document.getElementById('daily-status');
+            
+            if (userProgress.dailyChallengeDate === today) {
+                dailyStatus.textContent = '✓ Completed Today!';
+                dailyStatus.classList.add('completed');
+            } else {
+                dailyStatus.textContent = 'Complete for +50 XP!';
+            }
+            
+            // Update countdown timer
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            const diff = tomorrow - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer-text').textContent = timeString;
+        }
+
+        // Update timer every second
+        updateDailyChallenge();
+        setInterval(updateDailyChallenge, 1000);
+        
+        if (!userProgress.onboarded) {
+            window.location.href = 'onboarding.html';
+        }
+        
+        // Update header stats and user name
+        document.getElementById('user-name').textContent = userProgress.userName || 'Player';
+        document.getElementById('header-streak').textContent = userProgress.streak || 0;
+        document.getElementById('header-xp').textContent = userProgress.xp || 0;
+
+        function startLesson(lessonNumber) {
+            if (lessonNumber === 1) {
+                // Add exit animation
+                document.body.classList.add('page-exit');
+                
+                // Navigate after animation completes
+                setTimeout(() => {
+                    window.location.href = 'duolingo-math.html';
+                }, 300);
+            }
+        }
+
+        function navigateTo(page) {
+            // Add exit animation
+            document.body.classList.add('page-exit');
+            
+            // Navigate after animation completes
+            setTimeout(() => {
+                window.location.href = page;
+            }, 300);
+        }
+
+        function playUnlockAnimation(nodeIndex) {
+            const nodes = document.querySelectorAll('.lesson-node');
+            const node = nodes[nodeIndex];
+            const button = node.querySelector('.lesson-button');
+            const lockIcon = button.querySelector('.lock-icon');
+            
+            // Get button position for particles
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Add unlock text
+            const unlockText = document.createElement('div');
+            unlockText.className = 'unlock-text';
+            unlockText.textContent = 'UNLOCKED!';
+            node.style.position = 'relative';
+            node.appendChild(unlockText);
+            
+            setTimeout(() => {
+                unlockText.classList.add('show');
+            }, 100);
+            
+            // Start animations
+            button.classList.add('unlocking');
+            
+            // Create particle burst
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'unlock-particle';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                
+                const angle = (i / 20) * Math.PI * 2;
+                const distance = 60 + Math.random() * 40;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                particle.style.animation = `particleBurst ${0.6 + Math.random() * 0.4}s ease-out forwards`;
+                particle.style.animationDelay = Math.random() * 0.2 + 's';
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+            }
+            
+            // After lock melts, reveal new icon
+            setTimeout(() => {
+                button.className = 'lesson-button unlocked';
+                button.innerHTML = `
+                    <svg class="lesson-icon" viewBox="0 0 60 60" style="animation: iconReveal 0.5s ease-out forwards;">
+                        <!-- Two X's for "Double Trouble" -->
+                        <g fill="white">
+                            <path d="M 15 15 L 25 25 M 25 15 L 15 25" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M 35 15 L 45 25 M 45 15 L 35 25" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="20" cy="40" r="8" fill="none" stroke="white" stroke-width="2"/>
+                            <circle cx="40" cy="40" r="8" fill="none" stroke="white" stroke-width="2"/>
+                        </g>
+                    </svg>
+                `;
+                button.onclick = () => alert('Figure 002 coming soon!');
+                
+                const progress = node.querySelector('.lesson-progress');
+                progress.className = 'lesson-progress';
+                progress.textContent = 'Start';
+            }, 600);
+            
+            // Remove unlock text after animation
+            setTimeout(() => {
+                unlockText.remove();
+            }, 1600);
+        }
+
+        function playStreakCelebration(streak) {
+            if (streak < 3) return; // Only celebrate 3+ streaks
+            
+            const container = document.getElementById('streak-celebration');
+            const message = document.getElementById('streak-message');
+            
+            container.classList.add('active');
+            
+            // Show message
+            message.textContent = `${streak} STREAK! 🔥`;
+            message.classList.add('show');
+            
+            // Create rising flames
+            const flameCount = Math.min(streak * 3, 30);
+            for (let i = 0; i < flameCount; i++) {
+                setTimeout(() => {
+                    const flame = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    flame.classList.add('flame-particle');
+                    flame.setAttribute('viewBox', '0 0 40 40');
+                    
+                    // Random position across bottom
+                    const x = Math.random() * window.innerWidth;
+                    flame.style.left = x + 'px';
+                    flame.style.bottom = '0px';
+                    
+                    // Random rotation
+                    const rotate = (Math.random() - 0.5) * 360;
+                    flame.style.setProperty('--rotate', rotate + 'deg');
+                    
+                    // Multi-layer flame
+                    flame.innerHTML = `
+                        <path d="M 20 5 c-3 8-8 12-8 20 c0 4.4 3.6 8 8 8s8-3.6 8-8c0-8-5-12-8-20z" fill="#FFA500"/>
+                        <path d="M 20 12 c-2 5-5 8-5 13 c0 2.8 2.2 5 5 5s5-2.2 5-5c0-5-3-8-5-13z" fill="#FF6B00"/>
+                        <path d="M 20 18 c-1 3-3 5-3 8 c0 1.7 1.3 3 3 3s3-1.3 3-3c0-3-2-5-3-8z" fill="#FFD700"/>
+                    `;
+                    
+                    flame.style.animation = `flameRise ${2 + Math.random()}s ease-out forwards`;
+                    flame.style.animationDelay = (Math.random() * 0.5) + 's';
+                    
+                    container.appendChild(flame);
+                    
+                    setTimeout(() => flame.remove(), 3000);
+                }, i * 50);
+            }
+            
+            // Hide message after 2 seconds
+            setTimeout(() => {
+                message.classList.remove('show');
+                message.classList.add('hide');
+                
+                setTimeout(() => {
+                    message.classList.remove('hide');
+                    container.classList.remove('active');
+                }, 500);
+            }, 2000);
+        }
+
+        // Check if returning from a completed lesson
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('completed') === '1') {
+            const earnedXP = parseInt(urlParams.get('xp') || '0');
+            const newStreak = parseInt(urlParams.get('streak') || '0');
+            
+            // Update progress
+            userProgress.xp = (userProgress.xp || 0) + earnedXP;
+            userProgress.streak = newStreak;
+            
+            if (!userProgress.completed.includes(1)) {
+                userProgress.completed.push(1);
+            }
+            
+            localStorage.setItem('reckonProgress', JSON.stringify(userProgress));
+            
+            // Update display
+            document.getElementById('header-xp').textContent = userProgress.xp;
+            document.getElementById('header-streak').textContent = userProgress.streak;
+            
+            // Play streak celebration if they have a good streak
+            if (newStreak >= 3) {
+                setTimeout(() => {
+                    playStreakCelebration(newStreak);
+                }, 500);
+            }
+            
+            // Update Figure 001 to show as completed
+            const nodes = document.querySelectorAll('.lesson-node');
+            const figure001 = nodes[0];
+            const button = figure001.querySelector('.lesson-button');
+            button.className = 'lesson-button completed';
+            button.innerHTML = `
+                <svg class="check-icon-svg" viewBox="0 0 60 60">
+                    <circle cx="30" cy="30" r="25" fill="white" opacity="0.3"/>
+                    <path d="M 15 30 L 25 40 L 45 20" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            `;
+            
+            const progress = figure001.querySelector('.lesson-progress');
+            progress.textContent = 'Completed!';
+            
+            // Add stars
+            const stars = document.createElement('div');
+            stars.className = 'stars';
+            stars.innerHTML = '<span class="star">★</span><span class="star">★</span><span class="star">★</span>';
+            figure001.querySelector('.lesson-info').appendChild(stars);
+            
+            // Unlock Figure 002 with animation
+            const figure002 = nodes[1];
+            
+            // Trigger unlock animation after a brief delay
+            setTimeout(() => {
+                playUnlockAnimation(1);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
