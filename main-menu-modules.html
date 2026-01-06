@@ -252,6 +252,10 @@
     </div>
 
     <script>
+        // Load saved theme
+        const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        
         const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": [], "userName": "Player"}');
 
         document.getElementById('user-name').textContent = userProgress.userName || 'Player';
@@ -275,6 +279,7 @@
 
         function openModule(moduleNum) {
             if (moduleNum === 1) {
+                // Open the original menu with figure path
                 window.location.href = 'main-menu.html';
             } else {
                 alert('This module is locked!\n\nUpgrade to Premium to unlock all 70 figures.\n\nOnly $7.99/month or $49/year');

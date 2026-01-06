@@ -505,6 +505,10 @@
     </div>
 
     <script>
+        // Load saved theme
+        const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        
         const state = {
             solved: false,
             startTime: Date.now()

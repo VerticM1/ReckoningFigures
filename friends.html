@@ -441,7 +441,7 @@
 
     <!-- Bottom Navigation -->
     <div id="bottom-nav">
-        <div class="nav-item" onclick="navigateTo('main-menu.html')">
+        <div class="nav-item" onclick="navigateTo('main-menu-modules.html')">
             <svg class="nav-icon" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
             </svg>
@@ -468,6 +468,10 @@
     </div>
 
     <script>
+        // Load saved theme
+        const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        
         // Load user progress
         const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"userName": "Player", "xp": 0, "streak": 0}');
 
@@ -652,46 +656,119 @@
 
         function challengeFriend(friendId) {
             const friend = friends.find(f => f.id === friendId);
-            alert(`Challenge sent to ${friend.name}! They'll have 24 hours to beat your best score.`);
+            if (!friend) return;
+            
+            // Create challenge dialog
+            const challengeType = confirm(`Challenge ${friend.name}!\n\nClick OK to challenge them to beat your score on Figure 001\nClick Cancel to challenge them to a weekly XP race`);
+            
+            if (challengeType === null) return; // User cancelled
+            
+            const challengeText = challengeType 
+                ? `Beat your score on Figure 001!` 
+                : `Race to 100 XP this week!`;
+            
+            alert(`Challenge sent to ${friend.name}!\n\n"${challengeText}"\n\nThey have 24 hours to respond.`);
+            
+            // In a real app, this would send to backend
+            // For now, we just show the alert
         }
 
         function compareFriend(friendId) {
             const friend = friends.find(f => f.id === friendId);
-            const userXP = userProgress.xp || 0;
-            const diff = userXP - friend.xp;
+            if (!friend) return;
             
-            if (diff > 0) {
-                alert(`You're ${diff} XP ahead of ${friend.name}! 🎉`);
-            } else if (diff < 0) {
-                alert(`${friend.name} is ${Math.abs(diff)} XP ahead of you! Time to catch up! 💪`);
+            const userXP = userProgress.xp || 0;
+            const userStreak = userProgress.streak || 0;
+            const userCompleted = userProgress.completed?.length || 0;
+            
+            const xpDiff = userXP - friend.xp;
+            const streakDiff = userStreak - friend.streak;
+            
+            let comparisonText = `📊 YOU vs ${friend.name}\n\n`;
+            
+            // XP Comparison
+            if (xpDiff > 0) {
+                comparisonText += `XP: You're ahead by ${xpDiff} XP! 🎉\n`;
+            } else if (xpDiff < 0) {
+                comparisonText += `XP: ${friend.name} leads by ${Math.abs(xpDiff)} XP 💪\n`;
             } else {
-                alert(`You and ${friend.name} are tied! 🤝`);
+                comparisonText += `XP: Tied at ${userXP} XP! 🤝\n`;
             }
+            
+            // Streak Comparison
+            if (streakDiff > 0) {
+                comparisonText += `Streak: You're ahead! (${userStreak} vs ${friend.streak})\n`;
+            } else if (streakDiff < 0) {
+                comparisonText += `Streak: ${friend.name} is on fire! (${friend.streak} vs ${userStreak})\n`;
+            } else {
+                comparisonText += `Streak: Both at ${userStreak} days!\n`;
+            }
+            
+            comparisonText += `\nFigures Completed: ${userCompleted} (you)\n`;
+            comparisonText += `\nKeep grinding to stay ahead! 🔥`;
+            
+            alert(comparisonText);
         }
 
         function acceptChallenge(challengeId) {
-            alert('Challenge accepted! Good luck! 🎯');
+            const challengeIndex = challenges.findIndex(c => c.id === challengeId);
+            if (challengeIndex === -1) return;
+            
+            const challenge = challenges[challengeIndex];
+            
+            // Remove challenge from list
+            challenges.splice(challengeIndex, 1);
+            
+            alert(`Challenge accepted! Now compete on ${challenge.text.includes('Figure') ? 'that figure' : 'this week\'s leaderboard'}!`);
+            renderChallenges();
         }
 
         function declineChallenge(challengeId) {
+            const challengeIndex = challenges.findIndex(c => c.id === challengeId);
+            if (challengeIndex === -1) return;
+            
+            // Remove challenge from list
+            challenges.splice(challengeIndex, 1);
+            
             alert('Challenge declined.');
+            renderChallenges();
         }
 
         function acceptRequest(requestId) {
-            const request = requests.find(r => r.id === requestId);
+            const requestIndex = requests.findIndex(r => r.id === requestId);
+            if (requestIndex === -1) return;
+            
+            const request = requests[requestIndex];
+            
+            // Add to friends list
             friends.push({ ...request, streak: 0 });
             localStorage.setItem('reckonFriends', JSON.stringify(friends));
-            alert(`${request.name} is now your friend! 🎉`);
+            
+            // Remove from requests array
+            requests.splice(requestIndex, 1);
+            
+            alert(`${request.name} is now your friend!`);
+            
+            // Re-render both tabs
             renderFriends();
             renderRequests();
         }
 
         function declineRequest(requestId) {
-            alert('Friend request declined.');
+            const requestIndex = requests.findIndex(r => r.id === requestId);
+            if (requestIndex === -1) return;
+            
+            const request = requests[requestIndex];
+            
+            // Remove from requests array
+            requests.splice(requestIndex, 1);
+            
+            alert(`Request from ${request.name} declined.`);
+            renderRequests();
         }
 
         function goBack() {
-            window.location.href = 'main-menu.html';
+            window.location.href = 'main-menu-modules.html';
         }
 
         function navigateTo(page) {

@@ -851,6 +851,10 @@
     <div class="streak-message" id="streak-message"></div>
 
     <script>
+        // Load saved theme
+        const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        
         // Continuous Background Music System for Main Menu
         let bgMusicContext = null;
         let bgOscillators = [];

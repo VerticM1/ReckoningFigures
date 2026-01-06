@@ -908,6 +908,10 @@
     </div>
 
     <script>
+        // Load saved theme
+        const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        
         const state = {
             current: 0,
             streak: 0,
