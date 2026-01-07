@@ -816,7 +816,7 @@
 <body>
     <div id="game-container">
         <div id="top-bar">
-            <button class="close-btn">×</button>
+            <button class="close-btn" onclick="exitLesson()">×</button>
             <div id="progress-container">
                 <div id="streak-label"></div>
                 <div id="progress-bg">
@@ -1001,6 +1001,12 @@
             correct: ['Amazing!', 'Perfect!', 'Excellent!', 'Brilliant!', 'Good job!', 'Incredible!'],
             wrong: ['Not quite', 'Almost', 'Try again']
         };
+
+        function exitLesson() {
+            if (confirm('Exit lesson? Your progress will be lost.')) {
+                window.location.href = 'module-1-simple.html';
+            }
+        }
 
         function showProblem() {
             const p = problems[state.current];
@@ -1468,7 +1474,7 @@
             
             setTimeout(() => {
                 try {
-                    window.location.href = `main-menu.html?completed=1&xp=${earnedXP}&streak=${state.streak}`;
+                    window.location.href = `module-1-simple.html?completed=2&xp=${earnedXP}&streak=${state.streak}`;
                 } catch (e) {
                     alert('Lesson completed! Progress saved. In the full app, you would return to the main menu and see Figure 002 unlock with an awesome animation!');
                     location.reload();

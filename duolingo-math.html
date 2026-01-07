@@ -1131,7 +1131,7 @@
 
         function exitLesson() {
             if (confirm('Exit lesson? Your progress will be lost.')) {
-                window.location.href = 'main-menu.html';
+                window.location.href = 'module-1-simple.html';
             }
         }
 
@@ -1747,6 +1747,11 @@
                     currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
                     currentProgress.streak = state.streak;
                     
+                    // Ensure completed array exists
+                    if (!currentProgress.completed) {
+                        currentProgress.completed = [];
+                    }
+                    
                     if (!currentProgress.completed.includes(1)) {
                         currentProgress.completed.push(1);
                     }
@@ -1757,7 +1762,7 @@
                     document.body.classList.add('page-exit');
                     
                     setTimeout(() => {
-                        window.location.href = `main-menu.html?completed=1&xp=${earnedXP}&streak=${state.streak}`;
+                        window.location.href = `module-1-simple.html?completed=1&xp=${earnedXP}&streak=${state.streak}`;
                     }, 300);
                 } catch (e) {
                     console.error('Claim XP error:', e);
@@ -1775,8 +1780,8 @@
             { type: 'xp', amount: 10, icon: '+', desc: 'Bonus XP', rarity: 'common' },
             { type: 'xp', amount: 15, icon: '+', desc: 'Bonus XP', rarity: 'common' },
             { type: 'xp', amount: 20, icon: '+', desc: 'Bonus XP', rarity: 'common' },
-            { type: 'xp', amount: 30, icon: '💎', desc: 'Rare Bonus XP', rarity: 'uncommon' },
-            { type: 'xp', amount: 50, icon: '👑', desc: 'Legendary Bonus XP', rarity: 'rare' }
+            { type: 'xp', amount: 30, icon: '+', desc: 'Rare Bonus XP', rarity: 'uncommon' },
+            { type: 'xp', amount: 50, icon: '+', desc: 'Legendary Bonus XP', rarity: 'rare' }
         ];
 
         function getRandomReward() {
