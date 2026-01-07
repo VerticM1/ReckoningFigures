@@ -980,9 +980,10 @@
         updateDailyChallenge();
         setInterval(updateDailyChallenge, 1000);
         
-        if (!userProgress.onboarded) {
-            window.location.href = 'onboarding.html';
-        }
+        // Onboarding disabled until we build it
+        // if (!userProgress.onboarded) {
+        //     window.location.href = 'onboarding.html';
+        // }
         
         // Update header stats and user name
         document.getElementById('user-name').textContent = userProgress.userName || 'Player';
