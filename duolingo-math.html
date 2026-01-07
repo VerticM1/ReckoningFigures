@@ -984,7 +984,9 @@
                 <div class="stat-card time">
                     <div class="stat-label">Blazing</div>
                     <div class="stat-value">
-                        <span class="stat-icon">⏱</span>
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#3B82F6" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
                         <span id="time">1:10</span>
                     </div>
                 </div>
@@ -1731,32 +1733,40 @@
             }
         }
 
-        document.getElementById('claim-btn').addEventListener('click', () => {
-            // Save progress and return to main menu
-            const currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": []}');
-            const earnedXP = parseInt(document.getElementById('total-xp').textContent);
-            
-            currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
-            currentProgress.streak = state.streak;
-            
-            if (!currentProgress.completed.includes(1)) {
-                currentProgress.completed.push(1);
-            }
-            
-            safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
-            
-            // Add exit animation before navigation
-            document.body.classList.add('page-exit');
-            
-            setTimeout(() => {
+        const claimBtn = document.getElementById('claim-btn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', () => {
+                console.log('Claim XP clicked!');
                 try {
-                    window.location.href = `main-menu.html?completed=1&xp=${earnedXP}&streak=${state.streak}`;
+                    // Save progress and return to main menu
+                    const currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": []}');
+                    const earnedXP = parseInt(document.getElementById('total-xp').textContent);
+                    
+                    console.log('Earned XP:', earnedXP);
+                    
+                    currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
+                    currentProgress.streak = state.streak;
+                    
+                    if (!currentProgress.completed.includes(1)) {
+                        currentProgress.completed.push(1);
+                    }
+                    
+                    safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
+                    
+                    // Add exit animation before navigation
+                    document.body.classList.add('page-exit');
+                    
+                    setTimeout(() => {
+                        window.location.href = `main-menu.html?completed=1&xp=${earnedXP}&streak=${state.streak}`;
+                    }, 300);
                 } catch (e) {
-                    alert('Lesson completed! Progress saved. In the full app, you would return to the main menu and see Figure 002 unlock with an awesome animation!');
-                    location.reload();
+                    console.error('Claim XP error:', e);
+                    alert('Error saving progress: ' + e.message);
                 }
-            }, 300);
-        });
+            });
+        } else {
+            console.error('Claim button not found!');
+        }
 
         document.getElementById('continue-btn').addEventListener('click', nextProblem);
         
