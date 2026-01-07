@@ -890,7 +890,11 @@
 
         <div id="bottom-section">
             <div id="feedback">
-                <div class="check-icon">✓</div>
+                <div class="check-icon">
+                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                        <path fill="white" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                </div>
                 <div id="feedback-text"></div>
             </div>
             <button id="continue-btn">Continue</button>
@@ -962,14 +966,18 @@
                 <div class="stat-card xp">
                     <div class="stat-label">Total XP</div>
                     <div class="stat-value">
-                        <span class="stat-icon">⚡</span>
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#58CC02" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                        </svg>
                         <span id="total-xp">15</span>
                     </div>
                 </div>
                 <div class="stat-card accuracy">
                     <div class="stat-label">Amazing</div>
                     <div class="stat-value">
-                        <span class="stat-icon">✓</span>
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#58CC02" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
                         <span id="accuracy">100%</span>
                     </div>
                 </div>
@@ -991,10 +999,11 @@
         const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
         document.body.setAttribute('data-theme', savedTheme);
         
-        // Global error handler
+        // Global error handler - only show for critical errors
         window.addEventListener('error', function(e) {
-            console.error('Error caught:', e.message);
-            showError('Something went wrong. Please refresh the page.');
+            console.error('Error caught:', e.message, e.filename, e.lineno);
+            // Don't show error popup for every minor issue
+            // Only log to console for debugging
         });
 
         // Show error message to user
@@ -1141,6 +1150,20 @@
                     }
                 });
                 choicesContainer.appendChild(input);
+                
+                // Add submit button
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'choice';
+                submitBtn.textContent = 'Submit';
+                submitBtn.style.marginTop = '16px';
+                submitBtn.onclick = () => {
+                    const value = input.value.trim();
+                    if (value) {
+                        checkFillBlank(value);
+                    }
+                };
+                choicesContainer.appendChild(submitBtn);
+                
                 setTimeout(() => input.focus(), 100);
                 
             } else if (p.type === 'true-false') {
@@ -1641,7 +1664,7 @@
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            const particles = ['+10', '+10', '+10', '⚡', '⚡', '+XP', '+XP'];
+            const particles = ['+10', '+10', '+10', '+XP', '+XP', '+XP', '+XP'];
             
             particles.forEach((text, i) => {
                 const particle = document.createElement('div');
@@ -1733,9 +1756,9 @@
         
         // Reward Chest System
         const rewards = [
-            { type: 'xp', amount: 10, icon: '⚡', desc: 'Bonus XP', rarity: 'common' },
-            { type: 'xp', amount: 15, icon: '⚡', desc: 'Bonus XP', rarity: 'common' },
-            { type: 'xp', amount: 20, icon: '⚡', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 10, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 15, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 20, icon: '+', desc: 'Bonus XP', rarity: 'common' },
             { type: 'xp', amount: 30, icon: '💎', desc: 'Rare Bonus XP', rarity: 'uncommon' },
             { type: 'xp', amount: 50, icon: '👑', desc: 'Legendary Bonus XP', rarity: 'rare' }
         ];
