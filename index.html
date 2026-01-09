@@ -5,7 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reckoning Figures</title>
     <script>
-        window.location.href = 'main-menu-modules.html';
+        // Check if user has completed onboarding
+        const progress = JSON.parse(localStorage.getItem('reckonProgress') || '{}');
+        
+        if (!progress.onboarded) {
+            // First time user - send to onboarding
+            window.location.href = 'onboarding.html';
+        } else {
+            // Returning user - send to module menu
+            window.location.href = 'main-menu-modules.html';
+        }
     </script>
 </head>
 <body>
