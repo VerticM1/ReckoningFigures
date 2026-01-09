@@ -818,10 +818,25 @@
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
+            animation: buttonPulse 2s ease-in-out infinite;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 6px 30px rgba(59, 130, 246, 0.6);
+            }
         }
 
         #claim-btn:hover {
             background: #2563EB;
+            animation: none;
+            transform: scale(1.05);
         }
 
         /* Confetti Animation */
@@ -1623,10 +1638,7 @@
                 }, 800);
             }
             
-            // Animate XP counter after a brief delay
-            setTimeout(() => {
-                animateXPCounter(xp);
-            }, 500);
+            // Animations will happen AFTER chest is closed and summary is visible
         }
 
         function animateXPCounter(targetXP) {
@@ -1663,6 +1675,53 @@
                     setTimeout(() => {
                         xpCard.classList.remove('count-complete');
                     }, 600);
+                }
+            }, updateInterval);
+        }
+
+        function animateAccuracy(targetAccuracy) {
+            const accuracyElement = document.getElementById('accuracy');
+            let currentAccuracy = 0;
+            const duration = 1200;
+            const startTime = Date.now();
+            const updateInterval = 30;
+            
+            const counter = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                currentAccuracy = Math.floor(easeProgress * targetAccuracy);
+                
+                accuracyElement.textContent = currentAccuracy + '%';
+                
+                if (progress >= 1) {
+                    clearInterval(counter);
+                    accuracyElement.textContent = targetAccuracy + '%';
+                }
+            }, updateInterval);
+        }
+
+        function animateTime(minutes, seconds) {
+            const timeElement = document.getElementById('time');
+            const totalSeconds = minutes * 60 + seconds;
+            let currentSeconds = 0;
+            const duration = 1000;
+            const startTime = Date.now();
+            const updateInterval = 30;
+            
+            const counter = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                currentSeconds = Math.floor(easeProgress * totalSeconds);
+                
+                const m = Math.floor(currentSeconds / 60);
+                const s = currentSeconds % 60;
+                timeElement.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                
+                if (progress >= 1) {
+                    clearInterval(counter);
+                    timeElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
                 }
             }, updateInterval);
         }
@@ -1839,6 +1898,19 @@
         function closeChest() {
             document.getElementById('reward-chest-modal').style.display = 'none';
             document.getElementById('summary').classList.add('show');
+            
+            // NOW animate the counters after screen is visible
+            const xp = state.correct * 10 + (state.correct === state.total ? 50 : 0);
+            const accuracy = state.totalAttempts > 0 ? Math.round((state.correct / state.totalAttempts) * 100) : 0;
+            const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            
+            setTimeout(() => {
+                animateXPCounter(xp);
+                animateAccuracy(accuracy);
+                animateTime(minutes, seconds);
+            }, 300);
         }
 
         showProblem();

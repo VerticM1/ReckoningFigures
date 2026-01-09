@@ -1031,6 +1031,20 @@
                     }
                 });
                 choicesContainer.appendChild(input);
+                
+                // Add submit button
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'choice';
+                submitBtn.textContent = 'Submit';
+                submitBtn.style.marginTop = '16px';
+                submitBtn.onclick = () => {
+                    const value = input.value.trim();
+                    if (value) {
+                        checkFillBlank(value);
+                    }
+                };
+                choicesContainer.appendChild(submitBtn);
+                
                 setTimeout(() => input.focus(), 100);
                 
             } else if (p.type === 'true-false') {
