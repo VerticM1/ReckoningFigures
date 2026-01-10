@@ -51,7 +51,7 @@
 
         #game-container {
             max-width: 480px;
-            margin: 0 0 0 auto;
+            margin: 0 auto;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -119,6 +119,10 @@
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         #question-text {
@@ -127,6 +131,8 @@
             color: white;
             margin-bottom: 40px;
             line-height: 1.3;
+            text-align: center;
+            width: 100%;
         }
 
         #question-text .var {
@@ -145,6 +151,7 @@
             font-size: 40px;
             font-weight: 900;
             color: white;
+            width: 100%;
         }
 
         #choices {
@@ -152,6 +159,7 @@
             flex-direction: column;
             gap: 12px;
             margin-bottom: 20px;
+            width: 100%;
         }
 
         .choice {
@@ -283,6 +291,10 @@
             margin-top: auto;
             padding: 20px;
             background: #1F2937;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
         }
 
         #feedback {
@@ -806,17 +818,77 @@
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
+            animation: buttonPulse 2s ease-in-out infinite;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 6px 30px rgba(59, 130, 246, 0.6);
+            }
         }
 
         #claim-btn:hover {
             background: #2563EB;
+            animation: none;
+            transform: scale(1.05);
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotateZ(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Reward Chest Animations */
+        @keyframes chestShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            75% { transform: translateX(5px) rotate(2deg); }
+        }
+
+        @keyframes chestOpen {
+            0% { transform-origin: bottom center; transform: rotateX(0deg); }
+            100% { transform-origin: bottom center; transform: rotateX(-120deg); }
+        }
+
+        @keyframes lockBreak {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes rewardPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
     <div id="game-container">
         <div id="top-bar">
-            <button class="close-btn">×</button>
+            <button class="close-btn" onclick="exitLesson()">×</button>
             <div id="progress-container">
                 <div id="streak-label"></div>
                 <div id="progress-bg">
@@ -833,7 +905,11 @@
 
         <div id="bottom-section">
             <div id="feedback">
-                <div class="check-icon">✓</div>
+                <div class="check-icon">
+                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                        <path fill="white" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                </div>
                 <div id="feedback-text"></div>
             </div>
             <button id="continue-btn">Continue</button>
@@ -848,6 +924,28 @@
             <div class="victory-msg" id="victory-msg"></div>
             <div class="badges" id="victory-badges"></div>
             <button class="continue-btn" onclick="location.reload()">Continue</button>
+        </div>
+
+        <!-- Reward Chest Modal -->
+        <div id="reward-chest-modal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); display: none; align-items: center; justify-content: center; z-index: 9999;">
+            <div style="text-align: center; max-width: 400px; padding: 40px;">
+                <svg id="chest-svg" viewBox="0 0 120 120" style="width: 200px; height: 200px; margin-bottom: 20px; cursor: pointer;" onclick="openChest()">
+                    <rect x="20" y="60" width="80" height="50" fill="#8B4513" stroke="#654321" stroke-width="3" rx="5"/>
+                    <rect x="25" y="65" width="70" height="40" fill="#A0522D"/>
+                    <g id="chest-lid"><path d="M 20 60 Q 60 40 100 60 L 100 70 Q 60 50 20 70 Z" fill="#8B4513" stroke="#654321" stroke-width="3"/><ellipse cx="60" cy="60" rx="40" ry="12" fill="#A0522D"/></g>
+                    <circle id="chest-lock" cx="60" cy="80" r="8" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+                    <rect id="chest-lock-shackle" x="57" y="72" width="6" height="8" fill="#FFD700" stroke="#FFA500" stroke-width="2" rx="3"/>
+                    <circle cx="40" cy="50" r="3" fill="white" opacity="0.6"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/></circle>
+                    <circle cx="85" cy="55" r="2" fill="white" opacity="0.5"><animate attributeName="opacity" values="0.4;0.9;0.4" dur="1.5s" repeatCount="indefinite"/></circle>
+                </svg>
+                <div id="chest-text" style="font-size: 24px; font-weight: 900; color: #FFA500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">Tap to Open!</div>
+                <div id="reward-display" style="display: none;">
+                    <div style="font-size: 64px; margin-bottom: 16px;" id="reward-icon"></div>
+                    <div style="font-size: 32px; font-weight: 900; color: #58CC02; margin-bottom: 12px;" id="reward-amount"></div>
+                    <div style="font-size: 16px; font-weight: 800; color: #9CA3AF; margin-bottom: 30px;" id="reward-desc"></div>
+                    <button onclick="closeChest()" style="padding: 16px 32px; background: #58CC02; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 900; color: white; cursor: pointer; text-transform: uppercase;">Claim Reward</button>
+                </div>
+            </div>
         </div>
 
         <!-- Practice Summary Screen -->
@@ -883,21 +981,27 @@
                 <div class="stat-card xp">
                     <div class="stat-label">Total XP</div>
                     <div class="stat-value">
-                        <span class="stat-icon">⚡</span>
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#58CC02" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                        </svg>
                         <span id="total-xp">15</span>
                     </div>
                 </div>
                 <div class="stat-card accuracy">
                     <div class="stat-label">Amazing</div>
                     <div class="stat-value">
-                        <span class="stat-icon">✓</span>
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#58CC02" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
                         <span id="accuracy">100%</span>
                     </div>
                 </div>
                 <div class="stat-card time">
                     <div class="stat-label">Blazing</div>
                     <div class="stat-value">
-                        <span class="stat-icon">⏱</span>
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#3B82F6" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
                         <span id="time">1:10</span>
                     </div>
                 </div>
@@ -912,6 +1016,44 @@
         const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
         document.body.setAttribute('data-theme', savedTheme);
         
+        // Global error handler - only show for critical errors
+        window.addEventListener('error', function(e) {
+            console.error('Error caught:', e.message, e.filename, e.lineno);
+            // Don't show error popup for every minor issue
+            // Only log to console for debugging
+        });
+
+        // Show error message to user
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #EF4444; color: white; padding: 16px 24px; border-radius: 12px; font-weight: 900; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.style.transition = 'opacity 0.3s';
+                errorDiv.style.opacity = '0';
+                setTimeout(() => errorDiv.remove(), 300);
+            }, 4000);
+        }
+
+        // Wrap localStorage calls in try-catch
+        function safeLocalStorage(action, key, value) {
+            try {
+                if (action === 'get') {
+                    return localStorage.getItem(key);
+                } else if (action === 'set') {
+                    localStorage.setItem(key, value);
+                } else if (action === 'remove') {
+                    localStorage.removeItem(key);
+                }
+            } catch (e) {
+                console.error('localStorage error:', e);
+                showError('Unable to save progress. Check your browser settings.');
+                return null;
+            }
+        }
+
         const state = {
             current: 0,
             streak: 0,
@@ -924,115 +1066,76 @@
         };
 
         const problems = [
+            // Introduction to fraction equations
             { 
                 type: 'multiple-choice',
-                eq: 'x/2 = 4', 
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">2</span></div> = 4', 
                 q: 'To solve this, what operation undoes division?', 
                 choices: ['Multiplication', 'Subtraction', 'Addition'], 
                 answer: 0 
             },
+            // Step by step
             { 
                 type: 'multiple-choice',
-                eq: 'x/2 = 4', 
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">2</span></div> = 4', 
                 q: 'What do we multiply both sides by?', 
                 choices: ['2', '4', '6'], 
                 answer: 0 
             },
+            // Fill in the answer
             {
                 type: 'fill-blank',
-                eq: 'x/3 = 5',
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">3</span></div> = 5',
                 q: 'Solve for <span class="var">x</span>',
                 answer: '15',
                 placeholder: 'x = ?'
             },
+            // True/False understanding
             {
                 type: 'true-false',
-                eq: 'x/4 = 3',
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">4</span></div> = 3',
                 q: 'To solve this, we multiply both sides by 4',
                 answer: true
             },
+            // Complete solve
             { 
                 type: 'multiple-choice',
-                eq: 'x/5 = 6', 
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">5</span></div> = 6', 
                 q: 'Solve for <span class="var">x</span>', 
                 choices: ['x = 25', 'x = 30', 'x = 35'], 
                 answer: 1 
             },
+            // Larger numbers
             { 
                 type: 'multiple-choice',
-                eq: 'x/6 = 4', 
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">6</span></div> = 8', 
                 q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 18', 'x = 24', 'x = 30'], 
+                choices: ['x = 42', 'x = 48', 'x = 54'], 
                 answer: 1 
             },
+            // Fill blank
             {
                 type: 'fill-blank',
-                eq: 'x/7 = 3',
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">7</span></div> = 4',
                 q: 'What is <span class="var">x</span>?',
-                answer: '21',
+                answer: '28',
                 placeholder: 'x = ?'
             },
+            // Different divisor
             { 
                 type: 'multiple-choice',
-                eq: 'x/8 = 5', 
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">8</span></div> = 9', 
                 q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 32', 'x = 40', 'x = 48'], 
+                choices: ['x = 64', 'x = 72', 'x = 80'], 
                 answer: 1 
             },
+            // Final challenge
             { 
                 type: 'multiple-choice',
-                eq: 'x/10 = 7', 
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">10</span></div> = 12', 
                 q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 60', 'x = 70', 'x = 80'], 
-                answer: 1 
-            }
-        ];
-            // Complete solve
-            { 
-                type: 'multiple-choice',
-                eq: '3x + 4 = 19', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 3', 'x = 5', 'x = 7'], 
-                answer: 1 
-            },
-            // True/False conceptual
-            {
-                type: 'true-false',
-                eq: '4x - 3 = 9',
-                q: 'To solve this, we should first add 3 to both sides.',
-                answer: true
-            },
-            // Standard solve with subtraction
-            { 
-                type: 'multiple-choice',
-                eq: '5x - 7 = 18', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 3', 'x = 5', 'x = 11'], 
-                answer: 1 
-            },
-            // Fill in blank
-            {
-                type: 'fill-blank',
-                eq: '2x + 10 = 26',
-                q: 'What is <span class="var">x</span>?',
-                answer: '8',
-                placeholder: 'x = ?'
-            },
-            // Harder problem
-            { 
-                type: 'multiple-choice',
-                eq: '6x - 12 = 24', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 4', 'x = 6', 'x = 12'], 
-                answer: 1 
-            },
-            // Variable on right
-            { 
-                type: 'multiple-choice',
-                eq: '20 = 3x + 2', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 4', 'x = 6', 'x = 8'], 
-                answer: 1 
+                choices: ['x = 100', 'x = 110', 'x = 120'], 
+                answer: 2 
             }
         ];
 
@@ -1041,11 +1144,17 @@
             wrong: ['Not quite', 'Almost', 'Try again']
         };
 
+        function exitLesson() {
+            if (confirm('Exit lesson? Your progress will be lost.')) {
+                window.location.href = 'module-1-simple.html';
+            }
+        }
+
         function showProblem() {
             const p = problems[state.current];
             
             document.getElementById('question-text').innerHTML = p.q;
-            document.getElementById('equation').textContent = p.eq;
+            document.getElementById('equation').innerHTML = p.eq;
             
             const choicesContainer = document.getElementById('choices');
             choicesContainer.innerHTML = '';
@@ -1064,6 +1173,20 @@
                     }
                 });
                 choicesContainer.appendChild(input);
+                
+                // Add submit button
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'choice';
+                submitBtn.textContent = 'Submit';
+                submitBtn.style.marginTop = '16px';
+                submitBtn.onclick = () => {
+                    const value = input.value.trim();
+                    if (value) {
+                        checkFillBlank(value);
+                    }
+                };
+                choicesContainer.appendChild(submitBtn);
+                
                 setTimeout(() => input.focus(), 100);
                 
             } else if (p.type === 'true-false') {
@@ -1122,6 +1245,7 @@
                 btn.disabled = true;
                 if (index === choiceIndex) {
                     btn.classList.add('selected');
+                    haptic('light');  // Light tap on select
                     
                     setTimeout(() => {
                         if (choiceIndex === p.answer) {
@@ -1129,8 +1253,9 @@
                             state.correct++;
                             state.streak++;
                             
-                            // Play success sound
+                            // Play success sound and haptic
                             playSound('correct');
+                            haptic('success');
                             
                             const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
                             document.getElementById('feedback-text').textContent = feedbackMsg;
@@ -1146,8 +1271,9 @@
                             state.mistakes++;
                             document.getElementById('streak-label').textContent = '';
                             
-                            // Play wrong sound
+                            // Play wrong sound and haptic
                             playSound('wrong');
+                            haptic('error');
                             
                             setTimeout(() => {
                                 btn.classList.remove('selected', 'incorrect');
@@ -1253,35 +1379,101 @@
             });
         }
 
+        // Haptic Feedback (mobile vibration)
+        function haptic(pattern) {
+            if ('vibrate' in navigator) {
+                const settings = JSON.parse(localStorage.getItem('reckonSettings') || '{"haptics": true}');
+                if (settings.haptics) {
+                    if (pattern === 'light') {
+                        navigator.vibrate(10);  // Light tap
+                    } else if (pattern === 'medium') {
+                        navigator.vibrate(20);  // Medium tap
+                    } else if (pattern === 'success') {
+                        navigator.vibrate([10, 50, 10]);  // Success pattern
+                    } else if (pattern === 'error') {
+                        navigator.vibrate([50, 30, 50]);  // Error pattern
+                    } else if (pattern === 'heavy') {
+                        navigator.vibrate(50);  // Heavy tap
+                    }
+                }
+            }
+        }
+
         function playSound(type) {
+            // Check if sound is enabled
+            const settings = JSON.parse(localStorage.getItem('reckonSettings') || '{"sound": true}');
+            if (!settings.sound) return;
+            
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             
             if (type === 'correct') {
-                // Cheerful upbeat melody
-                const notes = [
-                    { freq: 523.25, time: 0, duration: 0.15 },      // C5
-                    { freq: 659.25, time: 0.12, duration: 0.15 },   // E5
-                    { freq: 783.99, time: 0.24, duration: 0.15 },   // G5
-                    { freq: 1046.50, time: 0.36, duration: 0.25 }   // C6 (octave up, longer)
+                // Randomize between 3 different success sounds
+                const variant = Math.floor(Math.random() * 3);
+                
+                if (variant === 0) {
+                    // Cheerful upbeat melody
+                    const notes = [
+                        { freq: 523.25, time: 0, duration: 0.15 },
+                        { freq: 659.25, time: 0.12, duration: 0.15 },
+                        { freq: 783.99, time: 0.24, duration: 0.15 },
+                        { freq: 1046.50, time: 0.36, duration: 0.25 }
+                    ];
+                    playNotes(audioContext, notes, 'sine');
+                } else if (variant === 1) {
+                    // Bright chime
+                    const notes = [
+                        { freq: 659.25, time: 0, duration: 0.2 },
+                        { freq: 830.61, time: 0.1, duration: 0.2 },
+                        { freq: 987.77, time: 0.2, duration: 0.3 }
+                    ];
+                    playNotes(audioContext, notes, 'triangle');
+                } else {
+                    // Power-up sound
+                    const notes = [
+                        { freq: 392.00, time: 0, duration: 0.1 },
+                        { freq: 523.25, time: 0.08, duration: 0.1 },
+                        { freq: 659.25, time: 0.16, duration: 0.15 },
+                        { freq: 783.99, time: 0.24, duration: 0.2 }
+                    ];
+                    playNotes(audioContext, notes, 'square', 0.2);
+                }
+                
+            } else if (type === 'wrong') {
+                // Sad descending tone
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.3);
+                
+                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+                
+            } else if (type === 'victory') {
+                // Epic victory fanfare
+                const melody = [
+                    { freq: 523.25, time: 0, duration: 0.3 },      // C5
+                    { freq: 659.25, time: 0.3, duration: 0.3 },    // E5
+                    { freq: 783.99, time: 0.6, duration: 0.3 },    // G5
+                    { freq: 1046.50, time: 0.9, duration: 0.6 }    // C6 (hold)
                 ];
                 
-                notes.forEach(note => {
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    oscillator.type = 'sine';
-                    oscillator.frequency.setValueAtTime(note.freq, audioContext.currentTime + note.time);
-                    
-                    gainNode.gain.setValueAtTime(0, audioContext.currentTime + note.time);
-                    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + note.time + 0.02);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + note.time + note.duration);
-                    
-                    oscillator.start(audioContext.currentTime + note.time);
-                    oscillator.stop(audioContext.currentTime + note.time + note.duration);
-                });
+                const harmony = [
+                    { freq: 392.00, time: 0, duration: 0.3 },      // G4
+                    { freq: 493.88, time: 0.3, duration: 0.3 },    // B4
+                    { freq: 587.33, time: 0.6, duration: 0.3 },    // D5
+                    { freq: 783.99, time: 0.9, duration: 0.6 }     // G5
+                ];
+                
+                playNotes(audioContext, melody, 'square', 0.25);
+                playNotes(audioContext, harmony, 'sine', 0.15);
                 
             } else if (type === 'trumpet') {
                 // Triumphant trumpet fanfare for streaks
@@ -1328,6 +1520,26 @@
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.2);
             }
+        }
+
+        function playNotes(audioContext, notes, waveType = 'sine', volume = 0.3) {
+            notes.forEach(note => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = waveType;
+                oscillator.frequency.setValueAtTime(note.freq, audioContext.currentTime + note.time);
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime + note.time);
+                gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + note.time + 0.02);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + note.time + note.duration);
+                
+                oscillator.start(audioContext.currentTime + note.time);
+                oscillator.stop(audioContext.currentTime + note.time + note.duration);
+            });
         }
 
         function showCelebration(streak) {
@@ -1401,10 +1613,10 @@
             
             // Update summary screen
             if (perfect && state.mistakes === 0) {
-                document.getElementById('summary-title').textContent = 'Fraction Champion!';
-                document.getElementById('summary-subtitle').textContent = 'You mastered fractions perfectly!';
+                document.getElementById('summary-title').textContent = 'Seriously???';
+                document.getElementById('summary-subtitle').textContent = 'You made 0 mistakes. How?!';
             } else {
-                document.getElementById('summary-title').textContent = 'Great Work!';
+                document.getElementById('summary-title').textContent = 'Great work!';
                 document.getElementById('summary-subtitle').textContent = 'You completed Figure 004!';
             }
             
@@ -1413,12 +1625,20 @@
             document.getElementById('accuracy').textContent = accuracy + '%';
             document.getElementById('time').textContent = timeString;
             
-            document.getElementById('summary').classList.add('show');
+            // Play victory fanfare
+            playSound('victory');
             
-            // Animate XP counter after a brief delay
-            setTimeout(() => {
-                animateXPCounter(xp);
-            }, 500);
+            // Show reward chest first
+            showRewardChest();
+            
+            // Launch confetti for perfect score
+            if (perfect && state.mistakes === 0) {
+                setTimeout(() => {
+                    launchConfetti();
+                }, 800);
+            }
+            
+            // Animations will happen AFTER chest is closed and summary is visible
         }
 
         function animateXPCounter(targetXP) {
@@ -1459,12 +1679,59 @@
             }, updateInterval);
         }
 
+        function animateAccuracy(targetAccuracy) {
+            const accuracyElement = document.getElementById('accuracy');
+            let currentAccuracy = 0;
+            const duration = 1200;
+            const startTime = Date.now();
+            const updateInterval = 30;
+            
+            const counter = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                currentAccuracy = Math.floor(easeProgress * targetAccuracy);
+                
+                accuracyElement.textContent = currentAccuracy + '%';
+                
+                if (progress >= 1) {
+                    clearInterval(counter);
+                    accuracyElement.textContent = targetAccuracy + '%';
+                }
+            }, updateInterval);
+        }
+
+        function animateTime(minutes, seconds) {
+            const timeElement = document.getElementById('time');
+            const totalSeconds = minutes * 60 + seconds;
+            let currentSeconds = 0;
+            const duration = 1000;
+            const startTime = Date.now();
+            const updateInterval = 30;
+            
+            const counter = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                currentSeconds = Math.floor(easeProgress * totalSeconds);
+                
+                const m = Math.floor(currentSeconds / 60);
+                const s = currentSeconds % 60;
+                timeElement.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                
+                if (progress >= 1) {
+                    clearInterval(counter);
+                    timeElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, updateInterval);
+        }
+
         function createXPParticleBurst(element) {
             const rect = element.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            const particles = ['+10', '+10', '+10', '⚡', '⚡', '+XP', '+XP'];
+            const particles = ['+10', '+10', '+10', '+XP', '+XP', '+XP', '+XP'];
             
             particles.forEach((text, i) => {
                 const particle = document.createElement('div');
@@ -1488,35 +1755,164 @@
             });
         }
 
-        document.getElementById('claim-btn').addEventListener('click', () => {
-            // Save progress and return to main menu
-            const currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": []}');
-            const earnedXP = parseInt(document.getElementById('total-xp').textContent);
+        function launchConfetti() {
+            const colors = ['#FFA500', '#FF6B00', '#FFD700', '#58CC02', '#3B82F6', '#8B5CF6', '#EC4899'];
+            const confettiCount = 150;
             
-            currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
-            currentProgress.streak = state.streak;
-            
-            if (!currentProgress.completed.includes(1)) {
-                currentProgress.completed.push(1);
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    
+                    // Random color
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Random starting position across top
+                    confetti.style.left = Math.random() * 100 + '%';
+                    
+                    // Random size
+                    const size = 5 + Math.random() * 10;
+                    confetti.style.width = size + 'px';
+                    confetti.style.height = size + 'px';
+                    
+                    // Random shape (circle or square)
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = '50%';
+                    }
+                    
+                    // Random duration
+                    const duration = 2 + Math.random() * 2;
+                    confetti.style.animation = `confettiFall ${duration}s linear forwards`;
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), (duration + 0.5) * 1000);
+                }, i * 10);
             }
-            
-            localStorage.setItem('reckonProgress', JSON.stringify(currentProgress));
-            
-            // Add exit animation before navigation
-            document.body.classList.add('page-exit');
-            
-            setTimeout(() => {
+        }
+
+        const claimBtn = document.getElementById('claim-btn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', () => {
+                console.log('Claim XP clicked!');
                 try {
-                    window.location.href = `main-menu.html?completed=1&xp=${earnedXP}&streak=${state.streak}`;
+                    // Save progress and return to main menu
+                    const currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": []}');
+                    const earnedXP = parseInt(document.getElementById('total-xp').textContent);
+                    
+                    console.log('Earned XP:', earnedXP);
+                    
+                    currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
+                    currentProgress.streak = state.streak;
+                    
+                    // Ensure completed array exists
+                    if (!currentProgress.completed) {
+                        currentProgress.completed = [];
+                    }
+                    
+                    if (!currentProgress.completed.includes(4)) {
+                        currentProgress.completed.push(4);
+                    }
+                    
+                    safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
+                    
+                    // Add exit animation before navigation
+                    document.body.classList.add('page-exit');
+                    
+                    setTimeout(() => {
+                        window.location.href = `module-1-simple.html?completed=4&xp=${earnedXP}&streak=${state.streak}`;
+                    }, 300);
                 } catch (e) {
-                    alert('Lesson completed! Progress saved. In the full app, you would return to the main menu and see Figure 002 unlock with an awesome animation!');
-                    location.reload();
+                    console.error('Claim XP error:', e);
+                    alert('Error saving progress: ' + e.message);
                 }
-            }, 300);
-        });
+            });
+        } else {
+            console.error('Claim button not found!');
+        }
 
         document.getElementById('continue-btn').addEventListener('click', nextProblem);
         
+        // Reward Chest System
+        const rewards = [
+            { type: 'xp', amount: 10, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 15, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 20, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 30, icon: '+', desc: 'Rare Bonus XP', rarity: 'uncommon' },
+            { type: 'xp', amount: 50, icon: '+', desc: 'Legendary Bonus XP', rarity: 'rare' }
+        ];
+
+        function getRandomReward() {
+            const rand = Math.random();
+            let pool = rand < 0.7 ? rewards.filter(r => r.rarity === 'common') :
+                       rand < 0.9 ? rewards.filter(r => r.rarity === 'uncommon') :
+                       rewards.filter(r => r.rarity === 'rare');
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        function showRewardChest() {
+            document.getElementById('reward-chest-modal').style.display = 'flex';
+        }
+
+        function openChest() {
+            const chestSvg = document.getElementById('chest-svg');
+            const chestText = document.getElementById('chest-text');
+            const lid = document.getElementById('chest-lid');
+            const lock = document.getElementById('chest-lock');
+            const lockShackle = document.getElementById('chest-lock-shackle');
+            
+            chestSvg.onclick = null;
+            chestSvg.style.cursor = 'default';
+            chestSvg.style.animation = 'chestShake 0.5s ease';
+            
+            setTimeout(() => {
+                lock.style.animation = 'lockBreak 0.4s ease forwards';
+                lockShackle.style.animation = 'lockBreak 0.4s ease forwards';
+                
+                setTimeout(() => {
+                    lid.style.animation = 'chestOpen 0.6s ease forwards';
+                    
+                    setTimeout(() => {
+                        chestSvg.style.display = 'none';
+                        chestText.style.display = 'none';
+                        
+                        const reward = getRandomReward();
+                        document.getElementById('reward-icon').textContent = reward.icon;
+                        document.getElementById('reward-amount').textContent = `+${reward.amount} XP!`;
+                        document.getElementById('reward-desc').textContent = reward.desc;
+                        
+                        const rewardDisplay = document.getElementById('reward-display');
+                        rewardDisplay.style.display = 'block';
+                        rewardDisplay.style.animation = 'rewardPop 0.5s ease';
+                        
+                        // Apply reward
+                        const progress = JSON.parse(safeLocalStorage('get', 'reckonProgress') || '{}');
+                        progress.xp = (progress.xp || 0) + reward.amount;
+                        safeLocalStorage('set', 'reckonProgress', JSON.stringify(progress));
+                    }, 600);
+                }, 400);
+            }, 500);
+        }
+
+        function closeChest() {
+            document.getElementById('reward-chest-modal').style.display = 'none';
+            document.getElementById('summary').classList.add('show');
+            
+            // NOW animate the counters after screen is visible
+            const xp = state.correct * 10 + (state.correct === state.total ? 50 : 0);
+            const accuracy = state.totalAttempts > 0 ? Math.round((state.correct / state.totalAttempts) * 100) : 0;
+            const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            
+            setTimeout(() => {
+                animateXPCounter(xp);
+                animateAccuracy(accuracy);
+                animateTime(minutes, seconds);
+            }, 300);
+        }
+
         showProblem();
     </script>
 </body>
