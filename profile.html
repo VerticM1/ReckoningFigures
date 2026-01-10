@@ -84,6 +84,26 @@
             margin-bottom: 8px;
         }
 
+        .edit-name-btn {
+            width: 36px;
+            height: 36px;
+            background: #374151;
+            border: 2px solid #4A5568;
+            border-radius: 8px;
+            color: #9CA3AF;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .edit-name-btn:hover {
+            background: #4A5568;
+            border-color: #FFA500;
+            color: #FFA500;
+        }
+
         .user-title {
             font-size: 16px;
             font-weight: 800;
@@ -348,7 +368,14 @@
                 <text x="60" y="75" font-family="Nunito" font-size="48" font-weight="900" 
                       fill="#FFA500" text-anchor="middle" id="avatar-initial">P</text>
             </svg>
-            <div class="username" id="username">Player</div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                <div class="username" id="username">Player</div>
+                <button class="edit-name-btn" onclick="editName()">
+                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                        <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+                    </svg>
+                </button>
+            </div>
             <div class="user-title" id="user-title">Math Apprentice</div>
         </div>
 
@@ -588,6 +615,21 @@
             element.classList.toggle('active');
             settings[setting] = element.classList.contains('active');
             localStorage.setItem('reckonSettings', JSON.stringify(settings));
+        }
+
+        function editName() {
+            const currentName = userProgress.userName || 'Player';
+            const newName = prompt('Enter your new name:', currentName);
+            
+            if (newName && newName.trim() && newName.trim() !== currentName) {
+                const trimmedName = newName.trim().slice(0, 20); // Max 20 characters
+                userProgress.userName = trimmedName;
+                localStorage.setItem('reckonProgress', JSON.stringify(userProgress));
+                
+                // Update display
+                document.getElementById('username').textContent = trimmedName;
+                document.getElementById('avatar-initial').textContent = trimmedName[0].toUpperCase();
+            }
         }
 
         function goBack() {

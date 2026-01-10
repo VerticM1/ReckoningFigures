@@ -1477,8 +1477,8 @@
             currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
             currentProgress.streak = state.streak;
             
-            if (!currentProgress.completed.includes(1)) {
-                currentProgress.completed.push(1);
+            if (!currentProgress.completed.includes(2)) {
+                currentProgress.completed.push(2);
             }
             
             localStorage.setItem('reckonProgress', JSON.stringify(currentProgress));
