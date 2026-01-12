@@ -51,7 +51,7 @@
 
         #game-container {
             max-width: 480px;
-            margin: 0 0 0 auto;
+            margin: 0 auto;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -378,92 +378,323 @@
             z-index: 9999;
         }
 
-        /* 5-streak: Diagonal fire bolt from top-right to bottom-left */
-        .fire-bolt-diagonal {
-            position: absolute;
-            width: 150px;
-            height: 120%;
-            background: linear-gradient(180deg, 
-                #FFD700 0%, 
-                #FFA500 25%, 
-                #FF6B00 50%, 
-                #FF0000 75%, 
-                #FFD700 100%);
-            transform: rotate(-45deg);
-            transform-origin: center;
-            opacity: 0;
-            filter: blur(4px);
-            animation: boltDiagonal 0.8s ease-out;
-            box-shadow: 
-                0 0 60px #FFA500, 
-                0 0 100px #FF6B00,
-                inset 0 0 40px #FFD700;
-            left: 100%;
-            top: -20%;
+        /* ⚡ LIGHTNING STREAK CELEBRATION - Duolingo-inspired ⚡ */
+        
+        /* Lightning Container */
+        .lightning-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
         }
 
-        @keyframes boltDiagonal {
+        /* Main Lightning Bolt - Curved and Glowing */
+        .lightning-bolt {
+            position: absolute;
+            width: 8px;
+            background: linear-gradient(180deg, 
+                #FFF700 0%,    /* Bright yellow */
+                #00FFD1 50%,   /* Cyan */
+                #B4FF39 100%   /* Lime */
+            );
+            border-radius: 50px;
+            box-shadow: 
+                0 0 20px #FFF700,
+                0 0 40px #00FFD1,
+                0 0 60px #B4FF39,
+                0 0 80px rgba(255, 247, 0, 0.5);
+            filter: blur(1px);
+            opacity: 0;
+        }
+
+        /* Streak 3 - Simple diagonal bolt */
+        .lightning-bolt-3 {
+            top: -10%;
+            right: 20%;
+            height: 60%;
+            transform: rotate(25deg);
+            animation: lightningStrike3 0.6s ease-out;
+        }
+
+        @keyframes lightningStrike3 {
             0% {
                 opacity: 0;
-                left: 100%;
-                top: -20%;
+                transform: rotate(25deg) translateY(-100px) scale(0.5);
             }
-            20% {
+            10% {
                 opacity: 1;
+                transform: rotate(25deg) translateY(0) scale(1);
             }
             50% {
                 opacity: 1;
             }
             100% {
                 opacity: 0;
-                left: -100%;
-                top: 100%;
+                transform: rotate(25deg) translateY(50px) scale(1.2);
             }
         }
 
-        /* 7-streak: Thick vertical bolt down center, then spreads */
-        .fire-bolt-center {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            width: 200px;
-            height: 100%;
-            margin-left: -100px;
-            background: linear-gradient(to bottom,
-                #FFD700 0%,
-                #FFA500 20%,
-                #FF6B00 40%,
-                #FF0000 60%,
-                #FF6B00 80%,
-                #FFA500 100%);
-            opacity: 0;
-            filter: blur(6px);
-            animation: boltCenter 0.7s ease-out;
-            box-shadow: 
-                0 0 80px #FFA500, 
-                0 0 140px #FF6B00,
-                inset 0 0 60px #FFD700;
+        /* Streak 5 - Double bolts crossing */
+        .lightning-bolt-5-left {
+            top: -5%;
+            left: 15%;
+            height: 70%;
+            transform: rotate(-20deg);
+            animation: lightningStrike5Left 0.8s ease-out;
         }
 
-        @keyframes boltCenter {
+        .lightning-bolt-5-right {
+            top: -5%;
+            right: 15%;
+            height: 70%;
+            transform: rotate(20deg);
+            animation: lightningStrike5Right 0.8s ease-out 0.1s;
+        }
+
+        @keyframes lightningStrike5Left {
             0% {
                 opacity: 0;
-                transform: scaleY(0);
-                filter: blur(6px);
+                transform: rotate(-20deg) translateY(-100px) scale(0.3);
             }
-            30% {
+            15% {
                 opacity: 1;
-                transform: scaleY(1);
+                transform: rotate(-20deg) translateY(0) scale(1);
             }
-            70% {
+            60% {
                 opacity: 1;
-                transform: scaleY(1);
             }
             100% {
                 opacity: 0;
-                transform: scaleY(1);
-                filter: blur(20px);
+                transform: rotate(-20deg) translateY(100px) scale(1.3);
             }
+        }
+
+        @keyframes lightningStrike5Right {
+            0% {
+                opacity: 0;
+                transform: rotate(20deg) translateY(-100px) scale(0.3);
+            }
+            15% {
+                opacity: 1;
+                transform: rotate(20deg) translateY(0) scale(1);
+            }
+            60% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(20deg) translateY(100px) scale(1.3);
+            }
+        }
+
+        /* Streak 7 - Massive center bolt with spreading energy */
+        .lightning-bolt-7-center {
+            top: -10%;
+            left: 50%;
+            margin-left: -6px;
+            width: 12px;
+            height: 80%;
+            animation: lightningStrike7Center 1s ease-out;
+            box-shadow: 
+                0 0 30px #FFF700,
+                0 0 60px #00FFD1,
+                0 0 90px #B4FF39,
+                0 0 120px rgba(255, 247, 0, 0.7);
+        }
+
+        @keyframes lightningStrike7Center {
+            0% {
+                opacity: 0;
+                transform: translateY(-200px) scale(0.5);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            20% {
+                transform: translateY(0) scale(1.1);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(50px) scale(1.2);
+                filter: blur(10px);
+            }
+        }
+
+        /* Energy Spread - Radiating glow from center */
+        .energy-spread {
+            position: absolute;
+            top: 50%;
+            width: 200px;
+            height: 300px;
+            margin-top: -150px;
+            background: radial-gradient(ellipse at center,
+                rgba(255, 247, 0, 0.8) 0%,
+                rgba(0, 255, 209, 0.6) 20%,
+                rgba(180, 255, 57, 0.4) 40%,
+                transparent 70%);
+            opacity: 0;
+            filter: blur(15px);
+        }
+
+        .energy-spread.left {
+            left: 50%;
+            animation: energySpreadLeft 1s ease-out 0.3s;
+        }
+
+        .energy-spread.right {
+            right: 50%;
+            animation: energySpreadRight 1s ease-out 0.3s;
+        }
+
+        @keyframes energySpreadLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scale(0.5);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-300px) scale(2.5);
+            }
+        }
+
+        @keyframes energySpreadRight {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scale(0.5);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(300px) scale(2.5);
+            }
+        }
+
+        /* Electric Sparks - Confetti-like particles */
+        .electric-spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .spark-yellow {
+            background: #FFF700;
+            box-shadow: 0 0 10px #FFF700, 0 0 20px #FFF700;
+        }
+
+        .spark-cyan {
+            background: #00FFD1;
+            box-shadow: 0 0 10px #00FFD1, 0 0 20px #00FFD1;
+        }
+
+        .spark-lime {
+            background: #B4FF39;
+            box-shadow: 0 0 10px #B4FF39, 0 0 20px #B4FF39;
+        }
+
+        @keyframes sparkBurst {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.3);
+            }
+        }
+
+        /* Bloom/Glow overlay for whole screen */
+        .lightning-bloom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%,
+                rgba(255, 247, 0, 0.15) 0%,
+                rgba(0, 255, 209, 0.1) 30%,
+                transparent 60%);
+            opacity: 0;
+            animation: bloomPulse 0.8s ease-out;
+        }
+
+        @keyframes bloomPulse {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Legacy fire class names (for compatibility) */
+        .fire-bolt-diagonal {
+            position: absolute;
+            width: 8px;
+            background: linear-gradient(180deg, #FFF700 0%, #00FFD1 50%, #B4FF39 100%);
+            border-radius: 50px;
+            box-shadow: 0 0 20px #FFF700, 0 0 40px #00FFD1, 0 0 60px #B4FF39;
+            filter: blur(1px);
+            opacity: 0;
+            top: -10%;
+            right: 20%;
+            height: 60%;
+            transform: rotate(25deg);
+            animation: lightningStrike3 0.6s ease-out;
+        }
+
+        .fire-bolt-center {
+            position: absolute;
+            width: 12px;
+            background: linear-gradient(180deg, #FFF700 0%, #00FFD1 50%, #B4FF39 100%);
+            border-radius: 50px;
+            box-shadow: 0 0 30px #FFF700, 0 0 60px #00FFD1, 0 0 90px #B4FF39;
+            filter: blur(1px);
+            opacity: 0;
+            top: -10%;
+            left: 50%;
+            margin-left: -6px;
+            height: 80%;
+            animation: lightningStrike7Center 1s ease-out;
+        }
+
+        .fire-spread {
+            position: absolute;
+            top: 50%;
+            width: 200px;
+            height: 300px;
+            margin-top: -150px;
+            background: radial-gradient(ellipse at center,
+                rgba(255, 247, 0, 0.8) 0%,
+                rgba(0, 255, 209, 0.6) 20%,
+                rgba(180, 255, 57, 0.4) 40%,
+                transparent 70%);
+            opacity: 0;
+            filter: blur(15px);
+        }
+
+        .fire-spread.left {
+            left: 50%;
+            animation: energySpreadLeft 1s ease-out 0.3s;
+        }
+
+        .fire-spread.right {
+            right: 50%;
+            animation: energySpreadRight 1s ease-out 0.3s;
         }
 
         /* Spreading flames from center after bolt */
@@ -1319,41 +1550,76 @@
             // Play trumpet fanfare for streak milestones
             playSound('trumpet');
             
-            // Add fire bolt effects based on streak
-            const fireContainer = document.createElement('div');
-            fireContainer.className = 'fire-container';
+            // Create lightning container
+            const lightningContainer = document.createElement('div');
+            lightningContainer.className = 'lightning-container';
             
-            if (streak === 5) {
-                // Diagonal fire bolt from top-right to bottom-left
-                const bolt = document.createElement('div');
-                bolt.className = 'fire-bolt-diagonal';
-                fireContainer.appendChild(bolt);
-            } else if (streak === 7) {
-                // Thick vertical bolt down center
-                const centerBolt = document.createElement('div');
-                centerBolt.className = 'fire-bolt-center';
-                fireContainer.appendChild(centerBolt);
-                
-                // Spreading flames from center (left and right)
-                const spreadLeft = document.createElement('div');
-                spreadLeft.className = 'fire-spread left';
-                fireContainer.appendChild(spreadLeft);
-                
-                const spreadRight = document.createElement('div');
-                spreadRight.className = 'fire-spread right';
-                fireContainer.appendChild(spreadRight);
-            } else if (streak === 3) {
-                // Simple diagonal for 3 streak
-                const bolt = document.createElement('div');
-                bolt.className = 'fire-bolt-diagonal';
-                fireContainer.appendChild(bolt);
+            // Add bloom glow effect
+            const bloom = document.createElement('div');
+            bloom.className = 'lightning-bloom';
+            lightningContainer.appendChild(bloom);
+            
+            // Add electric sparks (confetti-like)
+            const sparkCount = streak === 7 ? 30 : streak === 5 ? 20 : 12;
+            for (let i = 0; i < sparkCount; i++) {
+                setTimeout(() => {
+                    const spark = document.createElement('div');
+                    spark.className = 'electric-spark';
+                    
+                    // Random color
+                    const colors = ['spark-yellow', 'spark-cyan', 'spark-lime'];
+                    spark.classList.add(colors[Math.floor(Math.random() * colors.length)]);
+                    
+                    // Random position near center
+                    spark.style.left = (45 + Math.random() * 10) + '%';
+                    spark.style.top = (45 + Math.random() * 10) + '%';
+                    
+                    // Random direction
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 100 + Math.random() * 150;
+                    spark.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                    spark.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                    
+                    spark.style.animation = `sparkBurst ${0.6 + Math.random() * 0.4}s ease-out`;
+                    
+                    lightningContainer.appendChild(spark);
+                    
+                    setTimeout(() => spark.remove(), 1000);
+                }, i * 30);
             }
             
-            cel.appendChild(fireContainer);
+            // Add lightning bolts based on streak
+            if (streak === 3) {
+                const bolt = document.createElement('div');
+                bolt.className = 'lightning-bolt lightning-bolt-3';
+                lightningContainer.appendChild(bolt);
+            } else if (streak === 5) {
+                const boltLeft = document.createElement('div');
+                boltLeft.className = 'lightning-bolt lightning-bolt-5-left';
+                lightningContainer.appendChild(boltLeft);
+                
+                const boltRight = document.createElement('div');
+                boltRight.className = 'lightning-bolt lightning-bolt-5-right';
+                lightningContainer.appendChild(boltRight);
+            } else if (streak === 7) {
+                const centerBolt = document.createElement('div');
+                centerBolt.className = 'lightning-bolt lightning-bolt-7-center';
+                lightningContainer.appendChild(centerBolt);
+                
+                const spreadLeft = document.createElement('div');
+                spreadLeft.className = 'energy-spread left';
+                lightningContainer.appendChild(spreadLeft);
+                
+                const spreadRight = document.createElement('div');
+                spreadRight.className = 'energy-spread right';
+                lightningContainer.appendChild(spreadRight);
+            }
+            
+            cel.appendChild(lightningContainer);
             
             setTimeout(() => {
-                fireContainer.remove();
-            }, 1500);
+                lightningContainer.remove();
+            }, 1800);
             
             setTimeout(() => {
                 cel.classList.remove('show');
