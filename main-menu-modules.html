@@ -256,10 +256,13 @@
         const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
         document.body.setAttribute('data-theme', savedTheme);
         
-        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": [], "userName": "Player"}');
+        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "dailyStreak": 0, "questionStreak": 0, "bestQuestionStreak": 0, "completed": [], "userName": "Player"}');
 
+        // Daily streak is updated when completing figures (not just visiting)
+        // So we don't update it here - it happens in figure completion
+        
         document.getElementById('user-name').textContent = userProgress.userName || 'Player';
-        document.getElementById('header-streak').textContent = userProgress.streak || 0;
+        document.getElementById('header-streak').textContent = userProgress.dailyStreak || 0;
         document.getElementById('header-xp').textContent = userProgress.xp || 0;
 
         const totalFigures = 70;

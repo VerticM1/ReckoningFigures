@@ -409,11 +409,10 @@
 
             <div class="stat-card">
                 <svg class="stat-icon" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="#3B82F6" stroke-width="2"/>
-                    <path fill="#3B82F6" d="M12 6v6l4 2"/>
+                    <path fill="#3B82F6" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
                 </svg>
-                <div class="stat-value" id="best-streak">0</div>
-                <div class="stat-label">Best Streak</div>
+                <div class="stat-value" id="question-streak">0</div>
+                <div class="stat-label">Question Streak</div>
             </div>
         </div>
 
@@ -526,9 +525,9 @@
         // Update stats
         const totalXP = userProgress.xp || 0;
         document.getElementById('total-xp').textContent = totalXP;
-        document.getElementById('current-streak').textContent = userProgress.streak || 0;
+        document.getElementById('current-streak').textContent = userProgress.dailyStreak || 0;
         document.getElementById('lessons-completed').textContent = userProgress.completed?.length || 0;
-        document.getElementById('best-streak').textContent = userProgress.bestStreak || userProgress.streak || 0;
+        document.getElementById('question-streak').textContent = userProgress.bestQuestionStreak || 0;
 
         // Update title based on XP
         let title = 'Math Apprentice';

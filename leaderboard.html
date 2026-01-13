@@ -360,9 +360,8 @@
     <div id="header">
         <div class="header-title">Leaderboard</div>
         <div class="time-tabs">
-            <button class="time-tab active" onclick="switchPeriod('week')">This Week</button>
-            <button class="time-tab" onclick="switchPeriod('month')">This Month</button>
-            <button class="time-tab" onclick="switchPeriod('all')">All Time</button>
+            <button class="time-tab active" onclick="switchLeaderboard('xp')">XP Rankings</button>
+            <button class="time-tab" onclick="switchLeaderboard('streak')">Question Streaks</button>
         </div>
     </div>
 
@@ -390,8 +389,8 @@
             <div class="rank-number">
                 <span id="user-rank">12</span><span class="rank-suffix">th</span>
             </div>
-            <div class="your-xp">
-                <span id="user-xp-display">0</span> XP this week
+            <div class="your-xp" id="user-stat-display">
+                <span id="user-xp-display">0</span> XP
             </div>
         </div>
 
@@ -458,7 +457,7 @@
         }
         
         // Load user progress
-        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "userName": "Player"}');
+        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "userName": "Player", "bestQuestionStreak": 0}');
 
         // League System
         function getLeague(xp) {
@@ -477,6 +476,62 @@
         iconPath.setAttribute('fill', userLeague.color);
         const userName = userProgress.userName || 'Player';
         const userXP = userProgress.xp || 0;
+        const userQuestionStreak = userProgress.bestQuestionStreak || 0;
+
+        // Track current leaderboard type
+        let currentLeaderboardType = 'xp';
+
+        // Generate REAL question streak leaderboard using actual localStorage data
+        function generateQuestionStreakLeaderboard() {
+            // Get all localStorage keys that look like user progress
+            const leaderboard = [];
+            
+            // Add current user with REAL stats
+            leaderboard.push({
+                name: userName,
+                streak: userQuestionStreak,
+                isCurrentUser: true
+            });
+            
+            // Generate mock competitors (in real app, this comes from server)
+            const names = [
+                'Alex Rivera', 'Jordan Chen', 'Taylor Kim', 'Morgan Patel', 'Casey Johnson', 
+                'Riley Martinez', 'Avery Singh', 'Quinn O\'Brien', 'Blake Anderson', 'Drew Williams',
+                'MathWiz47', 'AlgebraPro', 'EquationKing99', 'NumberNinja', 'CalcMaster23',
+                'SolveItSam', 'FormulaFred', 'BalanceBoss', 'GraphGuru', 'VariableVicky'
+            ];
+            
+            const usedNames = new Set([userName]);
+            
+            // Generate 19 other players
+            for (let i = 0; i < 19; i++) {
+                let name;
+                do {
+                    name = names[Math.floor(Math.random() * names.length)];
+                } while (usedNames.has(name));
+                usedNames.add(name);
+                
+                // Generate realistic streak (weighted toward lower numbers)
+                const rand = Math.random();
+                let streak;
+                if (rand < 0.3) {
+                    streak = Math.floor(Math.random() * 5) + 1; // 1-5
+                } else if (rand < 0.6) {
+                    streak = Math.floor(Math.random() * 5) + 6; // 6-10
+                } else if (rand < 0.85) {
+                    streak = Math.floor(Math.random() * 5) + 11; // 11-15
+                } else {
+                    streak = Math.floor(Math.random() * 10) + 16; // 16-25
+                }
+                
+                leaderboard.push({ name, streak });
+            }
+            
+            // Sort by streak (highest first)
+            leaderboard.sort((a, b) => b.streak - a.streak);
+            
+            return leaderboard;
+        }
 
         // Generate mock leaderboard data (in real app, this would come from server)
         function generateLeaderboard() {
@@ -550,7 +605,29 @@
             return leaderboard;
         }
 
-        let currentLeaderboard = generateLeaderboard();
+        // Get or generate persistent leaderboard
+        function getPersistentLeaderboard() {
+            const saved = localStorage.getItem('reckonLeaderboard');
+            const today = new Date().toDateString();
+            
+            if (saved) {
+                const data = JSON.parse(saved);
+                // Refresh leaderboard daily
+                if (data.date === today) {
+                    return data.leaderboard;
+                }
+            }
+            
+            // Generate new leaderboard
+            const newLeaderboard = generateLeaderboard();
+            localStorage.setItem('reckonLeaderboard', JSON.stringify({
+                date: today,
+                leaderboard: newLeaderboard
+            }));
+            return newLeaderboard;
+        }
+
+        let currentLeaderboard = getPersistentLeaderboard();
 
         function getRankSuffix(rank) {
             if (rank === 1) return 'st';
@@ -567,7 +644,14 @@
             const userRank = currentLeaderboard.findIndex(p => p.isCurrentUser) + 1;
             document.getElementById('user-rank').textContent = userRank;
             document.querySelector('.rank-suffix').textContent = getRankSuffix(userRank);
-            document.getElementById('user-xp-display').textContent = userXP;
+            
+            // Update user stat display based on type
+            if (currentLeaderboardType === 'xp') {
+                document.getElementById('user-xp-display').textContent = userXP.toLocaleString();
+                document.getElementById('user-stat-display').innerHTML = `<span id="user-xp-display">${userXP.toLocaleString()}</span> XP`;
+            } else {
+                document.getElementById('user-stat-display').innerHTML = `<span id="user-xp-display">${userQuestionStreak}</span> question streak`;
+            }
 
             // Render top 20
             currentLeaderboard.slice(0, 20).forEach((player, index) => {
@@ -589,6 +673,28 @@
                     medalHTML = '<svg class="medal" viewBox="0 0 32 32"><path d="M 16 4 L 11 14 L 6 14 L 11 19 L 9 26 L 16 21 L 23 26 L 21 19 L 26 14 L 21 14 Z" fill="#CD7F32"/></svg>';
                 }
 
+                // Different display based on leaderboard type
+                let statHTML = '';
+                if (currentLeaderboardType === 'xp') {
+                    statHTML = `
+                        <div class="player-xp">
+                            <svg class="xp-icon" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                            </svg>
+                            ${player.xp.toLocaleString()}
+                        </div>
+                    `;
+                } else {
+                    statHTML = `
+                        <div class="player-xp">
+                            <svg class="xp-icon" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                            </svg>
+                            ${player.streak} 🔥
+                        </div>
+                    `;
+                }
+
                 div.innerHTML = `
                     ${medalHTML || `<div class="rank">${rank}</div>`}
                     <div class="player-info">
@@ -598,43 +704,43 @@
                             ${player.country ? `<span class="country-flag">${player.country}</span>` : ''}
                         </div>
                     </div>
-                    <div class="player-xp">
-                        <svg class="xp-icon" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
-                        </svg>
-                        ${player.xp.toLocaleString()}
-                    </div>
+                    ${statHTML}
                 `;
 
                 list.appendChild(div);
             });
 
-            // Update footer stats
+            // Update footer stats based on type
             document.getElementById('total-players').textContent = currentLeaderboard.length;
-            const avgXP = Math.floor(currentLeaderboard.reduce((sum, p) => sum + p.xp, 0) / currentLeaderboard.length);
-            document.getElementById('avg-xp').textContent = avgXP.toLocaleString();
-            document.getElementById('top-xp').textContent = currentLeaderboard[0].xp.toLocaleString();
+            
+            if (currentLeaderboardType === 'xp') {
+                const avgXP = Math.floor(currentLeaderboard.reduce((sum, p) => sum + p.xp, 0) / currentLeaderboard.length);
+                document.getElementById('avg-xp').textContent = avgXP.toLocaleString();
+                document.getElementById('top-xp').textContent = currentLeaderboard[0].xp.toLocaleString();
+                document.querySelector('.stats-grid .stat-item:nth-child(2) .stat-label').textContent = 'Avg XP';
+                document.querySelector('.stats-grid .stat-item:nth-child(3) .stat-label').textContent = 'Top XP';
+            } else {
+                const avgStreak = Math.floor(currentLeaderboard.reduce((sum, p) => sum + p.streak, 0) / currentLeaderboard.length);
+                document.getElementById('avg-xp').textContent = avgStreak;
+                document.getElementById('top-xp').textContent = currentLeaderboard[0].streak;
+                document.querySelector('.stats-grid .stat-item:nth-child(2) .stat-label').textContent = 'Avg Streak';
+                document.querySelector('.stats-grid .stat-item:nth-child(3) .stat-label').textContent = 'Top Streak';
+            }
         }
 
-        function switchPeriod(period) {
+        function switchLeaderboard(type) {
             // Update tab styles
             document.querySelectorAll('.time-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             event.target.classList.add('active');
 
-            // In real app, would fetch different data
-            // For now, just regenerate with different multipliers
-            if (period === 'week') {
-                currentLeaderboard = generateLeaderboard();
-            } else if (period === 'month') {
-                currentLeaderboard = generateLeaderboard();
-                currentLeaderboard.forEach(p => p.xp = Math.floor(p.xp * 3.5));
-                currentLeaderboard.sort((a, b) => b.xp - a.xp);
+            currentLeaderboardType = type;
+            
+            if (type === 'xp') {
+                currentLeaderboard = getPersistentLeaderboard();
             } else {
-                currentLeaderboard = generateLeaderboard();
-                currentLeaderboard.forEach(p => p.xp = Math.floor(p.xp * 8));
-                currentLeaderboard.sort((a, b) => b.xp - a.xp);
+                currentLeaderboard = generateQuestionStreakLeaderboard();
             }
 
             renderLeaderboard();

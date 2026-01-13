@@ -2064,13 +2064,42 @@
                 console.log('Claim XP clicked!');
                 try {
                     // Save progress and return to main menu
-                    const currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": []}');
+                    const currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "dailyStreak": 0, "questionStreak": 0, "bestQuestionStreak": 0, "completed": []}');
                     const earnedXP = parseInt(document.getElementById('total-xp').textContent);
                     
                     console.log('Earned XP:', earnedXP);
                     
                     currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
-                    currentProgress.streak = state.streak;
+                    
+                    // Update question streak (current in-lesson streak)
+                    currentProgress.questionStreak = state.streak;
+                    if (state.streak > (currentProgress.bestQuestionStreak || 0)) {
+                        currentProgress.bestQuestionStreak = state.streak;
+                    }
+                    
+                    // Update daily streak (days in a row completing figures)
+                    const today = new Date().toDateString();
+                    const lastCompletionDate = currentProgress.lastCompletionDate;
+                    
+                    if (lastCompletionDate !== today) {
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        const yesterdayStr = yesterday.toDateString();
+                        
+                        if (lastCompletionDate === yesterdayStr) {
+                            // Completed yesterday - increment daily streak
+                            currentProgress.dailyStreak = (currentProgress.dailyStreak || 0) + 1;
+                        } else if (lastCompletionDate) {
+                            // Missed a day - reset to 1
+                            currentProgress.dailyStreak = 1;
+                        } else {
+                            // First completion ever
+                            currentProgress.dailyStreak = 1;
+                        }
+                        
+                        currentProgress.lastCompletionDate = today;
+                    }
+                    // If already completed today, daily streak stays same
                     
                     // Ensure completed array exists
                     if (!currentProgress.completed) {
@@ -2087,7 +2116,7 @@
                     document.body.classList.add('page-exit');
                     
                     setTimeout(() => {
-                        window.location.href = `module-1-simple.html?completed=1&xp=${earnedXP}&streak=${state.streak}`;
+                        window.location.href = `module-1-simple.html?completed=1&xp=${earnedXP}&questionStreak=${state.streak}`;
                     }, 300);
                 } catch (e) {
                     console.error('Claim XP error:', e);
