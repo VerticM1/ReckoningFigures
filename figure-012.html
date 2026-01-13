@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Figure 003: Division Discovery</title>
+    <title>Figure 012: Module Challenge</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
         
@@ -1297,75 +1297,75 @@
         };
 
         const problems = [
-            // Introduction to division equations
+            // Addition (Figure 001)
             { 
                 type: 'multiple-choice',
-                eq: '3x = 15', 
-                q: 'To solve for <span class="var">x</span>, what operation undoes multiplication?', 
-                choices: ['Division', 'Subtraction', 'Addition'], 
-                answer: 0 
-            },
-            // Step by step
-            { 
-                type: 'multiple-choice',
-                eq: '3x = 15', 
-                q: 'What do we divide both sides by?', 
-                choices: ['3', '5', '15'], 
-                answer: 0 
-            },
-            // Fill in the answer
-            {
-                type: 'fill-blank',
-                eq: '4x = 20',
-                q: 'Solve for <span class="var">x</span>',
-                answer: '5',
-                placeholder: 'x = ?'
-            },
-            // True/False understanding
-            {
-                type: 'true-false',
-                eq: '5x = 30',
-                q: 'To solve this, we divide both sides by 5',
-                answer: true
-            },
-            // Complete solve
-            { 
-                type: 'multiple-choice',
-                eq: '6x = 42', 
+                eq: 'x + 9 = 17', 
                 q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 7', 'x = 8'], 
+                choices: ['x = 6', 'x = 8', 'x = 26'], 
                 answer: 1 
             },
-            // Larger numbers
+            // Two-step (Figure 002)
             { 
                 type: 'multiple-choice',
-                eq: '8x = 64', 
+                eq: '3x + 7 = 22', 
                 q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 7', 'x = 8'], 
-                answer: 2 
+                choices: ['x = 4', 'x = 5', 'x = 6'], 
+                answer: 1 
             },
-            // Fill blank
+            // Multiplication (Figure 003)
             {
                 type: 'fill-blank',
-                eq: '7x = 49',
-                q: 'What is <span class="var">x</span>?',
+                eq: '6x = 42',
+                q: 'Solve for <span class="var">x</span>',
                 answer: '7',
                 placeholder: 'x = ?'
             },
-            // Different coefficient
+            // Fractions (Figure 004)
+            {
+                type: 'true-false',
+                eq: '<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle;"><span>x</span><span style="border-top: 3px solid white; padding-top: 4px;">5</span></div> = 4',
+                q: 'To solve this, we multiply both sides by 5',
+                answer: true
+            },
+            // Negatives (Figure 005)
             { 
                 type: 'multiple-choice',
-                eq: '9x = 72', 
+                eq: '-4x = 16', 
                 q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 8', 'x = 9'], 
+                choices: ['x = -4', 'x = 4', 'x = -64'], 
+                answer: 0 
+            },
+            // Variables both sides (Figure 006)
+            { 
+                type: 'multiple-choice',
+                eq: '5x = 2x + 12', 
+                q: 'Solve for <span class="var">x</span>', 
+                choices: ['x = 3', 'x = 4', 'x = 5'], 
                 answer: 1 
             },
-            // Final challenge
+            // Multi-step (Figure 007)
+            {
+                type: 'fill-blank',
+                eq: '4x - 8 = 20',
+                q: 'Solve for <span class="var">x</span>',
+                answer: '7',
+                placeholder: 'x = ?'
+            },
+            // Decimals (Figure 008)
             { 
                 type: 'multiple-choice',
-                eq: '12x = 60', 
+                eq: '2x + 1.5 = 8.5', 
                 q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 4', 'x = 5', 'x = 6'], 
+                choices: ['x = 3', 'x = 3.5', 'x = 4'], 
+                answer: 1 
+            },
+            // Final challenge - Word problem
+            { 
+                type: 'multiple-choice',
+                eq: '', 
+                q: 'A number tripled and then increased by 5 equals 26. What is the number?', 
+                choices: ['5', '7', '9'], 
                 answer: 1 
             }
         ];
@@ -1385,7 +1385,15 @@
             const p = problems[state.current];
             
             document.getElementById('question-text').innerHTML = p.q;
-            document.getElementById('equation').textContent = p.eq;
+            
+            // Hide equation box if no equation
+            const equationBox = document.getElementById('equation');
+            if (p.eq && p.eq.trim()) {
+                equationBox.innerHTML = p.eq;
+                equationBox.style.display = 'block';
+            } else {
+                equationBox.style.display = 'none';
+            }
             
             const choicesContainer = document.getElementById('choices');
             choicesContainer.innerHTML = '';
@@ -1883,7 +1891,7 @@
                 document.getElementById('summary-subtitle').textContent = 'You made 0 mistakes. How?!';
             } else {
                 document.getElementById('summary-title').textContent = 'Great work!';
-                document.getElementById('summary-subtitle').textContent = 'You completed Figure 003!';
+                document.getElementById('summary-subtitle').textContent = 'You completed Figure 012!';
             }
             
             // Set initial values to 0 for animation
@@ -2077,8 +2085,8 @@
                         currentProgress.completed = [];
                     }
                     
-                    if (!currentProgress.completed.includes(3)) {
-                        currentProgress.completed.push(3);
+                    if (!currentProgress.completed.includes(12)) {
+                        currentProgress.completed.push(12);
                     }
                     
                     safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
@@ -2087,7 +2095,7 @@
                     document.body.classList.add('page-exit');
                     
                     setTimeout(() => {
-                        window.location.href = `module-1-simple.html?completed=3&xp=${earnedXP}&streak=${state.streak}`;
+                        window.location.href = `module-1-simple.html?completed=12&xp=${earnedXP}&streak=${state.streak}`;
                     }, 300);
                 } catch (e) {
                     console.error('Claim XP error:', e);

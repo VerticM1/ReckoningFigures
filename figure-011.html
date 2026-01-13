@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Figure 003: Division Discovery</title>
+    <title>Figure 011: Word Problems 2</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
         
@@ -1297,75 +1297,75 @@
         };
 
         const problems = [
-            // Introduction to division equations
+            // Rate problem
             { 
                 type: 'multiple-choice',
-                eq: '3x = 15', 
-                q: 'To solve for <span class="var">x</span>, what operation undoes multiplication?', 
-                choices: ['Division', 'Subtraction', 'Addition'], 
+                eq: '', 
+                q: 'A car travels 60 mph. After <span class="var">x</span> hours it goes 180 miles. Which equation?', 
+                choices: ['60x = 180', 'x + 60 = 180', '180x = 60'], 
                 answer: 0 
             },
-            // Step by step
+            // Solve rate problem
             { 
                 type: 'multiple-choice',
-                eq: '3x = 15', 
-                q: 'What do we divide both sides by?', 
-                choices: ['3', '5', '15'], 
-                answer: 0 
+                eq: '60x = 180', 
+                q: 'How many hours did the car travel?', 
+                choices: ['2 hours', '3 hours', '4 hours'], 
+                answer: 1 
             },
-            // Fill in the answer
+            // Two-step word problem
             {
                 type: 'fill-blank',
-                eq: '4x = 20',
-                q: 'Solve for <span class="var">x</span>',
+                eq: '3x + 12 = 45',
+                q: 'Three friends split a bill equally and added a $12 tip. Total was $45. How much did each pay?',
+                answer: '11',
+                placeholder: 'Each paid $?'
+            },
+            // Consecutive integers
+            {
+                type: 'true-false',
+                eq: '',
+                q: 'Two consecutive numbers add up to 25. If the first number is x, the equation is x + (x + 1) = 25',
+                answer: true
+            },
+            // Solve consecutive
+            { 
+                type: 'multiple-choice',
+                eq: '2x + 1 = 25', 
+                q: 'What is the first number?', 
+                choices: ['11', '12', '13'], 
+                answer: 1 
+            },
+            // Mixture problem
+            { 
+                type: 'multiple-choice',
+                eq: '', 
+                q: 'You have <span class="var">x</span> dimes and twice as many quarters. Total is 15 coins. Equation?', 
+                choices: ['x + 2x = 15', '2x = 15', 'x + x = 15'], 
+                answer: 0 
+            },
+            // Solve mixture
+            {
+                type: 'fill-blank',
+                eq: '3x = 15',
+                q: 'How many dimes?',
                 answer: '5',
                 placeholder: 'x = ?'
             },
-            // True/False understanding
-            {
-                type: 'true-false',
-                eq: '5x = 30',
-                q: 'To solve this, we divide both sides by 5',
-                answer: true
-            },
-            // Complete solve
+            // Percent problem
             { 
                 type: 'multiple-choice',
-                eq: '6x = 42', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 7', 'x = 8'], 
-                answer: 1 
-            },
-            // Larger numbers
-            { 
-                type: 'multiple-choice',
-                eq: '8x = 64', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 7', 'x = 8'], 
-                answer: 2 
-            },
-            // Fill blank
-            {
-                type: 'fill-blank',
-                eq: '7x = 49',
-                q: 'What is <span class="var">x</span>?',
-                answer: '7',
-                placeholder: 'x = ?'
-            },
-            // Different coefficient
-            { 
-                type: 'multiple-choice',
-                eq: '9x = 72', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 8', 'x = 9'], 
-                answer: 1 
+                eq: '', 
+                q: 'A shirt costs $40 after a $<span class="var">x</span> discount. Original was $50. Equation?', 
+                choices: ['50 − x = 40', '50 + x = 40', 'x − 50 = 40'], 
+                answer: 0 
             },
             // Final challenge
             { 
                 type: 'multiple-choice',
-                eq: '12x = 60', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 4', 'x = 5', 'x = 6'], 
+                eq: '50 − x = 40', 
+                q: 'What was the discount amount?', 
+                choices: ['$5', '$10', '$15'], 
                 answer: 1 
             }
         ];
@@ -1385,7 +1385,13 @@
             const p = problems[state.current];
             
             document.getElementById('question-text').innerHTML = p.q;
-            document.getElementById('equation').textContent = p.eq;
+            const equationBox = document.getElementById('equation');
+            if (p.eq && p.eq.trim()) {
+                equationBox.textContent = p.eq;
+                equationBox.style.display = 'block';
+            } else {
+                equationBox.style.display = 'none';
+            }
             
             const choicesContainer = document.getElementById('choices');
             choicesContainer.innerHTML = '';
@@ -1883,7 +1889,7 @@
                 document.getElementById('summary-subtitle').textContent = 'You made 0 mistakes. How?!';
             } else {
                 document.getElementById('summary-title').textContent = 'Great work!';
-                document.getElementById('summary-subtitle').textContent = 'You completed Figure 003!';
+                document.getElementById('summary-subtitle').textContent = 'You completed Figure 011!';
             }
             
             // Set initial values to 0 for animation
@@ -2077,8 +2083,8 @@
                         currentProgress.completed = [];
                     }
                     
-                    if (!currentProgress.completed.includes(3)) {
-                        currentProgress.completed.push(3);
+                    if (!currentProgress.completed.includes(11)) {
+                        currentProgress.completed.push(11);
                     }
                     
                     safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
@@ -2087,7 +2093,7 @@
                     document.body.classList.add('page-exit');
                     
                     setTimeout(() => {
-                        window.location.href = `module-1-simple.html?completed=3&xp=${earnedXP}&streak=${state.streak}`;
+                        window.location.href = `module-1-simple.html?completed=11&xp=${earnedXP}&streak=${state.streak}`;
                     }, 300);
                 } catch (e) {
                     console.error('Claim XP error:', e);

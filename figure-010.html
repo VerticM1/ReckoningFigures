@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Figure 003: Division Discovery</title>
+    <title>Figure 010: Word Problems 1</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
         
@@ -1297,75 +1297,75 @@
         };
 
         const problems = [
-            // Introduction to division equations
+            // Simple age problem
             { 
                 type: 'multiple-choice',
-                eq: '3x = 15', 
-                q: 'To solve for <span class="var">x</span>, what operation undoes multiplication?', 
-                choices: ['Division', 'Subtraction', 'Addition'], 
+                eq: '', 
+                q: 'Sarah is 5 years older than Tom. If Tom is <span class="var">x</span> years old, how old is Sarah?', 
+                choices: ['x + 5', 'x − 5', '5x'], 
                 answer: 0 
             },
-            // Step by step
+            // Simple total problem
             { 
                 type: 'multiple-choice',
-                eq: '3x = 15', 
-                q: 'What do we divide both sides by?', 
-                choices: ['3', '5', '15'], 
+                eq: '', 
+                q: 'A number plus 7 equals 15. What equation represents this?', 
+                choices: ['x + 7 = 15', 'x − 7 = 15', '7x = 15'], 
                 answer: 0 
             },
             // Fill in the answer
             {
                 type: 'fill-blank',
-                eq: '4x = 20',
-                q: 'Solve for <span class="var">x</span>',
-                answer: '5',
+                eq: 'x + 7 = 15',
+                q: 'What is the number?',
+                answer: '8',
                 placeholder: 'x = ?'
             },
-            // True/False understanding
+            // Cost problem
             {
                 type: 'true-false',
-                eq: '5x = 30',
-                q: 'To solve this, we divide both sides by 5',
-                answer: true
+                eq: '',
+                q: 'If a ticket costs $12 and you have x dollars, the equation for buying 3 tickets is 3(12) = x',
+                answer: false
             },
-            // Complete solve
+            // Money problem
             { 
                 type: 'multiple-choice',
-                eq: '6x = 42', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 7', 'x = 8'], 
+                eq: '', 
+                q: 'Jake has $50. He spends <span class="var">x</span> dollars and has $23 left. Which equation is correct?', 
+                choices: ['50 − x = 23', '50 + x = 23', 'x − 50 = 23'], 
+                answer: 0 
+            },
+            // Solve money problem
+            { 
+                type: 'multiple-choice',
+                eq: '50 − x = 23', 
+                q: 'How much did Jake spend?', 
+                choices: ['$23', '$27', '$73'], 
                 answer: 1 
             },
-            // Larger numbers
-            { 
-                type: 'multiple-choice',
-                eq: '8x = 64', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 7', 'x = 8'], 
-                answer: 2 
-            },
-            // Fill blank
+            // Perimeter problem
             {
                 type: 'fill-blank',
-                eq: '7x = 49',
-                q: 'What is <span class="var">x</span>?',
-                answer: '7',
-                placeholder: 'x = ?'
+                eq: '2x + 8 = 24',
+                q: 'A rectangle has a perimeter of 24. If the width is 4, what is the length?',
+                answer: '8',
+                placeholder: 'length = ?'
             },
-            // Different coefficient
+            // Temperature problem
             { 
                 type: 'multiple-choice',
-                eq: '9x = 72', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 8', 'x = 9'], 
-                answer: 1 
+                eq: '', 
+                q: 'The temperature was <span class="var">x</span>°. It rose 15° to reach 72°. Which equation?', 
+                choices: ['x + 15 = 72', 'x − 15 = 72', '15x = 72'], 
+                answer: 0 
             },
             // Final challenge
             { 
                 type: 'multiple-choice',
-                eq: '12x = 60', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 4', 'x = 5', 'x = 6'], 
+                eq: 'x + 15 = 72', 
+                q: 'What was the starting temperature?', 
+                choices: ['52°', '57°', '87°'], 
                 answer: 1 
             }
         ];
@@ -1385,7 +1385,13 @@
             const p = problems[state.current];
             
             document.getElementById('question-text').innerHTML = p.q;
-            document.getElementById('equation').textContent = p.eq;
+            const equationBox = document.getElementById('equation');
+            if (p.eq && p.eq.trim()) {
+                equationBox.textContent = p.eq;
+                equationBox.style.display = 'block';
+            } else {
+                equationBox.style.display = 'none';
+            }
             
             const choicesContainer = document.getElementById('choices');
             choicesContainer.innerHTML = '';
@@ -1883,7 +1889,7 @@
                 document.getElementById('summary-subtitle').textContent = 'You made 0 mistakes. How?!';
             } else {
                 document.getElementById('summary-title').textContent = 'Great work!';
-                document.getElementById('summary-subtitle').textContent = 'You completed Figure 003!';
+                document.getElementById('summary-subtitle').textContent = 'You completed Figure 010!';
             }
             
             // Set initial values to 0 for animation
@@ -2077,8 +2083,8 @@
                         currentProgress.completed = [];
                     }
                     
-                    if (!currentProgress.completed.includes(3)) {
-                        currentProgress.completed.push(3);
+                    if (!currentProgress.completed.includes(10)) {
+                        currentProgress.completed.push(10);
                     }
                     
                     safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
@@ -2087,7 +2093,7 @@
                     document.body.classList.add('page-exit');
                     
                     setTimeout(() => {
-                        window.location.href = `module-1-simple.html?completed=3&xp=${earnedXP}&streak=${state.streak}`;
+                        window.location.href = `module-1-simple.html?completed=10&xp=${earnedXP}&streak=${state.streak}`;
                     }, 300);
                 } catch (e) {
                     console.error('Claim XP error:', e);
