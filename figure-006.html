@@ -1296,80 +1296,6 @@
             totalAttempts: 0
         };
 
-        const problems = [
-            // Conceptual understanding
-            { 
-                type: 'multiple-choice',
-                eq: 'x + 5 = 12', 
-                q: 'What should we do first to solve for <span class="var">x</span>?', 
-                choices: ['Subtract 5 from both sides', 'Add 5 to both sides', 'Divide both sides by 5'], 
-                answer: 0 
-            },
-            // Basic arithmetic
-            { 
-                type: 'multiple-choice',
-                eq: 'x = 12 − 5', 
-                q: 'What does 12 − 5 equal?', 
-                choices: ['7', '17', '5'], 
-                answer: 0 
-            },
-            // Fill in the blank
-            {
-                type: 'fill-blank',
-                eq: 'x + ___ = 15',
-                q: 'If <span class="var">x</span> = 8, what number goes in the blank?',
-                answer: '7',
-                placeholder: 'Enter number'
-            },
-            // Standard solve
-            { 
-                type: 'multiple-choice',
-                eq: 'x + 7 = 15', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 6', 'x = 8', 'x = 22'], 
-                answer: 1 
-            },
-            // True/False conceptual
-            {
-                type: 'true-false',
-                eq: 'x + 9 = 20',
-                q: 'To solve this equation, we add 9 to both sides.',
-                answer: false
-            },
-            // Standard solve
-            { 
-                type: 'multiple-choice',
-                eq: 'x + 12 = 25', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 11', 'x = 13', 'x = 37'], 
-                answer: 1 
-            },
-            // Fill in the blank
-            {
-                type: 'fill-blank',
-                eq: 'x + 6 = 18',
-                q: 'What is <span class="var">x</span>?',
-                answer: '12',
-                placeholder: 'x = ?'
-            },
-            // Standard solve with bigger numbers
-            { 
-                type: 'multiple-choice',
-                eq: 'x + 15 = 38', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 21', 'x = 23', 'x = 53'], 
-                answer: 1 
-            },
-            // Equation on right side
-            { 
-                type: 'multiple-choice',
-                eq: '23 = x + 8', 
-                q: 'Solve for <span class="var">x</span>', 
-                choices: ['x = 13', 'x = 15', 'x = 31'], 
-                answer: 1 
-            }
-        ];
-
         const feedback = {
             correct: ['Amazing!', 'Perfect!', 'Excellent!', 'Brilliant!', 'Good job!', 'Incredible!'],
             wrong: ['Not quite', 'Almost', 'Try again']
@@ -2070,7 +1996,36 @@
                     console.log('Earned XP:', earnedXP);
                     
                     currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
-                    currentProgress.streak = state.streak;
+                    
+                    // Update question streak (current in-lesson streak)
+                    currentProgress.questionStreak = state.streak;
+                    if (state.streak > (currentProgress.bestQuestionStreak || 0)) {
+                        currentProgress.bestQuestionStreak = state.streak;
+                    }
+                    
+                    // Update daily streak (days in a row completing figures)
+                    const today = new Date().toDateString();
+                    const lastCompletionDate = currentProgress.lastCompletionDate;
+                    
+                    if (lastCompletionDate !== today) {
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        const yesterdayStr = yesterday.toDateString();
+                        
+                        if (lastCompletionDate === yesterdayStr) {
+                            // Completed yesterday - increment daily streak
+                            currentProgress.dailyStreak = (currentProgress.dailyStreak || 0) + 1;
+                        } else if (lastCompletionDate) {
+                            // Missed a day - reset to 1
+                            currentProgress.dailyStreak = 1;
+                        } else {
+                            // First completion ever
+                            currentProgress.dailyStreak = 1;
+                        }
+                        
+                        currentProgress.lastCompletionDate = today;
+                    }
+                    // If already completed today, daily streak stays same
                     
                     // Ensure completed array exists
                     if (!currentProgress.completed) {
@@ -3149,7 +3104,36 @@
                     console.log('Earned XP:', earnedXP);
                     
                     currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
-                    currentProgress.streak = state.streak;
+                    
+                    // Update question streak (current in-lesson streak)
+                    currentProgress.questionStreak = state.streak;
+                    if (state.streak > (currentProgress.bestQuestionStreak || 0)) {
+                        currentProgress.bestQuestionStreak = state.streak;
+                    }
+                    
+                    // Update daily streak (days in a row completing figures)
+                    const today = new Date().toDateString();
+                    const lastCompletionDate = currentProgress.lastCompletionDate;
+                    
+                    if (lastCompletionDate !== today) {
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        const yesterdayStr = yesterday.toDateString();
+                        
+                        if (lastCompletionDate === yesterdayStr) {
+                            // Completed yesterday - increment daily streak
+                            currentProgress.dailyStreak = (currentProgress.dailyStreak || 0) + 1;
+                        } else if (lastCompletionDate) {
+                            // Missed a day - reset to 1
+                            currentProgress.dailyStreak = 1;
+                        } else {
+                            // First completion ever
+                            currentProgress.dailyStreak = 1;
+                        }
+                        
+                        currentProgress.lastCompletionDate = today;
+                    }
+                    // If already completed today, daily streak stays same
                     
                     // Ensure completed array exists
                     if (!currentProgress.completed) {
@@ -3166,7 +3150,7 @@
                     document.body.classList.add('page-exit');
                     
                     setTimeout(() => {
-                        window.location.href = `module-1-simple.html?completed=6&xp=${earnedXP}&streak=${state.streak}`;
+                        window.location.href = `module-1-simple.html?completed=6&xp=${earnedXP}&questionStreak=${state.streak}`;
                     }, 300);
                 } catch (e) {
                     console.error('Claim XP error:', e);
