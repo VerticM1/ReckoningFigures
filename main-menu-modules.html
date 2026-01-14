@@ -38,11 +38,27 @@
         .module-card:hover { transform: translateY(-4px); border-color: #58CC02; }
         .module-card.locked { opacity: 0.6; cursor: not-allowed; }
         .module-card.locked:hover { transform: none; border-color: #4A5568; }
+        .module-card.completed { 
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%); 
+            border: 3px solid #10b981; 
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .module-card.completed:hover { 
+            border-color: #34d399;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
         
         .module-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .module-number { font-size: 14px; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; }
         .module-badge { padding: 6px 12px; background: #58CC02; border-radius: 20px; font-size: 12px; font-weight: 900; color: white; text-transform: uppercase; }
         .module-badge.locked { background: #6B7280; }
+        .module-badge.complete {
+            background: #10b981 !important;
+            color: white !important;
+            border: 2px solid #34d399 !important;
+            font-weight: 900;
+            padding: 6px 10px;
+        }
         
         .module-title { font-size: 22px; font-weight: 900; color: white; margin-bottom: 8px; }
         .module-desc { font-size: 14px; font-weight: 700; color: #9CA3AF; line-height: 1.5; margin-bottom: 16px; }
@@ -279,6 +295,18 @@
 
         document.getElementById('mod1-progress').textContent = `${module1Complete}/12`;
         document.getElementById('mod1-fill').style.width = module1Percent + '%';
+
+        // ✅ HIGHLIGHT COMPLETED MODULE IN GREEN
+        if (module1Complete === module1Figures.length) {
+            const module1Card = document.querySelector('.module-card');
+            module1Card.classList.add('completed');
+            
+            // Add green checkmark to badge
+            const module1Badge = module1Card.querySelector('.module-badge');
+            module1Badge.innerHTML = '<svg viewBox="0 0 24 24" style="width: 14px; height: 14px; margin-right: 4px; display: inline-block; vertical-align: middle;" fill="currentColor"><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/></svg>Complete!';
+            module1Badge.classList.remove('locked');
+            module1Badge.classList.add('complete');
+        }
 
         function openModule(moduleNum) {
             if (moduleNum === 1) {
