@@ -478,18 +478,31 @@
         const userXP = userProgress.xp || 0;
         const userQuestionStreak = userProgress.bestQuestionStreak || 0;
 
+        // ✅ REFRESH STATS FROM LOCALSTORAGE (called when switching tabs)
+        function refreshUserStats() {
+            const freshProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "userName": "Player", "bestQuestionStreak": 0}');
+            return {
+                userName: freshProgress.userName || 'Player',
+                xp: freshProgress.xp || 0,
+                questionStreak: freshProgress.bestQuestionStreak || 0
+            };
+        }
+
         // Track current leaderboard type
         let currentLeaderboardType = 'xp';
 
         // Generate REAL question streak leaderboard using actual localStorage data
         function generateQuestionStreakLeaderboard() {
+            // ✅ Get FRESH stats from localStorage!
+            const freshStats = refreshUserStats();
+            
             // Get all localStorage keys that look like user progress
             const leaderboard = [];
             
-            // Add current user with REAL stats
+            // Add current user with REAL FRESH stats
             leaderboard.push({
-                name: userName,
-                streak: userQuestionStreak,
+                name: freshStats.userName,
+                streak: freshStats.questionStreak,
                 isCurrentUser: true
             });
             
@@ -501,7 +514,7 @@
                 'SolveItSam', 'FormulaFred', 'BalanceBoss', 'GraphGuru', 'VariableVicky'
             ];
             
-            const usedNames = new Set([userName]);
+            const usedNames = new Set([freshStats.userName]);
             
             // Generate 19 other players
             for (let i = 0; i < 19; i++) {
@@ -535,6 +548,9 @@
 
         // Generate mock leaderboard data (in real app, this would come from server)
         function generateLeaderboard() {
+            // ✅ Get FRESH stats from localStorage!
+            const freshStats = refreshUserStats();
+            
             const fullNames = [
                 'Alex Rivera', 'Jordan Chen', 'Taylor Kim', 'Morgan Patel', 'Casey Johnson', 
                 'Riley Martinez', 'Avery Singh', 'Quinn O\'Brien', 'Blake Anderson', 'Drew Williams',
@@ -566,7 +582,7 @@
             ];
 
             const leaderboard = [];
-            const usedNames = new Set();
+            const usedNames = new Set([freshStats.userName]);
             
             // Generate 19 random players (so with current user = 20 total)
             for (let i = 0; i < 19; i++) {
@@ -597,7 +613,7 @@
             }
 
             // Add current user (without flag by default, they're local)
-            leaderboard.push({ name: userName, xp: userXP, isCurrentUser: true });
+            leaderboard.push({ name: freshStats.userName, xp: freshStats.xp, isCurrentUser: true });
 
             // Sort by XP
             leaderboard.sort((a, b) => b.xp - a.xp);
@@ -607,6 +623,9 @@
 
         // Get or generate persistent leaderboard
         function getPersistentLeaderboard() {
+            // ✅ Get FRESH stats from localStorage!
+            const freshStats = refreshUserStats();
+            
             const saved = localStorage.getItem('reckonLeaderboard');
             const today = new Date().toDateString();
             
@@ -614,11 +633,22 @@
                 const data = JSON.parse(saved);
                 // Refresh leaderboard daily
                 if (data.date === today) {
-                    return data.leaderboard;
+                    const leaderboard = data.leaderboard;
+                    
+                    // ✅ CRITICAL: Always update current user's XP with latest data!
+                    const userIndex = leaderboard.findIndex(p => p.isCurrentUser);
+                    if (userIndex !== -1) {
+                        leaderboard[userIndex].xp = freshStats.xp;  // Use FRESH XP from localStorage!
+                        leaderboard[userIndex].name = freshStats.userName;  // In case name changed
+                        // Re-sort after updating user's XP
+                        leaderboard.sort((a, b) => b.xp - a.xp);
+                    }
+                    
+                    return leaderboard;
                 }
             }
             
-            // Generate new leaderboard
+            // Generate new leaderboard with FRESH stats
             const newLeaderboard = generateLeaderboard();
             localStorage.setItem('reckonLeaderboard', JSON.stringify({
                 date: today,
@@ -748,6 +778,25 @@
 
         // Initial render
         renderLeaderboard();
+
+        // ✅ Refresh leaderboard when page gains focus (user returns from completing figure)
+        window.addEventListener('focus', function() {
+            // Refresh user stats and league
+            const freshStats = refreshUserStats();
+            const userLeague = getLeague(freshStats.xp);
+            document.getElementById('league-name').textContent = userLeague.name;
+            const leagueIcon = document.getElementById('league-icon');
+            const iconPath = leagueIcon.querySelector('path');
+            iconPath.setAttribute('fill', userLeague.color);
+            
+            // Regenerate current leaderboard with fresh stats
+            if (currentLeaderboardType === 'xp') {
+                currentLeaderboard = getPersistentLeaderboard();
+            } else {
+                currentLeaderboard = generateQuestionStreakLeaderboard();
+            }
+            renderLeaderboard();
+        });
     </script>
 </body>
 </html>
