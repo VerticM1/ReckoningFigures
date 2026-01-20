@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 013: Inequality Basics</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1F2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+            animation: pageEnter 0.4s ease-out;
+        }
+
+        @keyframes pageEnter {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        body.page-exit {
+            animation: pageExit 0.3s ease-in forwards;
+        }
+
+        @keyframes pageExit {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -22px;
+            left: 0;
+            font-size: 12px;
+            font-weight: 900;
+            color: #FFA500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFA500 0%, #FFB700 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 20px 20px 0 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        #question-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 40px;
+            line-height: 1.3;
+            text-align: center;
+            width: 100%;
+        }
+
+        #question-text .var {
+            color: white;
+            font-style: italic;
+            padding: 0 3px;
+        }
+
+        #equation {
+            background: #2D3748;
+            border: 2px solid #4A5568;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 40px;
+            font-weight: 900;
+            color: white;
+            width: 100%;
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .choice {
+            width: 100%;
+            padding: 20px 24px;
+            background: #2D3748;
+            border: 2px solid #4A5568;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .choice:hover {
+            background: #374151;
+            border-color: #5a6573;
+        }
+
+        .choice.selected {
+            border-color: #58CC02;
+            background: #2D3748;
+        }
+
+        .choice.correct {
+            border-color: #58CC02;
+            background: #1e4620;
+            color: #58CC02;
+        }
+
+        .choice.incorrect {
+            border-color: #ea2b2b;
+            background: #4a1a1a;
+            animation: shake 0.4s;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+        }
+
+        /* Fill in the blank input */
+        .answer-input {
+            width: 100%;
+            padding: 18px 24px;
+            background: #2D3748;
+            border: 3px solid #4b5563;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .answer-input:focus {
+            border-color: #58CC02;
+        }
+
+        .answer-input::placeholder {
+            color: #6B7280;
+            font-weight: 700;
+        }
+
+        .answer-input.correct {
+            border-color: #10b981;
+            background: #065f46;
+        }
+
+        .answer-input.incorrect {
+            border-color: #ef4444;
+            background: #7f1d1d;
+            animation: shake 0.4s;
+        }
+
+        /* True/False buttons */
+        .true-false-container {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .tf-button {
+            flex: 1;
+            padding: 24px;
+            background: #374151;
+            border: 3px solid #4b5563;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tf-button:hover {
+            border-color: #6b7280;
+            background: #3f4651;
+        }
+
+        .tf-button.selected {
+            border-color: #10b981;
+            background: #065f46;
+        }
+
+        .tf-button.correct {
+            border-color: #10b981;
+            background: #065f46;
+        }
+
+        .tf-button.incorrect {
+            border-color: #ef4444;
+            background: #7f1d1d;
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        #bottom-section {
+            margin-top: auto;
+            padding: 20px;
+            background: #1F2937;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 40px;
+            height: 40px;
+            background: #58CC02;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .check-icon.show {
+            display: flex;
+        }
+
+        #feedback-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #58CC02;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: #58CC02;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: none;
+        }
+
+        #continue-btn.show {
+            display: block;
+        }
+
+        #continue-btn:hover {
+            background: #4CAE00;
+        }
+
+        #celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1F2937;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #celebration.show {
+            display: flex;
+        }
+
+        .celebration-text {
+            font-size: 64px;
+            font-weight: 900;
+            color: #58CC02;
+            text-align: center;
+            animation: pop 0.5s ease;
+        }
+
+        /* Fire effect for streak milestones */
+        .fire-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        /* ⚡ LIGHTNING STREAK CELEBRATION - Duolingo-inspired ⚡ */
+        
+        /* Lightning Container */
+        .lightning-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Main Lightning Bolt - Curved and Glowing */
+        .lightning-bolt {
+            position: absolute;
+            width: 8px;
+            background: linear-gradient(180deg, 
+                #FFF700 0%,    /* Bright yellow */
+                #00FFD1 50%,   /* Cyan */
+                #B4FF39 100%   /* Lime */
+            );
+            border-radius: 50px;
+            box-shadow: 
+                0 0 20px #FFF700,
+                0 0 40px #00FFD1,
+                0 0 60px #B4FF39,
+                0 0 80px rgba(255, 247, 0, 0.5);
+            filter: blur(1px);
+            opacity: 0;
+        }
+
+        /* Streak 3 - Simple diagonal bolt */
+        .lightning-bolt-3 {
+            top: -10%;
+            right: 20%;
+            height: 60%;
+            transform: rotate(25deg);
+            animation: lightningStrike3 0.6s ease-out;
+        }
+
+        @keyframes lightningStrike3 {
+            0% {
+                opacity: 0;
+                transform: rotate(25deg) translateY(-100px) scale(0.5);
+            }
+            10% {
+                opacity: 1;
+                transform: rotate(25deg) translateY(0) scale(1);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(25deg) translateY(50px) scale(1.2);
+            }
+        }
+
+        /* Streak 5 - Double bolts crossing */
+        .lightning-bolt-5-left {
+            top: -5%;
+            left: 15%;
+            height: 70%;
+            transform: rotate(-20deg);
+            animation: lightningStrike5Left 0.8s ease-out;
+        }
+
+        .lightning-bolt-5-right {
+            top: -5%;
+            right: 15%;
+            height: 70%;
+            transform: rotate(20deg);
+            animation: lightningStrike5Right 0.8s ease-out 0.1s;
+        }
+
+        @keyframes lightningStrike5Left {
+            0% {
+                opacity: 0;
+                transform: rotate(-20deg) translateY(-100px) scale(0.3);
+            }
+            15% {
+                opacity: 1;
+                transform: rotate(-20deg) translateY(0) scale(1);
+            }
+            60% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(-20deg) translateY(100px) scale(1.3);
+            }
+        }
+
+        @keyframes lightningStrike5Right {
+            0% {
+                opacity: 0;
+                transform: rotate(20deg) translateY(-100px) scale(0.3);
+            }
+            15% {
+                opacity: 1;
+                transform: rotate(20deg) translateY(0) scale(1);
+            }
+            60% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(20deg) translateY(100px) scale(1.3);
+            }
+        }
+
+        /* Streak 7 - Massive center bolt with spreading energy */
+        .lightning-bolt-7-center {
+            top: -10%;
+            left: 50%;
+            margin-left: -6px;
+            width: 12px;
+            height: 80%;
+            animation: lightningStrike7Center 1s ease-out;
+            box-shadow: 
+                0 0 30px #FFF700,
+                0 0 60px #00FFD1,
+                0 0 90px #B4FF39,
+                0 0 120px rgba(255, 247, 0, 0.7);
+        }
+
+        @keyframes lightningStrike7Center {
+            0% {
+                opacity: 0;
+                transform: translateY(-200px) scale(0.5);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            20% {
+                transform: translateY(0) scale(1.1);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(50px) scale(1.2);
+                filter: blur(10px);
+            }
+        }
+
+        /* Energy Spread - Radiating glow from center */
+        .energy-spread {
+            position: absolute;
+            top: 50%;
+            width: 200px;
+            height: 300px;
+            margin-top: -150px;
+            background: radial-gradient(ellipse at center,
+                rgba(255, 247, 0, 0.8) 0%,
+                rgba(0, 255, 209, 0.6) 20%,
+                rgba(180, 255, 57, 0.4) 40%,
+                transparent 70%);
+            opacity: 0;
+            filter: blur(15px);
+        }
+
+        .energy-spread.left {
+            left: 50%;
+            animation: energySpreadLeft 1s ease-out 0.3s;
+        }
+
+        .energy-spread.right {
+            right: 50%;
+            animation: energySpreadRight 1s ease-out 0.3s;
+        }
+
+        @keyframes energySpreadLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scale(0.5);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-300px) scale(2.5);
+            }
+        }
+
+        @keyframes energySpreadRight {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scale(0.5);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(300px) scale(2.5);
+            }
+        }
+
+        /* Electric Sparks - Confetti-like particles */
+        .electric-spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .spark-yellow {
+            background: #FFF700;
+            box-shadow: 0 0 10px #FFF700, 0 0 20px #FFF700;
+        }
+
+        .spark-cyan {
+            background: #00FFD1;
+            box-shadow: 0 0 10px #00FFD1, 0 0 20px #00FFD1;
+        }
+
+        .spark-lime {
+            background: #B4FF39;
+            box-shadow: 0 0 10px #B4FF39, 0 0 20px #B4FF39;
+        }
+
+        @keyframes sparkBurst {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.3);
+            }
+        }
+
+        /* Bloom/Glow overlay for whole screen */
+        .lightning-bloom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%,
+                rgba(255, 247, 0, 0.15) 0%,
+                rgba(0, 255, 209, 0.1) 30%,
+                transparent 60%);
+            opacity: 0;
+            animation: bloomPulse 0.8s ease-out;
+        }
+
+        @keyframes bloomPulse {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Legacy fire class names (for compatibility) */
+        .fire-bolt-diagonal {
+            position: absolute;
+            width: 8px;
+            background: linear-gradient(180deg, #FFF700 0%, #00FFD1 50%, #B4FF39 100%);
+            border-radius: 50px;
+            box-shadow: 0 0 20px #FFF700, 0 0 40px #00FFD1, 0 0 60px #B4FF39;
+            filter: blur(1px);
+            opacity: 0;
+            top: -10%;
+            right: 20%;
+            height: 60%;
+            transform: rotate(25deg);
+            animation: lightningStrike3 0.6s ease-out;
+        }
+
+        .fire-bolt-center {
+            position: absolute;
+            width: 12px;
+            background: linear-gradient(180deg, #FFF700 0%, #00FFD1 50%, #B4FF39 100%);
+            border-radius: 50px;
+            box-shadow: 0 0 30px #FFF700, 0 0 60px #00FFD1, 0 0 90px #B4FF39;
+            filter: blur(1px);
+            opacity: 0;
+            top: -10%;
+            left: 50%;
+            margin-left: -6px;
+            height: 80%;
+            animation: lightningStrike7Center 1s ease-out;
+        }
+
+        .fire-spread {
+            position: absolute;
+            top: 50%;
+            width: 200px;
+            height: 300px;
+            margin-top: -150px;
+            background: radial-gradient(ellipse at center,
+                rgba(255, 247, 0, 0.8) 0%,
+                rgba(0, 255, 209, 0.6) 20%,
+                rgba(180, 255, 57, 0.4) 40%,
+                transparent 70%);
+            opacity: 0;
+            filter: blur(15px);
+        }
+
+        .fire-spread.left {
+            left: 50%;
+            animation: energySpreadLeft 1s ease-out 0.3s;
+        }
+
+        .fire-spread.right {
+            right: 50%;
+            animation: energySpreadRight 1s ease-out 0.3s;
+        }
+
+        /* Spreading flames from center after bolt */
+        .fire-spread {
+            position: absolute;
+            top: 50%;
+            width: 120px;
+            height: 200px;
+            margin-top: -100px;
+            background: radial-gradient(ellipse at center,
+                #FFD700 0%,
+                #FFA500 20%,
+                #FF6B00 40%,
+                #FF0000 60%,
+                transparent 100%);
+            opacity: 0;
+            filter: blur(8px);
+            box-shadow: 0 0 60px #FFA500;
+        }
+
+        .fire-spread.left {
+            left: 50%;
+            animation: spreadLeft 0.8s ease-out 0.4s;
+        }
+
+        .fire-spread.right {
+            right: 50%;
+            animation: spreadRight 0.8s ease-out 0.4s;
+        }
+
+        @keyframes spreadLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scale(1);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-400px) scale(2);
+            }
+        }
+
+        @keyframes spreadRight {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scale(1);
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(400px) scale(2);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+
+        /* 🎁 3D TREASURE CHEST ENHANCEMENTS */
+        #reward-chest-modal {
+            perspective: 1000px;
+        }
+
+        #chest-svg {
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+        }
+
+        #chest-svg:hover {
+            transform: scale(1.05) translateY(-10px);
+            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.6));
+        }
+
+        #chest-svg.opening {
+            animation: chestOpen 0.6s ease-out;
+        }
+
+        @keyframes chestOpen {
+            0% {
+                transform: scale(1) rotateX(0deg);
+            }
+            30% {
+                transform: scale(1.1) rotateX(-10deg);
+            }
+            50% {
+                transform: scale(1.15) rotateX(5deg);
+            }
+            100% {
+                transform: scale(1.2) rotateX(0deg);
+            }
+        }
+
+        /* Coins/Particles bursting from chest */
+        .chest-particle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleBurst 1s ease-out forwards;
+        }
+
+        .particle-gold {
+            background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500);
+            box-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
+        }
+
+        .particle-gem {
+            background: radial-gradient(circle at 30% 30%, #00FFD1, #0080FF);
+            box-shadow: 0 0 10px #00FFD1, 0 0 20px #0080FF;
+        }
+
+        @keyframes particleBurst {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rotation));
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--tx) * 1.5), calc(var(--ty) * 1.5)) scale(0.5) rotate(calc(var(--rotation) * 2));
+            }
+        }
+
+        /* ⚡ XP SMACK EFFECT - SMACKS THE SCREEN! */
+        #reward-display {
+            perspective: 800px;
+        }
+
+        #reward-amount {
+            animation: xpMegaSmack 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 48px !important;
+            font-weight: 900 !important;
+            text-shadow: 
+                0 0 30px #58CC02,
+                0 0 60px #58CC02,
+                0 0 90px #58CC02,
+                0 0 120px rgba(88, 204, 2, 0.5),
+                0 10px 30px rgba(0, 0, 0, 0.8);
+            transform-style: preserve-3d;
+            display: inline-block;
+            color: #58CC02;
+        }
+
+        @keyframes xpMegaSmack {
+            0% {
+                transform: scale(0) translateZ(-1000px) rotateX(90deg);
+                opacity: 0;
+                filter: blur(20px);
+            }
+            50% {
+                transform: scale(2) translateZ(200px) rotateX(0deg);
+                opacity: 1;
+                filter: blur(0px);
+                text-shadow: 
+                    0 0 50px #58CC02,
+                    0 0 100px #58CC02,
+                    0 0 150px #58CC02,
+                    0 0 200px rgba(88, 204, 2, 0.8),
+                    0 15px 40px rgba(0, 0, 0, 1);
+            }
+            65% {
+                transform: scale(1.6) translateZ(150px) rotateX(-5deg);
+            }
+            80% {
+                transform: scale(1.2) translateZ(80px) rotateX(2deg);
+            }
+            100% {
+                transform: scale(1.3) translateZ(50px) rotateX(0deg);
+                opacity: 1;
+                filter: blur(0px);
+            }
+        }
+
+        #reward-icon {
+            animation: iconMegaBounce 0.8s ease-out 0.1s backwards;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.5));
+            font-size: 72px !important;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes iconMegaBounce {
+            0% {
+                transform: scale(0) translateZ(-500px) rotateZ(-360deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.4) translateZ(100px) rotateZ(20deg);
+                filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+            }
+            75% {
+                transform: scale(1.1) translateZ(60px) rotateZ(-10deg);
+            }
+            100% {
+                transform: scale(1.2) translateZ(30px) rotateZ(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* Glow pulse - MORE INTENSE */
+        @keyframes glowPulse {
+            0%, 100% {
+                text-shadow: 
+                    0 0 30px #58CC02,
+                    0 0 60px #58CC02,
+                    0 0 90px #58CC02,
+                    0 10px 30px rgba(0, 0, 0, 0.8);
+                transform: translateZ(50px) scale(1.3);
+            }
+            50% {
+                text-shadow: 
+                    0 0 50px #58CC02,
+                    0 0 100px #58CC02,
+                    0 0 150px #58CC02,
+                    0 0 200px rgba(88, 204, 2, 0.6),
+                    0 15px 40px rgba(0, 0, 0, 1);
+                transform: translateZ(80px) scale(1.35);
+            }
+        }
+
+        #reward-amount.glow {
+            animation: glowPulse 1.2s ease-in-out infinite;
+        }
+
+        /* Screen flash effect when XP hits */
+        @keyframes screenFlash {
+            0% { opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0; }
+        }
+
+        .screen-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(88, 204, 2, 0.4) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9998;
+            animation: screenFlash 0.4s ease-out;
+        }
+
+        /* Enhanced confetti for big celebrations */
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1F2937;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            padding: 40px;
+        }
+
+        #victory.show {
+            display: flex;
+        }
+
+        .victory-title {
+            font-size: 56px;
+            font-weight: 900;
+            color: #FFA500;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .victory-msg {
+            font-size: 22px;
+            font-weight: 800;
+            color: #9ca3af;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            padding: 12px 24px;
+            background: #2D3748;
+            border: 3px solid #FFA500;
+            border-radius: 24px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #FFA500;
+        }
+
+        #victory .continue-btn {
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+            background: #58CC02;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #victory .continue-btn:hover {
+            background: #4CAE00;
+        }
+
+        /* XP Counter Animation */
+        @keyframes counterPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                box-shadow: 0 0 0 rgba(255, 165, 0, 0);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 165, 0, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 0 rgba(255, 165, 0, 0);
+            }
+        }
+
+        .counting {
+            animation: counterPulse 0.1s ease-in-out infinite;
+        }
+
+        .count-complete {
+            animation: glowPulse 0.6s ease-out;
+        }
+
+        /* XP Particle burst */
+        .xp-particle {
+            position: fixed;
+            font-size: 20px;
+            font-weight: 900;
+            color: #FFA500;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        @keyframes xpParticleBurst {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.5);
+            }
+        }
+
+        /* Practice Summary Screen */
+        #summary {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1F2937;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            padding: 40px 20px;
+        }
+
+        #summary.show {
+            display: flex;
+        }
+
+        .summary-mascot {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .summary-mascot circle {
+            fill: #58CC02;
+        }
+
+        .summary-mascot .eye {
+            fill: #2D3748;
+        }
+
+        .summary-mascot .mouth {
+            fill: none;
+            stroke: #2D3748;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+
+        .summary-mascot .arm {
+            fill: #58CC02;
+        }
+
+        .sparkle {
+            fill: #58CC02;
+            opacity: 0.8;
+        }
+
+        .summary-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #FFA500;
+            margin-bottom: 16px;
+        }
+
+        .summary-subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            color: #9CA3AF;
+            margin-bottom: 50px;
+        }
+
+        .summary-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .stat-card {
+            flex: 1;
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 3px solid;
+        }
+
+        .stat-card.xp {
+            background: #1F2937;
+            border-color: #FFA500;
+        }
+
+        .stat-card.accuracy {
+            background: #1F2937;
+            border-color: #58CC02;
+        }
+
+        .stat-card.time {
+            background: #1F2937;
+            border-color: #3B82F6;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card.xp .stat-label {
+            color: #FFA500;
+        }
+
+        .stat-card.accuracy .stat-label {
+            color: #58CC02;
+        }
+
+        .stat-card.time .stat-label {
+            color: #3B82F6;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .stat-icon {
+            font-size: 28px;
+        }
+
+        #claim-btn {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background: #3B82F6;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: buttonPulse 2s ease-in-out infinite;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 6px 30px rgba(59, 130, 246, 0.6);
+            }
+        }
+
+        #claim-btn:hover {
+            background: #2563EB;
+            animation: none;
+            transform: scale(1.05);
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotateZ(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Reward Chest Animations */
+        @keyframes chestShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            75% { transform: translateX(5px) rotate(2deg); }
+        }
+
+        @keyframes chestOpen {
+            0% { transform-origin: bottom center; transform: rotateX(0deg); }
+            100% { transform-origin: bottom center; transform: rotateX(-120deg); }
+        }
+
+        @keyframes lockBreak {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes rewardPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="top-bar">
+            <button class="close-btn" onclick="exitLesson()">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div id="question-text"></div>
+            <div id="equation"></div>
+            <div id="choices"></div>
+        </div>
+
+        <div id="bottom-section">
+            <div id="feedback">
+                <div class="check-icon">
+                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                        <path fill="white" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                </div>
+                <div id="feedback-text"></div>
+            </div>
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <div id="celebration">
+            <div class="celebration-text" id="celebration-text"></div>
+        </div>
+
+        <div id="victory">
+            <div class="victory-title">RECKONED!</div>
+            <div class="victory-msg" id="victory-msg"></div>
+            <div class="badges" id="victory-badges"></div>
+            <button class="continue-btn" onclick="location.reload()">Continue</button>
+        </div>
+
+        <!-- Reward Chest Modal -->
+        <div id="reward-chest-modal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); display: none; align-items: center; justify-content: center; z-index: 9999;">
+            <div style="text-align: center; max-width: 400px; padding: 40px;">
+                                <svg id="chest-svg" viewBox="0 0 120 120" style="width: 220px; height: 220px; margin-bottom: 20px; cursor: pointer;" onclick="openChest()">
+                    <!-- Shadow base -->
+                    <ellipse cx="60" cy="115" rx="45" ry="8" fill="rgba(0,0,0,0.4)" opacity="0.6"/>
+                    
+                    <!-- Chest body base - 3D effect -->
+                    <defs>
+                        <linearGradient id="woodGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#654321;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#8B4513;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="woodDark" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#5D2E0D;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="metalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#808080;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#505050;stop-opacity:1" />
+                        </linearGradient>
+                        <radialGradient id="goldGradient" cx="30%" cy="30%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                            <stop offset="70%" style="stop-color:#FFA500;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#CC8400;stop-opacity:1" />
+                        </radialGradient>
+                    </defs>
+                    
+                    <!-- Bottom of chest - darkest -->
+                    <rect x="18" y="95" width="84" height="15" fill="#5D2E0D" rx="3"/>
+                    
+                    <!-- Main chest body with 3D gradient -->
+                    <rect x="20" y="62" width="80" height="48" fill="url(#woodGradient)" stroke="#4A2511" stroke-width="3" rx="4"/>
+                    
+                    <!-- Front panel depth -->
+                    <rect x="24" y="66" width="72" height="40" fill="url(#woodDark)" rx="2"/>
+                    
+                    <!-- Horizontal metal bands -->
+                    <rect x="20" y="75" width="80" height="3" fill="url(#metalGradient)"/>
+                    <rect x="20" y="95" width="80" height="3" fill="url(#metalGradient)"/>
+                    
+                    <!-- Corner reinforcements -->
+                    <circle cx="24" cy="78" r="4" fill="url(#metalGradient)" stroke="#404040" stroke-width="1"/>
+                    <circle cx="96" cy="78" r="4" fill="url(#metalGradient)" stroke="#404040" stroke-width="1"/>
+                    <circle cx="24" cy="92" r="4" fill="url(#metalGradient)" stroke="#404040" stroke-width="1"/>
+                    <circle cx="96" cy="92" r="4" fill="url(#metalGradient)" stroke="#404040" stroke-width="1"/>
+                    
+                    <!-- Lid - 3D curved top -->
+                    <g id="chest-lid">
+                        <!-- Lid shadow/depth -->
+                        <path d="M 20 62 Q 60 38 100 62 L 100 72 Q 60 48 20 72 Z" fill="#4A2511" opacity="0.8"/>
+                        <!-- Main lid -->
+                        <path d="M 20 60 Q 60 36 100 60 L 100 70 Q 60 46 20 70 Z" fill="url(#woodGradient)" stroke="#4A2511" stroke-width="3"/>
+                        <!-- Lid top curve highlight -->
+                        <ellipse cx="60" cy="60" rx="40" ry="12" fill="url(#woodDark)"/>
+                        <!-- Lid highlight shine -->
+                        <ellipse cx="60" cy="58" rx="30" ry="8" fill="#A0522D" opacity="0.6"/>
+                        <!-- Center metal strip on lid -->
+                        <rect x="57" y="50" width="6" height="20" fill="url(#metalGradient)" rx="1"/>
+                    </g>
+                    
+                    <!-- Lock - 3D golden lock -->
+                    <g id="chest-lock">
+                        <!-- Lock body shadow -->
+                        <circle cx="61" cy="81" r="9" fill="#CC8400" opacity="0.5"/>
+                        <!-- Lock body -->
+                        <circle cx="60" cy="80" r="9" fill="url(#goldGradient)" stroke="#CC8400" stroke-width="2.5"/>
+                        <!-- Lock shine -->
+                        <circle cx="57" cy="77" r="3" fill="#FFEB3B" opacity="0.8"/>
+                        <!-- Keyhole -->
+                        <circle cx="60" cy="80" r="3" fill="#4A2511"/>
+                        <rect x="58.5" y="80" width="3" height="4" fill="#4A2511"/>
+                    </g>
+                    
+                    <!-- Lock shackle - 3D U shape -->
+                    <g id="chest-lock-shackle">
+                        <path d="M 54 72 L 54 68 A 6 6 0 0 1 66 68 L 66 72" fill="none" stroke="url(#goldGradient)" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M 54.5 72 L 54.5 68.5 A 5.5 5.5 0 0 1 65.5 68.5 L 65.5 72" fill="none" stroke="#FFEB3B" stroke-width="1.5" opacity="0.6"/>
+                    </g>
+                    
+                    <!-- Magical sparkles -->
+                    <circle cx="35" cy="48" r="2.5" fill="#FFD700" opacity="0.8">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="r" values="2;3;2" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="88" cy="52" r="2" fill="#FFA500" opacity="0.7">
+                        <animate attributeName="opacity" values="0.4;0.9;0.4" dur="1.5s" repeatCount="indefinite"/>
+                        <animate attributeName="r" values="1.5;2.5;1.5" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="60" cy="40" r="1.5" fill="#FFEB3B" opacity="0.9">
+                        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite"/>
+                    </circle>
+                    
+                    <!-- Glow around chest -->
+                    <rect x="15" y="57" width="90" height="58" fill="none" stroke="#FFD700" stroke-width="1.5" rx="6" opacity="0.3">
+                        <animate attributeName="opacity" values="0.1;0.4;0.1" dur="3s" repeatCount="indefinite"/>
+                    </rect>
+                </svg>
+                <div id="chest-text" style="font-size: 24px; font-weight: 900; color: #FFA500; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">Tap to Open!</div>
+                <div id="reward-display" style="display: none;">
+                    <div style="font-size: 64px; margin-bottom: 16px;" id="reward-icon"></div>
+                    <div style="font-size: 32px; font-weight: 900; color: #58CC02; margin-bottom: 12px;" id="reward-amount"></div>
+                    <div style="font-size: 16px; font-weight: 800; color: #9CA3AF; margin-bottom: 30px;" id="reward-desc"></div>
+                    <button onclick="closeChest()" style="padding: 16px 32px; background: #58CC02; border: none; border-radius: 12px; font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 900; color: white; cursor: pointer; text-transform: uppercase;">Claim Reward</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Summary Screen -->
+        <div id="summary">
+            <svg class="summary-mascot" viewBox="0 0 200 200">
+                <!-- Happy mascot body -->
+                <circle cx="100" cy="100" r="80"/>
+                
+                <!-- Left arm up -->
+                <ellipse class="arm" cx="40" cy="80" rx="18" ry="40" transform="rotate(-30 40 80)"/>
+                
+                <!-- Right arm up -->
+                <ellipse class="arm" cx="160" cy="80" rx="18" ry="40" transform="rotate(30 160 80)"/>
+                
+                <!-- Eyes closed happy -->
+                <path d="M 70 85 Q 75 80 80 85" class="mouth"/>
+                <path d="M 120 85 Q 125 80 130 85" class="mouth"/>
+                
+                <!-- Big smile -->
+                <path d="M 70 110 Q 100 130 130 110" class="mouth"/>
+                
+                <!-- Sparkles around mascot -->
+                <path class="sparkle" d="M 40 40 L 45 50 L 55 45 L 45 55 L 40 65 L 35 55 L 25 45 L 35 50 Z"/>
+                <path class="sparkle" d="M 160 40 L 165 50 L 175 45 L 165 55 L 160 65 L 155 55 L 145 45 L 155 50 Z"/>
+                <path class="sparkle" d="M 50 150 L 55 160 L 65 155 L 55 165 L 50 175 L 45 165 L 35 155 L 45 160 Z"/>
+                <path class="sparkle" d="M 150 150 L 155 160 L 165 155 L 155 165 L 150 175 L 145 165 L 135 155 L 145 160 Z"/>
+            </svg>
+
+            <div class="summary-title" id="summary-title">Seriously???</div>
+            <div class="summary-subtitle" id="summary-subtitle">You made 0 mistakes. How?!</div>
+
+            <div class="summary-stats">
+                <div class="stat-card xp">
+                    <div class="stat-label">Total XP</div>
+                    <div class="stat-value">
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#58CC02" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                        </svg>
+                        <span id="total-xp">15</span>
+                    </div>
+                </div>
+                <div class="stat-card accuracy">
+                    <div class="stat-label">Amazing</div>
+                    <div class="stat-value">
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#58CC02" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
+                        <span id="accuracy">100%</span>
+                    </div>
+                </div>
+                <div class="stat-card time">
+                    <div class="stat-label">Blazing</div>
+                    <div class="stat-value">
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#3B82F6" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                        <span id="time">1:10</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="claim-btn">Claim XP</button>
+        </div>
+    </div>
+
+    <script>
+        // Load saved theme
+        const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        
+        // Global error handler - only show for critical errors
+        window.addEventListener('error', function(e) {
+            console.error('Error caught:', e.message, e.filename, e.lineno);
+            // Don't show error popup for every minor issue
+            // Only log to console for debugging
+        });
+
+        // Show error message to user
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #EF4444; color: white; padding: 16px 24px; border-radius: 12px; font-weight: 900; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.style.transition = 'opacity 0.3s';
+                errorDiv.style.opacity = '0';
+                setTimeout(() => errorDiv.remove(), 300);
+            }, 4000);
+        }
+
+        // Wrap localStorage calls in try-catch
+        function safeLocalStorage(action, key, value) {
+            try {
+                if (action === 'get') {
+                    return localStorage.getItem(key);
+                } else if (action === 'set') {
+                    localStorage.setItem(key, value);
+                } else if (action === 'remove') {
+                    localStorage.removeItem(key);
+                }
+            } catch (e) {
+                console.error('localStorage error:', e);
+                showError('Unable to save progress. Check your browser settings.');
+                return null;
+            }
+        }
+
+        const state = {
+            current: 0,
+            streak: 0,
+            correct: 0,
+            total: 9,
+            selected: null,
+            startTime: Date.now(),
+            mistakes: 0,
+            totalAttempts: 0
+        };
+
+        const problems = [
+            {eq: 'x + 3 < 8', q: 'What symbol means "less than"?', choices: ["<", ">", "="], answer: '<'},
+            {eq: 'x + 3 < 8', q: 'To solve, what should we subtract from both sides?', choices: ["3", "8", "x"], answer: '3'},
+            {eq: 'x < 5', q: 'What does x < 5 mean?', choices: ["x is less than 5", "x is greater than 5", "x equals 5"], answer: 'x is less than 5'},
+            {eq: 'x - 4 > 2', q: 'To solve, what should we add to both sides?', choices: ["4", "2", "-4"], answer: '4'},
+            {eq: 'x > 6', q: 'Is x = 7 a solution to x > 6?', choices: ["Yes", "No"], answer: 'Yes'},
+            {eq: 'x + 5 ≤ 12', q: 'What does ≤ mean?', choices: ["Less than or equal to", "Greater than or equal to", "Not equal to"], answer: 'Less than or equal to'},
+            {eq: 'x - 3 ≥ 7', q: 'Solve for x', choices: ["x ≥ 10", "x ≥ 4", "x ≤ 10"], answer: 'x ≥ 10'},
+            {eq: 'x + 8 < 15', q: 'Solve for x', choices: ["x < 7", "x < 23", "x > 7"], answer: 'x < 7'},
+            {eq: '9 > x - 2', q: 'Solve for x', choices: ["x < 11", "x > 11", "x < 7"], answer: 'x < 11'},
+        ];
+
+        const feedback = {
+            correct: ['Amazing!', 'Perfect!', 'Excellent!', 'Brilliant!', 'Good job!', 'Incredible!'],
+            wrong: ['Not quite', 'Almost', 'Try again']
+        };
+
+        function exitLesson() {
+            if (confirm('Exit lesson? Your progress will be lost.')) {
+                window.location.href = 'module-1-simple.html';
+            }
+        }
+
+        function showProblem() {
+            const p = problems[state.current];
+            
+            document.getElementById('question-text').innerHTML = p.q;
+            document.getElementById('equation').textContent = p.eq;
+            
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+            
+            // Render based on question type
+            if (p.type === 'fill-blank') {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'answer-input';
+                input.id = 'answer-input';
+                input.placeholder = p.placeholder;
+                input.autocomplete = 'off';
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && input.value.trim()) {
+                        checkFillBlank(input.value.trim());
+                    }
+                });
+                choicesContainer.appendChild(input);
+                
+                // Add submit button
+                const submitBtn = document.createElement('button');
+                submitBtn.className = 'choice';
+                submitBtn.textContent = 'Submit';
+                submitBtn.style.marginTop = '16px';
+                submitBtn.onclick = () => {
+                    const value = input.value.trim();
+                    if (value) {
+                        checkFillBlank(value);
+                    }
+                };
+                choicesContainer.appendChild(submitBtn);
+                
+                setTimeout(() => input.focus(), 100);
+                
+            } else if (p.type === 'true-false') {
+                const container = document.createElement('div');
+                container.className = 'true-false-container';
+                
+                const trueBtn = document.createElement('button');
+                trueBtn.className = 'tf-button';
+                trueBtn.textContent = 'True';
+                trueBtn.onclick = () => selectTrueFalse(true);
+                
+                const falseBtn = document.createElement('button');
+                falseBtn.className = 'tf-button';
+                falseBtn.textContent = 'False';
+                falseBtn.onclick = () => selectTrueFalse(false);
+                
+                container.appendChild(trueBtn);
+                container.appendChild(falseBtn);
+                choicesContainer.appendChild(container);
+                
+            } else {
+                // Multiple choice (default)
+                p.choices.forEach((choice, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice';
+                    btn.textContent = choice;
+                    btn.onclick = function() { selectChoice(index); };
+                    choicesContainer.appendChild(btn);
+                });
+            }
+            
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            } else {
+                document.getElementById('streak-label').textContent = '';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            document.getElementById('continue-btn').classList.remove('show');
+            
+            state.selected = null;
+        }
+
+        function selectChoice(choiceIndex) {
+            if (state.selected !== null) return;
+            
+            state.selected = choiceIndex;
+            state.totalAttempts++; // Count every attempt
+            const p = problems[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === choiceIndex) {
+                    btn.classList.add('selected');
+                    haptic('light');  // Light tap on select
+                    
+                    setTimeout(() => {
+                        if (choiceIndex === p.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            // Play success sound and haptic
+                            playSound('correct');
+                            haptic('success');
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                            if (state.streak === 3 || state.streak === 5 || state.streak === 7) {
+                                showCelebration(state.streak);
+                            }
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.streak = 0;
+                            state.mistakes++;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            // Play wrong sound and haptic
+                            playSound('wrong');
+                            haptic('error');
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function checkFillBlank(userAnswer) {
+            if (state.selected !== null) return;
+            
+            state.selected = true;
+            state.totalAttempts++;
+            const p = problems[state.current];
+            const input = document.getElementById('answer-input');
+            input.disabled = true;
+            
+            setTimeout(() => {
+                if (userAnswer === p.answer) {
+                    input.classList.add('correct');
+                    state.correct++;
+                    state.streak++;
+                    
+                    playSound('correct');
+                    
+                    const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                    document.getElementById('feedback-text').textContent = feedbackMsg;
+                    document.querySelector('.check-icon').classList.add('show');
+                    document.getElementById('continue-btn').classList.add('show');
+                    
+                    if (state.streak === 3 || state.streak === 5 || state.streak === 7) {
+                        showCelebration(state.streak);
+                    }
+                } else {
+                    input.classList.add('incorrect');
+                    state.streak = 0;
+                    state.mistakes++;
+                    document.getElementById('streak-label').textContent = '';
+                    
+                    playSound('wrong');
+                    
+                    setTimeout(() => {
+                        input.classList.remove('incorrect');
+                        input.disabled = false;
+                        input.value = '';
+                        input.focus();
+                        state.selected = null;
+                    }, 1200);
+                }
+            }, 300);
+        }
+
+        function selectTrueFalse(userAnswer) {
+            if (state.selected !== null) return;
+            
+            state.selected = userAnswer;
+            state.totalAttempts++;
+            const p = problems[state.current];
+            const btns = document.querySelectorAll('.tf-button');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                if ((btn.textContent === 'True' && userAnswer === true) || 
+                    (btn.textContent === 'False' && userAnswer === false)) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (userAnswer === p.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            playSound('correct');
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                            if (state.streak === 3 || state.streak === 5 || state.streak === 7) {
+                                showCelebration(state.streak);
+                            }
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.streak = 0;
+                            state.mistakes++;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            playSound('wrong');
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        // Haptic Feedback (mobile vibration)
+        function haptic(pattern) {
+            if ('vibrate' in navigator) {
+                const settings = JSON.parse(localStorage.getItem('reckonSettings') || '{"haptics": true}');
+                if (settings.haptics) {
+                    if (pattern === 'light') {
+                        navigator.vibrate(10);  // Light tap
+                    } else if (pattern === 'medium') {
+                        navigator.vibrate(20);  // Medium tap
+                    } else if (pattern === 'success') {
+                        navigator.vibrate([10, 50, 10]);  // Success pattern
+                    } else if (pattern === 'error') {
+                        navigator.vibrate([50, 30, 50]);  // Error pattern
+                    } else if (pattern === 'heavy') {
+                        navigator.vibrate(50);  // Heavy tap
+                    }
+                }
+            }
+        }
+
+        function playSound(type) {
+            // Check if sound is enabled
+            const settings = JSON.parse(localStorage.getItem('reckonSettings') || '{"sound": true}');
+            if (!settings.sound) return;
+            
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            if (type === 'correct') {
+                // Randomize between 3 different success sounds
+                const variant = Math.floor(Math.random() * 3);
+                
+                if (variant === 0) {
+                    // Cheerful upbeat melody
+                    const notes = [
+                        { freq: 523.25, time: 0, duration: 0.15 },
+                        { freq: 659.25, time: 0.12, duration: 0.15 },
+                        { freq: 783.99, time: 0.24, duration: 0.15 },
+                        { freq: 1046.50, time: 0.36, duration: 0.25 }
+                    ];
+                    playNotes(audioContext, notes, 'sine');
+                } else if (variant === 1) {
+                    // Bright chime
+                    const notes = [
+                        { freq: 659.25, time: 0, duration: 0.2 },
+                        { freq: 830.61, time: 0.1, duration: 0.2 },
+                        { freq: 987.77, time: 0.2, duration: 0.3 }
+                    ];
+                    playNotes(audioContext, notes, 'triangle');
+                } else {
+                    // Power-up sound
+                    const notes = [
+                        { freq: 392.00, time: 0, duration: 0.1 },
+                        { freq: 523.25, time: 0.08, duration: 0.1 },
+                        { freq: 659.25, time: 0.16, duration: 0.15 },
+                        { freq: 783.99, time: 0.24, duration: 0.2 }
+                    ];
+                    playNotes(audioContext, notes, 'square', 0.2);
+                }
+                
+            } else if (type === 'wrong') {
+                // Sad descending tone
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.3);
+                
+                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+                
+            } else if (type === 'victory') {
+                // Epic victory fanfare
+                const melody = [
+                    { freq: 523.25, time: 0, duration: 0.3 },      // C5
+                    { freq: 659.25, time: 0.3, duration: 0.3 },    // E5
+                    { freq: 783.99, time: 0.6, duration: 0.3 },    // G5
+                    { freq: 1046.50, time: 0.9, duration: 0.6 }    // C6 (hold)
+                ];
+                
+                const harmony = [
+                    { freq: 392.00, time: 0, duration: 0.3 },      // G4
+                    { freq: 493.88, time: 0.3, duration: 0.3 },    // B4
+                    { freq: 587.33, time: 0.6, duration: 0.3 },    // D5
+                    { freq: 783.99, time: 0.9, duration: 0.6 }     // G5
+                ];
+                
+                playNotes(audioContext, melody, 'square', 0.25);
+                playNotes(audioContext, harmony, 'sine', 0.15);
+                
+            } else if (type === 'trumpet') {
+                // Triumphant trumpet fanfare for streaks
+                const notes = [
+                    { freq: 523.25, time: 0, duration: 0.2 },       // C5
+                    { freq: 659.25, time: 0.15, duration: 0.2 },    // E5
+                    { freq: 783.99, time: 0.3, duration: 0.25 },    // G5
+                    { freq: 1046.50, time: 0.5, duration: 0.4 }     // C6 (triumphant finish)
+                ];
+                
+                notes.forEach(note => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Use sawtooth for trumpet-like sound
+                    oscillator.type = 'sawtooth';
+                    oscillator.frequency.setValueAtTime(note.freq, audioContext.currentTime + note.time);
+                    
+                    // Sharp attack, sustained, then decay (trumpet envelope)
+                    gainNode.gain.setValueAtTime(0, audioContext.currentTime + note.time);
+                    gainNode.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + note.time + 0.05);
+                    gainNode.gain.linearRampToValueAtTime(0.35, audioContext.currentTime + note.time + 0.1);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + note.time + note.duration);
+                    
+                    oscillator.start(audioContext.currentTime + note.time);
+                    oscillator.stop(audioContext.currentTime + note.time + note.duration);
+                });
+                
+            } else {
+                // Wrong descending tone
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(200, audioContext.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            }
+        }
+
+        function playNotes(audioContext, notes, waveType = 'sine', volume = 0.3) {
+            notes.forEach(note => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = waveType;
+                oscillator.frequency.setValueAtTime(note.freq, audioContext.currentTime + note.time);
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime + note.time);
+                gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + note.time + 0.02);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + note.time + note.duration);
+                
+                oscillator.start(audioContext.currentTime + note.time);
+                oscillator.stop(audioContext.currentTime + note.time + note.duration);
+            });
+        }
+
+        function showCelebration(streak) {
+            const cel = document.getElementById('celebration');
+            document.getElementById('celebration-text').textContent = streak + ' in a row!';
+            cel.classList.add('show');
+            
+            // Play trumpet fanfare for streak milestones
+            playSound('trumpet');
+            
+            // Create lightning container
+            const lightningContainer = document.createElement('div');
+            lightningContainer.className = 'lightning-container';
+            
+            // Add bloom glow effect
+            const bloom = document.createElement('div');
+            bloom.className = 'lightning-bloom';
+            lightningContainer.appendChild(bloom);
+            
+            // Add electric sparks (confetti-like)
+            const sparkCount = streak === 7 ? 30 : streak === 5 ? 20 : 12;
+            for (let i = 0; i < sparkCount; i++) {
+                setTimeout(() => {
+                    const spark = document.createElement('div');
+                    spark.className = 'electric-spark';
+                    
+                    // Random color
+                    const colors = ['spark-yellow', 'spark-cyan', 'spark-lime'];
+                    spark.classList.add(colors[Math.floor(Math.random() * colors.length)]);
+                    
+                    // Random position near center
+                    spark.style.left = (45 + Math.random() * 10) + '%';
+                    spark.style.top = (45 + Math.random() * 10) + '%';
+                    
+                    // Random direction
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 100 + Math.random() * 150;
+                    spark.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                    spark.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                    
+                    spark.style.animation = `sparkBurst ${0.6 + Math.random() * 0.4}s ease-out`;
+                    
+                    lightningContainer.appendChild(spark);
+                    
+                    setTimeout(() => spark.remove(), 1000);
+                }, i * 30);
+            }
+            
+            // Add lightning bolts based on streak
+            if (streak === 3) {
+                const bolt = document.createElement('div');
+                bolt.className = 'lightning-bolt lightning-bolt-3';
+                lightningContainer.appendChild(bolt);
+            } else if (streak === 5) {
+                const boltLeft = document.createElement('div');
+                boltLeft.className = 'lightning-bolt lightning-bolt-5-left';
+                lightningContainer.appendChild(boltLeft);
+                
+                const boltRight = document.createElement('div');
+                boltRight.className = 'lightning-bolt lightning-bolt-5-right';
+                lightningContainer.appendChild(boltRight);
+            } else if (streak === 7) {
+                const centerBolt = document.createElement('div');
+                centerBolt.className = 'lightning-bolt lightning-bolt-7-center';
+                lightningContainer.appendChild(centerBolt);
+                
+                const spreadLeft = document.createElement('div');
+                spreadLeft.className = 'energy-spread left';
+                lightningContainer.appendChild(spreadLeft);
+                
+                const spreadRight = document.createElement('div');
+                spreadRight.className = 'energy-spread right';
+                lightningContainer.appendChild(spreadRight);
+            }
+            
+            cel.appendChild(lightningContainer);
+            
+            setTimeout(() => {
+                lightningContainer.remove();
+            }, 1800);
+            
+            setTimeout(() => {
+                cel.classList.remove('show');
+            }, 2000);
+        }
+
+        function nextProblem() {
+            state.current++;
+            if (state.current < state.total) {
+                showProblem();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === state.total;
+            const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Calculate accuracy based on correct answers vs total attempts
+            const accuracy = state.totalAttempts > 0 ? Math.round((state.correct / state.totalAttempts) * 100) : 0;
+            const xp = state.correct * 10 + (perfect ? 50 : 0);
+            
+            // Update summary screen
+            if (perfect && state.mistakes === 0) {
+                document.getElementById('summary-title').textContent = 'Seriously???';
+                document.getElementById('summary-subtitle').textContent = 'You made 0 mistakes. How?!';
+            } else {
+                document.getElementById('summary-title').textContent = 'Great work!';
+                document.getElementById('summary-subtitle').textContent = 'You completed Figure 013!';
+            }
+            
+            // Set initial values to 0 for animation
+            document.getElementById('total-xp').textContent = '0';
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            document.getElementById('time').textContent = timeString;
+            
+            // Play victory fanfare
+            playSound('victory');
+            
+            // Show reward chest first
+            showRewardChest();
+            
+            // Launch confetti for perfect score
+            if (perfect && state.mistakes === 0) {
+                setTimeout(() => {
+                    launchConfetti();
+                }, 800);
+            }
+            
+            // Animations will happen AFTER chest is closed and summary is visible
+        }
+
+        function animateXPCounter(targetXP) {
+            const xpElement = document.getElementById('total-xp');
+            const xpCard = xpElement.closest('.stat-card');
+            let currentXP = 0;
+            const duration = 1500; // 1.5 seconds
+            const startTime = Date.now();
+            const updateInterval = 30; // Update every 30ms
+            
+            // Add counting class for pulse animation
+            xpElement.classList.add('counting');
+            
+            const counter = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Ease out cubic for smooth deceleration
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                currentXP = Math.floor(easeProgress * targetXP);
+                
+                xpElement.textContent = currentXP;
+                
+                if (progress >= 1) {
+                    clearInterval(counter);
+                    xpElement.textContent = targetXP;
+                    xpElement.classList.remove('counting');
+                    xpCard.classList.add('count-complete');
+                    
+                    // Create XP particle burst
+                    createXPParticleBurst(xpCard);
+                    
+                    // Remove glow class after animation
+                    setTimeout(() => {
+                        xpCard.classList.remove('count-complete');
+                    }, 600);
+                }
+            }, updateInterval);
+        }
+
+        function animateAccuracy(targetAccuracy) {
+            const accuracyElement = document.getElementById('accuracy');
+            let currentAccuracy = 0;
+            const duration = 1200;
+            const startTime = Date.now();
+            const updateInterval = 30;
+            
+            const counter = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                currentAccuracy = Math.floor(easeProgress * targetAccuracy);
+                
+                accuracyElement.textContent = currentAccuracy + '%';
+                
+                if (progress >= 1) {
+                    clearInterval(counter);
+                    accuracyElement.textContent = targetAccuracy + '%';
+                }
+            }, updateInterval);
+        }
+
+        function animateTime(minutes, seconds) {
+            const timeElement = document.getElementById('time');
+            const totalSeconds = minutes * 60 + seconds;
+            let currentSeconds = 0;
+            const duration = 1000;
+            const startTime = Date.now();
+            const updateInterval = 30;
+            
+            const counter = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                currentSeconds = Math.floor(easeProgress * totalSeconds);
+                
+                const m = Math.floor(currentSeconds / 60);
+                const s = currentSeconds % 60;
+                timeElement.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                
+                if (progress >= 1) {
+                    clearInterval(counter);
+                    timeElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, updateInterval);
+        }
+
+        function createXPParticleBurst(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const particles = ['+10', '+10', '+10', '+XP', '+XP', '+XP', '+XP'];
+            
+            particles.forEach((text, i) => {
+                const particle = document.createElement('div');
+                particle.className = 'xp-particle';
+                particle.textContent = text;
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                
+                const angle = (i / particles.length) * Math.PI * 2;
+                const distance = 60 + Math.random() * 40;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 20; // Slight upward bias
+                
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                particle.style.animation = `xpParticleBurst ${0.8 + Math.random() * 0.4}s ease-out forwards`;
+                particle.style.animationDelay = (i * 0.05) + 's';
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            });
+        }
+
+        function launchConfetti() {
+            const colors = ['#FFA500', '#FF6B00', '#FFD700', '#58CC02', '#3B82F6', '#8B5CF6', '#EC4899'];
+            const confettiCount = 150;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    
+                    // Random color
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Random starting position across top
+                    confetti.style.left = Math.random() * 100 + '%';
+                    
+                    // Random size
+                    const size = 5 + Math.random() * 10;
+                    confetti.style.width = size + 'px';
+                    confetti.style.height = size + 'px';
+                    
+                    // Random shape (circle or square)
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = '50%';
+                    }
+                    
+                    // Random duration
+                    const duration = 2 + Math.random() * 2;
+                    confetti.style.animation = `confettiFall ${duration}s linear forwards`;
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), (duration + 0.5) * 1000);
+                }, i * 10);
+            }
+        }
+
+        const claimBtn = document.getElementById('claim-btn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', () => {
+                console.log('Claim XP clicked!');
+                try {
+                    // Save progress and return to main menu
+                    const currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "streak": 0, "completed": []}');
+                    const earnedXP = parseInt(document.getElementById('total-xp').textContent);
+                    
+                    console.log('Earned XP:', earnedXP);
+                    
+                    currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
+                    
+                    // Update question streak (current in-lesson streak)
+                    currentProgress.questionStreak = state.streak;
+                    if (state.streak > (currentProgress.bestQuestionStreak || 0)) {
+                        currentProgress.bestQuestionStreak = state.streak;
+                    }
+                    
+                    // Update daily streak (days in a row completing figures)
+                    const today = new Date().toDateString();
+                    const lastCompletionDate = currentProgress.lastCompletionDate;
+                    
+                    if (lastCompletionDate !== today) {
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        const yesterdayStr = yesterday.toDateString();
+                        
+                        if (lastCompletionDate === yesterdayStr) {
+                            // Completed yesterday - increment daily streak
+                            currentProgress.dailyStreak = (currentProgress.dailyStreak || 0) + 1;
+                        } else if (lastCompletionDate) {
+                            // Missed a day - reset to 1
+                            currentProgress.dailyStreak = 1;
+                        } else {
+                            // First completion ever
+                            currentProgress.dailyStreak = 1;
+                        }
+                        
+                        currentProgress.lastCompletionDate = today;
+                    }
+                    // If already completed today, daily streak stays same
+                    
+                    // Ensure completed array exists
+                    if (!currentProgress.completed) {
+                        currentProgress.completed = [];
+                    }
+                    
+                    if (!currentProgress.completed.includes(3)) {
+                        currentProgress.completed.push(3);
+                    }
+                    
+                    safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
+                    
+                    // Add exit animation before navigation
+                    document.body.classList.add('page-exit');
+                    
+                    setTimeout(() => {
+                        window.location.href = `module-1-simple.html?completed=3&xp=${earnedXP}&questionStreak=${state.streak}`;
+                    }, 300);
+                } catch (e) {
+                    console.error('Claim XP error:', e);
+                    alert('Error saving progress: ' + e.message);
+                }
+            });
+        } else {
+            console.error('Claim button not found!');
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextProblem);
+        
+        // Reward Chest System
+        const rewards = [
+            { type: 'xp', amount: 10, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 15, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 20, icon: '+', desc: 'Bonus XP', rarity: 'common' },
+            { type: 'xp', amount: 30, icon: '+', desc: 'Rare Bonus XP', rarity: 'uncommon' },
+            { type: 'xp', amount: 50, icon: '+', desc: 'Legendary Bonus XP', rarity: 'rare' }
+        ];
+
+        function getRandomReward() {
+            const rand = Math.random();
+            let pool = rand < 0.7 ? rewards.filter(r => r.rarity === 'common') :
+                       rand < 0.9 ? rewards.filter(r => r.rarity === 'uncommon') :
+                       rewards.filter(r => r.rarity === 'rare');
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        function showRewardChest() {
+            document.getElementById('reward-chest-modal').style.display = 'flex';
+        }
+
+        function openChest() {
+            const chestSvg = document.getElementById('chest-svg');
+            const chestText = document.getElementById('chest-text');
+            const lid = document.getElementById('chest-lid');
+            const lock = document.getElementById('chest-lock');
+            const lockShackle = document.getElementById('chest-lock-shackle');
+            const modal = document.getElementById('reward-chest-modal');
+            
+            chestSvg.onclick = null;
+            chestSvg.style.cursor = 'default';
+            
+            // Add 3D opening animation
+            chestSvg.classList.add('opening');
+            haptic('medium');
+            playSound('chest');
+            
+            setTimeout(() => {
+                lock.style.animation = 'lockBreak 0.4s ease forwards';
+                lockShackle.style.animation = 'lockBreak 0.4s ease forwards';
+                haptic('light');
+                
+                setTimeout(() => {
+                    lid.style.animation = 'chestOpen 0.6s ease forwards';
+                    haptic('success');
+                    
+                    // PARTICLE BURST! 🎊
+                    createParticleBurst(chestSvg);
+                    
+                    setTimeout(() => {
+                        chestSvg.style.display = 'none';
+                        chestText.style.display = 'none';
+                        
+                        const reward = getRandomReward();
+                        const rewardIcon = document.getElementById('reward-icon');
+                        const rewardAmount = document.getElementById('reward-amount');
+                        const rewardDesc = document.getElementById('reward-desc');
+                        
+                        rewardIcon.textContent = reward.icon;
+                        rewardDesc.textContent = reward.desc;
+                        
+                        const rewardDisplay = document.getElementById('reward-display');
+                        rewardDisplay.style.display = 'block';
+                        
+                        // ANIMATED XP COUNT-UP with 3D SMACK!
+                        animateXPReward(rewardAmount, reward.amount);
+                        
+                        // Apply reward
+                        const progress = JSON.parse(safeLocalStorage('get', 'reckonProgress') || '{}');
+                        progress.xp = (progress.xp || 0) + reward.amount;
+                        safeLocalStorage('set', 'reckonProgress', JSON.stringify(progress));
+                        
+                        // Add glow pulse after animation
+                        setTimeout(() => {
+                            rewardAmount.classList.add('glow');
+                        }, 800);
+                    }, 600);
+                }, 400);
+            }, 300);
+        }
+
+        // 🎊 PARTICLE BURST ANIMATION
+        function createParticleBurst(centerElement) {
+            const rect = centerElement.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Create 20 particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = i % 2 === 0 ? 'chest-particle particle-gold' : 'chest-particle particle-gem';
+                
+                // Random direction
+                const angle = (Math.PI * 2 * i) / 20 + (Math.random() - 0.5) * 0.5;
+                const distance = 100 + Math.random() * 150;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 50; // Slight upward bias
+                const rotation = Math.random() * 720;
+                
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                particle.style.setProperty('--rotation', rotation + 'deg');
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        // ⚡ ANIMATED XP COUNT-UP with 3D SMACK EFFECT
+        function animateXPReward(element, finalAmount) {
+            // Screen flash when XP appears!
+            const flash = document.createElement('div');
+            flash.className = 'screen-flash';
+            document.body.appendChild(flash);
+            setTimeout(() => flash.remove(), 400);
+            
+            // Heavy haptic when it SMACKS the screen
+            setTimeout(() => {
+                haptic('heavy');
+            }, 450); // Right when it hits
+            
+            let current = 0;
+            const duration = 600; // ms
+            const steps = 30;
+            const increment = finalAmount / steps;
+            const stepDuration = duration / steps;
+            
+            const counter = setInterval(() => {
+                current += increment;
+                if (current >= finalAmount) {
+                    current = finalAmount;
+                    clearInterval(counter);
+                    haptic('success');
+                }
+                element.textContent = `+${Math.floor(current)} XP!`;
+            }, stepDuration);
+        }
+
+        function closeChest() {
+            document.getElementById('reward-chest-modal').style.display = 'none';
+            document.getElementById('summary').classList.add('show');
+            
+            // NOW animate the counters after screen is visible
+            const xp = state.correct * 10 + (state.correct === state.total ? 50 : 0);
+            const accuracy = state.totalAttempts > 0 ? Math.round((state.correct / state.totalAttempts) * 100) : 0;
+            const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            
+            setTimeout(() => {
+                animateXPCounter(xp);
+                animateAccuracy(accuracy);
+                animateTime(minutes, seconds);
+            }, 300);
+        }
+
+        showProblem();
+    </script>
+</body>
+</html>
