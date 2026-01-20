@@ -1594,15 +1594,15 @@
         };
 
         const problems = [
-            {eq: '2x + 5 < 15', q: 'First step: subtract what from both sides?', choices: ["5", "2", "15"], answer: '5'},
-            {eq: '2x < 10', q: 'Next step: divide by what?', choices: ["2", "10", "5"], answer: '2'},
-            {eq: 'x < 5', q: 'Is this the correct solution?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: '3x - 7 ≥ 8', q: 'Solve for x', choices: ["x ≥ 5", "x ≥ 1", "x ≤ 5"], answer: 'x ≥ 5'},
-            {eq: '-2x + 4 < 10', q: 'After subtracting 4, we get:', choices: ["-2x < 6", "-2x < 14", "-2x > 6"], answer: '-2x < 6'},
-            {eq: 'x > -3', q: 'After dividing by -2 and flipping the sign, is x > -3 correct?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: '5x - 12 ≤ 13', q: 'Solve for x', choices: ["x ≤ 5", "x ≥ 5", "x ≤ 1"], answer: 'x ≤ 5'},
-            {eq: '-4x + 3 > 19', q: 'Solve for x', choices: ["x < -4", "x > -4", "x < 4"], answer: 'x < -4'},
-            {eq: '6 - 2x ≥ 14', q: 'Solve for x', choices: ["x ≤ -4", "x ≥ -4", "x ≤ 4"], answer: 'x ≤ -4'},
+            {eq: '2x + 5 < 15', q: 'First step to isolate x:', choices: ["Divide by 2", "Add 5 to both sides", "Subtract 5 from both sides"], answer: 'Subtract 5 from both sides'},
+            {eq: '2x < 10', q: 'Now solve 2x < 10:', choices: ["x < 5", "x < 10", "x > 5"], answer: 'x < 5'},
+            {eq: '2x + 5 < 15', q: 'Final solution:', choices: ["x < 5", "x < 10", "x > 5"], answer: 'x < 5'},
+            {eq: '3x - 7 ≥ 8', q: 'Solve for x:', choices: ["x ≥ 15", "x ≥ 5", "x ≤ 5"], answer: 'x ≥ 5'},
+            {eq: '-2x + 4 < 10', q: 'After subtracting 4, you get:', choices: ["-2x < 6", "-2x < 14", "-2x > 6"], answer: '-2x < 6'},
+            {eq: '-2x < 6', q: 'Now divide by -2 and flip:', choices: ["x > -3", "x < -3", "x > 3"], answer: 'x > -3'},
+            {eq: '5x - 12 ≤ 13', q: 'Solve for x:', choices: ["x ≤ 5", "x ≥ 5", "x ≤ 25"], answer: 'x ≤ 5'},
+            {eq: '-4x + 3 > 19', q: 'Solve for x:', choices: ["x < -4", "x > -4", "x < 4"], answer: 'x < -4'},
+            {eq: '6 - 2x ≥ 14', q: 'Solve for x:', choices: ["x ≥ -4", "x ≤ -4", "x ≤ 4"], answer: 'x ≤ -4'},
         ];
 
         const feedback = {
@@ -1714,7 +1714,7 @@
                     haptic('light');  // Light tap on select
                     
                     setTimeout(() => {
-                        if (choiceIndex === p.answer) {
+                        if (p.choices[choiceIndex] === p.answer) {
                             btn.classList.add('correct');
                             state.correct++;
                             state.streak++;

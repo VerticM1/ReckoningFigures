@@ -1594,15 +1594,15 @@
         };
 
         const problems = [
-            {eq: '-3 < x < 5', q: 'This is an AND or OR compound inequality?', choices: ["AND", "OR"], answer: 'AND'},
+            {eq: '-3 < x < 5', q: 'This means x is between -3 and 5. This is:', choices: ["AND (both conditions)", "OR (either condition)"], answer: 'AND (both conditions)'},
             {eq: '-3 < x < 5', q: 'Is x = 0 a solution?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: '-3 < x < 5', q: 'Is x = 6 a solution?', choices: ["No", "Yes"], answer: 'No'},
-            {eq: 'x < -2 OR x > 4', q: 'Is x = 0 a solution to this OR inequality?', choices: ["No", "Yes"], answer: 'No'},
+            {eq: '-3 < x < 5', q: 'Is x = 6 a solution?', choices: ["Yes", "No"], answer: 'No'},
+            {eq: 'x < -2 OR x > 4', q: 'Is x = 0 a solution?', choices: ["No", "Yes"], answer: 'No'},
             {eq: 'x < -2 OR x > 4', q: 'Is x = 5 a solution?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: '-1 ≤ x ≤ 3', q: 'Is x = -1 included?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: 'x ≤ 0 OR x ≥ 6', q: 'Is x = 3 a solution?', choices: ["No", "Yes"], answer: 'No'},
-            {eq: '-5 < x < -1', q: 'What is one solution?', choices: ["x = -3", "x = 0", "x = -6"], answer: 'x = -3'},
-            {eq: 'x < 2 OR x > 8', q: 'Is x = 10 a solution?', choices: ["Yes", "No"], answer: 'Yes'},
+            {eq: '-1 ≤ x ≤ 3', q: 'Is x = -1 included in the solution?', choices: ["Yes", "No"], answer: 'Yes'},
+            {eq: 'x ≤ 0 OR x ≥ 6', q: 'Is x = 3 a solution?', choices: ["Yes", "No"], answer: 'No'},
+            {eq: '-5 < x < -1', q: 'What is one value between -5 and -1?', choices: ["-6", "0", "-3"], answer: '-3'},
+            {eq: 'x < 2 OR x > 8', q: 'Is x = 10 a solution?', choices: ["No", "Yes"], answer: 'Yes'},
         ];
 
         const feedback = {
@@ -1714,7 +1714,7 @@
                     haptic('light');  // Light tap on select
                     
                     setTimeout(() => {
-                        if (choiceIndex === p.answer) {
+                        if (p.choices[choiceIndex] === p.answer) {
                             btn.classList.add('correct');
                             state.correct++;
                             state.streak++;

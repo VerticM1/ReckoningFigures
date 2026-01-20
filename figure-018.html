@@ -1594,15 +1594,15 @@
         };
 
         const problems = [
-            {eq: 'x ≥ 18', q: '"At least 18" translates to which inequality?', choices: ["x ≥ 18", "x ≤ 18", "x > 18"], answer: 'x ≥ 18'},
-            {eq: 'x ≤ 100', q: '"No more than 100" translates to:', choices: ["x ≤ 100", "x ≥ 100", "x < 100"], answer: 'x ≤ 100'},
-            {eq: 'x < 50', q: '"Less than 50" translates to:', choices: ["x < 50", "x ≤ 50", "x > 50"], answer: 'x < 50'},
-            {eq: 'x > 30', q: '"More than 30" translates to:', choices: ["x > 30", "x ≥ 30", "x < 30"], answer: 'x > 30'},
-            {eq: 'x + 5 ≤ 20', q: 'You have $5 and earn x more. You want at most $20 total. Which inequality?', choices: ["x + 5 ≤ 20", "x + 5 ≥ 20", "x + 5 < 20"], answer: 'x + 5 ≤ 20'},
-            {eq: 'x ≤ 15', q: 'Solve x + 5 ≤ 20', choices: ["x ≤ 15", "x ≥ 15", "x < 15"], answer: 'x ≤ 15'},
-            {eq: '2x > 40', q: 'Two tickets cost 2x. You want to spend more than $40. Which inequality?', choices: ["2x > 40", "2x < 40", "2x ≥ 40"], answer: '2x > 40'},
-            {eq: 'x > 20', q: 'Solve 2x > 40', choices: ["x > 20", "x < 20", "x ≥ 20"], answer: 'x > 20'},
-            {eq: 'x ≥ 13', q: 'You need at least 13 years old to see a movie. Which inequality?', choices: ["x ≥ 13", "x ≤ 13", "x > 13"], answer: 'x ≥ 13'},
+            {eq: 'x ≥ 18', q: '"At least 18 years old" means:', choices: ["Less than or equal to 18", "Greater than or equal to 18", "Equal to 18"], answer: 'Greater than or equal to 18'},
+            {eq: 'x ≤ 100', q: '"No more than 100" means:', choices: ["Greater than or equal to 100", "Less than or equal to 100", "Equal to 100"], answer: 'Less than or equal to 100'},
+            {eq: 'x < 50', q: 'Temperature is "less than 50°". Write the inequality:', choices: ["x < 50", "x ≤ 50", "x > 50"], answer: 'x < 50'},
+            {eq: 'x > 30', q: 'Price is "more than $30". Write the inequality:', choices: ["x < 30", "x ≥ 30", "x > 30"], answer: 'x > 30'},
+            {eq: 'x + 5 ≤ 20', q: 'You have $5, want at most $20 total. Inequality:', choices: ["x + 5 ≥ 20", "x + 5 < 20", "x + 5 ≤ 20"], answer: 'x + 5 ≤ 20'},
+            {eq: 'x ≤ 15', q: 'Solve x + 5 ≤ 20:', choices: ["x ≤ 15", "x = 15", "x ≥ 15"], answer: 'x ≤ 15'},
+            {eq: '2x > 40', q: 'Two tickets cost 2x, want more than $40. Inequality:', choices: ["2x < 40", "2x ≥ 40", "2x > 40"], answer: '2x > 40'},
+            {eq: 'x > 20', q: 'Solve 2x > 40:', choices: ["x < 20", "x > 20", "x = 20"], answer: 'x > 20'},
+            {eq: 'x ≥ 13', q: 'Movie requires "at least 13 years old". Inequality:', choices: ["x ≤ 13", "x ≥ 13", "x > 13"], answer: 'x ≥ 13'},
         ];
 
         const feedback = {
@@ -1714,7 +1714,7 @@
                     haptic('light');  // Light tap on select
                     
                     setTimeout(() => {
-                        if (choiceIndex === p.answer) {
+                        if (p.choices[choiceIndex] === p.answer) {
                             btn.classList.add('correct');
                             state.correct++;
                             state.streak++;

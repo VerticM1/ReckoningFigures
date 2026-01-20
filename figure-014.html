@@ -1594,15 +1594,15 @@
         };
 
         const problems = [
-            {eq: '2x < 10', q: 'To solve, divide both sides by:', choices: ["2", "-2", "10"], answer: '2'},
-            {eq: 'x < 5', q: 'Did the inequality sign flip?', choices: ["No", "Yes"], answer: 'No'},
-            {eq: '-2x < 6', q: 'When we divide by -2, the sign will:', choices: ["Flip", "Stay the same"], answer: 'Flip'},
-            {eq: 'x > -3', q: 'After dividing -2x < 6 by -2, did the sign flip from < to >?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: 'x/-3 > 2', q: 'To solve, multiply both sides by:', choices: ["-3", "3", "2"], answer: '-3'},
-            {eq: 'x < -6', q: 'Did the sign flip?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: '-5x ≥ 15', q: 'Solve for x', choices: ["x ≤ -3", "x ≥ -3", "x ≤ 3"], answer: 'x ≤ -3'},
-            {eq: 'x/4 < 2', q: 'Solve for x', choices: ["x < 8", "x > 8", "x < 2"], answer: 'x < 8'},
-            {eq: '-x > 5', q: 'Solve for x', choices: ["x < -5", "x > -5", "x < 5"], answer: 'x < -5'},
+            {eq: '2x < 10', q: 'When dividing by a POSITIVE number, the sign:', choices: ["Stays the same", "Disappears", "Flips"], answer: 'Stays the same'},
+            {eq: '2x < 10', q: 'Solve by dividing both sides by 2:', choices: ["x > 5", "x < 20", "x < 5"], answer: 'x < 5'},
+            {eq: '-2x < 6', q: 'When dividing by a NEGATIVE number, the sign:', choices: ["Stays the same", "Becomes =", "Flips"], answer: 'Flips'},
+            {eq: '-2x < 6', q: 'Solve by dividing by -2 (remember to flip!):', choices: ["x > -3", "x < -3", "x > 3"], answer: 'x > -3'},
+            {eq: '-3x ≥ 12', q: 'Solve for x:', choices: ["x ≥ -4", "x ≤ 4", "x ≤ -4"], answer: 'x ≤ -4'},
+            {eq: 'x ÷ 4 < 2', q: 'Solve by multiplying both sides by 4:', choices: ["x < 8", "x > 8", "x < 2"], answer: 'x < 8'},
+            {eq: 'x ÷ (-3) > 2', q: 'Solve by multiplying by -3 (flip the sign!):', choices: ["x < -6", "x > -6", "x < 6"], answer: 'x < -6'},
+            {eq: '-5x ≥ 15', q: 'Solve for x:', choices: ["x ≥ -3", "x ≤ -3", "x ≤ 3"], answer: 'x ≤ -3'},
+            {eq: '-x > 5', q: 'Solve for x:', choices: ["x < -5", "x > -5", "x < 5"], answer: 'x < -5'},
         ];
 
         const feedback = {
@@ -1714,7 +1714,7 @@
                     haptic('light');  // Light tap on select
                     
                     setTimeout(() => {
-                        if (choiceIndex === p.answer) {
+                        if (p.choices[choiceIndex] === p.answer) {
                             btn.classList.add('correct');
                             state.correct++;
                             state.streak++;

@@ -1594,15 +1594,15 @@
         };
 
         const problems = [
-            {eq: 'x < 3', q: 'On a number line, which circle do we use for <?', choices: ["Open circle", "Closed circle"], answer: 'Open circle'},
-            {eq: 'x < 3', q: 'Which direction do we shade?', choices: ["Left", "Right"], answer: 'Left'},
-            {eq: 'x ≥ -2', q: 'For ≥, which circle do we use?', choices: ["Closed circle", "Open circle"], answer: 'Closed circle'},
-            {eq: 'x ≥ -2', q: 'Which direction do we shade?', choices: ["Right", "Left"], answer: 'Right'},
-            {eq: 'x > 0', q: 'Which symbol means we use an open circle?', choices: [">", "<", "≥", "≤"], answer: '>'},
-            {eq: 'x ≤ 5', q: 'Do we shade left or right for x ≤ 5?', choices: ["Left", "Right"], answer: 'Left'},
-            {eq: 'x > -3', q: 'Graph x > -3. Open or closed circle?', choices: ["Open", "Closed"], answer: 'Open'},
-            {eq: 'x ≤ 1', q: 'Graph x ≤ 1. Which direction?', choices: ["Left", "Right"], answer: 'Left'},
-            {eq: 'x ≥ 4', q: 'Is the point x = 4 included in the solution?', choices: ["Yes", "No"], answer: 'Yes'},
+            {eq: 'x = 3', q: 'For an equation (x = 3), what kind of circle?', choices: ["Open circle", "Closed circle"], answer: 'Closed circle'},
+            {eq: 'x < 3', q: 'For x < 3, which circle at the number 3?', choices: ["Open circle", "Closed circle"], answer: 'Open circle'},
+            {eq: 'x < 3', q: 'Which direction do we shade for "less than"?', choices: ["Left", "Right"], answer: 'Left'},
+            {eq: 'x ≥ -2', q: 'Does ≥ include the number or not?', choices: ["Does not include it (open circle)", "Includes it (closed circle)"], answer: 'Includes it (closed circle)'},
+            {eq: 'x ≥ -2', q: 'For "greater than or equal to", shade:', choices: ["Right", "Left"], answer: 'Right'},
+            {eq: 'x > 0', q: 'Is the point x = 0 included in the solution?', choices: ["Yes", "No"], answer: 'No'},
+            {eq: 'x ≤ 5', q: 'Is the point x = 5 included?', choices: ["Yes", "No"], answer: 'Yes'},
+            {eq: 'x ≤ 5', q: 'Which direction do we shade?', choices: ["Right", "Left"], answer: 'Left'},
+            {eq: 'x > -3', q: 'What kind of circle at -3?', choices: ["Closed", "Open"], answer: 'Open'},
         ];
 
         const feedback = {
@@ -1714,7 +1714,7 @@
                     haptic('light');  // Light tap on select
                     
                     setTimeout(() => {
-                        if (choiceIndex === p.answer) {
+                        if (p.choices[choiceIndex] === p.answer) {
                             btn.classList.add('correct');
                             state.correct++;
                             state.streak++;

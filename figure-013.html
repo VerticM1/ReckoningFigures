@@ -1594,15 +1594,15 @@
         };
 
         const problems = [
-            {eq: 'x + 3 < 8', q: 'What symbol means "less than"?', choices: ["<", ">", "="], answer: '<'},
-            {eq: 'x + 3 < 8', q: 'To solve, what should we subtract from both sides?', choices: ["3", "8", "x"], answer: '3'},
-            {eq: 'x < 5', q: 'What does x < 5 mean?', choices: ["x is less than 5", "x is greater than 5", "x equals 5"], answer: 'x is less than 5'},
-            {eq: 'x - 4 > 2', q: 'To solve, what should we add to both sides?', choices: ["4", "2", "-4"], answer: '4'},
-            {eq: 'x > 6', q: 'Is x = 7 a solution to x > 6?', choices: ["Yes", "No"], answer: 'Yes'},
-            {eq: 'x + 5 ≤ 12', q: 'What does ≤ mean?', choices: ["Less than or equal to", "Greater than or equal to", "Not equal to"], answer: 'Less than or equal to'},
-            {eq: 'x - 3 ≥ 7', q: 'Solve for x', choices: ["x ≥ 10", "x ≥ 4", "x ≤ 10"], answer: 'x ≥ 10'},
-            {eq: 'x + 8 < 15', q: 'Solve for x', choices: ["x < 7", "x < 23", "x > 7"], answer: 'x < 7'},
-            {eq: '9 > x - 2', q: 'Solve for x', choices: ["x < 11", "x > 11", "x < 7"], answer: 'x < 11'},
+            {eq: '5 = 5', q: 'An equation means both sides are:', choices: ["Different", "Not equal", "Equal"], answer: 'Equal'},
+            {eq: '3 < 7', q: 'This inequality says 3 is:', choices: ["Equal to 7", "Less than 7", "Greater than 7"], answer: 'Less than 7'},
+            {eq: '9 > 4', q: 'This inequality says 9 is:', choices: ["Greater than 4", "Less than 4", "Equal to 4"], answer: 'Greater than 4'},
+            {eq: 'x + 3 < 8', q: 'To isolate x, what should we do?', choices: ["Add 3 to both sides", "Multiply both sides by 3", "Subtract 3 from both sides"], answer: 'Subtract 3 from both sides'},
+            {eq: 'x + 3 < 8', q: 'Solve this inequality:', choices: ["x > 5", "x < 5", "x < 11"], answer: 'x < 5'},
+            {eq: 'x < 5', q: 'Which number is a solution?', choices: ["6", "4", "5"], answer: '4'},
+            {eq: 'x > 3', q: 'Which number is a solution?', choices: ["2", "7", "3"], answer: '7'},
+            {eq: 'x + 2 ≤ 9', q: 'Solve for x:', choices: ["x < 7", "x ≤ 7", "x ≥ 7"], answer: 'x ≤ 7'},
+            {eq: 'x - 5 ≥ 3', q: 'Solve for x:', choices: ["x ≤ 8", "x > 8", "x ≥ 8"], answer: 'x ≥ 8'},
         ];
 
         const feedback = {
@@ -1714,7 +1714,7 @@
                     haptic('light');  // Light tap on select
                     
                     setTimeout(() => {
-                        if (choiceIndex === p.answer) {
+                        if (p.choices[choiceIndex] === p.answer) {
                             btn.classList.add('correct');
                             state.correct++;
                             state.streak++;
