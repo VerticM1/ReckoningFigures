@@ -6,9 +6,9 @@
     <title>Reckoning Figures</title>
     <script>
         // Check if user has completed onboarding
-        const progress = JSON.parse(localStorage.getItem('reckonProgress') || '{}');
+        const onboardingComplete = localStorage.getItem('onboardingComplete');
         
-        if (!progress.onboarded) {
+        if (!onboardingComplete) {
             // First time user - send to onboarding
             window.location.href = 'onboarding.html';
         } else {

@@ -150,19 +150,33 @@
             </div>
         </div>
 
-        <div class="module-card locked">
+        <div class="module-card" onclick="openModule(2)">
             <div class="module-header">
                 <div class="module-number">Module 2</div>
-                <div class="module-badge locked">
-                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; margin-right: 4px; display: inline-block; vertical-align: middle;" fill="currentColor">
-                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
-                    </svg>
-                    Locked
-                </div>
+                <div class="module-badge">Free</div>
             </div>
             <div class="module-title">Linear Inequalities</div>
             <div class="module-desc">Solve and graph inequalities. Learn compound inequalities and word problems.</div>
             <div class="module-stats">
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span id="mod2-progress">0/6</span>
+                </div>
+                <div class="module-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~30 min</span>
+                </div>
+            </div>
+            <div class="module-progress-bar">
+                <div class="module-progress-fill" id="mod2-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="module-card locked">
                 <div class="module-stat">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
@@ -268,6 +282,15 @@
     </div>
 
     <script>
+        // ✅ Check if this is first visit - redirect to onboarding
+        const onboardingComplete = localStorage.getItem('onboardingComplete');
+        if (!onboardingComplete) {
+            // First time user! Send to onboarding
+            window.location.href = 'onboarding.html';
+            // Stop executing rest of script
+            throw new Error('Redirecting to onboarding');
+        }
+        
         // Load saved theme
         const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
         document.body.setAttribute('data-theme', savedTheme);
@@ -281,7 +304,7 @@
         document.getElementById('header-streak').textContent = userProgress.dailyStreak || 0;
         document.getElementById('header-xp').textContent = userProgress.xp || 0;
 
-        const totalFigures = 70;
+        const totalFigures = 18; // Module 1 (12) + Module 2 (6)
         const completedFigures = userProgress.completed ? userProgress.completed.length : 0;
         const overallPercent = Math.round((completedFigures / totalFigures) * 100);
 
@@ -296,6 +319,14 @@
         document.getElementById('mod1-progress').textContent = `${module1Complete}/12`;
         document.getElementById('mod1-fill').style.width = module1Percent + '%';
 
+        // ✅ Module 2 Progress Tracking
+        const module2Figures = [13, 14, 15, 16, 17, 18];
+        const module2Complete = module2Figures.filter(f => userProgress.completed?.includes(f)).length;
+        const module2Percent = Math.round((module2Complete / module2Figures.length) * 100);
+
+        document.getElementById('mod2-progress').textContent = `${module2Complete}/6`;
+        document.getElementById('mod2-fill').style.width = module2Percent + '%';
+
         // ✅ HIGHLIGHT COMPLETED MODULE IN GREEN
         if (module1Complete === module1Figures.length) {
             const module1Card = document.querySelector('.module-card');
@@ -308,10 +339,24 @@
             module1Badge.classList.add('complete');
         }
 
+        // ✅ HIGHLIGHT MODULE 2 IF COMPLETE
+        if (module2Complete === module2Figures.length) {
+            const module2Card = document.querySelectorAll('.module-card')[1]; // Second card
+            module2Card.classList.add('completed');
+            
+            // Add green checkmark to badge
+            const module2Badge = module2Card.querySelector('.module-badge');
+            module2Badge.innerHTML = '<svg viewBox="0 0 24 24" style="width: 14px; height: 14px; margin-right: 4px; display: inline-block; vertical-align: middle;" fill="currentColor"><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/></svg>Complete!';
+            module2Badge.classList.add('complete');
+        }
+
         function openModule(moduleNum) {
             if (moduleNum === 1) {
                 // Open simple list view for Module 1
                 window.location.href = 'module-1-simple.html';
+            } else if (moduleNum === 2) {
+                // ✅ Module 2 is now unlocked!
+                window.location.href = 'module-2-simple.html';
             } else {
                 alert('This module is locked!\n\nUpgrade to Premium to unlock all 70 figures.\n\nOnly $7.99/month or $49/year');
             }
