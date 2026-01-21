@@ -1612,7 +1612,7 @@
 
         function exitLesson() {
             if (confirm('Exit lesson? Your progress will be lost.')) {
-                window.location.href = 'module-1-simple.html';
+                window.location.href = 'module-2-simple.html';
             }
         }
 
@@ -2109,7 +2109,7 @@
             const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
             
             // Calculate accuracy based on correct answers vs total attempts
-            const accuracy = state.totalAttempts > 0 ? Math.round((state.correct / state.totalAttempts) * 100) : 0;
+            const accuracy = Math.round((state.correct / state.total) * 100);
             const xp = state.correct * 10 + (perfect ? 50 : 0);
             
             // Update summary screen
@@ -2341,8 +2341,8 @@
                         currentProgress.completed = [];
                     }
                     
-                    if (!currentProgress.completed.includes(3)) {
-                        currentProgress.completed.push(3);
+                    if (!currentProgress.completed.includes(14)) {
+                        currentProgress.completed.push(14);
                     }
                     
                     safeLocalStorage('set', 'reckonProgress', JSON.stringify(currentProgress));
@@ -2351,7 +2351,7 @@
                     document.body.classList.add('page-exit');
                     
                     setTimeout(() => {
-                        window.location.href = `module-1-simple.html?completed=3&xp=${earnedXP}&questionStreak=${state.streak}`;
+                        window.location.href = `module-2-simple.html?completed=14&xp=${earnedXP}&questionStreak=${state.streak}`;
                     }, 300);
                 } catch (e) {
                     console.error('Claim XP error:', e);
@@ -2511,7 +2511,7 @@
             
             // NOW animate the counters after screen is visible
             const xp = state.correct * 10 + (state.correct === state.total ? 50 : 0);
-            const accuracy = state.totalAttempts > 0 ? Math.round((state.correct / state.totalAttempts) * 100) : 0;
+            const accuracy = Math.round((state.correct / state.total) * 100);
             const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
             const minutes = Math.floor(timeElapsed / 60);
             const seconds = timeElapsed % 60;
