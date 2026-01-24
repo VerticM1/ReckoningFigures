@@ -262,6 +262,119 @@
             font-weight: 900;
             color: #10b981;
         }
+
+        /* Practice Summary Screen */
+        #summary {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1F2937;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            padding: 40px 20px;
+        }
+
+        #summary.show {
+            display: flex;
+        }
+
+        .summary-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #FFA500;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .summary-subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            color: #9CA3AF;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .summary-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .stat-card {
+            flex: 1;
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 3px solid;
+        }
+
+        .stat-card.xp {
+            background: #1F2937;
+            border-color: #FFA500;
+        }
+
+        .stat-card.accuracy {
+            background: #1F2937;
+            border-color: #58CC02;
+        }
+
+        .stat-card.time {
+            background: #1F2937;
+            border-color: #3B82F6;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card.xp .stat-label {
+            color: #FFA500;
+        }
+
+        .stat-card.accuracy .stat-label {
+            color: #58CC02;
+        }
+
+        .stat-card.time .stat-label {
+            color: #3B82F6;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+        }
+
+        #claim-btn {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background: #3B82F6;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #claim-btn:hover {
+            background: #2563EB;
+        }
     </style>
 </head>
 <body>
@@ -306,6 +419,38 @@
             </div>
             <button id="continue-btn">Continue</button>
         </div>
+
+    <!-- Summary Screen -->
+    <div id="summary">
+        <div class="summary-title" id="summary-title">Great Work!</div>
+        <div class="summary-subtitle" id="summary-subtitle">You completed Figure 016!</div>
+        
+        <div class="summary-stats">
+            <div class="stat-card xp">
+                <div class="stat-label">Total XP</div>
+                <div class="stat-value">
+                    <span id="total-xp">0</span>
+                </div>
+            </div>
+            
+            <div class="stat-card accuracy">
+                <div class="stat-label">Accuracy</div>
+                <div class="stat-value">
+                    <span id="accuracy">100%</span>
+                </div>
+            </div>
+            
+            <div class="stat-card time">
+                <div class="stat-label">Time</div>
+                <div class="stat-value">
+                    <span id="time">0:00</span>
+                </div>
+            </div>
+        </div>
+        
+        <button id="claim-btn">Claim XP & Continue</button>
+    </div>
+
     </div>
 
     <script>
@@ -314,7 +459,7 @@
             mode: 'tutorial', // tutorial, interactive, question
             selected: null,
             correct: 0,
-            total: 10,
+            total: 6, // 3 interactive + 3 multiple choice
             streak: 0,
             startTime: Date.now(),
             mistakes: 0,
@@ -791,8 +936,8 @@
             document.getElementById('feedback-text').style.color = '#10b981';
             document.querySelector('.check-icon').classList.remove('show');
 
-            // Update progress
-            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            // Update progress - use content.length for total screens
+            document.getElementById('progress-fill').style.width = ((state.current / content.length) * 100) + '%';
 
             if (item.mode === 'tutorial') {
                 showTutorial();
@@ -808,9 +953,68 @@
             if (state.current < content.length) {
                 showCurrent();
             } else {
-                alert(`Figure Complete!\n\nAccuracy: ${Math.round((state.correct / state.total) * 100)}%`);
-                window.location.href = 'module-2-simple.html';
+                showVictory();
             }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === state.total;
+            const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            const accuracy = Math.round((state.correct / state.total) * 100);
+            const xp = state.correct * 10 + (perfect ? 50 : 0);
+            
+            // Update summary screen
+            if (perfect && state.mistakes === 0) {
+                document.getElementById('summary-title').textContent = 'Perfect Score!';
+                document.getElementById('summary-subtitle').textContent = 'You mastered graphing inequalities!';
+            } else {
+                document.getElementById('summary-title').textContent = 'Great Work!';
+                document.getElementById('summary-subtitle').textContent = 'You completed Figure 016!';
+            }
+            
+            document.getElementById('total-xp').textContent = xp;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            document.getElementById('time').textContent = timeString;
+            
+            document.getElementById('summary').classList.add('show');
+        }
+
+        // Claim XP and continue
+        const claimBtn = document.getElementById('claim-btn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', () => {
+                try {
+                    const accuracy = Math.round((state.correct / state.total) * 100);
+                    const earnedXP = state.correct * 10 + (state.correct === state.total ? 50 : 0);
+                    
+                    // Get current progress
+                    let currentProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"xp": 0, "completed": [], "dailyStreak": 0}');
+                    
+                    // Add XP
+                    currentProgress.xp = (currentProgress.xp || 0) + earnedXP;
+                    
+                    // Mark as completed
+                    if (!currentProgress.completed) {
+                        currentProgress.completed = [];
+                    }
+                    
+                    if (!currentProgress.completed.includes(16)) {
+                        currentProgress.completed.push(16);
+                    }
+                    
+                    localStorage.setItem('reckonProgress', JSON.stringify(currentProgress));
+                    
+                    // Navigate to module 2
+                    window.location.href = `module-2-simple.html?completed=16&xp=${earnedXP}&questionStreak=${state.streak}`;
+                } catch (e) {
+                    console.error('Claim XP error:', e);
+                    alert('Error saving progress: ' + e.message);
+                }
+            });
         }
 
         function exitLesson() {
