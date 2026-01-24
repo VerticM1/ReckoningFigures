@@ -179,10 +179,10 @@
 
     <div id="content">
         <div class="intro-text">Pick a color scheme that matches your vibe!</div>
+        <div id="debug-test" style="color: red; font-weight: 900; margin-bottom: 20px;">JavaScript NOT loaded</div>
         <div class="themes-grid" id="themes-grid"></div>
     </div>
 
-    <script src="theme-system.js"></script>
     <script>
         const THEMES = {
             dark: {
@@ -327,10 +327,13 @@
         }
 
         function renderThemes(activeTheme) {
+            console.log('renderThemes called with activeTheme:', activeTheme);
             const grid = document.getElementById('themes-grid');
+            console.log('Grid element:', grid);
             grid.innerHTML = '';
             
             Object.entries(THEMES).forEach(([key, theme]) => {
+                console.log('Rendering theme:', key, theme.name);
                 const isActive = key === activeTheme;
                 const card = document.createElement('div');
                 card.className = `theme-card ${isActive ? 'active' : ''}`;
@@ -349,6 +352,7 @@
                 
                 grid.appendChild(card);
             });
+            console.log('Finished rendering', Object.keys(THEMES).length, 'themes');
         }
 
         function loadTheme() {
@@ -361,7 +365,11 @@
         }
 
         // Initialize
+        console.log('Initializing themes page...');
+        document.getElementById('debug-test').textContent = 'JavaScript IS loaded! Themes object has ' + Object.keys(THEMES).length + ' themes';
+        console.log('THEMES object:', THEMES);
         loadTheme();
+        console.log('loadTheme() completed');
     </script>
 </body>
 </html>
