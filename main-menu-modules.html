@@ -6,38 +6,56 @@
     <title>Reckoning Figures - Algebra Regents Prep</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        :root {
+            --bg-primary: #1F2937;
+            --bg-card: #2D3748;
+            --bg-card-hover: #374151;
+            --border: var(--border);
+            --border-hover: #5a6573;
+            --text: #ffffff;
+            --text-muted: #9CA3AF;
+            --text-dim: #6B7280;
+            --primary: #58CC02;
+            --primary-dark: #45A302;
+            --secondary: #7C3AED;
+            --secondary-dark: #5B21B6;
+            --accent: #FFA500;
+            --accent-dark: #FF6B00;
+        }
+        
+
         
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        body { font-family: 'Nunito', sans-serif; background: #1F2937; color: white; min-height: 100vh; overflow-x: hidden; padding-bottom: 80px; }
+        body { font-family: 'Nunito', sans-serif; background: var(--bg-primary); color: var(--text); min-height: 100vh; overflow-x: hidden; padding-bottom: 80px; }
         
-        #header { padding: 20px; background: #1F2937; border-bottom: 2px solid #374151; }
-        .user-greeting { font-size: 18px; font-weight: 700; color: #9CA3AF; margin-bottom: 12px; }
-        .user-greeting .name { color: white; font-weight: 900; }
+        #header { padding: 20px; background: var(--bg-primary); border-bottom: 2px solid #374151; }
+        .user-greeting { font-size: 18px; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; }
+        .user-greeting .name { color: var(--text); font-weight: 900; }
         .header-stats { display: flex; gap: 12px; }
-        .stat-badge { flex: 1; background: #2D3748; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; }
+        .stat-badge { flex: 1; background: var(--bg-card); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; }
         .stat-icon { width: 24px; height: 24px; }
         .stat-badge span { font-size: 18px; font-weight: 900; }
         
         #logo-section { padding: 40px 20px 20px; text-align: center; }
         .app-logo { max-width: 280px; margin-bottom: 8px; }
-        .tagline { font-size: 14px; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: 2px; }
+        .tagline { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
         
         .progress-banner { margin: 20px; background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%); border: 3px solid #8B5CF6; border-radius: 20px; padding: 20px; }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .progress-title { font-size: 14px; font-weight: 800; color: #DDD6FE; text-transform: uppercase; }
-        .progress-percent { font-size: 24px; font-weight: 900; color: white; }
+        .progress-percent { font-size: 24px; font-weight: 900; color: var(--text); }
         .progress-bar { width: 100%; height: 12px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, #FFA500 0%, #FF6B00 100%); border-radius: 10px; transition: width 0.5s ease; }
         .progress-text { font-size: 12px; font-weight: 700; color: #C4B5FD; }
         
         .modules-container { padding: 0 20px 20px; }
-        .section-header { font-size: 18px; font-weight: 900; color: white; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+        .section-header { font-size: 18px; font-weight: 900; color: var(--text); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .module-card { background: #2D3748; border: 3px solid #4A5568; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; }
-        .module-card:hover { transform: translateY(-4px); border-color: #58CC02; }
+        .module-card { background: var(--bg-card); border: 3px solid #4A5568; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; }
+        .module-card:hover { transform: translateY(-4px); border-color: var(--primary); }
         .module-card.locked { opacity: 0.6; cursor: not-allowed; }
-        .module-card.locked:hover { transform: none; border-color: #4A5568; }
+        .module-card.locked:hover { transform: none; border-color: var(--border); }
         .module-card.completed { 
             background: linear-gradient(135deg, #065f46 0%, #047857 100%); 
             border: 3px solid #10b981; 
@@ -48,30 +66,72 @@
             box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 8px 24px rgba(0, 0, 0, 0.4);
         }
         
-        .module-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .module-number { font-size: 14px; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; }
-        .module-badge { padding: 6px 12px; background: #58CC02; border-radius: 20px; font-size: 12px; font-weight: 900; color: white; text-transform: uppercase; }
-        .module-badge.locked { background: #6B7280; }
+        .module-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .module-number { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .module-badge { padding: 6px 12px; background: var(--primary); border-radius: 20px; font-size: 12px; font-weight: 900; color: var(--text); text-transform: uppercase; margin-right: auto; margin-left: 12px; }
+        .module-badge.locked { background: var(--text-dim); }
         .module-badge.complete {
             background: #10b981 !important;
-            color: white !important;
+            color: var(--text) !important;
             border: 2px solid #34d399 !important;
             font-weight: 900;
             padding: 6px 10px;
         }
         
-        .module-title { font-size: 22px; font-weight: 900; color: white; margin-bottom: 8px; }
-        .module-desc { font-size: 14px; font-weight: 700; color: #9CA3AF; line-height: 1.5; margin-bottom: 16px; }
-        .module-stats { display: flex; gap: 20px; }
+        .module-title { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+        .module-desc { font-size: 14px; font-weight: 700; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+        .module-stats { display: flex; gap: 20px; align-items: center; margin-top: 16px; }
         .module-stat { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #D1D5DB; }
         .module-stat svg { width: 16px; height: 16px; }
         
-        .module-progress-bar { width: 100%; height: 8px; background: #374151; border-radius: 10px; overflow: hidden; margin-top: 12px; }
-        .module-progress-fill { height: 100%; background: #58CC02; border-radius: 10px; transition: width 0.5s ease; }
+        /* Circular Progress Ring */
+        .progress-ring {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            flex-shrink: 0;
+        }
         
-        #bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #2D3748; border-top: 2px solid #374151; display: flex; justify-content: space-around; padding: 12px 20px; max-width: 600px; margin: 0 auto; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #9CA3AF; text-decoration: none; font-size: 12px; font-weight: 800; cursor: pointer; }
-        .nav-item.active { color: #58CC02; }
+        .progress-ring svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .progress-ring-circle-bg {
+            fill: none;
+            stroke: var(--bg-card-hover);
+            stroke-width: 6;
+        }
+        
+        .progress-ring-circle {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .progress-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--text);
+        }
+        
+        .module-card.completed .progress-ring-circle {
+            stroke: #10b981;
+        }
+        
+        .module-progress-bar { width: 100%; height: 8px; background: var(--bg-card-hover); border-radius: 10px; overflow: hidden; margin-top: 12px; }
+        .module-progress-fill { height: 100%; background: var(--primary); border-radius: 10px; transition: width 0.5s ease; }
+        
+        #bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 2px solid #374151; display: flex; justify-content: space-around; padding: 12px 20px; max-width: 600px; margin: 0 auto; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 800; cursor: pointer; }
+        .nav-item.active { color: var(--primary); }
         .nav-icon { width: 28px; height: 28px; }
     </style>
 </head>
@@ -100,8 +160,8 @@
         <svg class="app-logo" viewBox="0 0 200 80">
             <defs>
                 <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#FFA500;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#FF6B00;stop-opacity:1" />
+                    <stop offset="0%" style="stop-color: var(--accent);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color: var(--accent-dark);stop-opacity:1" />
                 </linearGradient>
             </defs>
             <text x="100" y="35" font-family="Nunito" font-size="28" font-weight="900" fill="url(#logoGradient)" text-anchor="middle">RECKONING</text>
@@ -128,21 +188,16 @@
             <div class="module-header">
                 <div class="module-number">Module 1</div>
                 <div class="module-badge">Free</div>
+                <div id="mod1-progress"></div>
             </div>
             <div class="module-title">Linear Equations</div>
             <div class="module-desc">Master one-step, two-step, and multi-step equations. Foundation for all algebra.</div>
             <div class="module-stats">
                 <div class="module-stat">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
-                    </svg>
-                    <span id="mod1-progress">5/12</span>
-                </div>
-                <div class="module-stat">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                     </svg>
-                    <span>~45 min</span>
+                    <span>45 min</span>
                 </div>
             </div>
             <div class="module-progress-bar">
@@ -154,41 +209,20 @@
             <div class="module-header">
                 <div class="module-number">Module 2</div>
                 <div class="module-badge">Free</div>
+                <div id="mod2-progress"></div>
             </div>
             <div class="module-title">Linear Inequalities</div>
             <div class="module-desc">Solve and graph inequalities. Learn compound inequalities and word problems.</div>
             <div class="module-stats">
                 <div class="module-stat">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
-                    </svg>
-                    <span id="mod2-progress">0/6</span>
-                </div>
-                <div class="module-stat">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                     </svg>
-                    <span>~30 min</span>
+                    <span>30 min</span>
                 </div>
             </div>
             <div class="module-progress-bar">
                 <div class="module-progress-fill" id="mod2-fill" style="width: 0%"></div>
-            </div>
-        </div>
-
-        <div class="module-card locked">
-                <div class="module-stat">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
-                    </svg>
-                    <span>0/6</span>
-                </div>
-                <div class="module-stat">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                    </svg>
-                    <span>~30 min</span>
-                </div>
             </div>
         </div>
 
@@ -215,7 +249,7 @@
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                     </svg>
-                    <span>~40 min</span>
+                    <span>40 min</span>
                 </div>
             </div>
         </div>
@@ -243,14 +277,14 @@
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                     </svg>
-                    <span>~60 min</span>
+                    <span>60 min</span>
                 </div>
             </div>
         </div>
 
         <div style="text-align: center; padding: 40px 20px;">
-            <div style="font-size: 16px; font-weight: 900; color: #9CA3AF; margin-bottom: 8px;">4 More Modules Coming Soon!</div>
-            <div style="font-size: 14px; font-weight: 700; color: #6B7280;">Exponents, Polynomials, Functions & Statistics</div>
+            <div style="font-size: 16px; font-weight: 900; color: var(--text-muted); margin-bottom: 8px;">4 More Modules Coming Soon!</div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--text-dim);">Exponents, Polynomials, Functions & Statistics</div>
         </div>
     </div>
 
@@ -316,7 +350,8 @@
         const module1Complete = module1Figures.filter(f => userProgress.completed?.includes(f)).length;
         const module1Percent = Math.round((module1Complete / module1Figures.length) * 100);
 
-        document.getElementById('mod1-progress').textContent = `${module1Complete}/12`;
+        // Create progress ring for Module 1
+        createProgressRing('mod1-progress', module1Complete, module1Figures.length);
         document.getElementById('mod1-fill').style.width = module1Percent + '%';
 
         // ✅ Module 2 Progress Tracking
@@ -324,8 +359,32 @@
         const module2Complete = module2Figures.filter(f => userProgress.completed?.includes(f)).length;
         const module2Percent = Math.round((module2Complete / module2Figures.length) * 100);
 
-        document.getElementById('mod2-progress').textContent = `${module2Complete}/6`;
+        // Create progress ring for Module 2
+        createProgressRing('mod2-progress', module2Complete, module2Figures.length);
         document.getElementById('mod2-fill').style.width = module2Percent + '%';
+
+        // Function to create circular progress ring
+        function createProgressRing(elementId, current, total) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const percent = (current / total) * 100;
+            const radius = 24;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (percent / 100) * circumference;
+            
+            element.innerHTML = `
+                <div class="progress-ring">
+                    <svg viewBox="0 0 60 60">
+                        <circle class="progress-ring-circle-bg" cx="30" cy="30" r="${radius}"/>
+                        <circle class="progress-ring-circle" cx="30" cy="30" r="${radius}" 
+                                stroke-dasharray="${circumference}" 
+                                stroke-dashoffset="${offset}"/>
+                    </svg>
+                    <div class="progress-ring-text">${current}/${total}</div>
+                </div>
+            `;
+        }
 
         // ✅ HIGHLIGHT COMPLETED MODULE IN GREEN
         if (module1Complete === module1Figures.length) {
@@ -365,6 +424,30 @@
         function navigateTo(page) {
             window.location.href = page;
         }
+    </script>
+
+    <script>
+        // Load theme
+        function loadTheme() {
+            const THEMES = {
+                dark: { colors: { '--bg-primary': '#1F2937', '--bg-card': '#2D3748', '--bg-card-hover': '#374151', '--border': '#4A5568', '--border-hover': '#5a6573', '--text': '#ffffff', '--text-muted': '#9CA3AF', '--text-dim': '#6B7280', '--primary': '#58CC02', '--primary-dark': '#45A302', '--secondary': '#7C3AED', '--secondary-dark': '#5B21B6', '--accent': '#FFA500', '--accent-dark': '#FF6B00' }},
+                light: { colors: { '--bg-primary': '#F9FAFB', '--bg-card': '#FFFFFF', '--bg-card-hover': '#F3F4F6', '--border': '#E5E7EB', '--border-hover': '#D1D5DB', '--text': '#1F2937', '--text-muted': '#6B7280', '--text-dim': '#9CA3AF', '--primary': '#10B981', '--primary-dark': '#059669', '--secondary': '#8B5CF6', '--secondary-dark': '#7C3AED', '--accent': '#F59E0B', '--accent-dark': '#D97706' }},
+                ocean: { colors: { '--bg-primary': '#0F172A', '--bg-card': '#1E293B', '--bg-card-hover': '#334155', '--border': '#475569', '--border-hover': '#64748B', '--text': '#F1F5F9', '--text-muted': '#94A3B8', '--text-dim': '#64748B', '--primary': '#06B6D4', '--primary-dark': '#0891B2', '--secondary': '#3B82F6', '--secondary-dark': '#2563EB', '--accent': '#8B5CF6', '--accent-dark': '#7C3AED' }},
+                sunset: { colors: { '--bg-primary': '#1C1917', '--bg-card': '#292524', '--bg-card-hover': '#44403C', '--border': '#57534E', '--border-hover': '#78716C', '--text': '#FAFAF9', '--text-muted': '#A8A29E', '--text-dim': '#78716C', '--primary': '#F97316', '--primary-dark': '#EA580C', '--secondary': '#EF4444', '--secondary-dark': '#DC2626', '--accent': '#FBBF24', '--accent-dark': '#F59E0B' }},
+                forest: { colors: { '--bg-primary': '#14532D', '--bg-card': '#166534', '--bg-card-hover': '#15803D', '--border': '#16A34A', '--border-hover': '#22C55E', '--text': '#F0FDF4', '--text-muted': '#BBF7D0', '--text-dim': '#86EFAC', '--primary': '#4ADE80', '--primary-dark': '#22C55E', '--secondary': '#10B981', '--secondary-dark': '#059669', '--accent': '#FDE047', '--accent-dark': '#FACC15' }},
+                midnight: { colors: { '--bg-primary': '#1E1B4B', '--bg-card': '#312E81', '--bg-card-hover': '#3730A3', '--border': '#4C1D95', '--border-hover': '#6D28D9', '--text': '#F5F3FF', '--text-muted': '#C4B5FD', '--text-dim': '#A78BFA', '--primary': '#A855F7', '--primary-dark': '#9333EA', '--secondary': '#EC4899', '--secondary-dark': '#DB2777', '--accent': '#F472B6', '--accent-dark': '#EC4899' }}
+            };
+            
+            const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+            const theme = THEMES[savedTheme];
+            if (theme) {
+                const root = document.documentElement;
+                Object.entries(theme.colors).forEach(([property, value]) => {
+                    root.style.setProperty(property, value);
+                });
+            }
+        }
+        loadTheme();
     </script>
 </body>
 </html>

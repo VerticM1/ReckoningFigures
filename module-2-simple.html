@@ -6,6 +6,24 @@
     <title>Module 2: Linear Inequalities</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        :root {
+            --bg-primary: #1F2937;
+            --bg-card: #2D3748;
+            --bg-card-hover: #374151;
+            --border: var(--border);
+            --border-hover: #5a6573;
+            --text: #ffffff;
+            --text-muted: #9CA3AF;
+            --text-dim: #6B7280;
+            --primary: #58CC02;
+            --primary-dark: #45A302;
+            --secondary: #7C3AED;
+            --secondary-dark: #5B21B6;
+            --accent: #FFA500;
+            --accent-dark: #FF6B00;
+        }
+        
+
         
         * {
             margin: 0;
@@ -16,8 +34,8 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: #1F2937;
-            color: white;
+            background: var(--bg-primary);
+            color: var(--text);
             min-height: 100vh;
             padding-bottom: 80px;
         }
@@ -25,7 +43,7 @@
         /* Header */
         #header {
             padding: 20px;
-            background: #1F2937;
+            background: var(--bg-primary);
             border-bottom: 2px solid #374151;
             position: sticky;
             top: 0;
@@ -35,7 +53,7 @@
         .back-btn {
             background: none;
             border: none;
-            color: #9CA3AF;
+            color: var(--text-muted);
             font-size: 24px;
             cursor: pointer;
             margin-bottom: 12px;
@@ -44,14 +62,14 @@
         .module-title {
             font-size: 24px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             margin-bottom: 4px;
         }
 
         .module-subtitle {
             font-size: 14px;
             font-weight: 700;
-            color: #9CA3AF;
+            color: var(--text-muted);
         }
 
         /* Progress Banner */
@@ -68,7 +86,7 @@
         .progress-text {
             font-size: 16px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
         }
 
         .progress-percent {
@@ -77,13 +95,51 @@
             color: #DDD6FE;
         }
 
+        /* Circular Progress Ring */
+        .progress-ring {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .progress-ring svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .progress-ring-circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 6;
+        }
+        
+        .progress-ring-circle {
+            fill: none;
+            stroke: #DDD6FE;
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .progress-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--text);
+        }
+
         /* Figures List */
         .figures-container {
             padding: 0 20px 20px;
         }
 
         .figure-card {
-            background: #2D3748;
+            background: var(--bg-card);
             border: 3px solid #4A5568;
             border-radius: 16px;
             padding: 20px;
@@ -97,7 +153,7 @@
 
         .figure-card:hover {
             transform: translateY(-2px);
-            border-color: #58CC02;
+            border-color: var(--primary);
         }
 
         .figure-card.locked {
@@ -107,11 +163,11 @@
 
         .figure-card.locked:hover {
             transform: none;
-            border-color: #4A5568;
+            border-color: var(--border);
         }
 
         .figure-card.completed {
-            border-color: #58CC02;
+            border-color: var(--primary);
             background: #1a3a1a;
         }
 
@@ -130,16 +186,16 @@
 
         .figure-icon.unlocked {
             background: linear-gradient(135deg, #58CC02 0%, #45A302 100%);
-            color: white;
+            color: var(--text);
         }
 
         .figure-icon.locked {
-            background: #4A5568;
-            color: #6B7280;
+            background: var(--border);
+            color: var(--text-dim);
         }
 
         .figure-icon.completed {
-            background: #58CC02;
+            background: var(--primary);
         }
 
         .figure-icon.completed::after {
@@ -155,12 +211,52 @@
             align-items: center;
             justify-content: center;
             font-size: 14px;
-            color: white;
+            color: var(--text);
             border: 2px solid #1F2937;
             background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/></svg>');
             background-size: 16px;
             background-repeat: no-repeat;
             background-position: center;
+        }
+
+        /* Unlock Animation */
+        @keyframes unlockPulse {
+            0% {
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(88, 204, 2, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(88, 204, 2, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(88, 204, 2, 0);
+            }
+        }
+
+        @keyframes unlockGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(88, 204, 2, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(88, 204, 2, 0.8);
+            }
+        }
+
+        @keyframes unlockShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .figure-card.just-unlocked {
+            animation: unlockPulse 0.6s ease-out, unlockGlow 2s ease-in-out infinite;
+            border-color: var(--primary) !important;
+        }
+
+        .figure-card.just-unlocked .figure-icon {
+            animation: unlockShake 0.5s ease-out 0.3s;
         }
 
         .figure-info {
@@ -170,7 +266,7 @@
         .figure-number {
             font-size: 12px;
             font-weight: 800;
-            color: #9CA3AF;
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 4px;
@@ -179,25 +275,25 @@
         .figure-title {
             font-size: 18px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             margin-bottom: 4px;
         }
 
         .figure-desc {
             font-size: 14px;
             font-weight: 700;
-            color: #9CA3AF;
+            color: var(--text-muted);
         }
 
         .figure-card.locked .figure-title,
         .figure-card.locked .figure-desc {
-            color: #6B7280;
+            color: var(--text-dim);
         }
 
         .lock-icon {
             width: 32px;
             height: 32px;
-            color: #6B7280;
+            color: var(--text-dim);
         }
 
         /* Bottom Nav */
@@ -206,7 +302,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #2D3748;
+            background: var(--bg-card);
             border-top: 2px solid #374151;
             display: flex;
             justify-content: space-around;
@@ -220,7 +316,7 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            color: #9CA3AF;
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 12px;
             font-weight: 800;
@@ -228,7 +324,7 @@
         }
 
         .nav-item.active {
-            color: #58CC02;
+            color: var(--primary);
         }
 
         .nav-icon {
@@ -348,14 +444,14 @@
         .module-stat-value {
             font-size: 36px;
             font-weight: 900;
-            color: #FFA500;
+            color: var(--accent);
             margin-bottom: 8px;
         }
 
         .module-stat-label {
             font-size: 14px;
             font-weight: 700;
-            color: #9CA3AF;
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -369,7 +465,7 @@
             font-family: 'Nunito', sans-serif;
             font-size: 20px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -454,7 +550,7 @@
     <!-- Progress -->
     <div class="progress-banner">
         <div class="progress-text">Your Progress</div>
-        <div class="progress-percent" id="progress-text">0/6</div>
+        <div id="progress-ring-container"></div>
     </div>
 
     <!-- Figures List -->
@@ -515,8 +611,8 @@
             const module2Figures = [13, 14, 15, 16, 17, 18];
             const module2Completed = module2Figures.filter(f => completed.includes(f)).length;
             
-            // Update progress - only count Module 2 figures
-            document.getElementById('progress-text').textContent = `${module2Completed}/6`;
+            // Update progress with circular ring
+            createProgressRing('progress-ring-container', module2Completed, 6);
             
             let html = '';
             figures.forEach((fig, index) => {
@@ -537,7 +633,7 @@
                 }
                 
                 html += `
-                    <div class="figure-card ${statusClass}" onclick="openFigure(${figNum}, '${fig.file}', ${isUnlocked})">
+                    <div class="figure-card ${statusClass}" data-figure-num="${figNum}" onclick="openFigure(${figNum}, '${fig.file}', ${isUnlocked})">
                         <div class="figure-icon ${statusClass}">
                             ${iconContent}
                         </div>
@@ -552,6 +648,29 @@
             });
             
             container.innerHTML = html;
+        }
+
+        // Function to create circular progress ring
+        function createProgressRing(elementId, current, total) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const percent = (current / total) * 100;
+            const radius = 28;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (percent / 100) * circumference;
+            
+            element.innerHTML = `
+                <div class="progress-ring">
+                    <svg viewBox="0 0 70 70">
+                        <circle class="progress-ring-circle-bg" cx="35" cy="35" r="${radius}"/>
+                        <circle class="progress-ring-circle" cx="35" cy="35" r="${radius}" 
+                                stroke-dasharray="${circumference}" 
+                                stroke-dashoffset="${offset}"/>
+                    </svg>
+                    <div class="progress-ring-text">${current}/${total}</div>
+                </div>
+            `;
         }
 
         function openFigure(num, file, isUnlocked) {
@@ -589,7 +708,27 @@
                     showModuleCompleteCelebration();
                 }, 800);
             } else {
-                // Regular figure completion
+                // Regular figure completion - animate the newly unlocked figure!
+                const completedNum = parseInt(justCompleted);
+                const nextFigNum = completedNum + 1;
+                
+                // Find and animate the next figure card
+                setTimeout(() => {
+                    const allCards = document.querySelectorAll('.figure-card');
+                    allCards.forEach(card => {
+                        const cardNum = parseInt(card.getAttribute('data-figure-num'));
+                        if (cardNum === nextFigNum && !card.classList.contains('locked')) {
+                            card.classList.add('just-unlocked');
+                            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            // Remove animation after 3 seconds
+                            setTimeout(() => {
+                                card.classList.remove('just-unlocked');
+                            }, 3000);
+                        }
+                    });
+                }, 300);
+                
                 setTimeout(() => {
                     alert(`Figure ${justCompleted.padStart(3, '0')} Complete!\n\n+${earnedXP} XP earned!\n\nNext figure unlocked!`);
                 }, 500);
@@ -648,6 +787,30 @@
             // Clean URL
             window.history.replaceState({}, document.title, window.location.pathname);
         }
+    </script>
+
+    <script>
+        // Load theme
+        function loadTheme() {
+            const THEMES = {
+                dark: { colors: { '--bg-primary': '#1F2937', '--bg-card': '#2D3748', '--bg-card-hover': '#374151', '--border': '#4A5568', '--border-hover': '#5a6573', '--text': '#ffffff', '--text-muted': '#9CA3AF', '--text-dim': '#6B7280', '--primary': '#58CC02', '--primary-dark': '#45A302', '--secondary': '#7C3AED', '--secondary-dark': '#5B21B6', '--accent': '#FFA500', '--accent-dark': '#FF6B00' }},
+                light: { colors: { '--bg-primary': '#F9FAFB', '--bg-card': '#FFFFFF', '--bg-card-hover': '#F3F4F6', '--border': '#E5E7EB', '--border-hover': '#D1D5DB', '--text': '#1F2937', '--text-muted': '#6B7280', '--text-dim': '#9CA3AF', '--primary': '#10B981', '--primary-dark': '#059669', '--secondary': '#8B5CF6', '--secondary-dark': '#7C3AED', '--accent': '#F59E0B', '--accent-dark': '#D97706' }},
+                ocean: { colors: { '--bg-primary': '#0F172A', '--bg-card': '#1E293B', '--bg-card-hover': '#334155', '--border': '#475569', '--border-hover': '#64748B', '--text': '#F1F5F9', '--text-muted': '#94A3B8', '--text-dim': '#64748B', '--primary': '#06B6D4', '--primary-dark': '#0891B2', '--secondary': '#3B82F6', '--secondary-dark': '#2563EB', '--accent': '#8B5CF6', '--accent-dark': '#7C3AED' }},
+                sunset: { colors: { '--bg-primary': '#1C1917', '--bg-card': '#292524', '--bg-card-hover': '#44403C', '--border': '#57534E', '--border-hover': '#78716C', '--text': '#FAFAF9', '--text-muted': '#A8A29E', '--text-dim': '#78716C', '--primary': '#F97316', '--primary-dark': '#EA580C', '--secondary': '#EF4444', '--secondary-dark': '#DC2626', '--accent': '#FBBF24', '--accent-dark': '#F59E0B' }},
+                forest: { colors: { '--bg-primary': '#14532D', '--bg-card': '#166534', '--bg-card-hover': '#15803D', '--border': '#16A34A', '--border-hover': '#22C55E', '--text': '#F0FDF4', '--text-muted': '#BBF7D0', '--text-dim': '#86EFAC', '--primary': '#4ADE80', '--primary-dark': '#22C55E', '--secondary': '#10B981', '--secondary-dark': '#059669', '--accent': '#FDE047', '--accent-dark': '#FACC15' }},
+                midnight: { colors: { '--bg-primary': '#1E1B4B', '--bg-card': '#312E81', '--bg-card-hover': '#3730A3', '--border': '#4C1D95', '--border-hover': '#6D28D9', '--text': '#F5F3FF', '--text-muted': '#C4B5FD', '--text-dim': '#A78BFA', '--primary': '#A855F7', '--primary-dark': '#9333EA', '--secondary': '#EC4899', '--secondary-dark': '#DB2777', '--accent': '#F472B6', '--accent-dark': '#EC4899' }}
+            };
+            
+            const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+            const theme = THEMES[savedTheme];
+            if (theme) {
+                const root = document.documentElement;
+                Object.entries(theme.colors).forEach(([property, value]) => {
+                    root.style.setProperty(property, value);
+                });
+            }
+        }
+        loadTheme();
     </script>
 </body>
 </html>

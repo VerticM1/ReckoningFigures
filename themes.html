@@ -8,110 +8,49 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
         
         :root {
-            /* Default Dark Theme */
             --bg-primary: #1F2937;
-            --bg-secondary: #2D3748;
-            --bg-tertiary: #374151;
-            --border-color: #4A5568;
-            --text-primary: #FFFFFF;
-            --text-secondary: #9CA3AF;
-            --accent-primary: #FFA500;
-            --accent-secondary: #FF6B00;
-            --success: #58CC02;
-            --error: #EF4444;
+            --bg-card: #2D3748;
+            --bg-card-hover: #374151;
+            --border: #4A5568;
+            --border-hover: #5a6573;
+            --text: #ffffff;
+            --text-muted: #9CA3AF;
+            --text-dim: #6B7280;
+            --primary: #58CC02;
+            --primary-dark: #45A302;
+            --secondary: #7C3AED;
+            --secondary-dark: #5B21B6;
+            --accent: #FFA500;
+            --accent-dark: #FF6B00;
         }
-
-        [data-theme="light"] {
-            --bg-primary: #F3F4F6;
-            --bg-secondary: #FFFFFF;
-            --bg-tertiary: #E5E7EB;
-            --border-color: #D1D5DB;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --accent-primary: #F59E0B;
-            --accent-secondary: #D97706;
-            --success: #10B981;
-            --error: #EF4444;
-        }
-
-        [data-theme="ocean"] {
-            --bg-primary: #0F172A;
-            --bg-secondary: #1E293B;
-            --bg-tertiary: #334155;
-            --border-color: #475569;
-            --text-primary: #F1F5F9;
-            --text-secondary: #94A3B8;
-            --accent-primary: #0EA5E9;
-            --accent-secondary: #0284C7;
-            --success: #10B981;
-            --error: #EF4444;
-        }
-
-        [data-theme="sunset"] {
-            --bg-primary: #1C1917;
-            --bg-secondary: #292524;
-            --bg-tertiary: #44403C;
-            --border-color: #57534E;
-            --text-primary: #FAFAF9;
-            --text-secondary: #A8A29E;
-            --accent-primary: #F97316;
-            --accent-secondary: #EA580C;
-            --success: #84CC16;
-            --error: #DC2626;
-        }
-
-        [data-theme="forest"] {
-            --bg-primary: #14532D;
-            --bg-secondary: #166534;
-            --bg-tertiary: #15803D;
-            --border-color: #16A34A;
-            --text-primary: #F0FDF4;
-            --text-secondary: #BBF7D0;
-            --accent-primary: #84CC16;
-            --accent-secondary: #65A30D;
-            --success: #22C55E;
-            --error: #DC2626;
-        }
-
-        [data-theme="purple"] {
-            --bg-primary: #1E1B4B;
-            --bg-secondary: #312E81;
-            --bg-tertiary: #3730A3;
-            --border-color: #4C1D95;
-            --text-primary: #EDE9FE;
-            --text-secondary: #C4B5FD;
-            --accent-primary: #A78BFA;
-            --accent-secondary: #8B5CF6;
-            --success: #10B981;
-            --error: #F87171;
-        }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Nunito', sans-serif;
             background: var(--bg-primary);
-            color: var(--text-primary);
+            color: var(--text);
             min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-bottom: 20px;
+            transition: background 0.3s ease;
         }
 
         /* Header */
         #header {
             padding: 20px;
-            background: var(--bg-secondary);
-            border-bottom: 2px solid var(--border-color);
             display: flex;
             align-items: center;
             gap: 16px;
+            background: var(--bg-primary);
+            border-bottom: 2px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: background-color 0.3s ease;
         }
 
         .back-btn {
@@ -119,42 +58,46 @@
             height: 40px;
             background: none;
             border: none;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 28px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .header-title {
             font-size: 24px;
             font-weight: 900;
+            color: var(--text);
         }
 
         /* Content */
         #content {
             max-width: 600px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
         }
 
-        .section-header {
-            font-size: 18px;
-            font-weight: 900;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .intro-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            text-align: center;
         }
 
+        /* Theme Grid */
         .themes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 16px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .theme-card {
-            background: var(--bg-secondary);
-            border: 3px solid var(--border-color);
+            background: var(--bg-card);
+            border: 3px solid var(--border);
             border-radius: 16px;
             padding: 20px;
             cursor: pointer;
@@ -164,225 +107,261 @@
 
         .theme-card:hover {
             transform: translateY(-4px);
-            border-color: var(--accent-primary);
+            border-color: var(--primary);
         }
 
         .theme-card.active {
-            border-color: var(--success);
-            box-shadow: 0 0 0 2px var(--success);
+            border-color: var(--primary);
+            background: var(--bg-card-hover);
+            box-shadow: 0 0 20px rgba(88, 204, 2, 0.3);
         }
 
-        .theme-preview {
-            width: 100%;
-            height: 80px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .theme-preview-top {
-            height: 60%;
-            width: 100%;
-        }
-
-        .theme-preview-bottom {
-            height: 40%;
-            width: 100%;
+        .theme-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px auto;
+            color: var(--primary);
             display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .theme-preview-accent {
-            flex: 1;
+        .theme-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .theme-icon svg[fill="none"] {
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .theme-name {
             font-size: 16px;
             font-weight: 900;
-            color: var(--text-primary);
-            margin-bottom: 4px;
+            color: var(--text);
+            margin-bottom: 8px;
         }
 
-        .theme-desc {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-secondary);
-        }
-
-        .checkmark {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 24px;
-            height: 24px;
-            background: var(--success);
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 14px;
-            font-weight: 900;
-        }
-
-        .theme-card.active .checkmark {
+        .theme-preview {
             display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 12px;
         }
 
-        /* Info Box */
-        .info-box {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
         }
 
-        .info-box h3 {
-            font-size: 18px;
+        .check-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
             font-weight: 900;
-            color: var(--accent-primary);
-            margin-bottom: 12px;
-        }
-
-        .info-box p {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            line-height: 1.6;
+            text-transform: uppercase;
+            margin-top: 8px;
         }
     </style>
 </head>
 <body>
     <div id="header">
         <button class="back-btn" onclick="goBack()">←</button>
-        <div class="header-title">Themes</div>
+        <div class="header-title">Choose Your Theme</div>
     </div>
 
     <div id="content">
-        <div class="section-header">Choose Your Theme</div>
-        
-        <div class="themes-grid">
-            <!-- Dark Theme -->
-            <div class="theme-card" onclick="setTheme('dark')">
-                <div class="theme-preview">
-                    <div class="checkmark">✓</div>
-                    <div class="theme-preview-top" style="background: #1F2937;"></div>
-                    <div class="theme-preview-bottom">
-                        <div class="theme-preview-accent" style="background: #FFA500;"></div>
-                        <div class="theme-preview-accent" style="background: #58CC02;"></div>
-                    </div>
-                </div>
-                <div class="theme-name">Dark</div>
-                <div class="theme-desc">Classic</div>
-            </div>
-
-            <!-- Light Theme -->
-            <div class="theme-card" onclick="setTheme('light')">
-                <div class="theme-preview">
-                    <div class="checkmark">✓</div>
-                    <div class="theme-preview-top" style="background: #F3F4F6;"></div>
-                    <div class="theme-preview-bottom">
-                        <div class="theme-preview-accent" style="background: #F59E0B;"></div>
-                        <div class="theme-preview-accent" style="background: #10B981;"></div>
-                    </div>
-                </div>
-                <div class="theme-name">Light</div>
-                <div class="theme-desc">Bright</div>
-            </div>
-
-            <!-- Ocean Theme -->
-            <div class="theme-card" onclick="setTheme('ocean')">
-                <div class="theme-preview">
-                    <div class="checkmark">✓</div>
-                    <div class="theme-preview-top" style="background: #0F172A;"></div>
-                    <div class="theme-preview-bottom">
-                        <div class="theme-preview-accent" style="background: #0EA5E9;"></div>
-                        <div class="theme-preview-accent" style="background: #10B981;"></div>
-                    </div>
-                </div>
-                <div class="theme-name">Ocean</div>
-                <div class="theme-desc">Cool blues</div>
-            </div>
-
-            <!-- Sunset Theme -->
-            <div class="theme-card" onclick="setTheme('sunset')">
-                <div class="theme-preview">
-                    <div class="checkmark">✓</div>
-                    <div class="theme-preview-top" style="background: #1C1917;"></div>
-                    <div class="theme-preview-bottom">
-                        <div class="theme-preview-accent" style="background: #F97316;"></div>
-                        <div class="theme-preview-accent" style="background: #84CC16;"></div>
-                    </div>
-                </div>
-                <div class="theme-name">Sunset</div>
-                <div class="theme-desc">Warm tones</div>
-            </div>
-
-            <!-- Forest Theme -->
-            <div class="theme-card" onclick="setTheme('forest')">
-                <div class="theme-preview">
-                    <div class="checkmark">✓</div>
-                    <div class="theme-preview-top" style="background: #14532D;"></div>
-                    <div class="theme-preview-bottom">
-                        <div class="theme-preview-accent" style="background: #84CC16;"></div>
-                        <div class="theme-preview-accent" style="background: #22C55E;"></div>
-                    </div>
-                </div>
-                <div class="theme-name">Forest</div>
-                <div class="theme-desc">Nature</div>
-            </div>
-
-            <!-- Purple Theme -->
-            <div class="theme-card" onclick="setTheme('purple')">
-                <div class="theme-preview">
-                    <div class="checkmark">✓</div>
-                    <div class="theme-preview-top" style="background: #1E1B4B;"></div>
-                    <div class="theme-preview-bottom">
-                        <div class="theme-preview-accent" style="background: #A78BFA;"></div>
-                        <div class="theme-preview-accent" style="background: #10B981;"></div>
-                    </div>
-                </div>
-                <div class="theme-name">Purple</div>
-                <div class="theme-desc">Royal</div>
-            </div>
-        </div>
-
-        <div class="info-box">
-            <h3>💡 About Themes</h3>
-            <p>Choose a theme that matches your style! Your selected theme will be saved and applied across all pages in the app.</p>
-        </div>
+        <div class="intro-text">Pick a color scheme that matches your vibe!</div>
+        <div class="themes-grid" id="themes-grid"></div>
     </div>
 
+    <script src="theme-system.js"></script>
     <script>
-        // Load current theme
-        const currentTheme = localStorage.getItem('reckonTheme') || 'dark';
-        document.body.setAttribute('data-theme', currentTheme);
-        
-        // Update active state
-        updateActiveTheme(currentTheme);
+        const THEMES = {
+            dark: {
+                name: 'Dark Mode',
+                icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.05 8.05 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05z"/></svg>',
+                colors: {
+                    '--bg-primary': '#1F2937',
+                    '--bg-card': '#2D3748',
+                    '--bg-card-hover': '#374151',
+                    '--border': '#4A5568',
+                    '--border-hover': '#5a6573',
+                    '--text': '#ffffff',
+                    '--text-muted': '#9CA3AF',
+                    '--text-dim': '#6B7280',
+                    '--primary': '#58CC02',
+                    '--primary-dark': '#45A302',
+                    '--secondary': '#7C3AED',
+                    '--secondary-dark': '#5B21B6',
+                    '--accent': '#FFA500',
+                    '--accent-dark': '#FF6B00'
+                },
+                preview: ['#1F2937', '#58CC02', '#7C3AED']
+            },
+            light: {
+                name: 'Light Mode',
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
+                colors: {
+                    '--bg-primary': '#F9FAFB',
+                    '--bg-card': '#FFFFFF',
+                    '--bg-card-hover': '#F3F4F6',
+                    '--border': '#E5E7EB',
+                    '--border-hover': '#D1D5DB',
+                    '--text': '#1F2937',
+                    '--text-muted': '#6B7280',
+                    '--text-dim': '#9CA3AF',
+                    '--primary': '#10B981',
+                    '--primary-dark': '#059669',
+                    '--secondary': '#8B5CF6',
+                    '--secondary-dark': '#7C3AED',
+                    '--accent': '#F59E0B',
+                    '--accent-dark': '#D97706'
+                },
+                preview: ['#F9FAFB', '#10B981', '#8B5CF6']
+            },
+            ocean: {
+                name: 'Ocean Blue',
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12c1.5-1.5 3-1.5 4.5 0S9 13.5 10.5 12s3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M2 18c1.5-1.5 3-1.5 4.5 0S9 19.5 10.5 18s3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M2 6c1.5-1.5 3-1.5 4.5 0S9 7.5 10.5 6s3-1.5 4.5 0 3 1.5 4.5 0"/></svg>',
+                colors: {
+                    '--bg-primary': '#0F172A',
+                    '--bg-card': '#1E293B',
+                    '--bg-card-hover': '#334155',
+                    '--border': '#475569',
+                    '--border-hover': '#64748B',
+                    '--text': '#F1F5F9',
+                    '--text-muted': '#94A3B8',
+                    '--text-dim': '#64748B',
+                    '--primary': '#06B6D4',
+                    '--primary-dark': '#0891B2',
+                    '--secondary': '#3B82F6',
+                    '--secondary-dark': '#2563EB',
+                    '--accent': '#8B5CF6',
+                    '--accent-dark': '#7C3AED'
+                },
+                preview: ['#0F172A', '#06B6D4', '#3B82F6']
+            },
+            sunset: {
+                name: 'Sunset',
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="19.78" y1="4.22" x2="18.36" y2="5.64"/><line x1="21" y1="12" x2="23" y2="12"/><path d="M2 16h20"/><path d="M2 20h20"/></svg>',
+                colors: {
+                    '--bg-primary': '#1C1917',
+                    '--bg-card': '#292524',
+                    '--bg-card-hover': '#44403C',
+                    '--border': '#57534E',
+                    '--border-hover': '#78716C',
+                    '--text': '#FAFAF9',
+                    '--text-muted': '#A8A29E',
+                    '--text-dim': '#78716C',
+                    '--primary': '#F97316',
+                    '--primary-dark': '#EA580C',
+                    '--secondary': '#EF4444',
+                    '--secondary-dark': '#DC2626',
+                    '--accent': '#FBBF24',
+                    '--accent-dark': '#F59E0B'
+                },
+                preview: ['#1C1917', '#F97316', '#FBBF24']
+            },
+            forest: {
+                name: 'Forest',
+                icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L8 8h2v3H8l4 4 4-4h-2V8h2l-4-6zm0 18v-4h-1l1-1 1 1h-1v4z"/><path d="M16 14h-1.5l2.5 3h-2l2 3H7l2-3H7l2.5-3H8l4-4 4 4z"/></svg>',
+                colors: {
+                    '--bg-primary': '#14532D',
+                    '--bg-card': '#166534',
+                    '--bg-card-hover': '#15803D',
+                    '--border': '#16A34A',
+                    '--border-hover': '#22C55E',
+                    '--text': '#F0FDF4',
+                    '--text-muted': '#BBF7D0',
+                    '--text-dim': '#86EFAC',
+                    '--primary': '#4ADE80',
+                    '--primary-dark': '#22C55E',
+                    '--secondary': '#10B981',
+                    '--secondary-dark': '#059669',
+                    '--accent': '#FDE047',
+                    '--accent-dark': '#FACC15'
+                },
+                preview: ['#14532D', '#4ADE80', '#FDE047']
+            },
+            midnight: {
+                name: 'Midnight',
+                icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5z"/></svg>',
+                colors: {
+                    '--bg-primary': '#1E1B4B',
+                    '--bg-card': '#312E81',
+                    '--bg-card-hover': '#3730A3',
+                    '--border': '#4C1D95',
+                    '--border-hover': '#6D28D9',
+                    '--text': '#F5F3FF',
+                    '--text-muted': '#C4B5FD',
+                    '--text-dim': '#A78BFA',
+                    '--primary': '#A855F7',
+                    '--primary-dark': '#9333EA',
+                    '--secondary': '#EC4899',
+                    '--secondary-dark': '#DB2777',
+                    '--accent': '#F472B6',
+                    '--accent-dark': '#EC4899'
+                },
+                preview: ['#1E1B4B', '#A855F7', '#EC4899']
+            }
+        };
 
-        function setTheme(themeName) {
-            document.body.setAttribute('data-theme', themeName);
-            localStorage.setItem('reckonTheme', themeName);
-            updateActiveTheme(themeName);
-        }
-
-        function updateActiveTheme(themeName) {
-            document.querySelectorAll('.theme-card').forEach(card => {
-                card.classList.remove('active');
+        function applyTheme(themeName) {
+            const theme = THEMES[themeName];
+            if (!theme) return;
+            
+            const root = document.documentElement;
+            Object.entries(theme.colors).forEach(([property, value]) => {
+                root.style.setProperty(property, value);
             });
             
-            const themeNames = ['dark', 'light', 'ocean', 'sunset', 'forest', 'purple'];
-            const index = themeNames.indexOf(themeName);
-            if (index !== -1) {
-                document.querySelectorAll('.theme-card')[index].classList.add('active');
-            }
+            localStorage.setItem('reckonTheme', themeName);
+            renderThemes(themeName);
+        }
+
+        function renderThemes(activeTheme) {
+            const grid = document.getElementById('themes-grid');
+            grid.innerHTML = '';
+            
+            Object.entries(THEMES).forEach(([key, theme]) => {
+                const isActive = key === activeTheme;
+                const card = document.createElement('div');
+                card.className = `theme-card ${isActive ? 'active' : ''}`;
+                card.onclick = () => applyTheme(key);
+                
+                const previewDots = theme.preview.map(color => 
+                    `<div class="color-dot" style="background: ${color};"></div>`
+                ).join('');
+                
+                card.innerHTML = `
+                    <div class="theme-icon">${theme.icon}</div>
+                    <div class="theme-name">${theme.name}</div>
+                    <div class="theme-preview">${previewDots}</div>
+                    ${isActive ? '<div class="check-badge">✓ Active</div>' : ''}
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+            applyTheme(savedTheme);
         }
 
         function goBack() {
             window.location.href = 'profile.html';
         }
+
+        // Initialize
+        loadTheme();
     </script>
 </body>
 </html>

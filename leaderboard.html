@@ -6,6 +6,24 @@
     <title>Leaderboard - Reckoning Figures</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        :root {
+            --bg-primary: #1F2937;
+            --bg-card: #2D3748;
+            --bg-card-hover: #374151;
+            --border: var(--border);
+            --border-hover: #5a6573;
+            --text: #ffffff;
+            --text-muted: #9CA3AF;
+            --text-dim: #6B7280;
+            --primary: #58CC02;
+            --primary-dark: #45A302;
+            --secondary: #7C3AED;
+            --secondary-dark: #5B21B6;
+            --accent: #FFA500;
+            --accent-dark: #FF6B00;
+        }
+        
+
         
         * {
             margin: 0;
@@ -16,8 +34,8 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: #1F2937;
-            color: white;
+            background: var(--bg-primary);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             padding-bottom: 80px;
@@ -26,7 +44,7 @@
         /* Header */
         #header {
             padding: 20px;
-            background: #1F2937;
+            background: var(--bg-primary);
             border-bottom: 2px solid #374151;
             position: sticky;
             top: 0;
@@ -36,7 +54,7 @@
         .header-title {
             font-size: 28px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             text-align: center;
             margin-bottom: 16px;
         }
@@ -45,7 +63,7 @@
         .time-tabs {
             display: flex;
             gap: 8px;
-            background: #2D3748;
+            background: var(--bg-card);
             border-radius: 12px;
             padding: 4px;
         }
@@ -59,14 +77,14 @@
             font-family: 'Nunito', sans-serif;
             font-size: 14px;
             font-weight: 800;
-            color: #9CA3AF;
+            color: var(--text-muted);
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .time-tab.active {
-            background: #58CC02;
-            color: white;
+            background: var(--primary);
+            color: var(--text);
         }
 
         /* Main Content */
@@ -95,7 +113,7 @@
         .your-rank {
             font-size: 16px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -103,7 +121,7 @@
         .rank-number {
             font-size: 48px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             text-align: center;
             margin-bottom: 8px;
         }
@@ -116,7 +134,7 @@
         .your-xp {
             font-size: 20px;
             font-weight: 800;
-            color: white;
+            color: var(--text);
             text-align: center;
         }
 
@@ -124,7 +142,7 @@
         .section-header {
             font-size: 18px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             margin-bottom: 16px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -138,7 +156,7 @@
         }
 
         .leaderboard-item {
-            background: #2D3748;
+            background: var(--bg-card);
             border-radius: 16px;
             padding: 16px 20px;
             display: flex;
@@ -169,7 +187,7 @@
         }
 
         .leaderboard-item.current-user {
-            border-color: #FFA500;
+            border-color: var(--accent);
             background: linear-gradient(135deg, #3a2f1f 0%, #2D3748 100%);
         }
 
@@ -208,19 +226,19 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: #374151;
+            background: var(--bg-card-hover);
             border: 2px solid #4A5568;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
             font-weight: 900;
-            color: #9CA3AF;
+            color: var(--text-muted);
         }
 
         .current-user .avatar-small {
-            border-color: #FFA500;
-            color: #FFA500;
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .rank-1 .avatar-small {
@@ -238,7 +256,7 @@
         .player-name {
             font-size: 18px;
             font-weight: 800;
-            color: white;
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -249,13 +267,13 @@
         }
 
         .current-user .player-name {
-            color: #FFA500;
+            color: var(--accent);
         }
 
         .player-xp {
             font-size: 20px;
             font-weight: 900;
-            color: #58CC02;
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 6px;
@@ -280,12 +298,12 @@
         .empty-text {
             font-size: 18px;
             font-weight: 800;
-            color: #9CA3AF;
+            color: var(--text-muted);
         }
 
         /* Stats Footer */
         .stats-footer {
-            background: #2D3748;
+            background: var(--bg-card);
             border-radius: 16px;
             padding: 20px;
             margin-top: 24px;
@@ -305,14 +323,14 @@
         .stat-value {
             font-size: 28px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             margin-bottom: 4px;
         }
 
         .stat-label {
             font-size: 12px;
             font-weight: 800;
-            color: #9CA3AF;
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -323,7 +341,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #2D3748;
+            background: var(--bg-card);
             border-top: 2px solid #374151;
             display: flex;
             justify-content: space-around;
@@ -337,7 +355,7 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            color: #9CA3AF;
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 12px;
             font-weight: 800;
@@ -345,7 +363,7 @@
         }
 
         .nav-item.active {
-            color: #58CC02;
+            color: var(--primary);
         }
 
         .nav-icon {
@@ -375,8 +393,8 @@
                     <path fill="#CD7F32" d="M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z"/>
                 </svg>
                 <div>
-                    <div style="font-size: 28px; font-weight: 900; color: white;" id="league-name">Bronze League</div>
-                    <div style="font-size: 14px; font-weight: 700; color: #C4B5FD;">Top 10 advance to Silver!</div>
+                    <div style="font-size: 28px; font-weight: 900; color: var(--text);" id="league-name">Bronze League</div>
+                    <div style="font-size: 14px; font-weight: 700; color: #C4B5FD;" id="league-advancement"></div>
                 </div>
             </div>
         </div>
@@ -469,6 +487,14 @@
 
         const userLeague = getLeague(userProgress.xp || 0);
         document.getElementById('league-name').textContent = userLeague.name;
+        
+        // Update advancement text
+        const advancementText = document.getElementById('league-advancement');
+        if (userLeague.next) {
+            advancementText.textContent = `Top 10 advance to ${userLeague.next}!`;
+        } else {
+            advancementText.textContent = 'Top League - Maintain Your Position!';
+        }
         
         // Update icon color based on league
         const leagueIcon = document.getElementById('league-icon');
@@ -797,6 +823,30 @@
             }
             renderLeaderboard();
         });
+    </script>
+
+    <script>
+        // Load theme
+        function loadTheme() {
+            const THEMES = {
+                dark: { colors: { '--bg-primary': '#1F2937', '--bg-card': '#2D3748', '--bg-card-hover': '#374151', '--border': '#4A5568', '--border-hover': '#5a6573', '--text': '#ffffff', '--text-muted': '#9CA3AF', '--text-dim': '#6B7280', '--primary': '#58CC02', '--primary-dark': '#45A302', '--secondary': '#7C3AED', '--secondary-dark': '#5B21B6', '--accent': '#FFA500', '--accent-dark': '#FF6B00' }},
+                light: { colors: { '--bg-primary': '#F9FAFB', '--bg-card': '#FFFFFF', '--bg-card-hover': '#F3F4F6', '--border': '#E5E7EB', '--border-hover': '#D1D5DB', '--text': '#1F2937', '--text-muted': '#6B7280', '--text-dim': '#9CA3AF', '--primary': '#10B981', '--primary-dark': '#059669', '--secondary': '#8B5CF6', '--secondary-dark': '#7C3AED', '--accent': '#F59E0B', '--accent-dark': '#D97706' }},
+                ocean: { colors: { '--bg-primary': '#0F172A', '--bg-card': '#1E293B', '--bg-card-hover': '#334155', '--border': '#475569', '--border-hover': '#64748B', '--text': '#F1F5F9', '--text-muted': '#94A3B8', '--text-dim': '#64748B', '--primary': '#06B6D4', '--primary-dark': '#0891B2', '--secondary': '#3B82F6', '--secondary-dark': '#2563EB', '--accent': '#8B5CF6', '--accent-dark': '#7C3AED' }},
+                sunset: { colors: { '--bg-primary': '#1C1917', '--bg-card': '#292524', '--bg-card-hover': '#44403C', '--border': '#57534E', '--border-hover': '#78716C', '--text': '#FAFAF9', '--text-muted': '#A8A29E', '--text-dim': '#78716C', '--primary': '#F97316', '--primary-dark': '#EA580C', '--secondary': '#EF4444', '--secondary-dark': '#DC2626', '--accent': '#FBBF24', '--accent-dark': '#F59E0B' }},
+                forest: { colors: { '--bg-primary': '#14532D', '--bg-card': '#166534', '--bg-card-hover': '#15803D', '--border': '#16A34A', '--border-hover': '#22C55E', '--text': '#F0FDF4', '--text-muted': '#BBF7D0', '--text-dim': '#86EFAC', '--primary': '#4ADE80', '--primary-dark': '#22C55E', '--secondary': '#10B981', '--secondary-dark': '#059669', '--accent': '#FDE047', '--accent-dark': '#FACC15' }},
+                midnight: { colors: { '--bg-primary': '#1E1B4B', '--bg-card': '#312E81', '--bg-card-hover': '#3730A3', '--border': '#4C1D95', '--border-hover': '#6D28D9', '--text': '#F5F3FF', '--text-muted': '#C4B5FD', '--text-dim': '#A78BFA', '--primary': '#A855F7', '--primary-dark': '#9333EA', '--secondary': '#EC4899', '--secondary-dark': '#DB2777', '--accent': '#F472B6', '--accent-dark': '#EC4899' }}
+            };
+            
+            const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+            const theme = THEMES[savedTheme];
+            if (theme) {
+                const root = document.documentElement;
+                Object.entries(theme.colors).forEach(([property, value]) => {
+                    root.style.setProperty(property, value);
+                });
+            }
+        }
+        loadTheme();
     </script>
 </body>
 </html>

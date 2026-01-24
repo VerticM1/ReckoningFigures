@@ -7,6 +7,23 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
         
+        :root {
+            --bg-primary: #1F2937;
+            --bg-card: #2D3748;
+            --bg-card-hover: #374151;
+            --border: #4A5568;
+            --border-hover: #5a6573;
+            --text: #ffffff;
+            --text-muted: #9CA3AF;
+            --text-dim: #6B7280;
+            --primary: #58CC02;
+            --primary-dark: #45A302;
+            --secondary: #7C3AED;
+            --secondary-dark: #5B21B6;
+            --accent: #FFA500;
+            --accent-dark: #FF6B00;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -16,47 +33,125 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: #1F2937;
-            color: white;
+            background: var(--bg-primary);
+            color: var(--text);
             min-height: 100vh;
-            overflow-x: hidden;
             padding-bottom: 80px;
         }
 
         /* Header */
         #header {
             padding: 20px;
-            background: #1F2937;
-            border-bottom: 2px solid #374151;
+            background: var(--bg-primary);
+            border-bottom: 2px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .back-btn {
-            width: 40px;
-            height: 40px;
-            background: none;
-            border: none;
-            color: #9ca3af;
-            font-size: 28px;
-            cursor: pointer;
         }
 
         .header-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 900;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .username-display {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .username-display .highlight {
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        /* Search Section */
+        #search-section {
+            padding: 20px;
+            background: var(--bg-card);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            background: var(--bg-primary);
+            border: 3px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        #search-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            color: var(--text-muted);
+        }
+
+        /* Search Results */
+        #search-results {
+            margin-top: 16px;
+            display: none;
+        }
+
+        #search-results.show {
+            display: block;
+        }
+
+        .search-result-item {
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .result-info {
             flex: 1;
+        }
+
+        .result-username {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .result-stats {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
         }
 
         .add-friend-btn {
             padding: 10px 20px;
-            background: #58CC02;
+            background: var(--primary);
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-family: 'Nunito', sans-serif;
             font-size: 14px;
             font-weight: 900;
@@ -65,185 +160,168 @@
             text-transform: uppercase;
         }
 
-        /* Content */
-        #content {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+        .add-friend-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .add-friend-btn:disabled {
+            background: var(--text-dim);
+            cursor: not-allowed;
         }
 
         /* Tabs */
         .tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            background: #2D3748;
-            border-radius: 12px;
-            padding: 4px;
+            gap: 12px;
+            padding: 20px 20px 0 20px;
         }
 
         .tab {
             flex: 1;
             padding: 12px;
-            background: transparent;
+            background: var(--bg-card);
             border: none;
-            border-radius: 8px;
+            border-radius: 12px 12px 0 0;
             font-family: 'Nunito', sans-serif;
             font-size: 14px;
-            font-weight: 800;
-            color: #9CA3AF;
+            font-weight: 900;
+            color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.2s ease;
+            text-transform: uppercase;
+            position: relative;
         }
 
         .tab.active {
-            background: #58CC02;
-            color: white;
+            background: var(--bg-primary);
+            color: var(--primary);
         }
 
-        /* Friend Card */
-        .friend-card {
-            background: #2D3748;
-            border: 2px solid #4A5568;
-            border-radius: 16px;
+        .tab-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 20px;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Friend Requests */
+        .request-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
             padding: 16px;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            transition: transform 0.2s ease;
+            justify-content: space-between;
         }
 
-        .friend-card:hover {
-            transform: translateX(4px);
-            border-color: #58CC02;
-        }
-
-        .friend-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: #374151;
-            border: 3px solid #58CC02;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 900;
-            color: #58CC02;
-            flex-shrink: 0;
-        }
-
-        .friend-info {
+        .request-info {
             flex: 1;
         }
 
-        .friend-name {
+        .request-username {
             font-size: 18px;
             font-weight: 900;
-            color: white;
+            color: var(--text);
             margin-bottom: 4px;
         }
 
-        .friend-stats {
+        .request-stats {
             font-size: 14px;
             font-weight: 700;
-            color: #9CA3AF;
-            display: flex;
-            gap: 16px;
+            color: var(--text-muted);
         }
 
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .friend-actions {
+        .request-actions {
             display: flex;
             gap: 8px;
         }
 
-        .action-btn {
-            width: 40px;
-            height: 40px;
-            background: #374151;
-            border: 2px solid #4A5568;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 20px;
-        }
-
-        .action-btn:hover {
-            border-color: #58CC02;
-            background: #2D4A1F;
-        }
-
-        /* Challenge Card */
-        .challenge-card {
-            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
-            border: 3px solid #8B5CF6;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 12px;
-        }
-
-        .challenge-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .challenge-from {
-            font-size: 14px;
-            font-weight: 800;
-            color: #DDD6FE;
-            text-transform: uppercase;
-        }
-
-        .challenge-time {
-            font-size: 12px;
-            font-weight: 700;
-            color: #C4B5FD;
-        }
-
-        .challenge-text {
-            font-size: 18px;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 16px;
-        }
-
-        .challenge-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .challenge-btn {
-            flex: 1;
-            padding: 12px;
+        .accept-btn, .decline-btn {
+            padding: 10px 16px;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-family: 'Nunito', sans-serif;
             font-size: 14px;
             font-weight: 900;
             cursor: pointer;
-            text-transform: uppercase;
         }
 
         .accept-btn {
-            background: #58CC02;
+            background: var(--primary);
             color: white;
         }
 
         .decline-btn {
-            background: #4A5568;
-            color: #9CA3AF;
+            background: var(--border);
+            color: var(--text);
+        }
+
+        /* Friends List */
+        .friend-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .friend-card:hover {
+            border-color: var(--primary);
+            background: var(--bg-card-hover);
+        }
+
+        .friend-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .friend-username {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text);
+        }
+
+        .friend-rank {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .friend-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .friend-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .friend-stat svg {
+            width: 16px;
+            height: 16px;
         }
 
         /* Empty State */
@@ -252,106 +330,24 @@
             padding: 60px 20px;
         }
 
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px auto;
+            color: var(--text-dim);
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
         .empty-text {
-            font-size: 18px;
-            font-weight: 800;
-            color: #9CA3AF;
-            margin-bottom: 8px;
-        }
-
-        .empty-subtext {
             font-size: 14px;
             font-weight: 700;
-            color: #6B7280;
-        }
-
-        /* Add Friend Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #2D3748;
-            border-radius: 20px;
-            padding: 32px;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-label {
-            font-size: 14px;
-            font-weight: 800;
-            color: #9CA3AF;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .text-input {
-            width: 100%;
-            padding: 16px;
-            background: #374151;
-            border: 2px solid #4A5568;
-            border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: white;
-            outline: none;
-        }
-
-        .text-input:focus {
-            border-color: #58CC02;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 16px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .primary-btn {
-            background: #58CC02;
-            color: white;
-        }
-
-        .secondary-btn {
-            background: #4A5568;
-            color: #9CA3AF;
+            color: var(--text-muted);
         }
 
         /* Bottom Navigation */
@@ -360,423 +356,474 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #2D3748;
-            border-top: 2px solid #374151;
+            background: var(--bg-card);
+            border-top: 2px solid var(--border);
             display: flex;
             justify-content: space-around;
-            padding: 12px 20px;
-            max-width: 600px;
-            margin: 0 auto;
+            padding: 12px 0;
+            z-index: 100;
         }
 
         .nav-item {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            color: #9CA3AF;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 800;
+            color: var(--text-muted);
             cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
         }
 
         .nav-item.active {
-            color: #58CC02;
+            color: var(--primary);
         }
 
         .nav-icon {
             width: 28px;
             height: 28px;
         }
+
+        /* Set Username Modal */
+        #username-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #username-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 3px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            margin: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .modal-desc {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 16px;
+            background: var(--bg-primary);
+            border: 3px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .modal-error {
+            color: #EF4444;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .modal-error.show {
+            display: block;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .modal-btn:hover {
+            background: var(--primary-dark);
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <div id="header">
-        <button class="back-btn" onclick="goBack()">←</button>
         <div class="header-title">Friends</div>
-        <button class="add-friend-btn" onclick="showAddFriendModal()">+ Add</button>
-    </div>
-
-    <!-- Content -->
-    <div id="content">
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('friends')">Friends</button>
-            <button class="tab" onclick="switchTab('challenges')">Challenges</button>
-            <button class="tab" onclick="switchTab('requests')">Requests</button>
-        </div>
-
-        <!-- Friends Tab -->
-        <div id="friends-tab">
-            <div id="friends-list"></div>
-        </div>
-
-        <!-- Challenges Tab -->
-        <div id="challenges-tab" style="display: none;">
-            <div id="challenges-list"></div>
-        </div>
-
-        <!-- Requests Tab -->
-        <div id="requests-tab" style="display: none;">
-            <div id="requests-list"></div>
+        <div class="username-display">
+            Playing as <span class="highlight" id="display-username">Player</span>
         </div>
     </div>
 
-    <!-- Add Friend Modal -->
-    <div class="modal" id="add-friend-modal">
+    <!-- Search Section -->
+    <div id="search-section">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search for friends..." autocomplete="off">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+            </svg>
+        </div>
+        <div id="search-results"></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" data-tab="requests">
+            Requests
+            <span class="tab-badge" id="requests-badge">0</span>
+        </button>
+        <button class="tab" data-tab="friends">
+            Friends
+            <span class="tab-badge" id="friends-badge">0</span>
+        </button>
+    </div>
+
+    <!-- Requests Section -->
+    <div class="content-section active" id="requests-section">
+        <div id="requests-list"></div>
+    </div>
+
+    <!-- Friends Section -->
+    <div class="content-section" id="friends-section">
+        <div id="friends-list"></div>
+    </div>
+
+    <!-- Username Modal -->
+    <div id="username-modal">
         <div class="modal-content">
-            <div class="modal-title">Add Friend</div>
-            <div class="input-group">
-                <div class="input-label">Friend Code</div>
-                <input type="text" class="text-input" id="friend-code-input" placeholder="Enter friend code">
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn secondary-btn" onclick="closeAddFriendModal()">Cancel</button>
-                <button class="modal-btn primary-btn" onclick="addFriend()">Add Friend</button>
-            </div>
+            <div class="modal-title">Set Your Username</div>
+            <div class="modal-desc">Choose a unique username to find and add friends!</div>
+            <input type="text" class="modal-input" id="username-input" placeholder="Enter username" maxlength="20">
+            <div class="modal-error" id="username-error"></div>
+            <button class="modal-btn" onclick="saveUsername()">Continue</button>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div id="bottom-nav">
         <div class="nav-item" onclick="navigateTo('main-menu-modules.html')">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
             </svg>
             <div>Learn</div>
         </div>
         <div class="nav-item" onclick="navigateTo('leaderboard.html')">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
             </svg>
             <div>Leaderboard</div>
         </div>
         <div class="nav-item active">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
             </svg>
             <div>Friends</div>
         </div>
         <div class="nav-item" onclick="navigateTo('profile.html')">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
             </svg>
             <div>Profile</div>
         </div>
     </div>
 
+    <script src="friends-system.js"></script>
     <script>
-        // Load saved theme
-        const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
-        
-        // Load user progress
-        const userProgress = JSON.parse(localStorage.getItem('reckonProgress') || '{"userName": "Player", "xp": 0, "streak": 0}');
-
-        // Mock friends data (in real app, would come from backend)
-        let friends = JSON.parse(localStorage.getItem('reckonFriends') || '[]');
-        
-        // Generate some mock friends if empty
-        if (friends.length === 0) {
-            friends = [
-                { id: 1, name: 'Alex Rivera', xp: 450, streak: 5, avatar: 'A' },
-                { id: 2, name: 'Jordan Chen', xp: 320, streak: 3, avatar: 'J' },
-                { id: 3, name: 'Taylor Kim', xp: 580, streak: 7, avatar: 'T' }
-            ];
-            localStorage.setItem('reckonFriends', JSON.stringify(friends));
-        }
-
-        // Mock challenges
-        const challenges = [
-            { id: 1, from: 'Alex Rivera', text: 'Beat my score on Figure 001!', time: '2h ago' },
-            { id: 2, from: 'Taylor Kim', text: 'Race to 100 XP this week!', time: '5h ago' }
-        ];
-
-        // Mock friend requests
-        const requests = [
-            { id: 1, name: 'Morgan Patel', xp: 290, avatar: 'M' }
-        ];
-
-        function renderFriends() {
-            const list = document.getElementById('friends-list');
-            
-            if (friends.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <svg class="empty-icon" viewBox="0 0 24 24" style="width: 64px; height: 64px; opacity: 0.5;">
-                            <path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-                        </svg>
-                        <div class="empty-text">No friends yet</div>
-                        <div class="empty-subtext">Add friends to compete and challenge each other!</div>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = friends.map(friend => `
-                <div class="friend-card">
-                    <div class="friend-avatar">${friend.avatar}</div>
-                    <div class="friend-info">
-                        <div class="friend-name">${friend.name}</div>
-                        <div class="friend-stats">
-                            <div class="stat">${friend.xp} XP</div>
-                            <div class="stat">${friend.streak} day streak</div>
-                        </div>
-                    </div>
-                    <div class="friend-actions">
-                        <div class="action-btn" title="Challenge" onclick="challengeFriend(${friend.id})">
-                            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
-                                <path fill="currentColor" d="M6.2 2.44L18.1 14.34L20.22 12.22L21.63 13.63L19.16 16.1L22.34 19.28C22.73 19.67 22.73 20.3 22.34 20.69L21.63 21.4C21.24 21.79 20.61 21.79 20.22 21.4L17.04 18.22L14.56 20.7L13.15 19.29L15.27 17.17L3.37 5.27V2.44H6.2M15.89 10L20.63 5.26C21.02 4.87 21.02 4.24 20.63 3.85L19.92 3.14C19.53 2.75 18.9 2.75 18.51 3.14L13.77 7.88L15.89 10M10.94 15L8.82 12.88L5.27 16.43L7.39 18.55L10.94 15Z"/>
-                            </svg>
-                        </div>
-                        <div class="action-btn" title="Compare" onclick="compareFriend(${friend.id})">
-                            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
-                                <path fill="currentColor" d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M9 17H7V10H9V17M13 17H11V7H13V17M17 17H15V13H17V17Z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderChallenges() {
-            const list = document.getElementById('challenges-list');
-            
-            if (challenges.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <svg class="empty-icon" viewBox="0 0 24 24" style="width: 64px; height: 64px; opacity: 0.5;">
-                            <path fill="currentColor" d="M6.2 2.44L18.1 14.34L20.22 12.22L21.63 13.63L19.16 16.1L22.34 19.28C22.73 19.67 22.73 20.3 22.34 20.69L21.63 21.4C21.24 21.79 20.61 21.79 20.22 21.4L17.04 18.22L14.56 20.7L13.15 19.29L15.27 17.17L3.37 5.27V2.44H6.2M15.89 10L20.63 5.26C21.02 4.87 21.02 4.24 20.63 3.85L19.92 3.14C19.53 2.75 18.9 2.75 18.51 3.14L13.77 7.88L15.89 10M10.94 15L8.82 12.88L5.27 16.43L7.39 18.55L10.94 15Z"/>
-                        </svg>
-                        <div class="empty-text">No active challenges</div>
-                        <div class="empty-subtext">Challenge your friends to compete!</div>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = challenges.map(challenge => `
-                <div class="challenge-card">
-                    <div class="challenge-header">
-                        <div class="challenge-from">From ${challenge.from}</div>
-                        <div class="challenge-time">${challenge.time}</div>
-                    </div>
-                    <div class="challenge-text">${challenge.text}</div>
-                    <div class="challenge-actions">
-                        <button class="challenge-btn accept-btn" onclick="acceptChallenge(${challenge.id})">Accept</button>
-                        <button class="challenge-btn decline-btn" onclick="declineChallenge(${challenge.id})">Decline</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderRequests() {
-            const list = document.getElementById('requests-list');
-            
-            if (requests.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <svg class="empty-icon" viewBox="0 0 24 24" style="width: 64px; height: 64px; opacity: 0.5;">
-                            <path fill="currentColor" d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4M20 8L12 13L4 8V6L12 11L20 6V8Z"/>
-                        </svg>
-                        <div class="empty-text">No pending requests</div>
-                        <div class="empty-subtext">Friend requests will appear here</div>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = requests.map(request => `
-                <div class="friend-card">
-                    <div class="friend-avatar">${request.avatar}</div>
-                    <div class="friend-info">
-                        <div class="friend-name">${request.name}</div>
-                        <div class="friend-stats">
-                            <div class="stat">${request.xp} XP</div>
-                        </div>
-                    </div>
-                    <div class="friend-actions">
-                        <div class="action-btn" style="background: #58CC02; border-color: #58CC02;" onclick="acceptRequest(${request.id})">
-                            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
-                                <path fill="white" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
-                            </svg>
-                        </div>
-                        <div class="action-btn" style="background: #EF4444; border-color: #DC2626;" onclick="declineRequest(${request.id})">
-                            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;">
-                                <path fill="white" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function switchTab(tab) {
-            // Update tab buttons
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Hide all tabs
-            document.getElementById('friends-tab').style.display = 'none';
-            document.getElementById('challenges-tab').style.display = 'none';
-            document.getElementById('requests-tab').style.display = 'none';
-
-            // Show selected tab
-            if (tab === 'friends') {
-                document.getElementById('friends-tab').style.display = 'block';
-                renderFriends();
-            } else if (tab === 'challenges') {
-                document.getElementById('challenges-tab').style.display = 'block';
-                renderChallenges();
-            } else if (tab === 'requests') {
-                document.getElementById('requests-tab').style.display = 'block';
-                renderRequests();
-            }
-        }
-
-        function showAddFriendModal() {
-            document.getElementById('add-friend-modal').classList.add('show');
-        }
-
-        function closeAddFriendModal() {
-            document.getElementById('add-friend-modal').classList.remove('show');
-            document.getElementById('friend-code-input').value = '';
-        }
-
-        function addFriend() {
-            const code = document.getElementById('friend-code-input').value.trim();
-            if (!code) return;
-
-            // Mock adding friend
-            alert(`Friend request sent to ${code}!`);
-            closeAddFriendModal();
-        }
-
-        function challengeFriend(friendId) {
-            const friend = friends.find(f => f.id === friendId);
-            if (!friend) return;
-            
-            // Create challenge dialog
-            const challengeType = confirm(`Challenge ${friend.name}!\n\nClick OK to challenge them to beat your score on Figure 001\nClick Cancel to challenge them to a weekly XP race`);
-            
-            if (challengeType === null) return; // User cancelled
-            
-            const challengeText = challengeType 
-                ? `Beat your score on Figure 001!` 
-                : `Race to 100 XP this week!`;
-            
-            alert(`Challenge sent to ${friend.name}!\n\n"${challengeText}"\n\nThey have 24 hours to respond.`);
-            
-            // In a real app, this would send to backend
-            // For now, we just show the alert
-        }
-
-        function compareFriend(friendId) {
-            const friend = friends.find(f => f.id === friendId);
-            if (!friend) return;
-            
-            const userXP = userProgress.xp || 0;
-            const userStreak = userProgress.streak || 0;
-            const userCompleted = userProgress.completed?.length || 0;
-            
-            const xpDiff = userXP - friend.xp;
-            const streakDiff = userStreak - friend.streak;
-            
-            let comparisonText = `📊 YOU vs ${friend.name}\n\n`;
-            
-            // XP Comparison
-            if (xpDiff > 0) {
-                comparisonText += `XP: You're ahead by ${xpDiff} XP! 🎉\n`;
-            } else if (xpDiff < 0) {
-                comparisonText += `XP: ${friend.name} leads by ${Math.abs(xpDiff)} XP 💪\n`;
-            } else {
-                comparisonText += `XP: Tied at ${userXP} XP! 🤝\n`;
-            }
-            
-            // Streak Comparison
-            if (streakDiff > 0) {
-                comparisonText += `Streak: You're ahead! (${userStreak} vs ${friend.streak})\n`;
-            } else if (streakDiff < 0) {
-                comparisonText += `Streak: ${friend.name} is on fire! (${friend.streak} vs ${userStreak})\n`;
-            } else {
-                comparisonText += `Streak: Both at ${userStreak} days!\n`;
-            }
-            
-            comparisonText += `\nFigures Completed: ${userCompleted} (you)\n`;
-            comparisonText += `\nKeep grinding to stay ahead! 🔥`;
-            
-            alert(comparisonText);
-        }
-
-        function acceptChallenge(challengeId) {
-            const challengeIndex = challenges.findIndex(c => c.id === challengeId);
-            if (challengeIndex === -1) return;
-            
-            const challenge = challenges[challengeIndex];
-            
-            // Remove challenge from list
-            challenges.splice(challengeIndex, 1);
-            
-            alert(`Challenge accepted! Now compete on ${challenge.text.includes('Figure') ? 'that figure' : 'this week\'s leaderboard'}!`);
-            renderChallenges();
-        }
-
-        function declineChallenge(challengeId) {
-            const challengeIndex = challenges.findIndex(c => c.id === challengeId);
-            if (challengeIndex === -1) return;
-            
-            // Remove challenge from list
-            challenges.splice(challengeIndex, 1);
-            
-            alert('Challenge declined.');
-            renderChallenges();
-        }
-
-        function acceptRequest(requestId) {
-            const requestIndex = requests.findIndex(r => r.id === requestId);
-            if (requestIndex === -1) return;
-            
-            const request = requests[requestIndex];
-            
-            // Add to friends list
-            friends.push({ ...request, streak: 0 });
-            localStorage.setItem('reckonFriends', JSON.stringify(friends));
-            
-            // Remove from requests array
-            requests.splice(requestIndex, 1);
-            
-            alert(`${request.name} is now your friend!`);
-            
-            // Re-render both tabs
-            renderFriends();
-            renderRequests();
-        }
-
-        function declineRequest(requestId) {
-            const requestIndex = requests.findIndex(r => r.id === requestId);
-            if (requestIndex === -1) return;
-            
-            const request = requests[requestIndex];
-            
-            // Remove from requests array
-            requests.splice(requestIndex, 1);
-            
-            alert(`Request from ${request.name} declined.`);
-            renderRequests();
-        }
-
-        function goBack() {
-            window.location.href = 'main-menu-modules.html';
-        }
+        let friendsSystem;
+        let searchTimeout;
 
         function navigateTo(page) {
             window.location.href = page;
         }
 
-        // Initial render
-        renderFriends();
+        // Initialize
+        function init() {
+            friendsSystem = new FriendsSystem();
+            
+            // Check if username is set
+            const username = friendsSystem.getUsername();
+            if (!username) {
+                document.getElementById('username-modal').classList.add('show');
+            } else {
+                document.getElementById('display-username').textContent = username;
+                loadData();
+            }
+
+            // Set up tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+
+            // Set up search
+            document.getElementById('search-input').addEventListener('input', handleSearch);
+        }
+
+        function saveUsername() {
+            const username = document.getElementById('username-input').value;
+            const error = document.getElementById('username-error');
+            
+            const result = friendsSystem.setUsername(username);
+            
+            if (result.success) {
+                document.getElementById('username-modal').classList.remove('show');
+                document.getElementById('display-username').textContent = username;
+                loadData();
+            } else {
+                error.textContent = result.error;
+                error.classList.add('show');
+            }
+        }
+
+        function switchTab(tabName) {
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Update sections
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`${tabName}-section`).classList.add('active');
+        }
+
+        function handleSearch(e) {
+            clearTimeout(searchTimeout);
+            const query = e.target.value;
+            
+            if (query.length < 2) {
+                document.getElementById('search-results').classList.remove('show');
+                return;
+            }
+            
+            searchTimeout = setTimeout(() => {
+                const results = friendsSystem.searchUsers(query);
+                displaySearchResults(results);
+            }, 300);
+        }
+
+        function displaySearchResults(results) {
+            const container = document.getElementById('search-results');
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="padding: 20px;"><div class="empty-text">No users found</div></div>';
+                container.classList.add('show');
+                return;
+            }
+            
+            let html = '';
+            results.forEach(user => {
+                const outgoing = friendsSystem.getOutgoingRequests();
+                const alreadySent = outgoing.some(r => r.userId === user.userId);
+                
+                html += `
+                    <div class="search-result-item">
+                        <div class="result-info">
+                            <div class="result-username">${user.userName}</div>
+                            <div class="result-stats">${user.xp} XP · ${user.streak} day streak</div>
+                        </div>
+                        <button class="add-friend-btn" onclick="sendRequest('${user.userId}')" ${alreadySent ? 'disabled' : ''}>
+                            ${alreadySent ? 'Sent' : 'Add'}
+                        </button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            container.classList.add('show');
+        }
+
+        function sendRequest(userId) {
+            const result = friendsSystem.sendFriendRequest(userId);
+            if (result.success) {
+                // Refresh search results
+                const query = document.getElementById('search-input').value;
+                const results = friendsSystem.searchUsers(query);
+                displaySearchResults(results);
+                
+                // Show pending in requests tab
+                setTimeout(() => {
+                    loadRequests();
+                }, 100);
+            }
+        }
+
+        function loadData() {
+            loadRequests();
+            loadFriends();
+            updateBadges();
+        }
+
+        function loadRequests() {
+            const incoming = friendsSystem.getIncomingRequests();
+            const outgoing = friendsSystem.getOutgoingRequests();
+            const container = document.getElementById('requests-list');
+            
+            if (incoming.length === 0 && outgoing.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg class="empty-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                        <div class="empty-title">No Friend Requests</div>
+                        <div class="empty-text">Search for users to send requests!</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            if (incoming.length > 0) {
+                html += '<div style="font-size: 14px; font-weight: 900; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Incoming</div>';
+                incoming.forEach(user => {
+                    html += `
+                        <div class="request-card">
+                            <div class="request-info">
+                                <div class="request-username">${user.userName}</div>
+                                <div class="request-stats">${user.xp} XP · ${user.streak} day streak</div>
+                            </div>
+                            <div class="request-actions">
+                                <button class="accept-btn" onclick="acceptRequest('${user.userId}')">Accept</button>
+                                <button class="decline-btn" onclick="declineRequest('${user.userId}')">Decline</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            if (outgoing.length > 0) {
+                html += '<div style="font-size: 14px; font-weight: 900; color: var(--text-muted); margin: 20px 0 12px 0; text-transform: uppercase; letter-spacing: 1px;">Pending</div>';
+                outgoing.forEach(user => {
+                    html += `
+                        <div class="request-card">
+                            <div class="request-info">
+                                <div class="request-username">${user.userName}</div>
+                                <div class="request-stats">${user.xp} XP · ${user.streak} day streak</div>
+                            </div>
+                            <div style="font-size: 14px; font-weight: 700; color: var(--text-dim);">Pending...</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function acceptRequest(userId) {
+            friendsSystem.acceptFriendRequest(userId);
+            loadData();
+        }
+
+        function declineRequest(userId) {
+            friendsSystem.declineFriendRequest(userId);
+            loadData();
+        }
+
+        function loadFriends() {
+            const friends = friendsSystem.getFriends();
+            const container = document.getElementById('friends-list');
+            
+            if (friends.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg class="empty-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                        <div class="empty-title">No Friends Yet</div>
+                        <div class="empty-text">Add friends to compete together!</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            friends.forEach((friend, index) => {
+                html += `
+                    <div class="friend-card">
+                        <div class="friend-header">
+                            <div class="friend-username">${friend.userName}</div>
+                            <div class="friend-rank">#${index + 1}</div>
+                        </div>
+                        <div class="friend-stats">
+                            <div class="friend-stat">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
+                                </svg>
+                                ${friend.xp} XP
+                            </div>
+                            <div class="friend-stat">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
+                                </svg>
+                                ${friend.streak} days
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function updateBadges() {
+            const requestCount = friendsSystem.getPendingRequestCount();
+            const friendCount = friendsSystem.getFriendCount();
+            
+            document.getElementById('requests-badge').textContent = requestCount;
+            document.getElementById('friends-badge').textContent = friendCount;
+        }
+
+        // Theme system
+        function loadTheme() {
+            const THEMES = {
+                dark: { colors: { '--bg-primary': '#1F2937', '--bg-card': '#2D3748', '--bg-card-hover': '#374151', '--border': '#4A5568', '--border-hover': '#5a6573', '--text': '#ffffff', '--text-muted': '#9CA3AF', '--text-dim': '#6B7280', '--primary': '#58CC02', '--primary-dark': '#45A302', '--secondary': '#7C3AED', '--secondary-dark': '#5B21B6', '--accent': '#FFA500', '--accent-dark': '#FF6B00' }},
+                light: { colors: { '--bg-primary': '#F9FAFB', '--bg-card': '#FFFFFF', '--bg-card-hover': '#F3F4F6', '--border': '#E5E7EB', '--border-hover': '#D1D5DB', '--text': '#1F2937', '--text-muted': '#6B7280', '--text-dim': '#9CA3AF', '--primary': '#10B981', '--primary-dark': '#059669', '--secondary': '#8B5CF6', '--secondary-dark': '#7C3AED', '--accent': '#F59E0B', '--accent-dark': '#D97706' }},
+                ocean: { colors: { '--bg-primary': '#0F172A', '--bg-card': '#1E293B', '--bg-card-hover': '#334155', '--border': '#475569', '--border-hover': '#64748B', '--text': '#F1F5F9', '--text-muted': '#94A3B8', '--text-dim': '#64748B', '--primary': '#06B6D4', '--primary-dark': '#0891B2', '--secondary': '#3B82F6', '--secondary-dark': '#2563EB', '--accent': '#8B5CF6', '--accent-dark': '#7C3AED' }},
+                sunset: { colors: { '--bg-primary': '#1C1917', '--bg-card': '#292524', '--bg-card-hover': '#44403C', '--border': '#57534E', '--border-hover': '#78716C', '--text': '#FAFAF9', '--text-muted': '#A8A29E', '--text-dim': '#78716C', '--primary': '#F97316', '--primary-dark': '#EA580C', '--secondary': '#EF4444', '--secondary-dark': '#DC2626', '--accent': '#FBBF24', '--accent-dark': '#F59E0B' }},
+                forest: { colors: { '--bg-primary': '#14532D', '--bg-card': '#166534', '--bg-card-hover': '#15803D', '--border': '#16A34A', '--border-hover': '#22C55E', '--text': '#F0FDF4', '--text-muted': '#BBF7D0', '--text-dim': '#86EFAC', '--primary': '#4ADE80', '--primary-dark': '#22C55E', '--secondary': '#10B981', '--secondary-dark': '#059669', '--accent': '#FDE047', '--accent-dark': '#FACC15' }},
+                midnight: { colors: { '--bg-primary': '#1E1B4B', '--bg-card': '#312E81', '--bg-card-hover': '#3730A3', '--border': '#4C1D95', '--border-hover': '#6D28D9', '--text': '#F5F3FF', '--text-muted': '#C4B5FD', '--text-dim': '#A78BFA', '--primary': '#A855F7', '--primary-dark': '#9333EA', '--secondary': '#EC4899', '--secondary-dark': '#DB2777', '--accent': '#F472B6', '--accent-dark': '#EC4899' }}
+            };
+            
+            const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+            const theme = THEMES[savedTheme];
+            if (theme) {
+                const root = document.documentElement;
+                Object.entries(theme.colors).forEach(([property, value]) => {
+                    root.style.setProperty(property, value);
+                });
+            }
+        }
+        
+        loadTheme();
+        init();
     </script>
 </body>
 </html>
