@@ -411,9 +411,14 @@
         // Initialize
         console.log('Initializing themes page...');
         document.getElementById('debug-test').textContent = 'JavaScript IS loaded! Themes object has ' + Object.keys(THEMES).length + ' themes';
-        console.log('THEMES object:', THEMES);
-        loadTheme();
-        console.log('loadTheme() completed');
+        
+        // Render themes immediately
+        const currentTheme = localStorage.getItem('reckonTheme') || 'dark';
+        console.log('Current theme:', currentTheme);
+        renderThemes(currentTheme);
+        
+        // Also apply theme colors
+        applyTheme(currentTheme);
     </script>
 </body>
 </html>
