@@ -29,6 +29,18 @@
             width: 100%;
         }
 
+        .version-tag {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #58CC02;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
         .logo {
             text-align: center;
             margin-bottom: 40px;
@@ -49,15 +61,18 @@
             letter-spacing: 2px;
         }
 
-        .auth-card {
+        .form-container {
             background: #2D3748;
             border: 3px solid #4A5568;
             border-radius: 20px;
             padding: 40px;
+        }
+
+        .form-section {
             display: none;
         }
 
-        .auth-card.active {
+        .form-section.active {
             display: block;
         }
 
@@ -104,7 +119,7 @@
             border-color: #58CC02;
         }
 
-        .error-message {
+        .error-box {
             background: rgba(239, 68, 68, 0.1);
             border: 2px solid #EF4444;
             border-radius: 8px;
@@ -116,11 +131,11 @@
             display: none;
         }
 
-        .error-message.show {
+        .error-box.show {
             display: block;
         }
 
-        .auth-btn {
+        .submit-btn {
             width: 100%;
             padding: 18px;
             background: #58CC02;
@@ -136,16 +151,16 @@
             margin-bottom: 16px;
         }
 
-        .auth-btn:hover {
+        .submit-btn:hover {
             background: #45A302;
         }
 
-        .auth-btn:disabled {
+        .submit-btn:disabled {
             background: #4A5568;
             cursor: not-allowed;
         }
 
-        .auth-divider {
+        .divider {
             text-align: center;
             color: #9CA3AF;
             font-size: 14px;
@@ -153,90 +168,99 @@
             margin: 20px 0;
         }
 
-        .auth-switch {
+        .switch-text {
             text-align: center;
             font-size: 14px;
             font-weight: 700;
             color: #9CA3AF;
         }
 
-        .auth-link {
+        .switch-btn {
+            background: none;
+            border: none;
             color: #58CC02;
-            text-decoration: none;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
             font-weight: 900;
             cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
         }
 
-        .auth-link:hover {
-            text-decoration: underline;
+        .switch-btn:hover {
+            color: #45A302;
         }
     </style>
 </head>
 <body>
+    <div class="version-tag">V2.0 - NEW</div>
+
     <div id="auth-container">
         <div class="logo">
             <div class="logo-title">Reckoning Figures</div>
             <div class="logo-subtitle">Algebra Regents Prep</div>
         </div>
 
-        <!-- Sign In Form -->
-        <div class="auth-card active" id="signin-form">
-            <div class="auth-title">Welcome Back!</div>
-            <div class="auth-subtitle">Sign in to continue learning</div>
+        <div class="form-container">
+            <!-- Sign In Section -->
+            <div class="form-section active" id="signin-section">
+                <div class="auth-title">Welcome Back!</div>
+                <div class="auth-subtitle">Sign in to continue learning</div>
 
-            <div class="error-message" id="signin-error"></div>
+                <div class="error-box" id="signin-error"></div>
 
-            <form id="signin-form-element">
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" id="signin-email" placeholder="your@email.com" required>
+                <form id="signin-form">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="signin-email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" id="signin-password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="signin-btn">Sign In</button>
+                </form>
+
+                <div class="divider">OR</div>
+
+                <div class="switch-text">
+                    Don't have an account? <button class="switch-btn" id="goto-signup">Sign Up</button>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-input" id="signin-password" placeholder="Enter your password" required>
-                </div>
-
-                <button type="submit" class="auth-btn" id="signin-btn">Sign In</button>
-            </form>
-
-            <div class="auth-divider">OR</div>
-
-            <div class="auth-switch">
-                Don't have an account? <span class="auth-link" id="show-signup-link">Sign Up</span>
             </div>
-        </div>
 
-        <!-- Sign Up Form -->
-        <div class="auth-card" id="signup-form">
-            <div class="auth-title">Create Account</div>
-            <div class="auth-subtitle">Join thousands of students mastering algebra</div>
+            <!-- Sign Up Section -->
+            <div class="form-section" id="signup-section">
+                <div class="auth-title">Create Account</div>
+                <div class="auth-subtitle">Join thousands of students mastering algebra</div>
 
-            <div class="error-message" id="signup-error"></div>
+                <div class="error-box" id="signup-error"></div>
 
-            <form id="signup-form-element">
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" id="signup-email" placeholder="your@email.com" required>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="signup-email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" id="signup-password" placeholder="At least 6 characters" required minlength="6">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" id="signup-username" placeholder="Choose a username" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="signup-btn">Create Account</button>
+                </form>
+
+                <div class="divider">OR</div>
+
+                <div class="switch-text">
+                    Already have an account? <button class="switch-btn" id="goto-signin">Sign In</button>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-input" id="signup-password" placeholder="At least 6 characters" required minlength="6">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-input" id="signup-username" placeholder="Choose a username" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
-                </div>
-
-                <button type="submit" class="auth-btn" id="signup-btn">Create Account</button>
-            </form>
-
-            <div class="auth-divider">OR</div>
-
-            <div class="auth-switch">
-                Already have an account? <span class="auth-link" id="show-signin-link">Sign In</span>
             </div>
         </div>
     </div>
@@ -251,20 +275,32 @@
     <script src="firebase-friends-system.js"></script>
 
     <script>
-        // Toggle functions - SUPER SIMPLE
-        document.getElementById('show-signup-link').addEventListener('click', function() {
-            document.getElementById('signin-form').classList.remove('active');
-            document.getElementById('signup-form').classList.add('active');
+        console.log('AUTH PAGE V2.0 - NEW VERSION LOADED');
+
+        // Get elements
+        const signinSection = document.getElementById('signin-section');
+        const signupSection = document.getElementById('signup-section');
+        const gotoSignup = document.getElementById('goto-signup');
+        const gotoSignin = document.getElementById('goto-signin');
+
+        // Toggle buttons
+        gotoSignup.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Switching to signup');
+            signinSection.classList.remove('active');
+            signupSection.classList.add('active');
         });
 
-        document.getElementById('show-signin-link').addEventListener('click', function() {
-            document.getElementById('signup-form').classList.remove('active');
-            document.getElementById('signin-form').classList.add('active');
+        gotoSignin.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Switching to signin');
+            signupSection.classList.remove('active');
+            signinSection.classList.add('active');
         });
 
-        // Get Firebase services
-        const auth = window.firebaseAuth;
-        const db = window.firebaseDB;
+        // Get Firebase
+        const firebaseAuth = window.firebaseAuth;
+        const firebaseDB = window.firebaseDB;
         let friendsSystem;
 
         function showError(formId, message) {
@@ -278,13 +314,13 @@
             errorEl.classList.remove('show');
         }
 
-        // Sign In Handler
-        document.getElementById('signin-form-element').addEventListener('submit', async function(e) {
+        // Sign In
+        document.getElementById('signin-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError('signin');
 
-            if (!auth) {
-                showError('signin', 'Firebase not loaded. Please refresh the page.');
+            if (!firebaseAuth) {
+                showError('signin', 'Firebase not loaded. Please refresh.');
                 return;
             }
 
@@ -296,8 +332,7 @@
             btn.textContent = 'Signing in...';
 
             try {
-                await auth.signInWithEmailAndPassword(email, password);
-                // Redirect happens in onAuthStateChanged
+                await firebaseAuth.signInWithEmailAndPassword(email, password);
             } catch (error) {
                 showError('signin', error.message);
                 btn.disabled = false;
@@ -305,13 +340,13 @@
             }
         });
 
-        // Sign Up Handler
-        document.getElementById('signup-form-element').addEventListener('submit', async function(e) {
+        // Sign Up
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError('signup');
 
-            if (!auth || !db) {
-                showError('signup', 'Firebase not loaded. Please refresh the page.');
+            if (!firebaseAuth || !firebaseDB) {
+                showError('signup', 'Firebase not loaded. Please refresh.');
                 return;
             }
 
@@ -320,7 +355,6 @@
             const username = document.getElementById('signup-username').value;
             const btn = document.getElementById('signup-btn');
 
-            // Validate username
             if (!/^[a-zA-Z0-9_]+$/.test(username)) {
                 showError('signup', 'Username can only contain letters, numbers, and underscores');
                 return;
@@ -330,20 +364,12 @@
             btn.textContent = 'Creating account...';
 
             try {
-                // Create account
-                await auth.createUserWithEmailAndPassword(email, password);
+                await firebaseAuth.createUserWithEmailAndPassword(email, password);
                 
-                // Initialize friends system
                 friendsSystem = new FirebaseFriendsSystem();
                 await friendsSystem.waitForAuth();
-                
-                // Create user profile with username
                 await friendsSystem.createOrUpdateUser(username, 0, 0);
-                
-                // Sync any existing progress from localStorage
                 await friendsSystem.syncProgressFromLocalStorage();
-                
-                // Redirect happens in onAuthStateChanged
             } catch (error) {
                 showError('signup', error.message);
                 btn.disabled = false;
@@ -351,24 +377,20 @@
             }
         });
 
-        // Listen for auth state changes
-        if (auth) {
-            auth.onAuthStateChanged(async (user) => {
+        // Auth state listener
+        if (firebaseAuth) {
+            firebaseAuth.onAuthStateChanged(async (user) => {
                 if (user) {
                     console.log('User signed in:', user.email);
                     
-                    // Initialize friends system
                     friendsSystem = new FirebaseFriendsSystem();
                     await friendsSystem.waitForAuth();
                     
-                    // Check if user has a username set
                     const userData = await friendsSystem.getCurrentUserData();
                     
                     if (userData && userData.userName) {
-                        // Redirect to main menu
                         window.location.href = 'main-menu-modules.html';
                     } else {
-                        // Need to set username - redirect to profile
                         window.location.href = 'profile.html';
                     }
                 }
