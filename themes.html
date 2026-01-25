@@ -93,6 +93,9 @@
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 16px;
             margin-bottom: 30px;
+            border: 3px solid red;
+            padding: 20px;
+            min-height: 200px;
         }
 
         .theme-card {
@@ -180,7 +183,21 @@
     <div id="content">
         <div class="intro-text">Pick a color scheme that matches your vibe!</div>
         <div id="debug-test" style="color: red; font-weight: 900; margin-bottom: 20px;">JavaScript NOT loaded</div>
-        <div class="themes-grid" id="themes-grid"></div>
+        
+        <!-- TEST CARD - Should always be visible -->
+        <div style="background: yellow; padding: 20px; margin-bottom: 20px; border: 3px solid red;">
+            <strong>TEST CARD:</strong> If you see this, HTML is rendering correctly
+        </div>
+        
+        <div class="themes-grid" id="themes-grid">
+            <!-- Static test theme card -->
+            <div class="theme-card" style="border: 3px solid lime;">
+                <div style="color: white; font-weight: 900; text-align: center; padding: 20px;">
+                    STATIC TEST CARD<br>
+                    If you see this, CSS is working
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -327,32 +344,59 @@
         }
 
         function renderThemes(activeTheme) {
-            console.log('renderThemes called with activeTheme:', activeTheme);
-            const grid = document.getElementById('themes-grid');
-            console.log('Grid element:', grid);
-            grid.innerHTML = '';
+            console.log('=== renderThemes START ===');
+            console.log('activeTheme:', activeTheme);
             
-            Object.entries(THEMES).forEach(([key, theme]) => {
-                console.log('Rendering theme:', key, theme.name);
-                const isActive = key === activeTheme;
-                const card = document.createElement('div');
-                card.className = `theme-card ${isActive ? 'active' : ''}`;
-                card.onclick = () => applyTheme(key);
+            try {
+                const grid = document.getElementById('themes-grid');
+                console.log('Grid element found:', grid);
                 
-                const previewDots = theme.preview.map(color => 
-                    `<div class="color-dot" style="background: ${color};"></div>`
-                ).join('');
+                if (!grid) {
+                    console.error('Grid element is null!');
+                    return;
+                }
                 
-                card.innerHTML = `
-                    <div class="theme-icon">${theme.icon}</div>
-                    <div class="theme-name">${theme.name}</div>
-                    <div class="theme-preview">${previewDots}</div>
-                    ${isActive ? '<div class="check-badge">✓ Active</div>' : ''}
-                `;
+                grid.innerHTML = '';
+                console.log('Grid cleared');
                 
-                grid.appendChild(card);
-            });
-            console.log('Finished rendering', Object.keys(THEMES).length, 'themes');
+                const themeEntries = Object.entries(THEMES);
+                console.log('Theme entries count:', themeEntries.length);
+                
+                themeEntries.forEach(([key, theme], index) => {
+                    console.log(`Rendering theme ${index + 1}/${themeEntries.length}:`, key);
+                    
+                    const isActive = key === activeTheme;
+                    const card = document.createElement('div');
+                    card.className = `theme-card ${isActive ? 'active' : ''}`;
+                    card.onclick = () => applyTheme(key);
+                    
+                    console.log('  - Card created for', key);
+                    
+                    const previewDots = theme.preview.map(color => 
+                        `<div class="color-dot" style="background: ${color};"></div>`
+                    ).join('');
+                    
+                    console.log('  - Preview dots:', previewDots.substring(0, 50) + '...');
+                    
+                    card.innerHTML = `
+                        <div class="theme-icon">${theme.icon}</div>
+                        <div class="theme-name">${theme.name}</div>
+                        <div class="theme-preview">${previewDots}</div>
+                        ${isActive ? '<div class="check-badge">✓ Active</div>' : ''}
+                    `;
+                    
+                    console.log('  - Card HTML set');
+                    
+                    grid.appendChild(card);
+                    console.log('  - Card appended to grid');
+                });
+                
+                console.log('=== renderThemes COMPLETE ===');
+                console.log('Grid children count:', grid.children.length);
+            } catch (error) {
+                console.error('ERROR in renderThemes:', error);
+                console.error('Error stack:', error.stack);
+            }
         }
 
         function loadTheme() {
