@@ -350,6 +350,15 @@
             color: var(--text-muted);
         }
 
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
         /* Bottom Navigation */
         #bottom-nav {
             position: fixed;
@@ -384,95 +393,6 @@
             width: 28px;
             height: 28px;
         }
-
-        /* Set Username Modal */
-        #username-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        #username-modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-card);
-            border: 3px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 400px;
-            margin: 20px;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--text);
-            margin-bottom: 12px;
-        }
-
-        .modal-desc {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 16px;
-            background: var(--bg-primary);
-            border: 3px solid var(--border);
-            border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 16px;
-        }
-
-        .modal-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .modal-error {
-            color: #EF4444;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: none;
-        }
-
-        .modal-error.show {
-            display: block;
-        }
-
-        .modal-btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            border: none;
-            border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 16px;
-            font-weight: 900;
-            color: white;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .modal-btn:hover {
-            background: var(--primary-dark);
-        }
     </style>
 </head>
 <body>
@@ -480,7 +400,7 @@
     <div id="header">
         <div class="header-title">Friends</div>
         <div class="username-display">
-            Playing as <span class="highlight" id="display-username">Player</span>
+            Playing as <span class="highlight" id="display-username">Loading...</span>
         </div>
     </div>
 
@@ -510,22 +430,15 @@
 
     <!-- Requests Section -->
     <div class="content-section active" id="requests-section">
-        <div id="requests-list"></div>
+        <div id="requests-list">
+            <div class="loading">Loading requests...</div>
+        </div>
     </div>
 
     <!-- Friends Section -->
     <div class="content-section" id="friends-section">
-        <div id="friends-list"></div>
-    </div>
-
-    <!-- Username Modal -->
-    <div id="username-modal">
-        <div class="modal-content">
-            <div class="modal-title">Set Your Username</div>
-            <div class="modal-desc">Choose a unique username to find and add friends!</div>
-            <input type="text" class="modal-input" id="username-input" placeholder="Enter username" maxlength="20">
-            <div class="modal-error" id="username-error"></div>
-            <button class="modal-btn" onclick="saveUsername()">Continue</button>
+        <div id="friends-list">
+            <div class="loading">Loading friends...</div>
         </div>
     </div>
 
@@ -557,7 +470,15 @@
         </div>
     </div>
 
-    <script src="friends-system.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Firebase Config & Friends System -->
+    <script src="firebase-config.js"></script>
+    <script src="firebase-friends-system.js"></script>
+
     <script>
         let friendsSystem;
         let searchTimeout;
@@ -566,55 +487,70 @@
             window.location.href = page;
         }
 
-        // Initialize
-        function init() {
-            friendsSystem = new FriendsSystem();
+        // Check authentication
+        async function checkAuth() {
+            const auth = window.firebaseAuth;
             
-            // Check if username is set
-            const username = friendsSystem.getUsername();
-            if (!username) {
-                document.getElementById('username-modal').classList.add('show');
-            } else {
-                document.getElementById('display-username').textContent = username;
-                loadData();
-            }
+            return new Promise((resolve) => {
+                auth.onAuthStateChanged((user) => {
+                    if (!user) {
+                        window.location.href = 'auth.html';
+                    } else {
+                        resolve(user);
+                    }
+                });
+            });
+        }
 
+        // Initialize
+        async function init() {
+            await checkAuth();
+            
+            friendsSystem = new FirebaseFriendsSystem();
+            await friendsSystem.waitForAuth();
+            
+            // Get current user data
+            const userData = await friendsSystem.getCurrentUserData();
+            if (userData && userData.userName) {
+                document.getElementById('display-username').textContent = userData.userName;
+            } else {
+                document.getElementById('display-username').textContent = 'No Username';
+            }
+            
+            // Load data
+            await loadData();
+            
+            // Set up real-time listeners
+            friendsSystem.listenToIncomingRequests((requests) => {
+                console.log('Incoming requests updated:', requests);
+                displayIncomingRequests(requests);
+                updateBadges();
+            });
+            
+            friendsSystem.listenToFriends((friends) => {
+                console.log('Friends updated:', friends);
+                displayFriends(friends);
+                updateBadges();
+            });
+            
             // Set up tab switching
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', () => switchTab(tab.dataset.tab));
             });
-
+            
             // Set up search
             document.getElementById('search-input').addEventListener('input', handleSearch);
         }
 
-        function saveUsername() {
-            const username = document.getElementById('username-input').value;
-            const error = document.getElementById('username-error');
-            
-            const result = friendsSystem.setUsername(username);
-            
-            if (result.success) {
-                document.getElementById('username-modal').classList.remove('show');
-                document.getElementById('display-username').textContent = username;
-                loadData();
-            } else {
-                error.textContent = result.error;
-                error.classList.add('show');
-            }
-        }
-
         function switchTab(tabName) {
-            // Update tabs
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
             
-            // Update sections
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById(`${tabName}-section`).classList.add('active');
         }
 
-        function handleSearch(e) {
+        async function handleSearch(e) {
             clearTimeout(searchTimeout);
             const query = e.target.value;
             
@@ -623,10 +559,10 @@
                 return;
             }
             
-            searchTimeout = setTimeout(() => {
-                const results = friendsSystem.searchUsers(query);
+            searchTimeout = setTimeout(async () => {
+                const results = await friendsSystem.searchUsers(query);
                 displaySearchResults(results);
-            }, 300);
+            }, 500);
         }
 
         function displaySearchResults(results) {
@@ -640,18 +576,13 @@
             
             let html = '';
             results.forEach(user => {
-                const outgoing = friendsSystem.getOutgoingRequests();
-                const alreadySent = outgoing.some(r => r.userId === user.userId);
-                
                 html += `
                     <div class="search-result-item">
                         <div class="result-info">
                             <div class="result-username">${user.userName}</div>
                             <div class="result-stats">${user.xp} XP · ${user.streak} day streak</div>
                         </div>
-                        <button class="add-friend-btn" onclick="sendRequest('${user.userId}')" ${alreadySent ? 'disabled' : ''}>
-                            ${alreadySent ? 'Sent' : 'Add'}
-                        </button>
+                        <button class="add-friend-btn" onclick="sendRequest('${user.userId}')">Add</button>
                     </div>
                 `;
             });
@@ -660,34 +591,47 @@
             container.classList.add('show');
         }
 
-        function sendRequest(userId) {
-            const result = friendsSystem.sendFriendRequest(userId);
-            if (result.success) {
-                // Refresh search results
-                const query = document.getElementById('search-input').value;
-                const results = friendsSystem.searchUsers(query);
-                displaySearchResults(results);
-                
-                // Show pending in requests tab
-                setTimeout(() => {
-                    loadRequests();
-                }, 100);
+        async function sendRequest(userId) {
+            try {
+                const result = await friendsSystem.sendFriendRequest(userId);
+                if (result.success) {
+                    // Refresh search
+                    const query = document.getElementById('search-input').value;
+                    if (query) {
+                        const results = await friendsSystem.searchUsers(query);
+                        displaySearchResults(results);
+                    }
+                    
+                    // Reload outgoing requests
+                    await loadOutgoingRequests();
+                } else {
+                    alert(result.error || 'Failed to send request');
+                }
+            } catch (error) {
+                console.error('Error sending request:', error);
+                alert('Failed to send friend request');
             }
         }
 
-        function loadData() {
-            loadRequests();
-            loadFriends();
-            updateBadges();
+        async function loadData() {
+            await Promise.all([
+                loadRequests(),
+                loadFriends(),
+                updateBadges()
+            ]);
         }
 
-        function loadRequests() {
-            const incoming = friendsSystem.getIncomingRequests();
-            const outgoing = friendsSystem.getOutgoingRequests();
+        async function loadRequests() {
+            const incoming = await friendsSystem.getIncomingRequests();
+            const outgoing = await friendsSystem.getOutgoingRequests();
+            
+            displayIncomingRequests(incoming);
+            
             const container = document.getElementById('requests-list');
+            let html = '';
             
             if (incoming.length === 0 && outgoing.length === 0) {
-                container.innerHTML = `
+                html = `
                     <div class="empty-state">
                         <svg class="empty-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
@@ -696,59 +640,90 @@
                         <div class="empty-text">Search for users to send requests!</div>
                     </div>
                 `;
+                container.innerHTML = html;
                 return;
             }
             
-            let html = '';
-            
             if (incoming.length > 0) {
                 html += '<div style="font-size: 14px; font-weight: 900; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Incoming</div>';
-                incoming.forEach(user => {
-                    html += `
-                        <div class="request-card">
-                            <div class="request-info">
-                                <div class="request-username">${user.userName}</div>
-                                <div class="request-stats">${user.xp} XP · ${user.streak} day streak</div>
-                            </div>
-                            <div class="request-actions">
-                                <button class="accept-btn" onclick="acceptRequest('${user.userId}')">Accept</button>
-                                <button class="decline-btn" onclick="declineRequest('${user.userId}')">Decline</button>
-                            </div>
-                        </div>
-                    `;
+                incoming.forEach(request => {
+                    html += createRequestCard(request, true);
                 });
             }
             
             if (outgoing.length > 0) {
                 html += '<div style="font-size: 14px; font-weight: 900; color: var(--text-muted); margin: 20px 0 12px 0; text-transform: uppercase; letter-spacing: 1px;">Pending</div>';
-                outgoing.forEach(user => {
-                    html += `
-                        <div class="request-card">
-                            <div class="request-info">
-                                <div class="request-username">${user.userName}</div>
-                                <div class="request-stats">${user.xp} XP · ${user.streak} day streak</div>
-                            </div>
-                            <div style="font-size: 14px; font-weight: 700; color: var(--text-dim);">Pending...</div>
-                        </div>
-                    `;
+                outgoing.forEach(request => {
+                    html += createRequestCard(request, false);
                 });
             }
             
             container.innerHTML = html;
         }
 
-        function acceptRequest(userId) {
-            friendsSystem.acceptFriendRequest(userId);
-            loadData();
+        function displayIncomingRequests(incoming) {
+            // This is called by the real-time listener
+            // Update just the incoming section
         }
 
-        function declineRequest(userId) {
-            friendsSystem.declineFriendRequest(userId);
-            loadData();
+        async function loadOutgoingRequests() {
+            const outgoing = await friendsSystem.getOutgoingRequests();
+            // Update UI as needed
         }
 
-        function loadFriends() {
-            const friends = friendsSystem.getFriends();
+        function createRequestCard(request, isIncoming) {
+            if (isIncoming) {
+                return `
+                    <div class="request-card">
+                        <div class="request-info">
+                            <div class="request-username">${request.userName}</div>
+                            <div class="request-stats">${request.xp} XP · ${request.streak} day streak</div>
+                        </div>
+                        <div class="request-actions">
+                            <button class="accept-btn" onclick="acceptRequest('${request.requestId}')">Accept</button>
+                            <button class="decline-btn" onclick="declineRequest('${request.requestId}')">Decline</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="request-card">
+                        <div class="request-info">
+                            <div class="request-username">${request.userName}</div>
+                            <div class="request-stats">${request.xp} XP · ${request.streak} day streak</div>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text-dim);">Pending...</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function acceptRequest(requestId) {
+            try {
+                await friendsSystem.acceptFriendRequest(requestId);
+                await loadData();
+            } catch (error) {
+                console.error('Error accepting request:', error);
+                alert('Failed to accept request');
+            }
+        }
+
+        async function declineRequest(requestId) {
+            try {
+                await friendsSystem.declineFriendRequest(requestId);
+                await loadData();
+            } catch (error) {
+                console.error('Error declining request:', error);
+                alert('Failed to decline request');
+            }
+        }
+
+        async function loadFriends() {
+            const friends = await friendsSystem.getFriends();
+            displayFriends(friends);
+        }
+
+        function displayFriends(friends) {
             const container = document.getElementById('friends-list');
             
             if (friends.length === 0) {
@@ -793,9 +768,9 @@
             container.innerHTML = html;
         }
 
-        function updateBadges() {
-            const requestCount = friendsSystem.getPendingRequestCount();
-            const friendCount = friendsSystem.getFriendCount();
+        async function updateBadges() {
+            const requestCount = await friendsSystem.getPendingRequestCount();
+            const friendCount = await friendsSystem.getFriendCount();
             
             document.getElementById('requests-badge').textContent = requestCount;
             document.getElementById('friends-badge').textContent = friendCount;

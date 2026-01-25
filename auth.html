@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Reckoning Figures</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        :root {
+            --bg-primary: #1F2937;
+            --bg-card: #2D3748;
+            --bg-card-hover: #374151;
+            --border: #4A5568;
+            --text: #ffffff;
+            --text-muted: #9CA3AF;
+            --primary: #58CC02;
+            --primary-dark: #45A302;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #auth-container {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-title {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .logo-subtitle {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border: 3px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .auth-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            background: var(--bg-primary);
+            border: 3px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid #EF4444;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #EF4444;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .auth-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .auth-btn:disabled {
+            background: var(--border);
+            cursor: not-allowed;
+        }
+
+        .auth-divider {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .auth-switch {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .auth-switch a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 900;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-muted);
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div id="auth-container">
+        <div class="logo">
+            <div class="logo-title">Reckoning Figures</div>
+            <div class="logo-subtitle">Algebra Regents Prep</div>
+        </div>
+
+        <div id="loading-state" class="loading" style="display: none;">
+            <div>Loading...</div>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="auth-card" id="signin-form">
+            <div class="auth-title">Welcome Back!</div>
+            <div class="auth-subtitle">Sign in to continue learning</div>
+
+            <div class="error-message" id="signin-error"></div>
+
+            <form onsubmit="handleSignIn(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="signin-email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="signin-password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="auth-btn" id="signin-btn">Sign In</button>
+            </form>
+
+            <div class="auth-divider">OR</div>
+
+            <div class="auth-switch">
+                Don't have an account? <a href="#" onclick="showSignUp(); return false;">Sign Up</a>
+            </div>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div class="auth-card" id="signup-form" style="display: none;">
+            <div class="auth-title">Create Account</div>
+            <div class="auth-subtitle">Join thousands of students mastering algebra</div>
+
+            <div class="error-message" id="signup-error"></div>
+
+            <form onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="signup-email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="signup-password" placeholder="At least 6 characters" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="signup-username" placeholder="Choose a username" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
+                </div>
+
+                <button type="submit" class="auth-btn" id="signup-btn">Create Account</button>
+            </form>
+
+            <div class="auth-divider">OR</div>
+
+            <div class="auth-switch">
+                Already have an account? <a href="#" onclick="showSignIn(); return false;">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+    <script src="firebase-friends-system.js"></script>
+
+    <script>
+        const auth = window.firebaseAuth;
+        const db = window.firebaseDB;
+        let friendsSystem;
+
+        function showSignIn() {
+            document.getElementById('signin-form').style.display = 'block';
+            document.getElementById('signup-form').style.display = 'none';
+        }
+
+        function showSignUp() {
+            document.getElementById('signin-form').style.display = 'none';
+            document.getElementById('signup-form').style.display = 'block';
+        }
+
+        function showError(formId, message) {
+            const errorEl = document.getElementById(`${formId}-error`);
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+
+        function hideError(formId) {
+            const errorEl = document.getElementById(`${formId}-error`);
+            errorEl.classList.remove('show');
+        }
+
+        async function handleSignIn(e) {
+            e.preventDefault();
+            hideError('signin');
+
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+            const btn = document.getElementById('signin-btn');
+
+            btn.disabled = true;
+            btn.textContent = 'Signing in...';
+
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                // Redirect happens in onAuthStateChanged
+            } catch (error) {
+                showError('signin', error.message);
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        }
+
+        async function handleSignUp(e) {
+            e.preventDefault();
+            hideError('signup');
+
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const username = document.getElementById('signup-username').value;
+            const btn = document.getElementById('signup-btn');
+
+            // Validate username
+            if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                showError('signup', 'Username can only contain letters, numbers, and underscores');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Creating account...';
+
+            try {
+                // Create account
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                
+                // Initialize friends system
+                friendsSystem = new FirebaseFriendsSystem();
+                await friendsSystem.waitForAuth();
+                
+                // Create user profile with username
+                await friendsSystem.createOrUpdateUser(username, 0, 0);
+                
+                // Sync any existing progress from localStorage
+                await friendsSystem.syncProgressFromLocalStorage();
+                
+                // Redirect happens in onAuthStateChanged
+            } catch (error) {
+                showError('signup', error.message);
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+            }
+        }
+
+        // Listen for auth state changes
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                console.log('User signed in:', user.email);
+                
+                // Initialize friends system
+                friendsSystem = new FirebaseFriendsSystem();
+                await friendsSystem.waitForAuth();
+                
+                // Check if user has a username set
+                const userData = await friendsSystem.getCurrentUserData();
+                
+                if (userData && userData.userName) {
+                    // Redirect to main menu
+                    window.location.href = 'main-menu-modules.html';
+                } else {
+                    // Need to set username - redirect to profile
+                    window.location.href = 'profile.html';
+                }
+            }
+        });
+
+        // Check if already signed in
+        document.getElementById('loading-state').style.display = 'block';
+        document.getElementById('signin-form').style.display = 'none';
+        
+        setTimeout(() => {
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('signin-form').style.display = 'block';
+            }
+        }, 1000);
+
+        // Theme system
+        function loadTheme() {
+            const THEMES = {
+                dark: { colors: { '--bg-primary': '#1F2937', '--bg-card': '#2D3748', '--bg-card-hover': '#374151', '--border': '#4A5568', '--text': '#ffffff', '--text-muted': '#9CA3AF', '--primary': '#58CC02', '--primary-dark': '#45A302' }},
+                light: { colors: { '--bg-primary': '#F9FAFB', '--bg-card': '#FFFFFF', '--bg-card-hover': '#F3F4F6', '--border': '#E5E7EB', '--text': '#1F2937', '--text-muted': '#6B7280', '--primary': '#10B981', '--primary-dark': '#059669' }},
+                ocean: { colors: { '--bg-primary': '#0F172A', '--bg-card': '#1E293B', '--bg-card-hover': '#334155', '--border': '#475569', '--text': '#F1F5F9', '--text-muted': '#94A3B8', '--primary': '#06B6D4', '--primary-dark': '#0891B2' }},
+                sunset: { colors: { '--bg-primary': '#1C1917', '--bg-card': '#292524', '--bg-card-hover': '#44403C', '--border': '#57534E', '--text': '#FAFAF9', '--text-muted': '#A8A29E', '--primary': '#F97316', '--primary-dark': '#EA580C' }},
+                forest: { colors: { '--bg-primary': '#14532D', '--bg-card': '#166534', '--bg-card-hover': '#15803D', '--border': '#16A34A', '--text': '#F0FDF4', '--text-muted': '#BBF7D0', '--primary': '#4ADE80', '--primary-dark': '#22C55E' }},
+                midnight: { colors: { '--bg-primary': '#1E1B4B', '--bg-card': '#312E81', '--bg-card-hover': '#3730A3', '--border': '#4C1D95', '--text': '#F5F3FF', '--text-muted': '#C4B5FD', '--primary': '#A855F7', '--primary-dark': '#9333EA' }}
+            };
+            
+            const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
+            const theme = THEMES[savedTheme];
+            if (theme) {
+                const root = document.documentElement;
+                Object.entries(theme.colors).forEach(([property, value]) => {
+                    root.style.setProperty(property, value);
+                });
+            }
+        }
+        
+        loadTheme();
+    </script>
+</body>
+</html>
