@@ -694,6 +694,26 @@
                 });
             }
 
+            // ✅ CRITICAL: Update current user's XP/streak from localStorage (may be newer than Firebase)
+            const currentUserIndex = realUsers.findIndex(u => u.isCurrentUser);
+            if (currentUserIndex !== -1) {
+                const localXP = freshStats.xp || 0;
+                const localStreak = freshStats.bestQuestionStreak || 0;
+                
+                // Use higher values (localStorage may be more recent than Firebase)
+                if (localXP > realUsers[currentUserIndex].xp) {
+                    console.log('📊 Updating XP from localStorage:', realUsers[currentUserIndex].xp, '→', localXP);
+                    realUsers[currentUserIndex].xp = localXP;
+                }
+                if (localStreak > realUsers[currentUserIndex].streak) {
+                    console.log('🔥 Updating streak from localStorage:', realUsers[currentUserIndex].streak, '→', localStreak);
+                    realUsers[currentUserIndex].streak = localStreak;
+                }
+                
+                // Also update name in case it changed
+                realUsers[currentUserIndex].name = freshStats.userName;
+            }
+
             // Generate fake users to fill the rest
             const fakeCount = Math.max(0, targetTotal - realUsers.length);
             const fakeUsers = [];
