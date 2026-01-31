@@ -182,21 +182,8 @@
 
     <div id="content">
         <div class="intro-text">Pick a color scheme that matches your vibe!</div>
-        <div id="debug-test" style="color: red; font-weight: 900; margin-bottom: 20px;">JavaScript NOT loaded</div>
-        
-        <!-- TEST CARD - Should always be visible -->
-        <div style="background: yellow; padding: 20px; margin-bottom: 20px; border: 3px solid red;">
-            <strong>TEST CARD:</strong> If you see this, HTML is rendering correctly
-        </div>
         
         <div class="themes-grid" id="themes-grid">
-            <!-- Static test theme card -->
-            <div class="theme-card" style="border: 3px solid lime;">
-                <div style="color: white; font-weight: 900; text-align: center; padding: 20px;">
-                    STATIC TEST CARD<br>
-                    If you see this, CSS is working
-                </div>
-            </div>
         </div>
     </div>
 
@@ -410,7 +397,6 @@
 
         // Initialize
         console.log('Initializing themes page...');
-        document.getElementById('debug-test').textContent = 'JavaScript IS loaded! Themes object has ' + Object.keys(THEMES).length + ' themes';
         
         // Render themes immediately
         const currentTheme = localStorage.getItem('reckonTheme') || 'dark';

@@ -426,6 +426,28 @@
         }
     </script>
 
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="auto-sync.js"></script>
+
+    <script>
+        // Auto-sync progress when page loads
+        window.addEventListener('DOMContentLoaded', async () => {
+            if (window.AutoSync && window.firebaseAuth && window.firebaseDB) {
+                const autoSync = new AutoSync();
+                try {
+                    await autoSync.fullSync();
+                    console.log('✅ Main menu: Progress synced to Firebase');
+                } catch (error) {
+                    console.log('⏸️  Main menu: Sync skipped (not logged in or error)');
+                }
+            }
+        });
+    </script>
+
     <script>
         // Load theme
         function loadTheme() {
