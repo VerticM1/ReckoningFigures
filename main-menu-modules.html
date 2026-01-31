@@ -37,6 +37,60 @@
         .stat-icon { width: 24px; height: 24px; }
         .stat-badge span { font-size: 18px; font-weight: 900; }
         
+        /* Weekly Streak Calendar */
+        .streak-calendar {
+            flex: 1;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 12px;
+        }
+        
+        .streak-days {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+        }
+        
+        .streak-day {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .day-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        .day-indicator {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .day-indicator.completed {
+            background: #FFA500;
+            box-shadow: 0 2px 8px rgba(255, 165, 0, 0.4);
+        }
+        
+        .day-indicator.completed svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .day-indicator.today {
+            border: 2px solid #FFA500;
+        }
+        
         #logo-section { padding: 40px 20px 20px; text-align: center; }
         .app-logo { max-width: 280px; margin-bottom: 8px; }
         .tagline { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
@@ -139,13 +193,10 @@
     <div id="header">
         <div class="user-greeting">Hi, <span class="name" id="user-name">Player</span></div>
         <div class="header-stats">
-            <div class="stat-badge streak">
-                <svg class="stat-icon" viewBox="0 0 24 24">
-                    <path fill="#FFA500" d="M12 3c-1.5 4-4 6-4 10 0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-2.5-6-4-10z"/>
-                    <path fill="#FF6B00" d="M12 7c-1 2.5-2.5 4-2.5 6.5 0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5c0-2.5-1.5-4-2.5-6.5z"/>
-                    <path fill="#FFD700" d="M12 10c-0.5 1.5-1.5 2.5-1.5 4 0 0.8 0.7 1.5 1.5 1.5s1.5-0.7 1.5-1.5c0-1.5-1-2.5-1.5-4z"/>
-                </svg>
-                <span id="header-streak">0</span>
+            <div class="streak-calendar">
+                <div class="streak-days" id="streak-calendar">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
             <div class="stat-badge xp">
                 <svg class="stat-icon" viewBox="0 0 24 24">
@@ -335,8 +386,89 @@
         // So we don't update it here - it happens in figure completion
         
         document.getElementById('user-name').textContent = userProgress.userName || 'Player';
-        document.getElementById('header-streak').textContent = userProgress.dailyStreak || 0;
         document.getElementById('header-xp').textContent = userProgress.xp || 0;
+        
+        // Weekly Streak Calendar
+        function renderWeeklyStreak() {
+            const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const container = document.getElementById('streak-calendar');
+            
+            // Get or create daily activity tracker
+            let dailyActivity = JSON.parse(localStorage.getItem('dailyActivity') || '{}');
+            
+            // Get today's date info
+            const today = new Date();
+            const todayDay = today.getDay(); // 0 = Sunday, 6 = Saturday
+            
+            // Generate the week
+            container.innerHTML = '';
+            for (let i = 0; i < 7; i++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'streak-day';
+                
+                // Calculate the date for this day
+                const dayOffset = i - todayDay;
+                const dayDate = new Date(today);
+                dayDate.setDate(today.getDate() + dayOffset);
+                const dateKey = dayDate.toISOString().split('T')[0]; // YYYY-MM-DD
+                
+                // Check if completed
+                const completed = dailyActivity[dateKey] || false;
+                const isToday = i === todayDay;
+                
+                // Day label
+                const label = document.createElement('div');
+                label.className = 'day-label';
+                label.textContent = dayLabels[i];
+                dayDiv.appendChild(label);
+                
+                // Day indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'day-indicator';
+                if (completed) indicator.classList.add('completed');
+                if (isToday) indicator.classList.add('today');
+                
+                // Add checkmark if completed
+                if (completed) {
+                    indicator.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="white">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    `;
+                }
+                
+                dayDiv.appendChild(indicator);
+                container.appendChild(dayDiv);
+            }
+        }
+        
+        // Mark today as active (called when user completes ANY figure)
+        function markTodayActive() {
+            const today = new Date().toISOString().split('T')[0];
+            let dailyActivity = JSON.parse(localStorage.getItem('dailyActivity') || '{}');
+            dailyActivity[today] = true;
+            localStorage.setItem('dailyActivity', JSON.stringify(dailyActivity));
+            renderWeeklyStreak();
+        }
+        
+        // Check if user has activity today
+        function checkTodayActivity() {
+            const today = new Date().toISOString().split('T')[0];
+            let dailyActivity = JSON.parse(localStorage.getItem('dailyActivity') || '{}');
+            
+            // If user has completed figures, mark today active
+            if (userProgress.completed && userProgress.completed.length > 0) {
+                // Check if any figures were completed (you might want to add timestamp tracking)
+                // For now, if they have progress, assume they've played
+                dailyActivity[today] = true;
+                localStorage.setItem('dailyActivity', JSON.stringify(dailyActivity));
+            }
+        }
+        
+        // Initialize
+        checkTodayActivity();
+        renderWeeklyStreak();
 
         const totalFigures = 18; // Module 1 (12) + Module 2 (6)
         const completedFigures = userProgress.completed ? userProgress.completed.length : 0;
