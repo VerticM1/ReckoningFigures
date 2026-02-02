@@ -465,13 +465,6 @@
         </div>
     </div>
 
-    <!-- Firebase Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="auto-sync.js"></script>
-
     <script>
         // Load saved theme
         const savedTheme = localStorage.getItem('reckonTheme') || 'dark';
@@ -525,199 +518,24 @@
         let currentLeaderboardType = 'xp';
 
         // Generate REAL question streak leaderboard using actual localStorage data
-        async function generateQuestionStreakLeaderboard() {
-            // ✅ Fetch real users from Firebase if not loaded yet
-            if (!firebaseUsersLoaded) {
-                await fetchFirebaseUsers();
-            }
 
-            // ✅ Generate mixed leaderboard (real + fake), sorted by streak
-            if (firebaseUsers.length > 0) {
-                console.log('✨ Mixing', firebaseUsers.length, 'real users with fake users (streak)');
-                return generateMixedLeaderboard(firebaseUsers, 20, 'streak');
-            }
-
-            // ✅ Fall back to purely fake data if no Firebase
-            console.log('📦 Using purely fake data for streaks (no Firebase users)');
+        // === SOLO MODE LEADERBOARD ===
+        // Generate leaderboard with current user + AI competitors
+        function generateSoloLeaderboard(sortBy = 'xp') {
             const freshStats = refreshUserStats();
-            return generateMixedLeaderboard([{
+            
+            // Create current user
+            const currentUser = {
                 name: freshStats.userName,
                 xp: freshStats.xp,
                 streak: freshStats.bestQuestionStreak || 0,
                 isCurrentUser: true,
-                isRealUser: true
-            }], 20, 'streak');
-        }
-
-        // Generate mock leaderboard data (in real app, this would come from server)
-        function generateLeaderboard() {
-            // ✅ Get FRESH stats from localStorage!
-            const freshStats = refreshUserStats();
+                country: null
+            };
             
-            const fullNames = [
-                'Alex Rivera', 'Jordan Chen', 'Taylor Kim', 'Morgan Patel', 'Casey Johnson', 
-                'Riley Martinez', 'Avery Singh', 'Quinn O\'Brien', 'Blake Anderson', 'Drew Williams',
-                'Reese Thompson', 'Sage Davis', 'Skylar Rodriguez', 'River Jackson'
-            ];
-
-            const usernames = [
-                'MathWiz47', 'AlgebraPro', 'EquationKing99', 'NumberNinja', 'CalcMaster23',
-                'FormulaFox', 'BrainiacBob', 'QuickSolver', 'LogicLuna88', 'TheoremThief',
-                'BalanceGuru42', 'FigureHunter', 'XPChaser', 'StreakSeeker7'
-            ];
-
-            const countries = [
-                { code: 'US', flag: '🇺🇸' },
-                { code: 'CA', flag: '🇨🇦' },
-                { code: 'GB', flag: '🇬🇧' },
-                { code: 'MX', flag: '🇲🇽' },
-                { code: 'BR', flag: '🇧🇷' },
-                { code: 'FR', flag: '🇫🇷' },
-                { code: 'DE', flag: '🇩🇪' },
-                { code: 'IT', flag: '🇮🇹' },
-                { code: 'ES', flag: '🇪🇸' },
-                { code: 'JP', flag: '🇯🇵' },
-                { code: 'KR', flag: '🇰🇷' },
-                { code: 'IN', flag: '🇮🇳' },
-                { code: 'AU', flag: '🇦🇺' },
-                { code: 'PL', flag: '🇵🇱' },
-                { code: 'PH', flag: '🇵🇭' }
-            ];
-
-            const leaderboard = [];
-            const usedNames = new Set([freshStats.userName]);
+            // Generate 19 AI competitors
+            const competitors = [];
             
-            // Generate 19 random players (so with current user = 20 total)
-            for (let i = 0; i < 19; i++) {
-                let name;
-                let namePool;
-                
-                // Mix between full names and usernames
-                if (Math.random() > 0.5) {
-                    namePool = fullNames;
-                } else {
-                    namePool = usernames;
-                }
-                
-                do {
-                    name = namePool[Math.floor(Math.random() * namePool.length)];
-                } while (usedNames.has(name));
-                usedNames.add(name);
-                
-                const xp = Math.floor(Math.random() * 1200) + 50;
-                
-                // 70% chance to show country flag
-                let country = null;
-                if (Math.random() > 0.3) {
-                    country = countries[Math.floor(Math.random() * countries.length)].flag;
-                }
-                
-                leaderboard.push({ name, xp, country });
-            }
-
-            // Add current user (without flag by default, they're local)
-            leaderboard.push({ name: freshStats.userName, xp: freshStats.xp, isCurrentUser: true });
-
-            // Sort by XP
-            leaderboard.sort((a, b) => b.xp - a.xp);
-
-            return leaderboard;
-        }
-
-        // === FIREBASE LEADERBOARD ===
-        let firebaseUsers = [];
-        let firebaseUsersLoaded = false;
-
-        // Fetch real users from Firebase (returns just real users, not mixed)
-        async function fetchFirebaseUsers() {
-            try {
-                // Check if Firebase is available
-                if (!window.firebaseDB || !window.firebaseAuth) {
-                    console.log('📦 Firebase not loaded - using local data only');
-                    return [];
-                }
-
-                // Sync localStorage to Firebase first
-                if (window.autoSync) {
-                    await window.autoSync.fullSync();
-                }
-
-                // Query all users sorted by XP
-                const snapshot = await window.firebaseDB.collection('users')
-                    .orderBy('xp', 'desc')
-                    .limit(100)
-                    .get();
-
-                if (snapshot.empty) {
-                    console.log('📦 No users in Firebase yet');
-                    return [];
-                }
-
-                const currentUserId = window.firebaseAuth.currentUser?.uid;
-                const users = [];
-
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    users.push({
-                        name: data.userName || 'Player',
-                        xp: data.xp || 0,
-                        streak: data.streak || 0,
-                        isCurrentUser: doc.id === currentUserId,
-                        isRealUser: true // Mark as real
-                    });
-                });
-
-                console.log('✅ Loaded', users.length, 'real users from Firebase');
-                firebaseUsers = users;
-                firebaseUsersLoaded = true;
-                return users;
-
-            } catch (error) {
-                console.error('❌ Firebase users fetch error:', error);
-                return [];
-            }
-        }
-
-        // Generate mixed leaderboard (real users + fake users)
-        function generateMixedLeaderboard(realUsers, targetTotal = 20, sortBy = 'xp') {
-            const freshStats = refreshUserStats();
-            
-            // Ensure current user is in real users (from localStorage if not in Firebase)
-            const hasCurrentUser = realUsers.some(u => u.isCurrentUser);
-            if (!hasCurrentUser) {
-                realUsers.push({
-                    name: freshStats.userName,
-                    xp: freshStats.xp,
-                    streak: freshStats.bestQuestionStreak || 0,
-                    isCurrentUser: true,
-                    isRealUser: true
-                });
-            }
-
-            // ✅ CRITICAL: Update current user's XP/streak from localStorage (may be newer than Firebase)
-            const currentUserIndex = realUsers.findIndex(u => u.isCurrentUser);
-            if (currentUserIndex !== -1) {
-                const localXP = freshStats.xp || 0;
-                const localStreak = freshStats.bestQuestionStreak || 0;
-                
-                // Use higher values (localStorage may be more recent than Firebase)
-                if (localXP > realUsers[currentUserIndex].xp) {
-                    console.log('📊 Updating XP from localStorage:', realUsers[currentUserIndex].xp, '→', localXP);
-                    realUsers[currentUserIndex].xp = localXP;
-                }
-                if (localStreak > realUsers[currentUserIndex].streak) {
-                    console.log('🔥 Updating streak from localStorage:', realUsers[currentUserIndex].streak, '→', localStreak);
-                    realUsers[currentUserIndex].streak = localStreak;
-                }
-                
-                // Also update name in case it changed
-                realUsers[currentUserIndex].name = freshStats.userName;
-            }
-
-            // Generate fake users to fill the rest
-            const fakeCount = Math.max(0, targetTotal - realUsers.length);
-            const fakeUsers = [];
-
             const fullNames = [
                 'Alex Rivera', 'Jordan Chen', 'Taylor Kim', 'Morgan Patel', 'Casey Johnson',
                 'Riley Martinez', 'Avery Singh', 'Quinn O\'Brien', 'Blake Anderson', 'Drew Williams',
@@ -735,9 +553,9 @@
                 '🇰🇷', '🇮🇳', '🇦🇺', '🇵🇱', '🇵🇭'
             ];
 
-            const usedNames = new Set(realUsers.map(u => u.name));
+            const usedNames = new Set([currentUser.name]);
 
-            for (let i = 0; i < fakeCount; i++) {
+            for (let i = 0; i < 19; i++) {
                 let name;
                 const namePool = Math.random() > 0.5 ? fullNames : usernames;
                 
@@ -750,46 +568,33 @@
                 const streak = Math.floor(Math.random() * 50) + 1;
                 const country = Math.random() > 0.3 ? countries[Math.floor(Math.random() * countries.length)] : null;
 
-                fakeUsers.push({
+                competitors.push({
                     name,
                     xp,
                     streak,
                     country,
-                    isCurrentUser: false,
-                    isRealUser: false // Mark as fake
+                    isCurrentUser: false
                 });
             }
 
-            // Combine and sort
-            const combined = [...realUsers, ...fakeUsers];
-            combined.sort((a, b) => b[sortBy] - a[sortBy]);
+            // Combine current user + competitors
+            const allPlayers = [currentUser, ...competitors];
+            
+            // Sort by the specified stat
+            allPlayers.sort((a, b) => b[sortBy] - a[sortBy]);
 
-            return combined;
+            console.log('🎮 Solo mode leaderboard generated with', allPlayers.length, 'players');
+            return allPlayers;
         }
 
-        // Get or generate persistent leaderboard
-        async function getPersistentLeaderboard() {
-            // ✅ Fetch real users from Firebase
-            if (!firebaseUsersLoaded) {
-                await fetchFirebaseUsers();
-            }
+        // Get or generate persistent leaderboard (XP Rankings)
+        function getPersistentLeaderboard() {
+            return generateSoloLeaderboard('xp');
+        }
 
-            // ✅ Generate mixed leaderboard (real + fake)
-            if (firebaseUsers.length > 0) {
-                console.log('✨ Mixing', firebaseUsers.length, 'real users with fake users');
-                return generateMixedLeaderboard(firebaseUsers, 20, 'xp');
-            }
-
-            // ✅ Fall back to purely fake data if no Firebase
-            console.log('📦 Using purely fake data (no Firebase users)');
-            const freshStats = refreshUserStats();
-            return generateMixedLeaderboard([{
-                name: freshStats.userName,
-                xp: freshStats.xp,
-                streak: freshStats.bestQuestionStreak || 0,
-                isCurrentUser: true,
-                isRealUser: true
-            }], 20, 'xp');
+        // Generate Question Streak Leaderboard
+        function generateQuestionStreakLeaderboard() {
+            return generateSoloLeaderboard('streak');
         }
 
         let currentLeaderboard = [];
@@ -899,7 +704,7 @@
             }
         }
 
-        async function switchLeaderboard(type) {
+        function switchLeaderboard(type) {
             // Update tab styles
             document.querySelectorAll('.time-tab').forEach(tab => {
                 tab.classList.remove('active');
@@ -909,17 +714,17 @@
             currentLeaderboardType = type;
             
             if (type === 'xp') {
-                currentLeaderboard = await getPersistentLeaderboard();
+                currentLeaderboard = getPersistentLeaderboard();
             } else {
-                currentLeaderboard = await generateQuestionStreakLeaderboard();
+                currentLeaderboard = generateQuestionStreakLeaderboard();
             }
 
             renderLeaderboard();
         }
 
         // Initialize leaderboard
-        async function initLeaderboard() {
-            currentLeaderboard = await getPersistentLeaderboard();
+        function initLeaderboard() {
+            currentLeaderboard = getPersistentLeaderboard();
             renderLeaderboard();
         }
 
@@ -927,7 +732,7 @@
         initLeaderboard();
 
         // ✅ Refresh leaderboard when page gains focus (user returns from completing figure)
-        window.addEventListener('focus', async function() {
+        window.addEventListener('focus', function() {
             // Refresh user stats and league
             const freshStats = refreshUserStats();
             const userLeague = getLeague(freshStats.xp);
@@ -938,9 +743,9 @@
             
             // Regenerate current leaderboard with fresh stats
             if (currentLeaderboardType === 'xp') {
-                currentLeaderboard = await getPersistentLeaderboard();
+                currentLeaderboard = getPersistentLeaderboard();
             } else {
-                currentLeaderboard = await generateQuestionStreakLeaderboard();
+                currentLeaderboard = generateQuestionStreakLeaderboard();
             }
             renderLeaderboard();
         });
