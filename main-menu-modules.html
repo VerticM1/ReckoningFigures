@@ -457,13 +457,11 @@
             const today = new Date().toISOString().split('T')[0];
             let dailyActivity = JSON.parse(localStorage.getItem('dailyActivity') || '{}');
             
-            // If user has completed figures, mark today active
-            if (userProgress.completed && userProgress.completed.length > 0) {
-                // Check if any figures were completed (you might want to add timestamp tracking)
-                // For now, if they have progress, assume they've played
-                dailyActivity[today] = true;
-                localStorage.setItem('dailyActivity', JSON.stringify(dailyActivity));
-            }
+            // Mark today as active (user opened the app!)
+            dailyActivity[today] = true;
+            localStorage.setItem('dailyActivity', JSON.stringify(dailyActivity));
+            
+            console.log('✅ Daily activity marked for', today);
         }
         
         // Initialize
