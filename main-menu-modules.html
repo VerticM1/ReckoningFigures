@@ -106,7 +106,7 @@
         .modules-container { padding: 0 20px 20px; }
         .section-header { font-size: 18px; font-weight: 900; color: var(--text); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .module-card { background: var(--bg-card); border: 3px solid #4A5568; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; }
+        .module-card { background: var(--bg-card); border: 3px solid #4A5568; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease; position: relative; }
         .module-card:hover { transform: translateY(-4px); border-color: var(--primary); }
         .module-card.locked { opacity: 0.6; cursor: not-allowed; }
         .module-card.locked:hover { transform: none; border-color: var(--border); }
@@ -202,6 +202,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
+            pointer-events: none; /* Allow clicks to pass through to card */
         }
         
         .premium-lock svg {
