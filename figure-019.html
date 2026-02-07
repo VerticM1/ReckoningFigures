@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 019: Unit Conversions</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Top Bar */
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        /* Main Content */
+        #content {
+            flex: 1;
+            padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Mode Badge - IMPROVED SPACING */
+        .mode-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .mode-badge.learn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .mode-badge.practice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .mode-badge.challenge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        /* Walkthrough Card */
+        .walkthrough-card {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .walkthrough-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .walkthrough-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .example-box {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .example-title {
+            font-size: 14px;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .step {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .step::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+        }
+
+        .conversion-chain {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .conversion-unit {
+            background: #4b5563;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .conversion-arrow {
+            color: #10b981;
+            font-size: 20px;
+        }
+
+        /* Fraction Display - OPTIMIZED WIDTH */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 4px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .fraction-top {
+            border-bottom: 3px solid white;
+            padding: 4px 12px 6px 12px;
+            min-width: 60px; /* REDUCED from 80px */
+            text-align: center;
+        }
+
+        .fraction-bottom {
+            padding: 6px 12px 4px 12px;
+            min-width: 60px; /* REDUCED from 80px */
+            text-align: center;
+        }
+
+        .conversion-step {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 12px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .conversion-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Question Section */
+        #walkthrough-section {
+            margin-bottom: 16px;
+        }
+
+        #question-text {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        /* IMPROVED CHOICE BUTTONS */
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* INCREASED from default */
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px; /* INCREASED padding */
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 50px; /* Space for letter label */
+        }
+
+        /* Letter labels (A, B, C, D) */
+        .choice::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #4b5563;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #9ca3af;
+        }
+
+        .choice:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-2px);
+        }
+
+        .choice.selected {
+            border-color: #fbbf24;
+            background: #4b5563;
+        }
+
+        .choice.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.correct::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        .choice.incorrect::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        /* Feedback Section */
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .check-icon.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #feedback-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        /* Continue Button */
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #1f2937;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #continue-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        #continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Victory Screen */
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #victory.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .victory-content {
+            text-align: center;
+            padding: 40px;
+            max-width: 400px;
+        }
+
+        .victory-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: victoryBounce 0.8s ease;
+        }
+
+        @keyframes victoryBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #victory-msg {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .victory-stat {
+            font-size: 18px;
+            font-weight: 800;
+            color: #9ca3af;
+            margin: 8px 0;
+        }
+
+        #victory-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #1f2937;
+            text-transform: uppercase;
+        }
+
+        .victory-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .victory-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Top Bar -->
+        <div id="top-bar">
+            <button class="close-btn" onclick="window.location.href='main-menu-modules.html'">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="content">
+            <div id="walkthrough-section"></div>
+            <div id="question-text"></div>
+            <div id="choices"></div>
+            
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <!-- Victory Screen -->
+        <div id="victory">
+            <div class="victory-content">
+                <div class="victory-icon">🎯</div>
+                <div id="victory-msg"></div>
+                <div id="victory-badges"></div>
+                <button class="victory-btn" onclick="window.location.href='main-menu-modules.html'">Return to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            current: 0,
+            total: 10,
+            correct: 0,
+            streak: 0,
+            selected: null
+        };
+
+        const content = [
+            // WALKTHROUGH 1: Basic Concept
+            {
+                type: 'walkthrough',
+                mode: 'learn',
+                title: 'Understanding Unit Conversions',
+                content: `
+                    <div class="walkthrough-text">Unit conversions let you change measurements while keeping the value the same.</div>
+                    <div class="example-box">
+                        <div class="example-title">Key Concept</div>
+                        <div class="step">Multiply by conversion factors</div>
+                        <div class="step">Units cancel like fractions</div>
+                        <div class="step">Check: unwanted units cancel</div>
+                    </div>
+                    <div class="walkthrough-text">Example: Convert 5 feet to inches</div>
+                    <div class="conversion-step">
+                        <div class="conversion-row">
+                            <span style="font-size: 18px; font-weight: 800;">5 ft ×</span>
+                            <div class="fraction">
+                                <div class="fraction-top">12 in</div>
+                                <div class="fraction-bottom">1 ft</div>
+                            </div>
+                            <span style="font-size: 18px; font-weight: 800;">= 60 in</span>
+                        </div>
+                    </div>
+                    <div class="walkthrough-text">The "ft" cancels, leaving inches.</div>
+                `
+            },
+
+            // WALKTHROUGH 2: Dimensional Analysis
+            {
+                type: 'walkthrough',
+                mode: 'learn',
+                title: 'Converting Units Step by Step',
+                content: `
+                    <div class="walkthrough-text">Set up conversions so units cancel correctly.</div>
+                    <div class="example-box">
+                        <div class="example-title">Example: 400 meters to miles</div>
+                        <div class="step">Start: 400 meters</div>
+                        <div class="step">Convert: meters → miles</div>
+                        <div class="conversion-step">
+                            <div class="conversion-row">
+                                <span style="font-size: 16px; font-weight: 800;">400 m ×</span>
+                                <div class="fraction">
+                                    <div class="fraction-top">0.62 mi</div>
+                                    <div class="fraction-bottom">1000 m</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step">Meters cancel</div>
+                        <div class="step">Result: 0.248 miles ✓</div>
+                    </div>
+                `
+            },
+
+            // WALKTHROUGH 3: Multi-Step Conversions
+            {
+                type: 'walkthrough',
+                mode: 'learn',
+                title: 'Chain Multiple Conversions',
+                content: `
+                    <div class="walkthrough-text">Some problems need multiple conversion factors.</div>
+                    <div class="example-box">
+                        <div class="example-title">Example: Pool volume (5240 ft³ to gallons)</div>
+                        <div class="step">Given: 7.5 gallons per cubic foot</div>
+                        <div class="conversion-step">
+                            <div class="conversion-row">
+                                <span style="font-size: 16px; font-weight: 800;">5240 ft³ ×</span>
+                                <div class="fraction">
+                                    <div class="fraction-top">7.5 gal</div>
+                                    <div class="fraction-bottom">1 ft³</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step">Cubic feet cancel</div>
+                        <div class="step">Result: 39,300 gallons ✓</div>
+                    </div>
+                `
+            },
+
+            // PRACTICE MODE - JMAP Questions (easier)
+            { 
+                mode: 'practice',
+                q: 'A runner completes 400 meters in 43.03 seconds. Which calculation gives his average speed in miles per hour?', 
+                choices: [
+                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (3600 sec ÷ 1 hr)',
+                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 100 m) × (60 sec ÷ 1 hr)',
+                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (1 hr ÷ 3600 sec)',
+                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (1 hr ÷ 60 sec)'
+                ],
+                answer: '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (3600 sec ÷ 1 hr)'
+            },
+            { 
+                mode: 'practice',
+                q: 'A pool holds 5240 cubic feet of water. There are 7.5 gallons in 1 cubic foot. How many gallons does the pool hold?', 
+                choices: [
+                    '698 gallons',
+                    '5,248 gallons',
+                    '39,300 gallons',
+                    '78,600 gallons'
+                ],
+                answer: '39,300 gallons'
+            },
+            { 
+                mode: 'practice',
+                q: 'A runner completes 50 meters in 7 seconds. She wants this speed in inches per minute. Which expression is correct?', 
+                choices: [
+                    '(7 sec ÷ 50 m) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)',
+                    '(7 sec ÷ 50 m) × (1 min ÷ 60 sec) × (39.37 in ÷ 1 m)',
+                    '(50 m ÷ 7 sec) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)',
+                    '(50 m ÷ 7 sec) × (1 min ÷ 60 sec) × (1 m ÷ 39.37 in)'
+                ],
+                answer: '(50 m ÷ 7 sec) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)'
+            },
+            { 
+                mode: 'practice',
+                q: 'A train travels at 49 mph. Each car is 56 feet long. How many cars pass a point in 1 minute?', 
+                choices: [
+                    '(49 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (60 min ÷ 1 hr) × (1 car ÷ 56 ft)',
+                    '(49 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)',
+                    '(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)',
+                    '(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (60 min ÷ 1 hr) × (1 car ÷ 56 ft)'
+                ],
+                answer: '(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)'
+            },
+
+            // CHALLENGE MODE - Harder conversions
+            { 
+                mode: 'challenge',
+                q: 'Usain Bolt ran 100 meters in 9.58 seconds (world record). Which calculation gives his speed in kilometers per hour?', 
+                choices: [
+                    '(9.58 sec ÷ 100 m) × (1000 m ÷ 1 km) × (1 min ÷ 60 sec) × (1 hr ÷ 60 min)',
+                    '(100 m ÷ 9.58 sec) × (60 sec ÷ 1 min) × (1000 m ÷ 1 km) × (1 hr ÷ 60 min)',
+                    '(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (1 min ÷ 60 sec) × (1 hr ÷ 60 min)',
+                    '(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (60 sec ÷ 1 min) × (60 min ÷ 1 hr)'
+                ],
+                answer: '(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (60 sec ÷ 1 min) × (60 min ÷ 1 hr)'
+            },
+            { 
+                mode: 'challenge',
+                q: 'A tank holds 6000 gallons. A truck holds 1 cubic foot. There are 7.5 gallons per cubic foot. How many truck loads to fill a 5240 ft³ pool?', 
+                choices: [
+                    '(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (6000 gal ÷ 1 load)',
+                    '(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (1 load ÷ 6000 gal)',
+                    '(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (6000 gal ÷ 1 load)',
+                    '(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (1 load ÷ 6000 gal)'
+                ],
+                answer: '(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (1 load ÷ 6000 gal)'
+            },
+            { 
+                mode: 'challenge',
+                q: 'Convert 65 miles per hour to feet per second. (1 mile = 5280 feet)', 
+                choices: [
+                    '(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 3600 sec) ≈ 95 ft/sec',
+                    '(65 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (3600 sec ÷ 1 hr) ≈ 44 ft/sec',
+                    '(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (3600 sec ÷ 1 hr) ≈ 343,200 ft/sec',
+                    '(65 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (1 hr ÷ 3600 sec) ≈ 0.01 ft/sec'
+                ],
+                answer: '(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 3600 sec) ≈ 95 ft/sec'
+            }
+        ];
+
+        const feedback = {
+            correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
+            wrong: ['Not quite', 'Try again', 'Almost']
+        };
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        function showContent() {
+            const item = content[state.current];
+            
+            if (item.type === 'walkthrough') {
+                // Show walkthrough card
+                const walkthroughSection = document.getElementById('walkthrough-section');
+                walkthroughSection.innerHTML = `
+                    <div class="mode-badge ${item.mode}">${item.mode}</div>
+                    <div class="walkthrough-card">
+                        <div class="walkthrough-title">${item.title}</div>
+                        ${item.content}
+                    </div>
+                `;
+                
+                document.getElementById('question-text').textContent = '';
+                document.getElementById('choices').innerHTML = '';
+                document.getElementById('continue-btn').classList.add('show');
+                
+            } else {
+                // Show question - badge in separate container
+                const modeBadge = `<div class="mode-badge ${item.mode}">${item.mode}</div>`;
+                document.getElementById('walkthrough-section').innerHTML = modeBadge;
+                document.getElementById('question-text').textContent = item.q;
+                
+                // FIXED: Use data attributes instead of onclick with escaping
+                const choicesHTML = item.choices.map((c, i) => 
+                    `<button class="choice" data-choice="${i}" data-letter="${letters[i]}">${c}</button>`
+                ).join('');
+                document.getElementById('choices').innerHTML = choicesHTML;
+                
+                // Add event listeners to choice buttons
+                document.querySelectorAll('.choice').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const choiceIndex = parseInt(this.getAttribute('data-choice'));
+                        selectChoice(item.choices[choiceIndex]);
+                    });
+                });
+                
+                document.getElementById('continue-btn').classList.remove('show');
+            }
+            
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            state.selected = null;
+        }
+
+        function selectChoice(choice) {
+            if (state.selected) return;
+            
+            state.selected = choice;
+            const item = content[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent; // Letter label is in CSS ::before, not in textContent
+                
+                if (btnText === choice) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choice === item.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.streak = 0;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function nextContent() {
+            state.current++;
+            if (state.current < state.total) {
+                showContent();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === 7; // 7 questions total (4 practice + 3 challenge)
+            
+            document.getElementById('victory-msg').textContent = perfect ? 
+                'Perfect! You mastered unit conversions!' : 
+                'Great work! You completed Figure 019!';
+            
+            let badgesHTML = '';
+            if (perfect) badgesHTML += '<div class="badge">Flawless</div>';
+            if (state.streak >= 5) badgesHTML += '<div class="badge">On Fire</div>';
+            
+            document.getElementById('victory-badges').innerHTML = badgesHTML || '<div class="badge">Complete</div>';
+            document.getElementById('victory').classList.add('show');
+            
+            // Save progress
+            const progress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+            if (!progress.completed.includes('figure-019')) {
+                progress.completed.push('figure-019');
+                progress.xp += 150;
+            }
+            localStorage.setItem('userProgress', JSON.stringify(progress));
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextContent);
+        
+        showContent();
+    </script>
+</body>
+</html>

@@ -187,6 +187,322 @@
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 800; cursor: pointer; }
         .nav-item.active { color: var(--primary); }
         .nav-icon { width: 28px; height: 28px; }
+
+        /* 🔒 PREMIUM LOCK OVERLAY */
+        .premium-lock {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #FFA500 0%, #FF6B00 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
+        }
+        
+        .premium-lock svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        /* 💎 PAYWALL MODAL */
+        #paywall-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #paywall-modal.show {
+            display: flex;
+        }
+
+        .paywall-content {
+            background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
+            border: 3px solid #FFA500;
+            border-radius: 24px;
+            max-width: 400px;
+            width: 100%;
+            padding: 32px;
+            text-align: center;
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        @keyframes modalSlideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .paywall-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FFA500 0%, #FF6B00 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 24px rgba(255, 165, 0, 0.4);
+        }
+
+        .paywall-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .paywall-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .paywall-subtitle {
+            font-size: 16px;
+            font-weight: 700;
+            color: #9CA3AF;
+            margin-bottom: 24px;
+        }
+
+        .paywall-benefits {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .benefit-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .benefit-icon {
+            width: 24px;
+            height: 24px;
+            background: #10B981;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .benefit-icon svg {
+            width: 14px;
+            height: 14px;
+            color: white;
+        }
+
+        .pricing-box {
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .price-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #DDD6FE;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .price-amount {
+            font-size: 40px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+        }
+
+        .price-period {
+            font-size: 16px;
+            font-weight: 700;
+            color: #C4B5FD;
+            margin-top: 4px;
+        }
+
+        .price-savings {
+            font-size: 12px;
+            font-weight: 800;
+            color: #34D399;
+            margin-top: 8px;
+        }
+
+        .upgrade-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #FFA500 0%, #FF6B00 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 165, 0, 0.5);
+        }
+
+        .upgrade-btn:active {
+            transform: translateY(0);
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 2px solid #4B5563;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 800;
+            color: #9CA3AF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cancel-btn:hover {
+            border-color: #6B7280;
+            color: #D1D5DB;
+        }
+
+        /* 💰 PRICING TABS */
+        .pricing-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .pricing-tab {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #9CA3AF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .pricing-tab.active {
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            color: white;
+        }
+
+        .pricing-tab:hover:not(.active) {
+            color: #D1D5DB;
+        }
+
+        .tab-badge {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            color: #34D399;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* 🎫 DISCOUNT CODE SECTION */
+        .discount-section {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .discount-input {
+            flex: 1;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #4B5563;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .discount-input::placeholder {
+            color: #6B7280;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .discount-input:focus {
+            outline: none;
+            border-color: #FFA500;
+        }
+
+        .apply-btn {
+            padding: 14px 24px;
+            background: #4B5563;
+            border: 2px solid #6B7280;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .apply-btn:hover {
+            background: #6B7280;
+            border-color: #9CA3AF;
+        }
+
+        .apply-btn:active {
+            transform: scale(0.95);
+        }
+
+        .discount-message {
+            font-size: 14px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+            min-height: 20px;
+        }
+
+        .discount-message.success {
+            color: #10B981;
+        }
+
+        .discount-message.error {
+            color: #EF4444;
+        }
     </style>
 </head>
 <body>
@@ -277,7 +593,7 @@
             </div>
         </div>
 
-        <div class="module-card locked">
+        <div class="module-card locked" onclick="openModule(3)">
             <div class="module-header">
                 <div class="module-number">Module 3</div>
                 <div class="module-badge locked">
@@ -302,6 +618,12 @@
                     </svg>
                     <span>40 min</span>
                 </div>
+            </div>
+            <!-- 🔒 PREMIUM LOCK ICON -->
+            <div class="premium-lock">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                </svg>
             </div>
         </div>
 
@@ -540,15 +862,106 @@
         }
 
         function openModule(moduleNum) {
+            // Check premium status for Module 3+
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
             if (moduleNum === 1) {
-                // Open simple list view for Module 1
                 window.location.href = 'module-1-simple.html';
             } else if (moduleNum === 2) {
-                // ✅ Module 2 is now unlocked!
                 window.location.href = 'module-2-simple.html';
-            } else {
-                alert('This module is locked!\n\nUpgrade to Premium to unlock all 70 figures.\n\nOnly $7.99/month or $49/year');
+            } else if (moduleNum >= 3) {
+                if (isPremium) {
+                    // User has premium - let them access
+                    window.location.href = `module-${moduleNum}-simple.html`;
+                } else {
+                    // Show paywall modal
+                    showPaywall();
+                }
             }
+        }
+
+        function showPaywall() {
+            document.getElementById('paywall-modal').classList.add('show');
+        }
+
+        function closePaywall() {
+            document.getElementById('paywall-modal').classList.remove('show');
+            // Clear discount input and message
+            document.getElementById('discount-code').value = '';
+            document.getElementById('discount-message').textContent = '';
+            document.getElementById('discount-message').className = 'discount-message';
+        }
+
+        // Toggle between monthly and annual pricing
+        function switchPricing(plan) {
+            const tabs = document.querySelectorAll('.pricing-tab');
+            const annualBox = document.getElementById('annual-pricing');
+            const monthlyBox = document.getElementById('monthly-pricing');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            if (plan === 'annual') {
+                tabs[0].classList.add('active');
+                annualBox.style.display = 'block';
+                monthlyBox.style.display = 'none';
+            } else {
+                tabs[1].classList.add('active');
+                annualBox.style.display = 'none';
+                monthlyBox.style.display = 'block';
+            }
+        }
+
+        // Apply discount code
+        function applyDiscountCode() {
+            const input = document.getElementById('discount-code');
+            const message = document.getElementById('discount-message');
+            const code = input.value.trim().toUpperCase();
+            
+            // Valid discount codes for testing
+            const validCodes = ['BETA2025', 'TESTFREE', 'RECKON100'];
+            
+            if (validCodes.includes(code)) {
+                // Grant premium access
+                const progress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                progress.premium = true;
+                progress.premiumSource = 'discount_code'; // Track how they got premium
+                progress.discountCode = code;
+                localStorage.setItem('userProgress', JSON.stringify(progress));
+                
+                // Show success message
+                message.textContent = '✓ Premium unlocked! Redirecting...';
+                message.className = 'discount-message success';
+                
+                // Close modal and reload after brief delay
+                setTimeout(() => {
+                    closePaywall();
+                    location.reload();
+                }, 1500);
+                
+            } else if (code === '') {
+                message.textContent = 'Please enter a discount code';
+                message.className = 'discount-message error';
+            } else {
+                message.textContent = 'Invalid code. Try again.';
+                message.className = 'discount-message error';
+                
+                // Clear error after 3 seconds
+                setTimeout(() => {
+                    message.textContent = '';
+                    message.className = 'discount-message';
+                }, 3000);
+            }
+        }
+
+        function upgradeToPremium() {
+            // Get selected plan type
+            const isAnnual = document.getElementById('annual-pricing').style.display !== 'none';
+            const plan = isAnnual ? 'annual' : 'monthly';
+            const price = isAnnual ? '$50/year' : '$7.99/month';
+            
+            // TODO: Integrate with Stripe/payment processor
+            alert(`Payment integration coming soon!\n\nSelected: ${price}\n\nFor now, use discount code "BETA2025" to unlock premium for free.`);
         }
 
         function navigateTo(page) {
@@ -601,5 +1014,95 @@
         }
         loadTheme();
     </script>
+
+    <!-- 💎 PAYWALL MODAL -->
+    <div id="paywall-modal">
+        <div class="paywall-content">
+            <div class="paywall-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1 15h2v2h-2v-2zm0-8h2v6h-2V9z"/>
+                </svg>
+            </div>
+            <div class="paywall-title">Unlock Premium</div>
+            <div class="paywall-subtitle">Access all 70+ figures and master the Algebra Regents</div>
+            
+            <div class="paywall-benefits">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
+                    </div>
+                    <div>Access all 70+ figures across 8 modules</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
+                    </div>
+                    <div>Complete Algebra Regents curriculum</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
+                    </div>
+                    <div>New content added monthly</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
+                    </div>
+                    <div>Ad-free experience</div>
+                </div>
+            </div>
+
+            <!-- PRICING TOGGLE TABS -->
+            <div class="pricing-tabs">
+                <button class="pricing-tab active" onclick="switchPricing('annual')">
+                    Annual
+                    <span class="tab-badge">Save 17%</span>
+                </button>
+                <button class="pricing-tab" onclick="switchPricing('monthly')">Monthly</button>
+            </div>
+
+            <!-- ANNUAL PRICING -->
+            <div class="pricing-box" id="annual-pricing">
+                <div class="price-label">Best Value</div>
+                <div class="price-amount">$50</div>
+                <div class="price-period">per year</div>
+                <div class="price-savings">Just $4.17/month • Save $46/year</div>
+            </div>
+
+            <!-- MONTHLY PRICING (Hidden by default) -->
+            <div class="pricing-box" id="monthly-pricing" style="display: none;">
+                <div class="price-label">Monthly Plan</div>
+                <div class="price-amount">$7.99</div>
+                <div class="price-period">per month</div>
+                <div class="price-savings">Cancel anytime</div>
+            </div>
+
+            <!-- DISCOUNT CODE INPUT -->
+            <div class="discount-section">
+                <input 
+                    type="text" 
+                    id="discount-code" 
+                    class="discount-input" 
+                    placeholder="Have a discount code?"
+                    onkeypress="if(event.key === 'Enter') applyDiscountCode()"
+                >
+                <button class="apply-btn" onclick="applyDiscountCode()">Apply</button>
+            </div>
+            <div id="discount-message" class="discount-message"></div>
+
+            <button class="upgrade-btn" onclick="upgradeToPremium()">Unlock Now</button>
+            <button class="cancel-btn" onclick="closePaywall()">Maybe Later</button>
+        </div>
+    </div>
+
 </body>
 </html>
