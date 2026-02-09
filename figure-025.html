@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 025: Systems Word Problems</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .mode-badge.learn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .mode-badge.practice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .mode-badge.challenge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #10b981;
+        }
+
+        .concept-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        #question-text {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .choice::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #4b5563;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #9ca3af;
+        }
+
+        .choice:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-2px);
+        }
+
+        .choice.selected {
+            border-color: #fbbf24;
+            background: #4b5563;
+        }
+
+        .choice.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.correct::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        .choice.incorrect::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .check-icon.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #feedback-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #1f2937;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #continue-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        #continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #victory.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .victory-content {
+            text-align: center;
+            padding: 40px;
+            max-width: 400px;
+        }
+
+        .victory-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: victoryBounce 0.8s ease;
+        }
+
+        @keyframes victoryBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #victory-msg {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        #victory-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #1f2937;
+            text-transform: uppercase;
+        }
+
+        .victory-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .victory-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="top-bar">
+            <button class="close-btn" onclick="window.location.href='module-3-simple.html'">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="mode-badge" id="mode-badge">learn</div>
+            <div id="concept-section"></div>
+            <div id="question-text"></div>
+            <div id="choices"></div>
+            
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <div id="victory">
+            <div class="victory-content">
+                <div class="victory-icon">🎯</div>
+                <div id="victory-msg"></div>
+                <div id="victory-badges"></div>
+                <button class="victory-btn" onclick="window.location.href='module-3-simple.html'">Return to Module 3</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function checkPremiumAccess() {
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
+            if (!isPremium) {
+                alert('⚠️ Module 3 requires Premium access.\n\nUpgrade to unlock all 70+ figures!');
+                window.location.href = 'main-menu-modules.html';
+                return;
+            }
+        })();
+
+        const state = {
+            current: 0,
+            total: 12,
+            correct: 0,
+            streak: 0,
+            selected: null
+        };
+
+        const content = [
+            // LEARN 1: Find what you're solving for
+            {
+                mode: 'learn',
+                concept: 'First, identify what the problem is asking for. Look for two unknowns. Example: "Adult and student tickets" means you need two variables.',
+                q: 'Problem: "A store sells apples and oranges." What are the two unknowns?',
+                choices: [
+                    'Number of apples and number of oranges',
+                    'Total fruit',
+                    'Price only',
+                    'Store location'
+                ],
+                answer: 'Number of apples and number of oranges'
+            },
+
+            // LEARN 2: Find the two relationships
+            {
+                mode: 'learn',
+                concept: 'Word problems give you TWO pieces of information about the unknowns. Look for totals, relationships, or conditions that create two equations.',
+                q: 'Problem: "120 tickets sold. Adults cost $15, students $10. Total $1500." How many relationships?',
+                choices: [
+                    'Two (total tickets AND total money)',
+                    'One',
+                    'Three',
+                    'None'
+                ],
+                answer: 'Two (total tickets AND total money)'
+            },
+
+            // LEARN 3: Write the first equation
+            {
+                mode: 'learn',
+                concept: 'Translate the first relationship into an equation. "Total tickets is 120" becomes a + s = 120 if a = adults and s = students.',
+                q: 'From "Sarah bought 12 items total (pens and notebooks)." Write equation:',
+                choices: [
+                    'p + n = 12',
+                    'pn = 12',
+                    'p - n = 12',
+                    '12p + 12n = total'
+                ],
+                answer: 'p + n = 12'
+            },
+
+            // LEARN 4: Write the second equation
+            {
+                mode: 'learn',
+                concept: 'Use the second piece of info. "Pens are $2 each, notebooks $5 each, spent $45 total" becomes 2p + 5n = 45.',
+                q: 'Problem: "Apples $3/lb, oranges $4/lb, spent $28." Second equation:',
+                choices: [
+                    '3a + 4o = 28',
+                    'a + o = 28',
+                    '7(a + o) = 28',
+                    '3a = 4o'
+                ],
+                answer: '3a + 4o = 28'
+            },
+
+            // PRACTICE
+            {
+                mode: 'practice',
+                q: 'Theater: 80 tickets sold. Adult $12, child $8. Total $800. First equation:',
+                choices: [
+                    'a + c = 80',
+                    '12a + 8c = 800',
+                    'a = c',
+                    '20(a + c) = 800'
+                ],
+                answer: 'a + c = 80'
+            },
+
+            {
+                mode: 'practice',
+                q: 'Same theater problem. Second equation:',
+                choices: [
+                    '12a + 8c = 800',
+                    'a + c = 80',
+                    'a - c = 800',
+                    '12 + 8 = 800'
+                ],
+                answer: '12a + 8c = 800'
+            },
+
+            {
+                mode: 'practice',
+                q: 'Two numbers sum to 50 and differ by 10. First equation:',
+                choices: [
+                    'x + y = 50',
+                    'x - y = 10',
+                    'xy = 50',
+                    'x = 50'
+                ],
+                answer: 'x + y = 50'
+            },
+
+            {
+                mode: 'practice',
+                q: 'Coffee $3 and tea $2. Bought 10 drinks for $26. System:',
+                choices: [
+                    'c + t = 10 and 3c + 2t = 26',
+                    'c + t = 26 and 3c + 2t = 10',
+                    '5(c + t) = 26',
+                    'c = t'
+                ],
+                answer: 'c + t = 10 and 3c + 2t = 26'
+            },
+
+            // CHALLENGE
+            {
+                mode: 'challenge',
+                q: 'A rectangle's perimeter is 40. Length is 3 more than width. System:',
+                choices: [
+                    '2L + 2W = 40 and L = W + 3',
+                    'L + W = 40 and L = 3W',
+                    'LW = 40 and L = W + 3',
+                    'L + W = 20 and L - W = 3'
+                ],
+                answer: '2L + 2W = 40 and L = W + 3'
+            },
+
+            {
+                mode: 'challenge',
+                q: 'Coins: 24 quarters and dimes worth $4.50. System:',
+                choices: [
+                    'q + d = 24 and 0.25q + 0.10d = 4.50',
+                    'q + d = 4.50 and q - d = 24',
+                    '25q + 10d = 24',
+                    'qd = 24'
+                ],
+                answer: 'q + d = 24 and 0.25q + 0.10d = 4.50'
+            },
+
+            {
+                mode: 'challenge',
+                q: 'Two cars 300 miles apart. One goes 60 mph, other 40 mph toward each other. When do they meet? System:',
+                choices: [
+                    'd₁ + d₂ = 300 and d₁ = 60t, d₂ = 40t',
+                    'd₁ - d₂ = 300',
+                    '60 + 40 = 300',
+                    't = 300'
+                ],
+                answer: 'd₁ + d₂ = 300 and d₁ = 60t, d₂ = 40t'
+            },
+
+            {
+                mode: 'challenge',
+                q: '50 people at event. Tickets: $20 advance, $30 door. Collected $1200. System:',
+                choices: [
+                    'a + d = 50 and 20a + 30d = 1200',
+                    'a + d = 1200 and 20a + 30d = 50',
+                    '50(a + d) = 1200',
+                    'a = d'
+                ],
+                answer: 'a + d = 50 and 20a + 30d = 1200'
+            }
+        ];
+
+        const feedback = {
+            correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
+            wrong: ['Not quite', 'Try again', 'Almost']
+        };
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        function showContent() {
+            const item = content[state.current];
+            
+            document.getElementById('mode-badge').className = 'mode-badge ' + item.mode;
+            document.getElementById('mode-badge').textContent = item.mode;
+
+            if (item.concept) {
+                let html = `<div class="concept-box"><div class="concept-text">${item.concept}</div></div>`;
+                document.getElementById('concept-section').innerHTML = html;
+            } else {
+                document.getElementById('concept-section').innerHTML = '';
+            }
+
+            document.getElementById('question-text').innerHTML = item.q;
+            
+            const choicesHTML = item.choices.map((c, i) => 
+                `<button class="choice" data-choice="${i}" data-letter="${letters[i]}">${c}</button>`
+            ).join('');
+            document.getElementById('choices').innerHTML = choicesHTML;
+            
+            document.querySelectorAll('.choice').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const choiceIndex = parseInt(this.getAttribute('data-choice'));
+                    selectChoice(item.choices[choiceIndex]);
+                });
+            });
+            
+            document.getElementById('continue-btn').classList.remove('show');
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            state.selected = null;
+        }
+
+        function selectChoice(choice) {
+            if (state.selected) return;
+            
+            state.selected = choice;
+            const item = content[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent;
+                
+                if (btnText === choice) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choice === item.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.streak = 0;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function nextContent() {
+            state.current++;
+            if (state.current < state.total) {
+                showContent();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === 12;
+            
+            document.getElementById('victory-msg').textContent = perfect ? 
+                'Perfect! You mastered word problems!' : 
+                'Great work! You completed Figure 025!';
+            
+            let badgesHTML = '';
+            if (perfect) badgesHTML += '<div class="badge">Flawless</div>';
+            if (state.streak >= 5) badgesHTML += '<div class="badge">On Fire</div>';
+            
+            document.getElementById('victory-badges').innerHTML = badgesHTML || '<div class="badge">Complete</div>';
+            document.getElementById('victory').classList.add('show');
+            
+            const progress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+            if (!progress.completed.includes('figure-025')) {
+                progress.completed.push('figure-025');
+                progress.xp += 150;
+            }
+            localStorage.setItem('userProgress', JSON.stringify(progress));
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextContent);
+        
+        showContent();
+    </script>
+</body>
+</html>
