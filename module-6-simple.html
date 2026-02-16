@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6: Exponents & Radicals - Reckoning Figures</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        #header {
+            padding: 20px;
+            background: #1f2937;
+            border-bottom: 2px solid #374151;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        .header-title {
+            flex: 1;
+        }
+
+        .module-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .module-name {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+            margin-top: 4px;
+        }
+
+        .premium-badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #FFA500 0%, #FF6B00 100%);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .progress-section {
+            padding: 20px;
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            border-bottom: 3px solid #8B5CF6;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #DDD6FE;
+            text-transform: uppercase;
+        }
+
+        .progress-percent {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFA500 0%, #FF6B00 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: #C4B5FD;
+        }
+
+        .figures-container {
+            padding: 20px;
+        }
+
+        .section-header {
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .figure-card {
+            background: #2D3748;
+            border: 3px solid #4A5568;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .figure-card:hover {
+            transform: translateY(-2px);
+            border-color: #FFA500;
+        }
+
+        .figure-card.completed {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            border: 3px solid #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .figure-card.completed:hover {
+            border-color: #34d399;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+        }
+
+        .figure-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .figure-number {
+            font-size: 14px;
+            font-weight: 800;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .complete-badge {
+            padding: 4px 12px;
+            background: #10b981;
+            border: 2px solid #34d399;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .figure-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .figure-desc {
+            font-size: 14px;
+            font-weight: 700;
+            color: #9CA3AF;
+            line-height: 1.5;
+        }
+
+        .figure-stats {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .figure-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #D1D5DB;
+        }
+
+        .figure-stat svg {
+            width: 14px;
+            height: 14px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        (function checkPremiumAccess() {
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
+            if (!isPremium) {
+                alert('⚠️ Module 6 requires Premium access.\n\nUpgrade to unlock all 70+ figures!');
+                window.location.href = 'main-menu-modules.html';
+                return;
+            }
+        })();
+    </script>
+
+    <div id="header">
+        <button class="back-btn" onclick="window.location.href='main-menu-modules.html'">‹</button>
+        <div class="header-title">
+            <div class="module-label">Module 6</div>
+            <div class="module-name">Exponents & Radicals</div>
+        </div>
+        <div class="premium-badge">Premium</div>
+    </div>
+
+    <div class="progress-section">
+        <div class="progress-header">
+            <div class="progress-label">Module Progress</div>
+            <div class="progress-percent" id="progress-percent">0%</div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <div class="progress-text" id="progress-text">0 of 8 figures complete</div>
+    </div>
+
+    <div class="figures-container">
+        <div class="section-header">Figures</div>
+
+        <!-- Figure 043 -->
+        <div class="figure-card" id="figure-043" onclick="openFigure('figure-043')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 043</div>
+                <div class="complete-badge" id="badge-043" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Product & Quotient Rules</div>
+            <div class="figure-desc">Multiply and divide powers using exponent rules.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Figure 044 -->
+        <div class="figure-card" id="figure-044" onclick="openFigure('figure-044')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 044</div>
+                <div class="complete-badge" id="badge-044" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Power Rules</div>
+            <div class="figure-desc">Master power of a power and power of a product rules.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Figure 045 -->
+        <div class="figure-card" id="figure-045" onclick="openFigure('figure-045')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 045</div>
+                <div class="complete-badge" id="badge-045" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Zero & Negative Exponents</div>
+            <div class="figure-desc">Understand x⁰ = 1 and x⁻ⁿ = 1/xⁿ.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Figure 046 -->
+        <div class="figure-card" id="figure-046" onclick="openFigure('figure-046')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 046</div>
+                <div class="complete-badge" id="badge-046" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Scientific Notation</div>
+            <div class="figure-desc">Write large and small numbers using powers of 10.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Figure 047 -->
+        <div class="figure-card" id="figure-047" onclick="openFigure('figure-047')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 047</div>
+                <div class="complete-badge" id="badge-047" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Introduction to Radicals</div>
+            <div class="figure-desc">Learn square roots, cube roots, and radical notation.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Figure 048 -->
+        <div class="figure-card" id="figure-048" onclick="openFigure('figure-048')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 048</div>
+                <div class="complete-badge" id="badge-048" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Simplifying Radicals</div>
+            <div class="figure-desc">Use product rule to simplify radicals with perfect square factors.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Figure 049 -->
+        <div class="figure-card" id="figure-049" onclick="openFigure('figure-049')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 049</div>
+                <div class="complete-badge" id="badge-049" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Operations with Radicals</div>
+            <div class="figure-desc">Add, subtract, and multiply radicals.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Figure 050 -->
+        <div class="figure-card" id="figure-050" onclick="openFigure('figure-050')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 050</div>
+                <div class="complete-badge" id="badge-050" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Rational Exponents</div>
+            <div class="figure-desc">Convert between radicals and fractional exponents.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+        
+        const module6Figures = ['figure-043', 'figure-044', 'figure-045', 'figure-046', 'figure-047', 'figure-048', 'figure-049', 'figure-050'];
+        
+        const completedFigures = module6Figures.filter(f => userProgress.completed?.includes(f)).length;
+        const totalFigures = 8;
+        const progressPercent = Math.round((completedFigures / totalFigures) * 100);
+        
+        document.getElementById('progress-percent').textContent = progressPercent + '%';
+        document.getElementById('progress-fill').style.width = progressPercent + '%';
+        document.getElementById('progress-text').textContent = `${completedFigures} of ${totalFigures} figures complete`;
+        
+        module6Figures.forEach(figureId => {
+            if (userProgress.completed?.includes(figureId)) {
+                const card = document.getElementById(figureId);
+                const badge = document.getElementById('badge-' + figureId.split('-')[1]);
+                
+                if (card) card.classList.add('completed');
+                if (badge) badge.style.display = 'flex';
+            }
+        });
+        
+        function openFigure(figureId) {
+            window.location.href = figureId + '.html';
+        }
+    </script>
+</body>
+</html>
