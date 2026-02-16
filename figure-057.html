@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 057: Piecewise Functions</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .mode-badge.learn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .mode-badge.practice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .mode-badge.challenge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #10b981;
+        }
+
+        .concept-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .example-box {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .example-label {
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .example-item {
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            margin: 6px 0;
+            text-align: center;
+        }
+
+        .highlight {
+            color: #10b981;
+            font-weight: 900;
+        }
+
+        #question-text {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .choice::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #4b5563;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #9ca3af;
+        }
+
+        .choice:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-2px);
+        }
+
+        .choice.selected {
+            border-color: #fbbf24;
+            background: #4b5563;
+        }
+
+        .choice.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.correct::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        .choice.incorrect::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .check-icon.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #feedback-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #1f2937;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #continue-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        #continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        #summary {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1F2937;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            padding: 40px 20px;
+        }
+
+        #summary.show {
+            display: flex;
+        }
+
+        .summary-mascot {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .summary-mascot circle {
+            fill: #58CC02;
+        }
+
+        .summary-mascot .eye {
+            fill: #2D3748;
+        }
+
+        .summary-mascot .mouth {
+            fill: none;
+            stroke: #2D3748;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+
+        .summary-mascot .arm {
+            fill: #58CC02;
+        }
+
+        .sparkle {
+            fill: #58CC02;
+            opacity: 0.8;
+        }
+
+        .summary-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: #FFA500;
+            margin-bottom: 16px;
+        }
+
+        .summary-subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            color: #9CA3AF;
+            margin-bottom: 50px;
+        }
+
+        .summary-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .stat-card {
+            flex: 1;
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 3px solid;
+        }
+
+        .stat-card.xp {
+            background: #1F2937;
+            border-color: #FFA500;
+        }
+
+        .stat-card.accuracy {
+            background: #1F2937;
+            border-color: #58CC02;
+        }
+
+        .stat-card.time {
+            background: #1F2937;
+            border-color: #3B82F6;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card.xp .stat-label {
+            color: #FFA500;
+        }
+
+        .stat-card.accuracy .stat-label {
+            color: #58CC02;
+        }
+
+        .stat-card.time .stat-label {
+            color: #3B82F6;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .stat-icon {
+            font-size: 28px;
+        }
+
+        #claim-btn {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background: #58CC02;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #claim-btn:hover {
+            background: #4CAE00;
+        }
+
+        #claim-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="top-bar">
+            <button class="close-btn" onclick="window.location.href='module-4-simple.html'">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="mode-badge" id="mode-badge">learn</div>
+            <div id="concept-section"></div>
+            <div id="question-text"></div>
+            <div id="choices"></div>
+            
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <div id="summary">
+            <svg class="summary-mascot" viewBox="0 0 200 200">
+                <!-- Happy mascot body -->
+                <circle cx="100" cy="100" r="80"/>
+                
+                <!-- Left arm up -->
+                <ellipse class="arm" cx="40" cy="80" rx="18" ry="40" transform="rotate(-30 40 80)"/>
+                
+                <!-- Right arm up -->
+                <ellipse class="arm" cx="160" cy="80" rx="18" ry="40" transform="rotate(30 160 80)"/>
+                
+                <!-- Eyes closed happy -->
+                <path d="M 70 85 Q 75 80 80 85" class="mouth"/>
+                <path d="M 120 85 Q 125 80 130 85" class="mouth"/>
+                
+                <!-- Big smile -->
+                <path d="M 70 110 Q 100 130 130 110" class="mouth"/>
+                
+                <!-- Sparkles around mascot -->
+                <path class="sparkle" d="M 40 40 L 45 50 L 55 45 L 45 55 L 40 65 L 35 55 L 25 45 L 35 50 Z"/>
+                <path class="sparkle" d="M 160 40 L 165 50 L 175 45 L 165 55 L 160 65 L 155 55 L 145 45 L 155 50 Z"/>
+                <path class="sparkle" d="M 50 150 L 55 160 L 65 155 L 55 165 L 50 175 L 45 165 L 35 155 L 45 160 Z"/>
+                <path class="sparkle" d="M 150 150 L 155 160 L 165 155 L 155 165 L 150 175 L 145 165 L 135 155 L 145 160 Z"/>
+            </svg>
+
+            <div class="summary-title" id="summary-title">Great work!</div>
+            <div class="summary-subtitle" id="summary-subtitle">You completed Figure 057!</div>
+
+            <div class="summary-stats">
+                <div class="stat-card xp">
+                    <div class="stat-label">Total XP</div>
+                    <div class="stat-value">
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#FFA500" d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                        </svg>
+                        <span id="total-xp">150</span>
+                    </div>
+                </div>
+                <div class="stat-card accuracy">
+                    <div class="stat-label" id="accuracy-label">Accuracy</div>
+                    <div class="stat-value">
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#58CC02" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                        </svg>
+                        <span id="accuracy">100%</span>
+                    </div>
+                </div>
+                <div class="stat-card time">
+                    <div class="stat-label" id="time-label">Time</div>
+                    <div class="stat-value">
+                        <svg class="stat-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <path fill="#3B82F6" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                        <span id="time">0:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="claim-btn" onclick="window.location.href='module-4-simple.html'">Claim XP</button>
+        </div>
+    </div>
+
+    <script>
+        (function checkPremiumAccess() {
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
+            if (!isPremium) {
+                alert('⚠️ Module 4 requires Premium access.\n\nUpgrade to unlock all 70+ figures!');
+                window.location.href = 'main-menu-modules.html';
+                return;
+            }
+        })();
+
+        const state = {
+            current: 0,
+            total: 12,
+            correct: 0,
+            streak: 0,
+            selected: null,
+            startTime: Date.now()
+        };
+
+        const content = [
+            // LEARN 1: What is piecewise?
+            {
+                mode: 'learn',
+                concept: 'A piecewise function has different rules for different parts of the domain. It\'s like having multiple functions in one! <div class="example-box"><div class="example-label">Example piecewise function:</div><div class="example-item">f(x) = x + 1 if x < 0</div><div class="example-item">f(x) = 2x if x ≥ 0</div><div class="example-item"><span class="highlight">Use different rules based on x value!</span></div></div>',
+                q: 'What makes a function piecewise?',
+                choices: [
+                    'It has multiple pieces of paper',
+                    'Different rules for different inputs',
+                    'It\'s broken into fractions',
+                    'It has three variables'
+                ],
+                answer: 'Different rules for different inputs'
+            },
+
+            // LEARN 2: Evaluating piecewise
+            {
+                mode: 'learn',
+                concept: 'To evaluate piecewise: check which condition the input meets, then use that rule only. <div class="example-box"><div class="example-label">f(x) = x + 2 if x < 3<br>f(x) = 2x if x ≥ 3</div><div class="example-item">Find f(2): 2 < 3, so use x + 2</div><div class="example-item">f(2) = 2 + 2 = <span class="highlight">4</span></div></div>',
+                q: 'For f(x) = {x + 1 if x < 0, 2x if x ≥ 0}, what is f(5)?',
+                choices: [
+                    '6',
+                    '11',
+                    '10',
+                    '5'
+                ],
+                answer: '10'
+            },
+
+            // LEARN 3: Reading conditions
+            {
+                mode: 'learn',
+                concept: 'Pay close attention to < vs ≤ and > vs ≥. The equals sign matters! <div class="example-box"><div class="example-label">Important symbols:</div><div class="example-item">x < 3 means x is less than 3 (not equal)</div><div class="example-item">x ≤ 3 means x is less than OR equal to 3</div><div class="example-item"><span class="highlight">The boundary value matters!</span></div></div>',
+                q: 'For f(x) = {x² if x ≤ 2, x + 1 if x > 2}, which rule do you use for x = 2?',
+                choices: [
+                    'x²',
+                    'x + 1',
+                    'Both rules',
+                    'Neither rule'
+                ],
+                answer: 'x²'
+            },
+
+            // LEARN 4: Multiple pieces
+            {
+                mode: 'learn',
+                concept: 'Piecewise functions can have more than 2 pieces! Check all conditions to find which rule applies. <div class="example-box"><div class="example-label">Three pieces:</div><div class="example-item">f(x) = -x if x < -1</div><div class="example-item">f(x) = 0 if -1 ≤ x ≤ 1</div><div class="example-item">f(x) = x if x > 1</div></div>',
+                q: 'How many pieces can a piecewise function have?',
+                choices: [
+                    'Exactly 2',
+                    'Exactly 3',
+                    'Any number',
+                    'Only even numbers'
+                ],
+                answer: 'Any number'
+            },
+
+            // PRACTICE
+            {
+                mode: 'practice',
+                q: 'For f(x) = {x if x < 0, 5 if x ≥ 0}, what is f(-3)?',
+                choices: [
+                    '5',
+                    '0',
+                    '-3',
+                    '3'
+                ],
+                answer: '-3'
+            },
+
+            {
+                mode: 'practice',
+                q: 'For f(x) = {2x if x < 1, x + 5 if x ≥ 1}, what is f(1)?',
+                choices: [
+                    '2',
+                    '5',
+                    '6',
+                    '7'
+                ],
+                answer: '6'
+            },
+
+            {
+                mode: 'practice',
+                q: 'For f(x) = {x² if x ≤ 0, 3x if x > 0}, what is f(2)?',
+                choices: [
+                    '4',
+                    '9',
+                    '6',
+                    '0'
+                ],
+                answer: '6'
+            },
+
+            {
+                mode: 'practice',
+                q: 'For f(x) = {10 if x < 5, 20 if x ≥ 5}, what is f(5)?',
+                choices: [
+                    '5',
+                    '10',
+                    '15',
+                    '20'
+                ],
+                answer: '20'
+            },
+
+            // CHALLENGE
+            {
+                mode: 'challenge',
+                q: 'For f(x) = {x + 3 if x < 2, 2x - 1 if x ≥ 2}, what is f(4)?',
+                choices: [
+                    '7',
+                    '5',
+                    '8',
+                    '9'
+                ],
+                answer: '7'
+            },
+
+            {
+                mode: 'challenge',
+                q: 'For f(x) = {-x if x < 0, x² if x ≥ 0}, what is f(-2)?',
+                choices: [
+                    '-2',
+                    '4',
+                    '2',
+                    '-4'
+                ],
+                answer: '2'
+            },
+
+            {
+                mode: 'challenge',
+                q: 'For f(x) = {x - 1 if x ≤ 3, 2x if x > 3}, what is f(3)?',
+                choices: [
+                    '2',
+                    '4',
+                    '6',
+                    '9'
+                ],
+                answer: '2'
+            },
+
+            {
+                mode: 'challenge',
+                q: 'For f(x) = {5 if x < -1, x² if -1 ≤ x < 2, 10 if x ≥ 2}, what is f(1)?',
+                choices: [
+                    '5',
+                    '1',
+                    '2',
+                    '10'
+                ],
+                answer: '1'
+            }
+        ];
+
+        const feedback = {
+            correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
+            wrong: ['Not quite', 'Try again', 'Almost']
+        };
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        function showContent() {
+            const item = content[state.current];
+            
+            document.getElementById('mode-badge').className = 'mode-badge ' + item.mode;
+            document.getElementById('mode-badge').textContent = item.mode;
+
+            if (item.concept) {
+                let html = `<div class="concept-box"><div class="concept-text">${item.concept}</div></div>`;
+                document.getElementById('concept-section').innerHTML = html;
+            } else {
+                document.getElementById('concept-section').innerHTML = '';
+            }
+
+            document.getElementById('question-text').innerHTML = item.q;
+            
+            const choicesHTML = item.choices.map((c, i) => 
+                `<button class="choice" data-choice="${i}" data-letter="${letters[i]}">${c}</button>`
+            ).join('');
+            document.getElementById('choices').innerHTML = choicesHTML;
+            
+            document.querySelectorAll('.choice').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const choiceIndex = parseInt(this.getAttribute('data-choice'));
+                    selectChoice(item.choices[choiceIndex]);
+                });
+            });
+            
+            document.getElementById('continue-btn').classList.remove('show');
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            state.selected = null;
+        }
+
+        function selectChoice(choice) {
+            if (state.selected) return;
+            
+            state.selected = choice;
+            const item = content[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent;
+                
+                if (btnText === choice) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choice === item.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.streak = 0;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function nextContent() {
+            state.current++;
+            if (state.current < state.total) {
+                showContent();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            const perfect = state.correct === 12;
+            const timeElapsed = Math.floor((Date.now() - state.startTime) / 1000);
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            const accuracy = Math.round((state.correct / 12) * 100);
+            
+            // Update title and subtitle
+            if (perfect) {
+                document.getElementById('summary-title').textContent = 'Seriously???';
+                document.getElementById('summary-subtitle').textContent = 'You made 0 mistakes. How?!';
+            } else {
+                document.getElementById('summary-title').textContent = 'Great work!';
+                document.getElementById('summary-subtitle').textContent = 'You completed Figure 057!';
+            }
+            
+            // Update stats
+            document.getElementById('total-xp').textContent = '150';
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            document.getElementById('time').textContent = timeString;
+            
+            // Dynamic labels based on performance
+            if (accuracy === 100) {
+                document.getElementById('accuracy-label').textContent = 'Amazing';
+            } else if (accuracy >= 80) {
+                document.getElementById('accuracy-label').textContent = 'Great';
+            } else {
+                document.getElementById('accuracy-label').textContent = 'Accuracy';
+            }
+            
+            if (timeElapsed < 120) {
+                document.getElementById('time-label').textContent = 'Blazing';
+            } else if (timeElapsed < 300) {
+                document.getElementById('time-label').textContent = 'Quick';
+            } else {
+                document.getElementById('time-label').textContent = 'Time';
+            }
+            
+            document.getElementById('summary').classList.add('show');
+            
+            // Save progress
+            const progress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+            if (!progress.completed.includes('figure-057')) {
+                progress.completed.push('figure-057');
+                progress.xp += 150;
+            }
+            localStorage.setItem('userProgress', JSON.stringify(progress));
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextContent);
+        
+        showContent();
+    </script>
+</body>
+</html>
