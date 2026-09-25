@@ -16,3 +16,11 @@ This is a web design preview, not an iOS build or App Store submission. Next ste
 The lesson now includes staggered equation/answer entrances, spring tap feedback, rising success/retry panels, per-answer XP bursts, combo milestones, and brief outgoing question transitions. Original question content and XP totals are unchanged. Reduced motion skips decorative movement, including when the preference changes during a lesson.
 
 Verified in headless Chromium at a 390 × 844 phone viewport: no horizontal overflow, answer transitions, combo increases/reset, wrong-answer retry, and reduced-motion behavior. Inspected question and correct-answer screenshots; checked desktop layout at 1440 × 1000. DOM checks cover the complete nine-question lesson, accuracy/XP, and separate preview persistence. Native iOS testing remains pending.
+
+## Brand and daily activity
+
+The supplied lightning artwork now has an alpha-transparent sibling asset (`assets/brand-transparent.png`), produced with the built-in image editing tool. Prompt: remove the mint background and broad haze, retain the golden bolts, blue outlines, orientation, and painted highlights; output true transparency. The original file is retained.
+
+Fredoka headings and Nunito body text are bundled locally with their SIL Open Font Licenses. Daily activity uses local calendar dates, deduplicates same-day visits and practice, and shows current/best practice streaks plus visit days and visit streak. A day is practiced when Figure 001 reaches completion, even before XP is claimed. Activity begins with this preview; no historical data is fabricated and Firebase is not yet integrated. The existing within-lesson answer combo remains separate.
+
+Validated duplicate days, missed-day reset, yesterday grace, month/year and daylight-saving boundaries, weekly dates, alpha transparency, font rendering, and the existing browser lesson checks.
