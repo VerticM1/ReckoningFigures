@@ -1,4 +1,5 @@
 import { problems } from './questions.js';
+import { animateEntrance, answerMotion, selectMotion, transitionQuestion } from './motion.js';
 const app = document.querySelector('#app');
 const key = 'reckoningPreviewV1';
 let progress = {xp:0, completed:false, sessions:0};
@@ -14,10 +15,10 @@ function home(){
  document.querySelector('#units').innerHTML=names.map((name,i)=>`<a class="unit" href="../module-${i+1}-simple.html"><span class="unit-number">${String(i+1).padStart(2,'0')}</span><div><h3>${name}</h3><p>${i===0?'Build a strong foundation':'Explore this module in the current app'}</p></div><span class="arrow" aria-hidden="true">↗</span></a>`).join('');
  document.querySelector('#start').onclick=start;
 }
-function start(){state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false};question();}
+function start(){state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false,combo:0,transitioning:false};question();}
 function question(){
- const p=problems[state.index]; state.selected=null;state.checked=false;
- app.innerHTML=`<main class="lesson"><header class="lesson-header"><button class="icon-btn" id="exit" aria-label="Exit lesson">×</button><div class="track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="${problems.length}" aria-valuenow="${state.index}"><div class="fill" style="width:${state.index/problems.length*100}%"></div></div><span class="count">${state.index+1} / ${problems.length}</span></header><section class="question"><span class="eyebrow" style="color:var(--blue)">Figure 001 · One-step equations</span><h1 tabindex="-1">${p.q}</h1><div class="equation">${p.eq}</div><div class="choices"></div></section><footer class="lesson-footer"><div class="feedback" role="status" aria-live="polite">Small steps. Strong foundations.</div><button class="primary" id="check" disabled>Check answer</button></footer></main>`;
+ const p=problems[state.index]; state.selected=null;state.checked=false;state.transitioning=false;
+ app.innerHTML=`<main class="lesson"><header class="lesson-header"><button class="icon-btn" id="exit" aria-label="Exit lesson">×</button><div class="track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="${problems.length}" aria-valuenow="${state.index}"><div class="fill" style="width:${state.index/problems.length*100}%"></div></div><span class="combo" aria-label="${state.combo} correct answers in a row">ϟ ${state.combo}</span><span class="count">${state.index+1} / ${problems.length}</span></header><section class="question"><span class="eyebrow" style="color:var(--blue)">Figure 001 · One-step equations</span><h1 tabindex="-1">${p.q}</h1><div class="equation" aria-label="${p.eq}"><span class="equation-text">${p.eq}</span><span class="energy-reward" aria-hidden="true"></span></div><div class="choices"></div></section><footer class="lesson-footer"><div class="feedback" role="status" aria-live="polite">Small steps. Strong foundations.</div><button class="primary" id="check" disabled>Check answer</button></footer></main>`;
  const choices=document.querySelector('.choices');
  if(p.type==='fill-blank'){
   const input=document.createElement('input');input.className='answer';input.type='text';input.inputMode='decimal';input.autocomplete='off';input.setAttribute('aria-label','Your answer');input.placeholder=p.placeholder;choices.append(input);
@@ -25,20 +26,22 @@ function question(){
   input.onkeydown=e=>{if(e.key==='Enter'&&!document.querySelector('#check').disabled){e.preventDefault();check();}};
  }else{
   const values=p.type==='true-false'?['True','False']:p.choices;
-  values.forEach((value,i)=>{const b=document.createElement('button');b.className='choice';b.setAttribute('aria-pressed','false');const n=document.createElement('b');n.textContent=i+1;const t=document.createElement('span');t.textContent=value;b.append(n,t);b.onclick=()=>{if(state.checked)return;state.selected=p.type==='true-false'?i===0:i;choices.querySelectorAll('button').forEach(el=>{el.classList.remove('selected','wrong');el.setAttribute('aria-pressed','false');});b.classList.add('selected');b.setAttribute('aria-pressed','true');document.querySelector('#check').disabled=false;};choices.append(b);});
+  values.forEach((value,i)=>{const b=document.createElement('button');b.className='choice';b.setAttribute('aria-pressed','false');const n=document.createElement('b');n.textContent=i+1;const t=document.createElement('span');t.textContent=value;b.append(n,t);b.onclick=()=>{if(state.checked)return;state.selected=p.type==='true-false'?i===0:i;choices.querySelectorAll('button').forEach(el=>{el.classList.remove('selected','wrong');el.setAttribute('aria-pressed','false');});b.classList.add('selected');selectMotion(b);b.setAttribute('aria-pressed','true');document.querySelector('#check').disabled=false;};choices.append(b);});
  }
- document.querySelector('#exit').onclick=()=>{if(confirm('Leave this lesson? This attempt will not be saved.'))home();};
+ document.querySelector('#exit').onclick=()=>{if(state.transitioning)return;if(confirm('Leave this lesson? This attempt will not be saved.'))home();};
  document.querySelector('#check').onclick=check;
  document.querySelector('h1').focus({preventScroll:true});
+ animateEntrance();
 }
 function check(){
- if(state.checked){state.index++;if(state.index===problems.length)finish();else question();return;}
+ if(state.transitioning)return;
+ if(state.checked){state.transitioning=true;document.querySelector('#check').disabled=true;transitionQuestion(()=>{state.index++;if(state.index===problems.length)finish();else question();});return;}
  if(state.selected===null||state.selected==='')return;
  const p=problems[state.index];const correct=p.type==='fill-blank'?Number(state.selected)===Number(p.answer):state.selected===p.answer;
  state.attempts++;
  const feedback=document.querySelector('.feedback');const button=document.querySelector('#check');
- if(correct){state.checked=true;feedback.className='feedback';feedback.innerHTML='<strong>That’s it. Nicely solved!</strong>Keep that momentum going.';document.querySelector('.selected')?.classList.add('correct');document.querySelectorAll('.choice,.answer').forEach(el=>el.disabled=true);button.textContent=state.index===problems.length-1?'Finish lesson':'Continue';const width=(state.index+1)/problems.length*100;document.querySelector('.fill').style.width=width+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',state.index+1);button.focus();}
- else{state.errors++;feedback.className='feedback error';feedback.innerHTML='<strong>Not quite. Give it another go.</strong>You can take as many tries as you need.';document.querySelector('.selected')?.classList.add('wrong');state.selected=null;button.disabled=true;const input=document.querySelector('.answer');if(input){input.value='';input.focus();}}
+ if(correct){state.checked=true;state.combo++;feedback.className='feedback';feedback.innerHTML='<strong>That’s it. Nicely solved!</strong>Keep that momentum going.';document.querySelector('.selected')?.classList.add('correct');document.querySelectorAll('.choice,.answer').forEach(el=>el.disabled=true);button.textContent=state.index===problems.length-1?'Finish lesson':'Continue';const width=(state.index+1)/problems.length*100;document.querySelector('.fill').style.width=width+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',state.index+1);button.focus();answerMotion(true,state.combo);}
+ else{state.errors++;state.combo=0;feedback.className='feedback error';feedback.innerHTML='<strong>Not quite. Give it another go.</strong>You can take as many tries as you need.';document.querySelector('.selected')?.classList.add('wrong');state.selected=null;button.disabled=true;const input=document.querySelector('.answer');if(input){input.value='';input.focus();}answerMotion(false,0);}
 }
 function finish(){
  state.earned=problems.length*10+(state.errors===0?50:0);
