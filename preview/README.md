@@ -24,3 +24,11 @@ The supplied lightning artwork now has an alpha-transparent sibling asset (`asse
 Fredoka headings and Nunito body text are bundled locally with their SIL Open Font Licenses. Daily activity uses local calendar dates, deduplicates same-day visits and practice, and shows current/best practice streaks plus visit days and visit streak. A day is practiced when Figure 001 reaches completion, even before XP is claimed. Activity begins with this preview; no historical data is fabricated and Firebase is not yet integrated. The existing within-lesson answer combo remains separate.
 
 Validated duplicate days, missed-day reset, yesterday grace, month/year and daylight-saving boundaries, weekly dates, alpha transparency, font rendering, and the existing browser lesson checks.
+
+## Learn path redesign
+
+Learn now centers on a winding 12-figure path for the existing Linear Equations module. A raised gold node and start callout identify the next lesson; the transparent lightning mark floats beside the path. The home dashboard cards were removed. Activity calendar opens from the streak counter, and all seven modules remain accessible from the unit menu.
+
+Only the preview's Figure 001 completion is reflected in this path. Later nodes open existing figure pages, explicitly described in their detail dialog. Completing Figure 001 advances the suggested next lesson to Figure 002, and the completed first node supports replay. No original lessons or progress were changed.
+
+Verified in Chromium: desktop and 390px phone layouts, 12 nodes, no phone horizontal overflow, activity/course dialogs, keyboard Escape, figure details, starting a new lesson, and replaying a completed lesson. Visual screenshots inspected at both sizes.
