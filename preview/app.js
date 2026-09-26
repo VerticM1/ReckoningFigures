@@ -1,3 +1,4 @@
+import { coaching, mountCoaching, revealHint } from './coaching.js';
 import { pathArt } from './path-art.js';
 import { problems } from './questions.js';
 import { animateEntrance, answerMotion, selectMotion, transitionQuestion } from './motion.js';
@@ -45,7 +46,7 @@ function home(){
 }
 function start(){state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false,combo:0,transitioning:false};question();}
 function question(){
- const p=problems[state.index]; state.selected=null;state.checked=false;state.transitioning=false;
+ const p=problems[state.index]; state.selected=null;state.checked=false;state.transitioning=false;state.questionErrors=0;
  app.innerHTML=`<main class="lesson"><header class="lesson-header"><button class="icon-btn" id="exit" aria-label="Exit lesson">×</button><div class="track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="${problems.length}" aria-valuenow="${state.index}"><div class="fill" style="width:${state.index/problems.length*100}%"></div></div><span class="combo" aria-label="${state.combo} correct answers in a row">ϟ ${state.combo}</span><span class="count">${state.index+1} / ${problems.length}</span></header><section class="question"><span class="eyebrow" style="color:var(--blue)">Figure 001 · One-step equations</span><h1 tabindex="-1">${p.q}</h1><div class="equation" aria-label="${p.eq}"><span class="equation-text">${p.eq}</span><span class="energy-reward" aria-hidden="true"></span></div><div class="choices"></div></section><footer class="lesson-footer"><div class="feedback" role="status" aria-live="polite">Small steps. Strong foundations.</div><button class="primary" id="check" disabled>Check answer</button></footer></main>`;
  const choices=document.querySelector('.choices');
  if(p.type==='fill-blank'){
@@ -56,6 +57,7 @@ function question(){
   const values=p.type==='true-false'?['True','False']:p.choices;
   values.forEach((value,i)=>{const b=document.createElement('button');b.className='choice';b.setAttribute('aria-pressed','false');const n=document.createElement('b');n.textContent=i+1;const t=document.createElement('span');t.textContent=value;b.append(n,t);b.onclick=()=>{if(state.checked)return;state.selected=p.type==='true-false'?i===0:i;choices.querySelectorAll('button').forEach(el=>{el.classList.remove('selected','wrong');el.setAttribute('aria-pressed','false');});b.classList.add('selected');selectMotion(b);b.setAttribute('aria-pressed','true');document.querySelector('#check').disabled=false;};choices.append(b);});
  }
+ mountCoaching(state.index);
  document.querySelector('#exit').onclick=()=>{if(state.transitioning)return;if(confirm('Leave this lesson? This attempt will not be saved.'))home();};
  document.querySelector('#check').onclick=check;
  document.querySelector('h1').focus({preventScroll:true});
@@ -68,15 +70,16 @@ function check(){
  const p=problems[state.index];const correct=p.type==='fill-blank'?Number(state.selected)===Number(p.answer):state.selected===p.answer;
  state.attempts++;
  const feedback=document.querySelector('.feedback');const button=document.querySelector('#check');
- if(correct){state.checked=true;state.combo++;feedback.className='feedback';feedback.innerHTML='<strong>That’s it. Nicely solved!</strong>Keep that momentum going.';document.querySelector('.selected')?.classList.add('correct');document.querySelectorAll('.choice,.answer').forEach(el=>el.disabled=true);button.textContent=state.index===problems.length-1?'Finish lesson':'Continue';const width=(state.index+1)/problems.length*100;document.querySelector('.fill').style.width=width+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',state.index+1);button.focus();answerMotion(true,state.combo);}
- else{state.errors++;state.combo=0;feedback.className='feedback error';feedback.innerHTML='<strong>Not quite. Give it another go.</strong>You can take as many tries as you need.';document.querySelector('.selected')?.classList.add('wrong');state.selected=null;button.disabled=true;const input=document.querySelector('.answer');if(input){input.value='';input.focus();}answerMotion(false,0);}
+ if(correct){state.checked=true;state.combo++;feedback.className='feedback';feedback.innerHTML='<strong>'+([3,5,9].includes(state.combo)?'ϟ '+state.combo+' in a row!':'That’s it. Nicely solved!')+'</strong>';const explanation=document.createElement('span');explanation.textContent=coaching[state.index][1];feedback.append(explanation);document.querySelector('.selected')?.classList.add('correct');document.querySelectorAll('.choice,.answer').forEach(el=>el.disabled=true);button.textContent=state.index===problems.length-1?'Finish lesson':'Continue';const width=(state.index+1)/problems.length*100;document.querySelector('.fill').style.width=width+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',state.index+1);button.focus();answerMotion(true,state.combo);}
+ else{state.errors++;state.questionErrors++;state.combo=0;feedback.className='feedback error';feedback.innerHTML='<strong>Not quite. Give it another go.</strong>You can take as many tries as you need.';document.querySelector('.selected')?.classList.add('wrong');state.selected=null;button.disabled=true;const input=document.querySelector('.answer');if(input){input.value='';input.focus();}answerMotion(false,0);revealHint(state.index,state.questionErrors);}
 }
 function finish(){
+ const firstPracticeToday=!progress.practiceDays.includes(dateKey());
  progress.practiceDays=markDay(progress.practiceDays);
  recordVisit();
  state.earned=problems.length*10+(state.errors===0?50:0);
  const seconds=Math.max(1,Math.round((Date.now()-state.started)/1000));
- app.innerHTML=`<main class="finish"><img src="assets/brand-transparent.png" alt=""><h1 tabindex="-1">Look at you go.</h1><p class="muted">One more figure solved.<br>One step closer to “I’ve got this.”</p><div class="finish-streak">ϟ ${streak(progress.practiceDays).current}-day practice streak · Today complete</div><div class="results"><div><strong>+${state.earned}</strong><span>XP earned</span></div><div><strong>${Math.round(problems.length/state.attempts*100)}%</strong><span>Accuracy</span></div><div><strong>${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}</strong><span>Time learning</span></div></div><button class="primary" id="claim">Keep the momentum →</button><p class="notice" id="save-status">Continue to save your preview progress on this device.</p></main>`;
+ app.innerHTML=`<main class="finish"><img src="assets/brand-transparent.png" alt=""><h1 tabindex="-1">Look at you go.</h1><p class="muted">One more figure solved.<br>One step closer to “I’ve got this.”</p><div class="finish-streak ${firstPracticeToday?'streak-new':''}">ϟ ${streak(progress.practiceDays).current}-day practice streak · ${firstPracticeToday?'Day secured!':'Today complete'}</div><p class="finish-note">${firstPracticeToday?'You showed up and practiced. Come back tomorrow to keep it going.':'More practice, more confidence. Your streak is already safe for today.'}</p><div class="results"><div><strong>+${state.earned}</strong><span>XP earned</span></div><div><strong>${Math.round(problems.length/state.attempts*100)}%</strong><span>Accuracy</span></div><div><strong>${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}</strong><span>Time learning</span></div></div><button class="primary" id="claim">Keep the momentum →</button><p class="notice" id="save-status">Continue to save your preview progress on this device.</p></main>`;
  document.querySelector('h1').focus();
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches)for(let i=0;i<32;i++){const el=document.createElement('i');el.className='confetti';el.style.left=Math.random()*100+'%';el.style.background=['#ffd15c','#5ed8f3','#9cdeac'][i%3];el.style.animationDelay=Math.random()*.4+'s';document.body.append(el);setTimeout(()=>el.remove(),2400);}
  document.querySelector('#claim').onclick=()=>{

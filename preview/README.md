@@ -38,3 +38,9 @@ Verified in Chromium: desktop and 390px phone layouts, 12 nodes, no phone horizo
 Added five lightweight, code-native SVG landmarks anchored to lessons: fraction tiles, balance scales, a decimal planet, an equation sketch, and a trophy. These supplement the original lightning artwork, with subtle drifting motion, star details, and background color washes. Decorative elements are hidden from assistive technology and cannot intercept taps. Reduced motion disables movement.
 
 Verified in Chromium at 320, 390, and 1440px: no horizontal overflow or intersections between the new art and lesson buttons; all 12 nodes remain, all five landmarks render, reduced motion works, and Figure 001 still starts. Phone and desktop screenshots inspected.
+
+## Figure 001 teaching pass
+
+Added an optional interactive balance exploration to question 1: apply +5 or −5 to both sides, inspect the resulting equation, and reset. This is unscored practice; original question text, choices, and answers remain intact. All nine questions now have specific hints; one mistake reveals a nudge and a second reveals a worked explanation. Correct answers explain the solution. Combo milestones at 3/5/9 get explicit feedback; the first completed practice of the local day gets a distinct streak celebration.
+
+Chromium end-to-end checks cover both balance operations/reset, two wrong answers and progressive hints, all nine question types, combo messaging, accuracy and XP, completion and replay on the same day, and separate storage. Phone screenshots of the balance interaction and completion inspected. Scope remains Figure 001; full course migration and iOS packaging are pending.
