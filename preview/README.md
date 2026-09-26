@@ -1,46 +1,28 @@
-# Reckoning Figures mobile design preview
+# Reckoning Figures redesigned course preview
 
-A first design milestone at `/preview/`: a responsive course home, Figure 001 lesson, and results screen. Run `python -m http.server 4173` at the repository root, then open http://localhost:4173/preview/.
+Run `python -m http.server 4173` from the repository root, then open `/preview/`.
 
-- Uses the supplied lightning logo unchanged.
-- Preserves all nine Figure 001 question objects from `duolingo-math.html`.
-- Supports multiple choice, numeric entry, and true/false; wrong answers can be retried without losing lives.
-- Uses separate `reckoningPreviewV1` browser storage. Does not mutate existing `reckonProgress`, authentication, or cloud data.
-- Existing module, practice, profile, and leaderboard links open the original app.
-- Includes keyboard focus, progress and feedback announcements, and reduced-motion support.
+## Current scope
 
-This is a web design preview, not an iOS build or App Store submission. Next steps: review design; migrate the remaining lesson content into a shared renderer; integrate existing account/progress behavior with a tested migration; add Capacitor iOS packaging and native-device testing; prepare TestFlight and App Store materials.
+- Seven module paths, 53 available lessons, and 581 source steps.
+- Shared lesson renderer for multiple choice, numeric and variable entry, true/false, tutorials, and interactive number lines.
+- Original questions, answers, and teaching content retained in `course.js`; the import script normalizes differing schemas. The original HTML files remain unchanged.
+- Five referenced files (Figures 020–024) do not exist in the repository. Their nodes show an availability message instead of a broken link.
+- The importer repairs an unescaped apostrophe in the source phrase `rectangle's` so the lesson data can parse; wording is unchanged.
+- Existing Premium requirements are preserved using the original `userProgress.premium` flag. A server-backed entitlement system is still needed for a production mobile app.
+- Each completed lesson updates its own path node, XP, and daily practice streak. Existing single-lesson preview progress migrates to completed Figure 001. Preview data stays in `reckoningPreviewV1`; existing `reckonProgress` and Firebase data are not changed.
+- Figure 001 includes custom hints and an optional balance exploration. Other figures retain their original concept explanations where present and provide basic retry/reveal feedback, not bespoke hints.
+- Calendar dates use the device's local time. Same-day practice does not increment the daily streak again.
+- Fredoka and Nunito are bundled with their licenses. The original lightning logo is retained alongside the transparent version. Lesson/path motion supports reduced-motion preferences.
 
-## Motion pass
+## Content workflow
 
-The lesson now includes staggered equation/answer entrances, spring tap feedback, rising success/retry panels, per-answer XP bursts, combo milestones, and brief outgoing question transitions. Original question content and XP totals are unchanged. Reduced motion skips decorative movement, including when the preference changes during a lesson.
+Run `node preview/scripts/import-course.cjs` to regenerate the course from existing lesson files. The original source objects are retained beside normalized question data for checking fidelity. Run `node preview/scripts/validate-course.mjs` for schema/content checks.
 
-Verified in headless Chromium at a 390 × 844 phone viewport: no horizontal overflow, answer transitions, combo increases/reset, wrong-answer retry, and reduced-motion behavior. Inspected question and correct-answer screenshots; checked desktop layout at 1440 × 1000. DOM checks cover the complete nine-question lesson, accuracy/XP, and separate preview persistence. Native iOS testing remains pending.
+## Validation
 
-## Brand and daily activity
+Headless Chromium completed all 53 available lessons and 581 steps with correct answers, including graph interactions, tutorial navigation, variable input, completion persistence and seven-module switching. Additional checks cover missing/premium gates, old preview migration, local day boundaries, wrong-answer feedback, and Figure 001 balance practice. Representative graph/tutorial/function screens were inspected at phone size. This is functional/content-preservation testing, not an independent audit of the original answer keys.
 
-The supplied lightning artwork now has an alpha-transparent sibling asset (`assets/brand-transparent.png`), produced with the built-in image editing tool. Prompt: remove the mint background and broad haze, retain the golden bolts, blue outlines, orientation, and painted highlights; output true transparency. The original file is retained.
+## Remaining work
 
-Fredoka headings and Nunito body text are bundled locally with their SIL Open Font Licenses. Daily activity uses local calendar dates, deduplicates same-day visits and practice, and shows current/best practice streaks plus visit days and visit streak. A day is practiced when Figure 001 reaches completion, even before XP is claimed. Activity begins with this preview; no historical data is fabricated and Firebase is not yet integrated. The existing within-lesson answer combo remains separate.
-
-Validated duplicate days, missed-day reset, yesterday grace, month/year and daylight-saving boundaries, weekly dates, alpha transparency, font rendering, and the existing browser lesson checks.
-
-## Learn path redesign
-
-Learn now centers on a winding 12-figure path for the existing Linear Equations module. A raised gold node and start callout identify the next lesson; the transparent lightning mark floats beside the path. The home dashboard cards were removed. Activity calendar opens from the streak counter, and all seven modules remain accessible from the unit menu.
-
-Only the preview's Figure 001 completion is reflected in this path. Later nodes open existing figure pages, explicitly described in their detail dialog. Completing Figure 001 advances the suggested next lesson to Figure 002, and the completed first node supports replay. No original lessons or progress were changed.
-
-Verified in Chromium: desktop and 390px phone layouts, 12 nodes, no phone horizontal overflow, activity/course dialogs, keyboard Escape, figure details, starting a new lesson, and replaying a completed lesson. Visual screenshots inspected at both sizes.
-
-## Scenery along the path
-
-Added five lightweight, code-native SVG landmarks anchored to lessons: fraction tiles, balance scales, a decimal planet, an equation sketch, and a trophy. These supplement the original lightning artwork, with subtle drifting motion, star details, and background color washes. Decorative elements are hidden from assistive technology and cannot intercept taps. Reduced motion disables movement.
-
-Verified in Chromium at 320, 390, and 1440px: no horizontal overflow or intersections between the new art and lesson buttons; all 12 nodes remain, all five landmarks render, reduced motion works, and Figure 001 still starts. Phone and desktop screenshots inspected.
-
-## Figure 001 teaching pass
-
-Added an optional interactive balance exploration to question 1: apply +5 or −5 to both sides, inspect the resulting equation, and reset. This is unscored practice; original question text, choices, and answers remain intact. All nine questions now have specific hints; one mistake reveals a nudge and a second reveals a worked explanation. Correct answers explain the solution. Combo milestones at 3/5/9 get explicit feedback; the first completed practice of the local day gets a distinct streak celebration.
-
-Chromium end-to-end checks cover both balance operations/reset, two wrong answers and progressive hints, all nine question types, combo messaging, accuracy and XP, completion and replay on the same day, and separate storage. Phone screenshots of the balance interaction and completion inspected. Scope remains Figure 001; full course migration and iOS packaging are pending.
+Restore or author the five missing source lessons; improve lesson-specific coaching throughout the course; integrate real account progress/entitlements; package for iOS; test on native devices and prepare TestFlight/App Store submission. This branch has not been deployed.
