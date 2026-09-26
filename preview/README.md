@@ -32,3 +32,9 @@ Learn now centers on a winding 12-figure path for the existing Linear Equations 
 Only the preview's Figure 001 completion is reflected in this path. Later nodes open existing figure pages, explicitly described in their detail dialog. Completing Figure 001 advances the suggested next lesson to Figure 002, and the completed first node supports replay. No original lessons or progress were changed.
 
 Verified in Chromium: desktop and 390px phone layouts, 12 nodes, no phone horizontal overflow, activity/course dialogs, keyboard Escape, figure details, starting a new lesson, and replaying a completed lesson. Visual screenshots inspected at both sizes.
+
+## Scenery along the path
+
+Added five lightweight, code-native SVG landmarks anchored to lessons: fraction tiles, balance scales, a decimal planet, an equation sketch, and a trophy. These supplement the original lightning artwork, with subtle drifting motion, star details, and background color washes. Decorative elements are hidden from assistive technology and cannot intercept taps. Reduced motion disables movement.
+
+Verified in Chromium at 320, 390, and 1440px: no horizontal overflow or intersections between the new art and lesson buttons; all 12 nodes remain, all five landmarks render, reduced motion works, and Figure 001 still starts. Phone and desktop screenshots inspected.
