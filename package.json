@@ -1,0 +1,24 @@
+{
+  "name": "reckoning-figures",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "build:vendor": "esbuild preview/firebase-client.js --bundle --format=esm --minify --outfile=preview/vendor/firebase.js",
+    "build": "npm run build:vendor && node scripts/build-mobile.cjs",
+    "ios:sync": "npm run build && cap sync ios",
+    "ios:open": "cap open ios",
+    "test:course": "node preview/scripts/validate-course.mjs",
+    "test:sync": "node preview/scripts/test-sync.mjs",
+    "test:lesson": "node preview/scripts/test-two-step.mjs"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.5.2",
+    "@capacitor/ios": "8.5.2",
+    "firebase": "12.19.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2",
+    "esbuild": "0.28.2"
+  },
+  "type": "module"
+}
