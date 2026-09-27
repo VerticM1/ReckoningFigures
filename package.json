@@ -8,7 +8,8 @@
     "ios:sync": "npm run build && cap sync ios",
     "ios:open": "cap open ios",
     "test:course": "node preview/scripts/validate-course.mjs",
-    "test:sync": "node preview/scripts/test-sync.mjs"
+    "test:sync": "node preview/scripts/test-sync.mjs",
+    "test:lesson": "node preview/scripts/test-two-step.mjs"
   },
   "dependencies": {
     "@capacitor/core": "8.5.2",

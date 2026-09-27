@@ -77,7 +77,7 @@ export function answerMotion(correct, combo) {
     { opacity: 1, transform: 'translate(-50%, 0) scale(1)' }
   ], { duration: 430 });
   if (reduced()) return;
-  const rect = equation.getBoundingClientRect();
+  const rect = (document.querySelector('.solver-board') || equation).getBoundingClientRect();
   const count = combo >= 3 ? 14 : 7;
   for (let i = 0; i < count; i++) {
     const spark = document.createElement('span');

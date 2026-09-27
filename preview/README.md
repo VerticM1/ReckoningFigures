@@ -30,3 +30,9 @@ Restore or author the five missing source lessons; improve lesson-specific coach
 ## Accounts and native packaging update
 
 Profile now opens optional account controls; Leaderboard opens a clearly labeled simulated Practice League. The SDK is bundled in `vendor/firebase.js` so this preview still runs from a static server without a build step. Cross-device sync requires review/activation of the private Firestore rules and live verification. See `../MOBILE_SETUP.md` for the exact state, tests, and Mac build instructions. The iOS project is generated, not signed or compiled.
+
+## Two-step lesson pilot
+
+Open **Unit 1 → Figure 002: Double Trouble** (the second lesson node). The nine imported questions are preserved. A tenth, new equation checks transfer without automatic hints. This lesson adds animated operations on both sides, two levels of optional help, misconception feedback, replay, and a completion message that distinguishes an independent first attempt from a supported solve. Reduced-motion mode shows the same mathematical steps immediately. This is a teaching prototype; effectiveness still needs student testing.
+
+Run `npm run test:lesson` to check that displayed transformations preserve both sides of each equation. Mobile Chromium smoke testing covers mistake feedback, hints, all ten answers, reduced motion, completion, and guest progress persistence. Native iPhone testing remains outstanding.
