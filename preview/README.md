@@ -42,3 +42,9 @@ Run `npm run test:lesson` to check that displayed transformations preserve both 
 `brand-art.js` reuses the transparent Reckoning Figures mark and builds a consistent electric-blue, amber, and white-highlight treatment for the Daily Charge battery, checkpoint vault, Spark League trophy, and badges. The same logo replaces generic lightning glyphs in streak, XP, combo, and lesson displays. Decorative objects carry no accessible labels; widget text conveys their state.
 
 Daily Charge is derived from today's local practice date. A unit's First Spark badge is derived from completion of its first three available figures; it grants no additional XP or cash. The league uses the existing three-day simulated scoring and now opens in a full-height view. Browser checks cover 320px, 390px and desktop widths, locked/unlocked widgets, league navigation, and lesson logo updates. Actual iPhone testing remains pending.
+
+## Lesson motion and celebration pass
+
+Reference reviewed: `ScreenRecording_09-25-2026 15-27-20_1.mp4` (2:29). It shows reactive lesson artwork, tile states, progress-bar changes and a large success/XP overlay around 0:53; it ends mid-lesson and contains no end-of-lesson streak flow.
+
+This pass adds distinct flame, crystal and completion-medal silhouettes, foreground answer celebrations, a powered combo bar, visible cancellation in Figure 002, and a full-screen XP → newly earned streak sequence. The streak scene is an original design based on the requested behavior, not a scene observed in the clip. It appears only on the first practice completion for the local day. Skip and reduced-motion modes retain results. XP continues to be awarded once by the existing claim action; animation does not grant additional rewards.

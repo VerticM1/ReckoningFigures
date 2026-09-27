@@ -43,7 +43,7 @@ export function mountTwoStep(index,onHint){
  shell.innerHTML=`<div class="studio-heading"><span class="eyebrow">${index<2?'SEE THE STEPS':index===9?'YOUR SOLO CHALLENGE':'BUILD YOUR CONFIDENCE'}</span><span class="studio-spark" aria-hidden="true">${bolt('medium')}</span></div><div class="solver-board" role="img"><div class="solver-pan"><span class="solver-value"></span><span class="solver-operation" aria-hidden="true"></span></div><b aria-hidden="true">=</b><div class="solver-pan"><span class="solver-value"></span><span class="solver-operation" aria-hidden="true"></span></div></div><p class="solver-caption" role="status">${index<2?'Choose an answer below. Watch the same operation happen on both sides.':index===9?'Try this one on your own. Help is here if you need it.':'Keep both sides equal as you work toward one x.'}</p><div class="solver-trail" aria-label="Worked steps"></div><div class="studio-actions"><button class="hint-toggle" aria-expanded="false">✧ Give me a nudge</button><button class="solver-replay" hidden>Replay steps ↻</button></div><div class="hint-copy" role="status" hidden></div>`;
  document.querySelector('.equation').hidden=true;document.querySelector('.lesson-concept').before(shell);
  const board=shell.querySelector('.solver-board'),values=shell.querySelectorAll('.solver-value'),ops=shell.querySelectorAll('.solver-operation'),caption=shell.querySelector('.solver-caption'),trail=shell.querySelector('.solver-trail'),hint=shell.querySelector('.hint-copy'),hintButton=shell.querySelector('.hint-toggle'),replay=shell.querySelector('.solver-replay');
- const set=(l,r)=>{values[0].textContent=l;values[1].textContent=r;board.setAttribute('aria-label',`${l} equals ${r}`);};set(first.left,first.right);
+ const set=(l,r)=>{[l,r].forEach((text,i)=>{values[i].replaceChildren();const match=text.match(/^(\d*)x(?: ([+−]) (\d+))?$/);if(!match){values[i].textContent=text;return;}if(match[1]){const factor=document.createElement('span');factor.className='term-factor';factor.textContent=match[1];values[i].append(factor);}values[i].append('x');if(match[2]){const constant=document.createElement('span');constant.className='term-constant';constant.textContent=` ${match[2]} ${match[3]}`;values[i].append(constant);}});board.setAttribute('aria-label',`${l} equals ${r}`);};set(first.left,first.right);
  function showHint(){
   hintLevel++;onHint();hint.hidden=false;hintButton.setAttribute('aria-expanded','true');
   hint.textContent=hintLevel===1?nudges[index]:moves.map(s=>`${equationText(s)} → ${s.operation} on both sides → ${s.nextLeft} = ${s.nextRight}`).join('. ');
@@ -58,6 +58,7 @@ export function mountTwoStep(index,onHint){
    if(!shell.isConnected)return;
    set(s.left,s.right);ops.forEach(el=>{el.textContent=s.operation;el.classList.add('operation-visible');});
    caption.textContent=`${s.operation} on BOTH sides. Equality stays intact.`;
+   board.querySelectorAll(s.operation.startsWith('÷')?'.term-factor':'.term-constant').forEach(el=>el.classList.add('term-cancelled'));
    if(!reduced){ops.forEach(el=>el.animate?.([{opacity:0,transform:'translateY(-12px)'},{opacity:1,transform:'translateY(0)'}],{duration:300,fill:'both'}));await wait(850);}
    if(!shell.isConnected)return;
    set(s.nextLeft,s.nextRight);ops.forEach(el=>{el.classList.remove('operation-visible');el.textContent='';});

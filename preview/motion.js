@@ -1,3 +1,4 @@
+import { successBurst } from './celebrations.js';
 import { bolt } from './brand-art.js';
 // Motion remains decorative: no answer or navigation depends on an animation finishing.
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
@@ -64,6 +65,8 @@ export function answerMotion(correct, combo) {
       [{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 260 });
     return;
   }
+  successBurst(combo);
+  document.querySelector('.track')?.classList.toggle('track-powered',combo>=3);
   move(document.querySelector('.selected') || document.querySelector('.answer'),
     [{ transform: 'scale(1)' }, { transform: 'scale(1.025)' }, { transform: 'scale(1)' }], { duration: 350 });
   move(equation, [{ borderColor: '#2b3b49' }, { borderColor: '#9cdeac', boxShadow: '0 0 30px #9cdeac25' }, { borderColor: '#2b3b49' }], { duration: 600 });
