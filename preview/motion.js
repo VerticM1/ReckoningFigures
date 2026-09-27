@@ -1,3 +1,4 @@
+import { bolt } from './brand-art.js';
 // Motion remains decorative: no answer or navigation depends on an animation finishing.
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 const reduced = () => motionPreference.matches;
@@ -54,7 +55,7 @@ export function answerMotion(correct, combo) {
   footer.classList.toggle('retry-panel', !correct);
   move(footer, [{ opacity: .55, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 290 });
   const badge = document.querySelector('.combo');
-  badge.textContent = `ϟ ${combo}`;
+  badge.innerHTML = `${bolt()} ${combo}`;
   badge.setAttribute('aria-label', `${combo} correct answers in a row`);
   badge.classList.toggle('charged', combo >= 3);
   const equation = document.querySelector('.equation');
@@ -68,7 +69,7 @@ export function answerMotion(correct, combo) {
   move(equation, [{ borderColor: '#2b3b49' }, { borderColor: '#9cdeac', boxShadow: '0 0 30px #9cdeac25' }, { borderColor: '#2b3b49' }], { duration: 600 });
   move(badge, [{ transform: 'scale(1)' }, { transform: 'scale(1.22)' }, { transform: 'scale(1)' }], { duration: 420 });
   const reward = document.querySelector('.energy-reward');
-  reward.textContent = combo >= 3 ? `ϟ ${combo} IN A ROW · +10 XP` : 'ϟ +10 XP';
+  reward.innerHTML = bolt() + (combo >= 3 ? `${combo} IN A ROW · +10 XP` : '+10 XP');
   // The XP reflects the existing ten points per solved question; no extra combo reward.
   reward.classList.add('visible');
   move(reward, [

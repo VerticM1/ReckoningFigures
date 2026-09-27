@@ -1,3 +1,4 @@
+import { bolt, brandObject } from './brand-art.js';
 // Deliberately simulated competitors; never presented as real users.
 export function league(now=Date.now(),earned=0){
  const duration=3*24*60*60*1000,round=Math.floor(now/duration),elapsed=now%duration;
@@ -9,5 +10,6 @@ export function league(now=Date.now(),earned=0){
 }
 export function leagueHTML(progress,now=Date.now()){
  const current=league(now),earned=progress.leagueXP?.[current.round]||0;const data=league(now,earned);
- return `<div class="league"><span class="eyebrow gold">PRACTICE LEAGUE</span><h2>A little friendly competition.</h2><p>These are simulated players, not real people. Earn lesson XP to climb this three-day practice round.</p><small>New round in ${Math.ceil((data.ends-now)/3600000)} hours · Opponent scores update every 6 hours.</small><ol>${data.rows.map((r,i)=>`<li class="${r.simulated?'':'you'}"><b>${i+1}</b><span>${r.name}<small>${r.simulated?'Simulated player':'Your XP this round'}</small></span><strong>${r.xp} XP</strong></li>`).join('')}</ol><p class="account-note">Practice-league scores stay on this device. No money or prizes are attached.</p></div>`;
+ const rank=data.rows.findIndex(r=>!r.simulated),above=data.rows[rank-1];
+ return `<div class="league"><header class="league-heading"><span class="eyebrow gold">PRACTICE LEAGUE</span><h2>Spark League</h2><p>Simulated opponents · Three-day round</p><span class="round-clock">${Math.ceil((data.ends-now)/3600000)} hours left</span></header><div class="league-showcase">${brandObject('trophy',true)}<p>Small steps. Serious energy.</p></div><div class="league-personal">${bolt('medium')}<span><strong>Your position: #${rank+1}</strong><small>${above?`${above.xp-earned+1} XP to move ahead of ${above.name}`:'You’re leading this practice round.'}</small></span><b>${earned} XP</b></div><ol>${data.rows.map((r,i)=>`<li class="${r.simulated?'':'you'}"><b class="rank-number">${i+1}</b><span class="league-avatar ${r.simulated?'':'your-avatar'}" aria-hidden="true">${r.simulated?r.name.slice(0,1):bolt('medium')}</span><span>${r.name}<small>${r.simulated?'Simulated player':'Your XP this round'}</small></span><strong>${r.xp} XP</strong></li>`).join('')}</ol><p class="account-note">Opponents are simulated, not real people. Their scores update every 6 hours. Practice-league scores stay on this device. No money or prizes are attached.</p></div>`;
 }

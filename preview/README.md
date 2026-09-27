@@ -36,3 +36,9 @@ Profile now opens optional account controls; Leaderboard opens a clearly labeled
 Open **Unit 1 → Figure 002: Double Trouble** (the second lesson node). The nine imported questions are preserved. A tenth, new equation checks transfer without automatic hints. This lesson adds animated operations on both sides, two levels of optional help, misconception feedback, replay, and a completion message that distinguishes an independent first attempt from a supported solve. Reduced-motion mode shows the same mathematical steps immediately. This is a teaching prototype; effectiveness still needs student testing.
 
 Run `npm run test:lesson` to check that displayed transformations preserve both sides of each equation. Mobile Chromium smoke testing covers mistake feedback, hints, all ten answers, reduced motion, completion, and guest progress persistence. Native iPhone testing remains outstanding.
+
+## Lightning brand widgets
+
+`brand-art.js` reuses the transparent Reckoning Figures mark and builds a consistent electric-blue, amber, and white-highlight treatment for the Daily Charge battery, checkpoint vault, Spark League trophy, and badges. The same logo replaces generic lightning glyphs in streak, XP, combo, and lesson displays. Decorative objects carry no accessible labels; widget text conveys their state.
+
+Daily Charge is derived from today's local practice date. A unit's First Spark badge is derived from completion of its first three available figures; it grants no additional XP or cash. The league uses the existing three-day simulated scoring and now opens in a full-height view. Browser checks cover 320px, 390px and desktop widths, locked/unlocked widgets, league navigation, and lesson logo updates. Actual iPhone testing remains pending.
