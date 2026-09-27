@@ -25,4 +25,8 @@ Headless Chromium completed all 53 available lessons and 581 steps with correct 
 
 ## Remaining work
 
-Restore or author the five missing source lessons; improve lesson-specific coaching throughout the course; integrate real account progress/entitlements; package for iOS; test on native devices and prepare TestFlight/App Store submission. This branch has not been deployed.
+Restore or author the five missing source lessons; improve lesson-specific coaching throughout the course; verify live cloud progress and production entitlements; test the generated iOS project on native devices and prepare TestFlight/App Store submission. This branch has not been deployed.
+
+## Accounts and native packaging update
+
+Profile now opens optional account controls; Leaderboard opens a clearly labeled simulated Practice League. The SDK is bundled in `vendor/firebase.js` so this preview still runs from a static server without a build step. Cross-device sync requires review/activation of the private Firestore rules and live verification. See `../MOBILE_SETUP.md` for the exact state, tests, and Mac build instructions. The iOS project is generated, not signed or compiled.

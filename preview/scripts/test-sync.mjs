@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {prepareProgress,mergeProgress,earnXP} from '../sync-model.js';
+import {league} from '../practice-league.js';
+const seed={xp:100,completedLessons:[1],visits:['2026-09-25'],practiceDays:[],sessions:1};
+const cloud=prepareProgress(seed,'legacy');
+const a=earnXP(cloud,90,'device-a'),b=earnXP(cloud,140,'device-b');
+const merged=mergeProgress(a,b);assert.equal(merged.xp,330);assert.equal(mergeProgress(merged,b).xp,330);assert.deepEqual(mergeProgress(a,b).cloud,mergeProgress(b,a).cloud);
+assert.equal(mergeProgress(earnXP(a,20,'device-a'),merged).xp,350);
+assert.deepEqual(mergeProgress({...a,completedLessons:[1,2]},{...b,completedLessons:[1,3]}).completedLessons,[1,2,3]);
+const now=Date.UTC(2026,8,25,12);assert.deepEqual(league(now,55),league(now,55));assert.equal(league(now).rows.filter(r=>r.simulated).length,7);assert.notEqual(league(now).round,league(now+3*86400000).round);assert.equal(league(now,55).rows.find(r=>!r.simulated).xp,55);
+console.log('PASS concurrent offline XP, merge replay/idempotence, completion union, deterministic three-day simulated league.');

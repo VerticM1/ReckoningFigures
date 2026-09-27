@@ -1,0 +1,6 @@
+{
+ "appId":"com.reckoningfigures.app",
+ "appName":"Reckoning Figures",
+ "webDir":"dist",
+ "ios":{"contentInset":"automatic","backgroundColor":"#101a24"}
+}

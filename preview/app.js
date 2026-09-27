@@ -1,3 +1,6 @@
+import { getClient, showAccount } from './account.js';
+import { prepareProgress, mergeProgress, earnXP } from './sync-model.js';
+import { league, leagueHTML } from './practice-league.js';
 import { coaching, mountCoaching, revealHint } from './coaching.js';
 import { pathArt } from './path-art.js';
 import { course } from './course.js';
@@ -6,7 +9,9 @@ let activeModule=0,activeLesson=course[0].lessons[0],problems=activeLesson.quest
 import { animateEntrance, answerMotion, selectMotion, transitionQuestion } from './motion.js';
 import { dateKey, markDay, streak, weekDays } from './activity.js';
 const app = document.querySelector('#app');
-const key = 'reckoningPreviewV1';
+let key = 'reckoningPreviewV1',accountUser=null,syncStatus='Not synced yet',syncTimer=null,syncBusy=false;
+let device;try{device=localStorage.getItem('rfDeviceId')||crypto.randomUUID();localStorage.setItem('rfDeviceId',device);}catch{device=crypto.randomUUID();}
+const xpDevice=()=>key==='reckoningPreviewV1'?'guest-'+device:device;
 let progress = {xp:0, completed:false, sessions:0};
 let storageAvailable = true;
 try { const saved = JSON.parse(localStorage.getItem(key) || 'null'); if(saved && typeof saved.xp === 'number') progress = {...progress,...saved}; } catch {storageAvailable=false;}
@@ -14,8 +19,17 @@ progress.completedLessons=Array.isArray(progress.completedLessons)?progress.comp
 activeModule=Math.max(0,Math.min(6,Number(progress.selectedModule)||0));
 progress.visits = Array.isArray(progress.visits)?progress.visits:[];
 progress.practiceDays = Array.isArray(progress.practiceDays)?progress.practiceDays:[];
+function queueSync(){if(!accountUser)return;clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncAccount().catch(()=>{}),1800);}
+async function syncAccount(){
+ if(!accountUser)return;
+ if(syncBusy){queueSync();throw Error('Sync is already in progress. Try again in a moment.');}
+ const uid=accountUser.uid,snapshot=prepareProgress(progress,xpDevice());syncBusy=true;syncStatus='Syncing…';
+ try{const cloud=await(await getClient()).sync(uid,snapshot);if(accountUser?.uid===uid){progress=mergeProgress(prepareProgress(progress,xpDevice()),cloud);localStorage.setItem(key,JSON.stringify(progress));syncStatus='Synced';if(document.querySelector('.shell')&&!document.querySelector('dialog[open]'))home();}}
+ catch(error){syncStatus=error.code==='permission-denied'?'Cloud access denied; saved on this device.':'Waiting for connection; saved on this device.';throw error;}
+ finally{syncBusy=false;}
+}
 function persistActivity(){
- try{localStorage.setItem(key,JSON.stringify(progress));storageAvailable=true;}catch{storageAvailable=false;}
+ try{localStorage.setItem(key,JSON.stringify(progress));storageAvailable=true;queueSync();}catch{storageAvailable=false;}
 }
 function recordVisit(){progress.visits=markDay(progress.visits);persistActivity();}
 recordVisit();
@@ -41,7 +55,7 @@ function home(){
  const nodes=figures.map((title,i)=>`<li class="path-step ${i===current?'next-step':''} ${progress.completedLessons.includes(lessons[i].id)?'done-step':''}" style="--shift:${offsets[i]}px"><button class="path-node" data-figure="${i}" ${i===current?'aria-current="step"':''} aria-label="Figure ${lessons[i].id}: ${title}${progress.completedLessons.includes(lessons[i].id)?', completed':i===current?', next lesson':''}">${!lessons[i].available?'…':progress.completedLessons.includes(lessons[i].id)?'✓':symbols[i]}</button>${i===current?'<span class="start-pointer">'+(completedCount?'UP NEXT':'START HERE')+'</span>':''}<span class="path-caption">${title}</span>${i===current?`<div class="node-preview"><span class="eyebrow">Figure ${String(lessons[i].id).padStart(3,'0')}</span><strong>${title}</strong><span>${lessons[i].premium?'Premium lesson':'Ready for your next challenge?'}</span><button class="primary" id="start">${progress.completedLessons.includes(lessons[i].id)?'Practice again':'Let’s solve it'} →</button></div>`:''}${pathArt(i)}</li>`).join('');
  const points=offsets.slice(0,lessons.length).map((x,i)=>[210+x,65+i*180]);
  const path=points.map(([x,y],i)=>i?`C ${points[i-1][0]} ${y-110}, ${x} ${y-70}, ${x} ${y}`:`M ${x} ${y}`).join(' ');
- app.innerHTML=`<div class="shell page learn-shell"><aside class="sidebar"><a class="brand" href="#">${brand}</a><nav class="nav" aria-label="Main navigation"><a class="active" href="#" aria-current="page">${icons[0]}Learn</a><a href="../daily-challenge.html">${icons[1]}Practice</a><a href="../leaderboard.html">${icons[2]}Leaderboard</a><a href="../profile.html">${icons[3]}Profile</a></nav><div class="foot">A little practice.<br>A lot more confidence.<br><a href="../main-menu-modules.html">Original app ↗</a></div></aside><main class="learn-main"><header class="learn-top"><div class="course-badge"><img src="assets/brand-transparent.png" alt=""><span>Algebra <b>1</b></span></div><div class="topstats"><button class="pill streak-button" id="open-streak" aria-label="View activity calendar, ${streak(progress.practiceDays).current} day practice streak">ϟ <span>${streak(progress.practiceDays).current}</span></button><span class="pill gold">✦ ${progress.xp} XP</span></div></header><section class="journey"><header class="unit-banner"><div><span class="eyebrow">ALGEBRA 1 · UNIT ${module.id}</span><h1>${activeModule===0?'Find your balance.':module.name}</h1><p>${module.name} · ${completedCount} of ${lessons.length} figures complete</p></div><button id="open-course" class="course-menu" aria-label="Browse all course modules">${icon('<path d="M5 6h14M5 12h14M5 18h14"/>')}</button></header><div class="world"><div class="world-decoration" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><img src="assets/brand-transparent.png" alt=""><span class="floating-math math-one">x + you</span><span class="floating-math math-two">= possibility</span><i class="star star-one">✦</i><i class="star star-two">✧</i></div><div class="path-map"><svg class="path-line" viewBox="0 0 420 2110" preserveAspectRatio="none" aria-hidden="true"><path d="${path}"/></svg><ol class="lesson-path" aria-label="${module.name} lesson path">${nodes}</ol></div></div><div class="next-unit"><span class="eyebrow">${activeModule<6?'UP AHEAD':'KEEP GROWING'}</span><h2>${activeModule<6?course[activeModule+1].name:'Every figure makes you stronger.'}</h2><button class="hint-toggle" id="next-module">${activeModule<6?'Explore next unit →':'Back to unit 1 →'}</button></div><p class="path-note">Progress is saved on this device. Five source lessons (020–024) are unavailable; premium access requirements still apply.</p></section></main><dialog class="learn-dialog" id="learn-dialog"><button class="dialog-close icon-btn" aria-label="Close dialog">×</button><div id="dialog-body"></div></dialog></div>`;
+ app.innerHTML=`<div class="shell page learn-shell"><aside class="sidebar"><a class="brand" href="#">${brand}</a><nav class="nav" aria-label="Main navigation"><a class="active" href="#" aria-current="page">${icons[0]}Learn</a><a href="../daily-challenge.html">${icons[1]}Practice</a><a href="#league" id="open-league">${icons[2]}Leaderboard</a><a href="#account" id="open-account">${icons[3]}Profile</a></nav><div class="foot">A little practice.<br>A lot more confidence.<br><a href="../main-menu-modules.html">Original app ↗</a></div></aside><main class="learn-main"><header class="learn-top"><div class="course-badge"><img src="assets/brand-transparent.png" alt=""><span>Algebra <b>1</b></span></div><div class="topstats"><button class="pill streak-button" id="open-streak" aria-label="View activity calendar, ${streak(progress.practiceDays).current} day practice streak">ϟ <span>${streak(progress.practiceDays).current}</span></button><span class="pill gold">✦ ${progress.xp} XP</span></div></header><section class="journey"><header class="unit-banner"><div><span class="eyebrow">ALGEBRA 1 · UNIT ${module.id}</span><h1>${activeModule===0?'Find your balance.':module.name}</h1><p>${module.name} · ${completedCount} of ${lessons.length} figures complete</p></div><button id="open-course" class="course-menu" aria-label="Browse all course modules">${icon('<path d="M5 6h14M5 12h14M5 18h14"/>')}</button></header><div class="world"><div class="world-decoration" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><img src="assets/brand-transparent.png" alt=""><span class="floating-math math-one">x + you</span><span class="floating-math math-two">= possibility</span><i class="star star-one">✦</i><i class="star star-two">✧</i></div><div class="path-map"><svg class="path-line" viewBox="0 0 420 2110" preserveAspectRatio="none" aria-hidden="true"><path d="${path}"/></svg><ol class="lesson-path" aria-label="${module.name} lesson path">${nodes}</ol></div></div><div class="next-unit"><span class="eyebrow">${activeModule<6?'UP AHEAD':'KEEP GROWING'}</span><h2>${activeModule<6?course[activeModule+1].name:'Every figure makes you stronger.'}</h2><button class="hint-toggle" id="next-module">${activeModule<6?'Explore next unit →':'Back to unit 1 →'}</button></div><p class="path-note">Progress is saved on this device. Five source lessons (020–024) are unavailable; premium access requirements still apply.</p></section></main><dialog class="learn-dialog" id="learn-dialog"><button class="dialog-close icon-btn" aria-label="Close dialog">×</button><div id="dialog-body"></div></dialog></div>`;
  const openDialog=(html)=>{document.querySelector('#dialog-body').innerHTML=html;document.querySelector('#learn-dialog').showModal();};
  const launch=(i)=>{const lesson=lessons[i];if(!lesson.available){openDialog('<div class="figure-detail"><h2>Lesson not available yet</h2><p>This lesson file is missing from the original project. Your progress is safe; choose another figure.</p></div>');return;}
  let premium=false;try{premium=JSON.parse(localStorage.getItem('userProgress')||'{}').premium===true;}catch{}
@@ -52,7 +66,9 @@ function home(){
  const selectModule=(id)=>{activeModule=id;progress.selectedModule=id;persistActivity();home();window.scrollTo(0,0);};
  document.querySelector('#next-module').onclick=()=>selectModule((activeModule+1)%7);
  document.querySelector('#open-course').onclick=()=>{openDialog('<div class="course-list"><h2>Your algebra journey</h2>'+course.map((m,i)=>`<button class="unit" data-module="${i}"><span class="unit-number">${i+1}</span><h3>${m.name}</h3><span class="arrow">→</span></button>`).join('')+'</div>');document.querySelectorAll('[data-module]').forEach(b=>b.onclick=()=>{document.querySelector('#learn-dialog').close();selectModule(Number(b.dataset.module));});};
- const dialog=document.querySelector('#learn-dialog');document.querySelector('.dialog-close').onclick=()=>dialog.close();dialog.onclick=e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}};
+ const dialog=document.querySelector('#learn-dialog');
+ document.querySelector('#open-league').onclick=e=>{e.preventDefault();openDialog(leagueHTML(progress));};
+ document.querySelector('#open-account').onclick=e=>{e.preventDefault();showAccount(dialog,{user:accountUser,status:syncStatus,onSync:syncAccount,onImport:()=>{const guest=prepareProgress(JSON.parse(localStorage.getItem('reckoningPreviewV1')||'{}'),'guest-'+device);progress=mergeProgress(prepareProgress(progress,device),guest);persistActivity();}});};document.querySelector('.dialog-close').onclick=()=>dialog.close();dialog.onclick=e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}};
 }
 function start(lesson=activeLesson){activeLesson=lesson;problems=lesson.questions;window.scrollTo(0,0);state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false,combo:0,transitioning:false};question();}
 function question(){
@@ -100,9 +116,21 @@ function finish(){
  document.querySelector('h1').focus();
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches)for(let i=0;i<32;i++){const el=document.createElement('i');el.className='confetti';el.style.left=Math.random()*100+'%';el.style.background=['#ffd15c','#5ed8f3','#9cdeac'][i%3];el.style.animationDelay=Math.random()*.4+'s';document.body.append(el);setTimeout(()=>el.remove(),2400);}
  document.querySelector('#claim').onclick=()=>{
-  if(state.claimed)return;state.claimed=true;progress.xp+=state.earned;progress.completedLessons=[...new Set([...progress.completedLessons,activeLesson.id])];progress.completed=progress.completedLessons.includes(1);progress.sessions++;
-  try{localStorage.setItem(key,JSON.stringify(progress));home();}catch{storageAvailable=false;document.querySelector('#save-status').textContent='Device storage is unavailable. Your progress will last for this visit only.';const b=document.querySelector('#claim');b.textContent='Back to learning';b.onclick=home;}
+  if(state.claimed)return;state.claimed=true;progress=earnXP(progress,state.earned,xpDevice());const round=league().round;progress.leagueXP=progress.leagueXP||{};progress.leagueXP[round]=(progress.leagueXP[round]||0)+state.earned;progress.completedLessons=[...new Set([...progress.completedLessons,activeLesson.id])];progress.completed=progress.completedLessons.includes(1);progress.sessions++;
+  try{localStorage.setItem(key,JSON.stringify(progress));queueSync();home();}catch{storageAvailable=false;document.querySelector('#save-status').textContent='Device storage is unavailable. Your progress will last for this visit only.';const b=document.querySelector('#claim');b.textContent='Back to learning';b.onclick=home;}
  };
  if(!storageAvailable)document.querySelector('#save-status').textContent='Device storage may be unavailable. Progress can still be kept for this visit.';
 }
 home();
+
+// Authentication is optional. Failed SDK/network initialization never blocks guest lessons.
+getClient().then(client=>client.observe(user=>{
+ if((user?.uid||null)===(accountUser?.uid||null))return;
+ clearTimeout(syncTimer);accountUser=user;key=user?'rfAccount_'+user.uid:'reckoningPreviewV1';
+ try{progress=JSON.parse(localStorage.getItem(key)||'null')||{};}catch{progress={};}
+ progress={xp:0,sessions:0,completed:false,completedLessons:[],visits:[],practiceDays:[],...progress};
+ if(progress.completed&&!progress.completedLessons.length)progress.completedLessons=[1];
+ activeModule=Math.max(0,Math.min(6,Number(progress.selectedModule)||0));
+ recordVisit();home();if(user)syncAccount().catch(()=>{});
+})).catch(()=>{syncStatus='Accounts unavailable offline. Guest progress stays on this device.';});
+window.addEventListener('online',()=>queueSync());
