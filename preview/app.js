@@ -128,7 +128,7 @@ function finish(){
   try{localStorage.setItem(key,JSON.stringify(progress));queueSync();home();}catch{storageAvailable=false;document.querySelector('#save-status').textContent='Device storage is unavailable. Your progress will last for this visit only.';const b=document.querySelector('#claim');b.textContent='Back to learning';b.onclick=home;}
  };
  if(!storageAvailable)document.querySelector('#save-status').textContent='Device storage may be unavailable. Progress can still be kept for this visit.';
- celebrateFinish({xp:state.earned,days:streak(progress.practiceDays).current,practiceDays:progress.practiceDays,firstPracticeToday});
+ celebrateFinish({xp:state.earned,days:streak(progress.practiceDays).current,practiceDays:progress.practiceDays,firstPracticeToday,scored,accuracy:Math.round(scored/Math.max(1,state.attempts)*100),seconds,independent:state.challengeIndependent,onComplete:()=>document.querySelector('#claim')?.click()});
 }
 home();
 

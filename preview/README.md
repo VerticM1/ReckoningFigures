@@ -48,3 +48,11 @@ Daily Charge is derived from today's local practice date. A unit's First Spark b
 Reference reviewed: `ScreenRecording_09-25-2026 15-27-20_1.mp4` (2:29). It shows reactive lesson artwork, tile states, progress-bar changes and a large success/XP overlay around 0:53; it ends mid-lesson and contains no end-of-lesson streak flow.
 
 This pass adds distinct flame, crystal and completion-medal silhouettes, foreground answer celebrations, a powered combo bar, visible cancellation in Figure 002, and a full-screen XP → newly earned streak sequence. The streak scene is an original design based on the requested behavior, not a scene observed in the clip. It appears only on the first practice completion for the local day. Skip and reduced-motion modes retain results. XP continues to be awarded once by the existing claim action; animation does not grant additional rewards.
+
+## Completion choreography, September 28 reference
+
+Reviewed `ScreenRecording_09-28-2026 18-54-21_1.mp4` (48.7 seconds), including the completion entrance/results at approximately 0:16–0:21 and streak ignition at 0:41–0:47. The flow now uses an original blue lightning banner entrance, sequential XP/accuracy/time cards, then a dim-to-lit flame with old/new streak counts and delayed calendar activation. Advertising and subscription interstitials are not included.
+
+The intro advances automatically after 1.7 seconds and can be skipped immediately. Reduced motion opens directly on the results. Finishing, skipping, or pressing Escape runs the existing guarded claim once and returns to Learn, without a duplicate results page. The new-day streak scene is omitted for later lessons on the same local date. Browser verification covers a 19→20 day transition, repeated same-day practice, reduced motion, skip timer cleanup and exactly-once saving. Native iPhone playback still needs device testing.
+
+While serving the preview, open `celebration-preview.html` next to `index.html` to replay a first day, a 19→20 day milestone, or same-day completion. This isolated review page uses sample results and never reads or writes progress.
