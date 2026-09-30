@@ -1,4 +1,5 @@
-import { successBurst } from './celebrations.js';
+import { playSound } from './sound.js';
+import { successBurst, isMilestone } from './celebrations.js';
 import { bolt } from './brand-art.js';
 // Motion remains decorative: no answer or navigation depends on an animation finishing.
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
@@ -51,6 +52,7 @@ export function transitionQuestion(next) {
   animation.finished.then(done, done);
 }
 export function answerMotion(correct, combo) {
+  playSound(correct?(isMilestone(combo)?combo:'correct'):'wrong');
   const footer = document.querySelector('.lesson-footer');
   footer.classList.toggle('success-panel', correct);
   footer.classList.toggle('retry-panel', !correct);
@@ -74,7 +76,7 @@ export function answerMotion(correct, combo) {
   const reward = document.querySelector('.energy-reward');
   reward.innerHTML = bolt() + (combo >= 3 ? `${combo} IN A ROW · +10 XP` : '+10 XP');
   // The XP reflects the existing ten points per solved question; no extra combo reward.
-  reward.classList.add('visible');
+  reward.classList.toggle('visible',isMilestone(combo));
   move(reward, [
     { opacity: 0, transform: 'translate(-50%, 14px) scale(.65)' },
     { opacity: 1, transform: 'translate(-50%, -4px) scale(1.08)', offset: .7 },
