@@ -1,3 +1,4 @@
+import { balanceIcon } from './brand-art.js';
 export const coaching = [
  ['Undo the +5. Whatever you do to the left side, do to the right side too.', 'Subtract 5 from both sides: x + 5 − 5 = 12 − 5, so x = 7.'],
  ['Start at 12 and count back 5. Subtraction makes this positive number smaller.', '12 − 5 = 7. Check by adding back: 7 + 5 = 12.'],
@@ -17,7 +18,7 @@ export function mountCoaching(index) {
  button.onclick=()=>{const opening=copy.hidden;copy.hidden=!opening;button.setAttribute('aria-expanded',String(opening));copy.textContent=coaching[index][0];};
  if(index!==0)return;
  const lab=document.createElement('details');lab.className='balance-lab';
- lab.innerHTML=`<summary>⚖ Try it on a balance <small>optional practice</small></summary><div class="lab-body"><p>Keep both sides equal. Choose an operation and watch what happens.</p><div class="balance-board" aria-live="polite"><div class="balance-side"><span class="math-chip variable">x</span><span class="math-chip constant">+ 5</span></div><b class="equal-sign">=</b><div class="balance-side"><span class="math-chip total">12</span></div></div><div class="operation-row"><button data-operation="-5">− 5 on both sides</button><button data-operation="5">+ 5 on both sides</button></div><p class="lab-message" role="status">Which operation leaves x by itself?</p><button class="lab-reset">Reset balance</button></div>`;
+ lab.innerHTML=`<summary>${balanceIcon()} Try it on a balance <small>optional practice</small></summary><div class="lab-body"><p>Keep both sides equal. Choose an operation and watch what happens.</p><div class="balance-board" aria-live="polite"><div class="balance-side"><span class="math-chip variable">x</span><span class="math-chip constant">+ 5</span></div><b class="equal-sign">=</b><div class="balance-side"><span class="math-chip total">12</span></div></div><div class="operation-row"><button data-operation="-5">− 5 on both sides</button><button data-operation="5">+ 5 on both sides</button></div><p class="lab-message" role="status">Which operation leaves x by itself?</p><button class="lab-reset">Reset balance</button></div>`;
  container.after(lab);
  lab.querySelectorAll('[data-operation]').forEach(button=>button.onclick=()=>{
   const subtraction=button.dataset.operation==='-5';
