@@ -91,7 +91,13 @@ function question(){
  const special=p.type==='tutorial'||p.type==='graph';
  if(special)renderSpecial(p,value=>{state.selected=value;document.querySelector('#check').disabled=false;});
  if(p.type==='fill-blank'){
-  const input=document.createElement('input');input.className='answer';input.type='text';input.inputMode=Number.isFinite(Number(p.answer))?'decimal':'text';input.autocomplete='off';input.setAttribute('aria-label','Your answer');input.placeholder=p.placeholder;choices.append(input);
+  const input=document.createElement('input');input.className='answer';input.type='text';input.inputMode=Number.isFinite(Number(p.answer))?'decimal':'text';input.autocomplete='off';input.setAttribute('aria-label','Your answer');const equationPrompt=p.placeholder?.match(/^(.+?)\s*=\s*\?$/);
+  if(equationPrompt){
+   const row=document.createElement('label');row.className='equation-answer';
+   const prefix=document.createElement('span');prefix.className='answer-prefix';prefix.textContent=equationPrompt[1].trim()+' =';prefix.setAttribute('aria-hidden','true');
+   input.placeholder='?';input.setAttribute('aria-label','Value of '+equationPrompt[1].trim());
+   row.append(prefix,input);choices.append(row);
+  }else{input.placeholder=p.placeholder||'Your answer';choices.append(input);}
   input.oninput=()=>{state.selected=input.value.trim();document.querySelector('#check').disabled=!state.selected;};
   input.onkeydown=e=>{if(e.key==='Enter'&&!document.querySelector('#check').disabled){e.preventDefault();check();}};
  }else if(!special){

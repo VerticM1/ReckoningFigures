@@ -74,3 +74,5 @@ Use custom SVG/brand artwork instead of emoji icons in the redesigned UI. The op
 
 ### Stylesheet cache consistency
 Both preview HTML entry points use a content-versioned stylesheet URL. `npm run build` regenerates that version before packaging; run `node scripts/version-preview-styles.cjs` before a direct web publish after any CSS edit. Publish the updated entry points together with the CSS. Lightning paths also carry SVG presentation attributes so they never fall back to black filled shapes while styles load. This fixes the reported new-artwork/old-styles combination on iPhone; guest progress storage is unaffected.
+
+Equation-shaped fill-in prompts now render a fixed expression and equals sign next to a value-only input (for example `3x = [15]`). The prefix stays visible during typing and retries. Original question text and answer validation are preserved. Verified Figure 002 rejects 5 at the intermediate 3x step and accepts 15, then advances normally.
