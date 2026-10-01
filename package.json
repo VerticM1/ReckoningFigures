@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build:vendor": "esbuild preview/firebase-client.js --bundle --format=esm --minify --outfile=preview/vendor/firebase.js",
-    "build": "npm run build:vendor && node scripts/build-mobile.cjs",
+    "build": "node scripts/version-preview-styles.cjs && npm run build:vendor && node scripts/build-mobile.cjs",
     "ios:sync": "npm run build && cap sync ios",
     "ios:open": "cap open ios",
     "test:course": "node preview/scripts/validate-course.mjs",

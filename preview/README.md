@@ -71,3 +71,6 @@ The public test URL is https://verticm1.github.io/ReckoningFigures/preview/ (Git
 
 ### Icon and streak refinement
 Use custom SVG/brand artwork instead of emoji icons in the redesigned UI. The optional balance activity now uses an original blue/gold scale icon. Neutral lesson feedback stays empty until there is actual answer feedback instead of repeating the same slogan. The shared streak flame is electric blue, with three continuous travelling lightning strokes and an enhanced blue ignition entrance. Reduced-motion mode keeps the strokes static. Questions, XP, and streak calculations are unchanged.
+
+### Stylesheet cache consistency
+Both preview HTML entry points use a content-versioned stylesheet URL. `npm run build` regenerates that version before packaging; run `node scripts/version-preview-styles.cjs` before a direct web publish after any CSS edit. Publish the updated entry points together with the CSS. Lightning paths also carry SVG presentation attributes so they never fall back to black filled shapes while styles load. This fixes the reported new-artwork/old-styles combination on iPhone; guest progress storage is unaffected.
