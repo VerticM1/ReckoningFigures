@@ -36,6 +36,16 @@ In Xcode, open the App target, select the signing Team for your Apple Developer 
 
 ## Before TestFlight / App Store
 
+### Required: native haptics (requested October 1, 2026)
+
+- [ ] Integrate native Capacitor haptics before considering the app finished.
+- [ ] Add a light correct-answer tap and gentle wrong-answer double pulse.
+- [ ] Escalate feedback at 3, 5 and 7 consecutive correct answers, synchronized with celebration motion and the seven-answer lightning strike.
+- [ ] Add perfect-lesson feedback and a daily-streak pulse when the new day number lands.
+- [ ] Provide a separate haptics on/off setting and gracefully skip unsupported devices/web browsers.
+- [ ] Test intensity, timing, cancellation and the toggle on a physical iPhone in the native build. The Safari preview is not sufficient verification.
+
+
 Native device QA, account deletion and data-removal flow, a published privacy/support page, App Store privacy declarations, and final signing/assets are still required. The existing client-side Premium flag is retained for compatibility; paid entitlements need a production design before selling access in the iOS app. Cloud progress is private user-owned learning state, not a tamper-proof competitive score service.
 
 ## Verification performed
