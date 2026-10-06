@@ -28,3 +28,8 @@ No Firebase rules, invitations, billing, or live support service were deployed a
 
 ## Validation
 `node preview/scripts/test-organization.mjs` covers aggregation, filters, empty states, class/assignment validation and CSV output. `npm run build` versions workspace styles, entry JS and its data-model import. Publish the preview directory to main to update the same URL; the redesign branch retains the native project and setup notes.
+
+## Curriculum planning workspace
+The Curriculum tab groups all existing figures into seven units, with suggested unit objectives and prerequisites. Teachers can search titles/question prompts, filter units, inspect original steps and reveal answer keys. Number-line teaching illustrations have text descriptions in the teacher preview. Optional learner coaching and animations are not reproduced. Figure 2's extra learner challenge is explicitly noted. Standards alignment is unverified; planning notes need educator review before a pilot. Missing figures have no preview or assignment action. Premium figures allow content review but cannot be assigned in this demo. Assigning a non-premium figure opens the existing assignment form with that figure selected and preserves class selection. No student delivery has been enabled.
+
+Future course idea: pre-algebra as a separate course/path within the same branded app. Deferred until the Algebra 1 educator workflow is ready; no pre-algebra content or availability is promised by this release.
