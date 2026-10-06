@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {seed,metrics,scopedAttempts,scopedLearners,assignmentProgress,addClass,addAssignment,csv,dayKey} from '../organization/model.js';
+const now=new Date('2026-10-06T12:00:00'),data=seed(now);
+assert.equal(scopedLearners(data,'c1').length,7);
+assert(scopedAttempts(data,'c1',7,now).every(a=>data.learners.find(l=>l.id===a.learnerId).classId==='c1'));
+assert.equal(metrics([]).accuracy,null);
+assert.equal(metrics([{learnerId:'a',questions:2,firstTry:2,minutes:2},{learnerId:'a',questions:8,firstTry:4,minutes:4}]).accuracy,60);
+assert.equal(metrics([{learnerId:'a',questions:2,firstTry:2,minutes:2},{learnerId:'a',questions:8,firstTry:4,minutes:4}]).active,1);
+const empty=addClass(data,{name:'A new class'});assert.throws(()=>addClass(data,{name:'a NEW class'}));
+assert.throws(()=>addAssignment(data,{classId:empty.id,title:'Assignment',lessonIds:[1],due:dayKey()},[1]));
+assert.throws(()=>addAssignment(data,{classId:'c1',title:'Assignment',lessonIds:[99],due:dayKey()},[1]));
+const a=addAssignment(data,{classId:'c1',title:'Assignment',lessonIds:[1,1,2],due:dayKey()},[1,2]);assert.equal(a.lessonIds.length,2);
+const learner=a.learnerIds[0];data.attempts.push({learnerId:learner,lessonId:1,date:dayKey(),questions:9,firstTry:9,minutes:5});data.attempts.push({learnerId:learner,lessonId:2,date:dayKey(),questions:9,firstTry:9,minutes:5});assert(assignmentProgress(data,a).find(r=>r.id===learner).done);
+assert(csv([['=1+1','a,b','a"b']]).includes("'="));assert(csv([['a"b']]).includes('a""b'));
+console.log('PASS report weighting, empty data, class isolation, validation, assignment completion, CSV escaping');
