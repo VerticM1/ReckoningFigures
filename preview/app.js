@@ -1,3 +1,5 @@
+import {homeworkRequested,homeworkContext,homeworkHome,saveHomework} from './homework.js?v=c7bbab705733';
+const homework=homeworkContext();
 import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js';
 import { soundButton, bindSoundButton } from './sound.js';
 import { celebrateFinish } from './celebrations.js';
@@ -15,7 +17,7 @@ let activeModule=0,activeLesson=course[0].lessons[0],problems=activeLesson.quest
 import { animateEntrance, answerMotion, selectMotion, transitionQuestion } from './motion.js';
 import { dateKey, markDay, streak, weekDays } from './activity.js';
 const app = document.querySelector('#app');
-let key = 'reckoningPreviewV1',accountUser=null,syncStatus='Not synced yet',syncTimer=null,syncBusy=false;
+let key = homeworkRequested?'rfHomeworkDemo_'+(homework?.learner.id||'unavailable'):'reckoningPreviewV1',accountUser=null,syncStatus='Not synced yet',syncTimer=null,syncBusy=false;
 let device;try{device=localStorage.getItem('rfDeviceId')||crypto.randomUUID();localStorage.setItem('rfDeviceId',device);}catch{device=crypto.randomUUID();}
 const xpDevice=()=>key==='reckoningPreviewV1'?'guest-'+device:device;
 let progress = {xp:0, completed:false, sessions:0};
@@ -53,6 +55,7 @@ const icons = [icon('<path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-7h6v7"/>'),i
 const brand = '<img src="assets/brand-transparent.png" alt="Reckoning Figures lightning logo"><span>Reckoning<br>Figures</span>';
 function openWelcome(){showOnboarding(app,{onFinish:action=>{const url=new URL(location.href);url.searchParams.delete('welcome');history.replaceState(null,'',url);if(action==='lesson')start(course[0].lessons[0]);else home();}});}
 function home(){
+ if(homeworkRequested)return homeworkHome(app,homework,start,energyIcon('flame','hero'));
  const module=course[activeModule],lessons=module.lessons,figures=lessons.map(l=>l.title);
  const offsets=[0,-70,-105,-70,0,70,105,70,0,-70,-105,-70];
  const pending=lessons.findIndex(l=>l.available&&!progress.completedLessons.includes(l.id));
@@ -80,14 +83,14 @@ function home(){
  document.querySelector('#open-league').onclick=e=>{e.preventDefault();openDialog(leagueHTML(progress));document.querySelector('#learn-dialog').classList.add('league-dialog');document.querySelector('#learn-dialog').scrollTop=0;};
  document.querySelector('#open-account').onclick=e=>{e.preventDefault();dialog.classList.remove('league-dialog');showAccount(dialog,{user:accountUser,status:syncStatus,onSync:syncAccount,onImport:()=>{const guest=prepareProgress(JSON.parse(localStorage.getItem('reckoningPreviewV1')||'{}'),'guest-'+device);progress=mergeProgress(prepareProgress(progress,device),guest);persistActivity();}});};document.querySelector('.dialog-close').onclick=()=>dialog.close();dialog.onclick=e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}};
 }
-function start(lesson=activeLesson){activeLesson=lesson;problems=lesson.id===2?[...lesson.questions,challenge]:lesson.questions;window.scrollTo(0,0);state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false,combo:0,transitioning:false,hintsUsed:0,challengeIndependent:false};question();}
+function start(lesson=activeLesson){activeLesson=lesson;problems=lesson.id===2?[...lesson.questions,challenge]:lesson.questions;window.scrollTo(0,0);state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false,combo:0,transitioning:false,hintsUsed:0,challengeIndependent:false,firstTry:0,supportSteps:new Set(),sessionId:crypto.randomUUID()};question();}
 function question(){
  solver=null;const p=problems[state.index]; state.selected=null;state.checked=false;state.transitioning=false;state.questionErrors=0;
  app.innerHTML=`<main class="lesson"><header class="lesson-header">${soundButton()}<button class="icon-btn" id="exit" aria-label="Exit lesson">×</button><div class="track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="${problems.length}" aria-valuenow="${state.index}"><div class="fill" style="width:${state.index/problems.length*100}%"></div></div><span class="combo" aria-label="${state.combo} correct answers in a row">${bolt()} ${state.combo}</span><span class="count">${state.index+1} / ${problems.length}</span></header><section class="question"><span class="eyebrow" style="color:var(--blue)">Figure ${String(activeLesson.id).padStart(3,'0')} · ${activeLesson.title}</span><h1 tabindex="-1">${p.q}</h1><div class="equation" aria-label="${p.eq}"><span class="equation-text">${p.eq}</span><span class="energy-reward" aria-hidden="true"></span></div><div class="lesson-concept"></div><div class="choices"></div></section><footer class="lesson-footer"><div class="feedback" role="status" aria-live="polite"></div><button class="primary" id="check" disabled>Check answer</button></footer></main>`;
  const choices=document.querySelector('.choices');
  if(!p.eq)document.querySelector('.equation').hidden=true;
  if(p.eq?.length>22)document.querySelector('.equation').classList.add('long-equation');
- if(p.concept)document.querySelector('.lesson-concept').innerHTML=p.concept;
+ if(p.concept){document.querySelector('.lesson-concept').innerHTML=p.concept;if(p.type!=='tutorial')state.supportSteps.add(state.index);}
  const special=p.type==='tutorial'||p.type==='graph';
  if(special)renderSpecial(p,value=>{state.selected=value;document.querySelector('#check').disabled=false;});
  if(p.type==='fill-blank'){
@@ -106,6 +109,8 @@ function question(){
  }
  if(activeLesson.id===1)mountCoaching(state.index);
  if(activeLesson.id===2){solver=mountTwoStep(state.index,()=>{state.hintsUsed++;});window.scrollTo(0,0);}
+ document.querySelectorAll('.hint-toggle').forEach(b=>b.addEventListener('click',()=>{if(!state.checked)state.supportSteps.add(state.index);}));
+ document.querySelector('.balance-lab')?.addEventListener('toggle',e=>{if(e.target.open&&!state.checked)state.supportSteps.add(state.index);});
  document.querySelector('#exit').onclick=()=>{if(state.transitioning)return;if(confirm('Leave this lesson? This attempt will not be saved.'))home();};
  document.querySelector('#check').onclick=check;
  if(p.type==='tutorial'){state.checked=true;document.querySelector('#check').disabled=false;document.querySelector('#check').textContent='Got it — continue';}
@@ -120,8 +125,8 @@ async function check(){
  const p=problems[state.index];const correct=p.type==='graph'?graphMatches(state.selected,p.answer):p.type==='fill-blank'?answerMatches(state.selected,p.answer):state.selected===p.answer;
  state.attempts++;
  const feedback=document.querySelector('.feedback');const button=document.querySelector('#check');
- if(correct){state.checked=true;state.combo++;feedback.className='feedback';feedback.innerHTML='<strong>'+([3,5,7].includes(state.combo)?bolt()+state.combo+' in a row!':'That’s it. Nicely solved!')+'</strong>';const explanation=document.createElement('span');explanation.textContent=activeLesson.id===1?coaching[state.index][1]:'Correct. Keep building on what you know.';feedback.append(explanation);document.querySelector('.selected')?.classList.add('correct');document.querySelectorAll('.choice,.answer,.graph-controls input,.graph-controls select').forEach(el=>el.disabled=true);button.textContent=state.index===problems.length-1?'Finish lesson':'Continue';const width=(state.index+1)/problems.length*100;document.querySelector('.fill').style.width=width+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',state.index+1);button.focus();answerMotion(true,state.combo);if(solver){state.challengeIndependent=state.index===9?(!solver.usedHint&&state.questionErrors===0):state.challengeIndependent;state.transitioning=true;button.disabled=true;await solver.success();state.transitioning=false;button.disabled=false;}}
- else{const submitted=state.selected;state.errors++;state.questionErrors++;state.combo=0;feedback.className='feedback error';feedback.innerHTML='<strong>Not quite. Give it another go.</strong>You can take as many tries as you need.';document.querySelector('.selected')?.classList.add('wrong');state.selected=null;button.disabled=true;const input=document.querySelector('.answer');if(input){input.value='';input.focus();}answerMotion(false,0);if(activeLesson.id===1)revealHint(state.index,state.questionErrors);else if(solver){const help=document.createElement('span');help.textContent=solver.wrong(submitted);feedback.append(help);}else{const help=document.createElement('span');help.textContent=state.questionErrors>=2?'Review the answer: '+(p.type==='multiple-choice'?p.choices[p.answer]:p.type==='graph'?`${p.answer.position}, ${p.answer.circleType} circle, shade ${p.answer.direction}`:String(p.answer)):(p.concept?'Re-read the example above, then try applying the same idea.':'Check the operation, signs, and what the question is asking.');feedback.append(help);}}
+ if(correct){if(state.questionErrors===0)state.firstTry++;state.checked=true;state.combo++;feedback.className='feedback';feedback.innerHTML='<strong>'+([3,5,7].includes(state.combo)?bolt()+state.combo+' in a row!':'That’s it. Nicely solved!')+'</strong>';const explanation=document.createElement('span');explanation.textContent=activeLesson.id===1?coaching[state.index][1]:'Correct. Keep building on what you know.';feedback.append(explanation);document.querySelector('.selected')?.classList.add('correct');document.querySelectorAll('.choice,.answer,.graph-controls input,.graph-controls select').forEach(el=>el.disabled=true);button.textContent=state.index===problems.length-1?'Finish lesson':'Continue';const width=(state.index+1)/problems.length*100;document.querySelector('.fill').style.width=width+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',state.index+1);button.focus();answerMotion(true,state.combo);if(solver){state.challengeIndependent=state.index===9?(!solver.usedHint&&state.questionErrors===0):state.challengeIndependent;state.transitioning=true;button.disabled=true;await solver.success();state.transitioning=false;button.disabled=false;}}
+ else{state.supportSteps.add(state.index);const submitted=state.selected;state.errors++;state.questionErrors++;state.combo=0;feedback.className='feedback error';feedback.innerHTML='<strong>Not quite. Give it another go.</strong>You can take as many tries as you need.';document.querySelector('.selected')?.classList.add('wrong');state.selected=null;button.disabled=true;const input=document.querySelector('.answer');if(input){input.value='';input.focus();}answerMotion(false,0);if(activeLesson.id===1)revealHint(state.index,state.questionErrors);else if(solver){const help=document.createElement('span');help.textContent=solver.wrong(submitted);feedback.append(help);}else{const help=document.createElement('span');help.textContent=state.questionErrors>=2?'Review the answer: '+(p.type==='multiple-choice'?p.choices[p.answer]:p.type==='graph'?`${p.answer.position}, ${p.answer.circleType} circle, shade ${p.answer.direction}`:String(p.answer)):(p.concept?'Re-read the example above, then try applying the same idea.':'Check the operation, signs, and what the question is asking.');feedback.append(help);}}
 }
 function finish(){
  const firstPracticeToday=!progress.practiceDays.includes(dateKey());
@@ -135,16 +140,18 @@ function finish(){
  document.querySelector('h1').focus();
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches)for(let i=0;i<32;i++){const el=document.createElement('i');el.className='confetti';el.style.left=Math.random()*100+'%';el.style.background=['#ffd15c','#5ed8f3','#9cdeac'][i%3];el.style.animationDelay=Math.random()*.4+'s';document.body.append(el);setTimeout(()=>el.remove(),2400);}
  document.querySelector('#claim').onclick=()=>{
-  if(state.claimed)return;state.claimed=true;progress=earnXP(progress,state.earned,xpDevice());const round=league().round;progress.leagueXP=progress.leagueXP||{};progress.leagueXP[round]=(progress.leagueXP[round]||0)+state.earned;progress.completedLessons=[...new Set([...progress.completedLessons,activeLesson.id])];progress.completed=progress.completedLessons.includes(1);progress.sessions++;
+  if(state.claimed)return;
+  if(homework){try{saveHomework(homework,activeLesson.id,state,scored,seconds);}catch(error){document.querySelector('#save-status').textContent=error.message;return;}}
+  state.claimed=true;progress=earnXP(progress,state.earned,xpDevice());const round=league().round;progress.leagueXP=progress.leagueXP||{};progress.leagueXP[round]=(progress.leagueXP[round]||0)+state.earned;progress.completedLessons=[...new Set([...progress.completedLessons,activeLesson.id])];progress.completed=progress.completedLessons.includes(1);progress.sessions++;
   try{localStorage.setItem(key,JSON.stringify(progress));queueSync();home();}catch{storageAvailable=false;document.querySelector('#save-status').textContent='Device storage is unavailable. Your progress will last for this visit only.';const b=document.querySelector('#claim');b.textContent='Back to learning';b.onclick=home;}
  };
  if(!storageAvailable)document.querySelector('#save-status').textContent='Device storage may be unavailable. Progress can still be kept for this visit.';
  celebrateFinish({xp:state.earned,days:streak(progress.practiceDays).current,practiceDays:progress.practiceDays,firstPracticeToday,scored,accuracy:Math.round(scored/Math.max(1,state.attempts)*100),seconds,independent:state.challengeIndependent,perfect:state.errors===0&&scored>0,onComplete:()=>document.querySelector('#claim')?.click()});
 }
-if(new URLSearchParams(location.search).get('welcome')==='1'||needsWelcome(progress))openWelcome();else home();
+if(homeworkRequested)home();else if(new URLSearchParams(location.search).get('welcome')==='1'||needsWelcome(progress))openWelcome();else home();
 
 // Authentication is optional. Failed SDK/network initialization never blocks guest lessons.
-getClient().then(client=>client.observe(user=>{
+if(!homeworkRequested)getClient().then(client=>client.observe(user=>{
  if((user?.uid||null)===(accountUser?.uid||null))return;
  clearTimeout(syncTimer);accountUser=user;key=user?'rfAccount_'+user.uid:'reckoningPreviewV1';
  try{progress=JSON.parse(localStorage.getItem(key)||'null')||{};}catch{progress={};}

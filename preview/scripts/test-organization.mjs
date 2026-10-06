@@ -10,6 +10,15 @@ const empty=addClass(data,{name:'A new class'});assert.throws(()=>addClass(data,
 assert.throws(()=>addAssignment(data,{classId:empty.id,title:'Assignment',lessonIds:[1],due:dayKey()},[1]));
 assert.throws(()=>addAssignment(data,{classId:'c1',title:'Assignment',lessonIds:[99],due:dayKey()},[1]));
 const a=addAssignment(data,{classId:'c1',title:'Assignment',lessonIds:[1,1,2],due:dayKey()},[1,2]);assert.equal(a.lessonIds.length,2);
-const learner=a.learnerIds[0];data.attempts.push({learnerId:learner,lessonId:1,date:dayKey(),questions:9,firstTry:9,minutes:5});data.attempts.push({learnerId:learner,lessonId:2,date:dayKey(),questions:9,firstTry:9,minutes:5});assert(assignmentProgress(data,a).find(r=>r.id===learner).done);
+const learner=a.learnerIds[0];data.attempts.push({assignmentId:a.id,learnerId:learner,lessonId:1,date:dayKey(),questions:9,firstTry:9,minutes:5});data.attempts.push({assignmentId:a.id,learnerId:learner,lessonId:2,date:dayKey(),questions:9,firstTry:9,minutes:5});assert(assignmentProgress(data,a).find(r=>r.id===learner).done);
 assert(csv([['=1+1','a,b','a"b']]).includes("'="));assert(csv([['a"b']]).includes('a""b'));
 console.log('PASS report weighting, empty data, class isolation, validation, assignment completion, CSV escaping');
+
+const other=addAssignment(data,{classId:'c1',title:'Another assignment',lessonIds:[1,2],due:dayKey()},[1,2]);
+assert(!assignmentProgress(data,other).find(r=>r.id===learner).done,'Unrelated lesson completions must not complete new homework');
+assert.equal(assignmentProgress(data,a).find(r=>r.id===learner).status,'Completed · Support unknown');
+for(const attempt of data.attempts.filter(t=>t.assignmentId===a.id))attempt.supportSteps=0;
+assert.equal(assignmentProgress(data,a).find(r=>r.id===learner).status,'Completed · No app support recorded');
+data.attempts.find(t=>t.assignmentId===a.id).supportSteps=1;
+assert.equal(assignmentProgress(data,a).find(r=>r.id===learner).status,'Completed with support');
+console.log('PASS homework assignment isolation and truthful support classifications');

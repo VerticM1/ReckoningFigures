@@ -1,5 +1,6 @@
 // Version the stylesheet URL so iPhone caches cannot mix new artwork with old CSS.
 const fs=require('fs'),crypto=require('crypto');
+if(fs.existsSync('preview/homework.js')){const hash=crypto.createHash('sha256').update(fs.readFileSync('preview/homework.js')).digest('hex').slice(0,12);fs.writeFileSync('preview/app.js',fs.readFileSync('preview/app.js','utf8').replace(/from '\.\/homework\.js(?:\?v=[^']*)?'/,`from './homework.js?v=${hash}'`));}
 const version=crypto.createHash('sha256').update(fs.readFileSync('preview/styles.css')).digest('hex').slice(0,12);
 for(const file of ['preview/index.html','preview/celebration-preview.html']){
  const html=fs.readFileSync(file,'utf8');
