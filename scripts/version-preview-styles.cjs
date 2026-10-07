@@ -30,3 +30,13 @@ if(fs.existsSync(owner+'client.js')){
  }
  fs.writeFileSync(owner+'index.html',html);
 }
+const school='preview/school/';
+if(fs.existsSync(school+'school.js')){
+ fs.writeFileSync(school+'school.js',fs.readFileSync(school+'school.js','utf8').replace(/from '\.\.\/owner\/client\.js(?:\?v=[^']*)?'/,`from '../owner/client.js?v=${digest(owner+'client.js')}'`));
+ let html=fs.readFileSync(school+'index.html','utf8');
+ for(const [url,file] of [['../styles.css','preview/styles.css'],['../organization/organization.css',org+'organization.css'],['../owner/owner.css',owner+'owner.css'],['school.css',school+'school.css'],['school.js',school+'school.js']]){
+  const escaped=url.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  html=html.replace(new RegExp('(["\\\'])'+escaped+'(?:\\?v=[^"\\\']*)?(["\\\'])','g'),`$1${url}?v=${digest(file)}$2`);
+ }
+ fs.writeFileSync(school+'index.html',html);
+}

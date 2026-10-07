@@ -34,11 +34,13 @@ function schoolAudit(schoolId, d, previousRevision) {
     && event.snapshot == d;
 }
 match /schools/{schoolId} {
-  allow read: if platformOwner();
+  allow get: if platformOwner() || activeMember(schoolId);
+  allow list: if platformOwner();
   allow create: if platformOwner() && validSchool(request.resource.data)
     && request.resource.data.revision == 1 && schoolAudit(schoolId, request.resource.data, 0);
   allow update: if platformOwner() && validSchool(request.resource.data)
     && request.resource.data.revision == resource.data.revision + 1
+    && request.resource.data.license.seatLimit >= occupied(schoolId)
     && schoolAudit(schoolId, request.resource.data, resource.data.revision);
   allow delete: if false; // Archive, retain history.
 }

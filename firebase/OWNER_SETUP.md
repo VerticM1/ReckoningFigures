@@ -1,27 +1,32 @@
-# Owner workspace activation
+# Owner and school membership setup
 
-Status: built and locally tested, not activated in production. Public page `/preview/owner/` has a sign-in gate. Security comes from Firestore rules, not its URL or the page's JavaScript.
+The owner foundation is active in production. On 2026-10-07 the user verified owner sign-in and a persisted Spark Pilot School with 25 seats and revision history. Membership code and updated rules are the next activation; do not assume rules are deployed just because the website is updated.
 
-The user designated Firebase Authentication UID `AqjkpegU4te08cEXR8d6WZAYGjC3` as the owner. This is an identifier, not a credential. It is not embedded as an automatic grant in application code.
+The designated owner UID is `AqjkpegU4te08cEXR8d6WZAYGjC3`, with `platformOwners/{uid}.active` set to boolean true by the user. This identifier is not a credential. Clients cannot grant or revoke platform ownership. Revoke through trusted Firebase console/admin access.
 
-## Activate with the project administrator
-1. In Firebase console for `reckoningfigures-bbdae`, Firestore → Data, create collection `platformOwners`.
-2. Use document ID `AqjkpegU4te08cEXR8d6WZAYGjC3` exactly. Add field `active`, type **boolean**, value **true**. Do not store passwords or private keys.
-3. Preserve a copy of the currently published rules. Add the contents of `owner.rules.fragment` **inside** `match /databases/{database}/documents`, alongside the existing collection matches. It is a fragment, not a complete replacement. Review the merged text before publishing. The user-supplied existing rules have no wildcard that overlaps these owner/school paths.
-4. The fragment does not change legacy users/friendships rules or enable teacher/student access. Existing public profile reads and broad social writes remain launch blockers, to be migrated before real student data. Do not add blanket recursive allow rules.
-5. Visit `/preview/owner/`, sign in using the designated app account. If Google sign-in reports an unauthorized domain, review Firebase Authentication's authorized domains for `verticm1.github.io` before testing again.
-6. Create a fictional pilot school, refresh, and confirm the record and history remain. Change the seat limit and confirm another revision is added. A different app account must see access denied.
-7. To revoke owner access, set that registry document's `active` to false through the trusted console. Browser clients cannot create or edit owner grants, including an existing owner.
+## Activate school membership
+1. Preserve a copy of currently deployed Firebase rules.
+2. Open `/preview/owner/activate.html`. Its complete `access-rules.txt` combines the known user-supplied legacy rules with **both** owner and membership fragments. If production rules have changed, reconcile those changes before replacement. Do not paste a fragment as a complete rules file.
+3. Copy complete rules into Firestore → Rules and Publish. No Firebase production deployment is performed by the website or coding tools.
+4. Owner workspace → Spark Pilot School → Manage members. Add existing test-account UIDs copied from Firebase Authentication; use fictional labels. The form does not create Auth accounts, verify their existence, or send invitations. Confirm identifiers carefully.
+5. Appoint a school administrator. In separate sessions, test an administrator adding a teacher and student; teacher/student see only their own access page. An unassigned account sees access needed. Removed members lose school access. Never share passwords in chat.
+6. Confirm one active student occupies one seat, removal releases it, and the updated count persists after refresh. Audit history is retained.
 
-No production rule publication, owner grant, school creation, payments, invitation or support reply has been performed by this implementation.
+## Permission model
+- Platform owner: school/license directory and edits, all membership roles, administrative audit.
+- School administrator: own-school roster, seat usage and membership audit; may manage teachers/students, not administrator roles or their own membership. No school license edits.
+- Teacher/student: own membership and their school's license/name; no roster, other memberships, license changes or audit access.
+- Anonymous/unassigned: no school access. Profile fields and client claims do not grant roles.
+- New active memberships require a pilot/active license within its UTC term (end exclusive). Expired/paused licenses still allow removal and manager access for administration. Course entitlement enforcement is not yet connected.
+- Active students count toward seats; teachers/admins do not. Member changes, audit and seat delta commit atomically. Revisions reject stale edits. Seat count cannot exceed licensed capacity. Lowering a license below occupied seats is rejected.
+- Memberships and audit entries cannot be deleted by clients; membership state `removed` preserves history. Privileged console/admin access can bypass rules and must be handled carefully.
 
-## What is connected after activation
-Owner sign-in (email/password and Google), school directory (first 200 ordered by name), school/recorded license edits and latest 30 administrative events use Firebase directly. Dates are UTC with an exclusive end date. Stale edits are rejected using revisions. Record and history changes commit together; audit entries cannot be changed by browser clients. Archive keeps records rather than deleting them. Project administrators can still change data using privileged console/server access.
+## Boundaries
+The educator workspace is still a separate browser-local demo. Real classes, assignments, reports, invitations, school billing and support ticket delivery are not connected. The membership page explicitly states this. Directory views load at most 200 schools, 500 members, and 30 latest audit events; pagination is needed before larger deployments.
 
-License records contain plan, capacity, start/end, and Algebra 1 course identifier. They do not yet enforce learner entitlement, track occupied seats, bill schools, send invitations, or deliver assignments. Support and curriculum management remain future integrations. No real learner records should be entered here.
+Legacy public user reads and broad friendship writes are deliberately preserved to avoid breaking the existing app. They remain a launch blocker: use fictional test accounts only until migrated. Personal progress rules are not included in this update. No real learner data should be entered yet.
 
-## Test and build
-- `npm run test:owner` runs an isolated demo-project Firestore emulator, never production. Firebase CLI 13.35.1 is pinned for this workspace's Java 17 emulator compatibility; test tooling is development-only.
-- Tests cover anonymous, student, school-admin and revoked-owner denial; profile role spoofing; forbidden self-promotion; schools A/B; invalid seats, dates and courses; immutable atomic history; stale revision checks; and revocation.
-- `npm run build` builds/version-tags the owner Firebase bundle and owner page assets.
-- Before a real pilot: migrate legacy social/profile rules; add school-specific memberships and server-enforced license/seat workflows; establish stronger owner authentication and operational review.
+## Verification
+`npm run test:owner` builds the exact downloadable rules and runs owner + membership tests on a local demo-project Firestore emulator, never production. Tests cover owner registration, role escalation, school isolation, immutable atomic audits, stale revisions, capacity, seat release/role changes, expired/paused licenses and revoked membership. Browser checks cover sign-in, role-specific UI, add/remove feedback, stale-edit errors and 320px layouts using mocked data. Real-project activation and separate-account checks remain manual.
+
+`npm run build` rebuilds the Firebase bundle and versions all owner/school entry assets. Run tests before publishing the rules text. Do not publish only one of the interdependent rule fragments.

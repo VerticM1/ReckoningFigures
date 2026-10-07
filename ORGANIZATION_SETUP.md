@@ -47,3 +47,6 @@ Assignments now provide a unit dropdown with select/clear actions for assignable
 School-based licenses and a separate platform-owner console are required roadmap items. See LAUNCH_READINESS.md for roles, seats/terms/course entitlements, owner support operations, content change controls and the ordered launch gates. Neither licensing nor an owner backend is live yet.
 
 Owner foundation: `preview/owner/` is a separate authenticated school/license records console. It remains denied by current production rules until the owner registry and additive rules are activated. Setup/test details are in `firebase/OWNER_SETUP.md`. The educator workspace remains a local demo and does not read these school records yet.
+
+## Live membership foundation (2026-10-07)
+The separate `/preview/school/` portal connects school-specific roles, roster management, seat allocation and membership history to Firebase after the new rules are published. Open it through Owner → Manage members. The educator workspace described above is still browser-local; real assignment delivery is the next integration. See `firebase/OWNER_SETUP.md` for activation and boundaries.
