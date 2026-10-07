@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "build:vendor": "esbuild preview/firebase-client.js --bundle --format=esm --minify --outfile=preview/vendor/firebase.js",
-    "build": "node scripts/version-preview-styles.cjs && npm run build:vendor && node scripts/build-mobile.cjs",
+    "build": "npm run build:owner && node scripts/version-preview-styles.cjs && npm run build:vendor && node scripts/build-mobile.cjs",
     "ios:sync": "npm run build && cap sync ios",
     "ios:open": "cap open ios",
     "test:course": "node preview/scripts/validate-course.mjs",
     "test:sync": "node preview/scripts/test-sync.mjs",
-    "test:lesson": "node preview/scripts/test-two-step.mjs"
+    "test:lesson": "node preview/scripts/test-two-step.mjs",
+    "build:owner": "esbuild preview/owner/client-source.js --bundle --format=esm --minify --outfile=preview/owner/client.js",
+    "test:owner": "node firebase/build-owner-test-rules.cjs && firebase emulators:exec --config firebase/owner-emulator.json --project demo-reckoning-owner --only firestore \"node firebase/tests/owner-rules.mjs\""
   },
   "dependencies": {
     "@capacitor/core": "8.5.2",
@@ -18,7 +20,9 @@
   },
   "devDependencies": {
     "@capacitor/cli": "8.5.2",
-    "esbuild": "0.28.2"
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "esbuild": "0.28.2",
+    "firebase-tools": "^13.35.1"
   },
   "type": "module"
 }

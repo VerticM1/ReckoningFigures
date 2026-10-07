@@ -1,0 +1,55 @@
+// Add inside match /databases/{database}/documents, alongside existing matches.
+// Grants no access to student data. Does not repair legacy testing rules.
+function platformOwner() {
+  return request.auth != null
+    && get(/databases/$(database)/documents/platformOwners/$(request.auth.uid)).data.active == true;
+}
+match /platformOwners/{uid} {
+  allow get: if request.auth != null && request.auth.uid == uid;
+  allow list, write: if false; // Provision/revoke only with trusted Firebase console/admin access.
+}
+function validSchool(d) {
+  return d.keys().hasAll(['name','status','license','revision','updatedAt','updatedBy','changeId'])
+    && d.keys().hasOnly(['name','status','license','revision','updatedAt','updatedBy','changeId'])
+    && d.name is string && d.name.size() > 0 && d.name.size() <= 100
+    && d.status in ['pilot','active','paused','archived']
+    && d.revision is int && d.revision > 0
+    && d.updatedAt == request.time && d.updatedBy == request.auth.uid
+    && d.changeId is string && d.changeId.size() > 0 && d.changeId.size() <= 100
+    && d.license is map
+    && d.license.keys().hasAll(['plan','seatLimit','startsOn','endsOn','courses'])
+    && d.license.keys().hasOnly(['plan','seatLimit','startsOn','endsOn','courses'])
+    && d.license.plan in ['pilot','school']
+    && d.license.seatLimit is int && d.license.seatLimit >= 1 && d.license.seatLimit <= 100000
+    && d.license.startsOn is timestamp && d.license.endsOn is timestamp
+    && d.license.endsOn > d.license.startsOn
+    && d.license.courses == ['algebra1'];
+}
+function schoolAudit(schoolId, d, previousRevision) {
+  let eventPath = /databases/$(database)/documents/ownerAudit/$(d.changeId);
+  let event = getAfter(eventPath).data;
+  return !exists(eventPath) && event.schoolId == schoolId
+    && event.actor == request.auth.uid && event.at == request.time
+    && event.previousRevision == previousRevision && event.revision == d.revision
+    && event.snapshot == d;
+}
+match /schools/{schoolId} {
+  allow read: if platformOwner();
+  allow create: if platformOwner() && validSchool(request.resource.data)
+    && request.resource.data.revision == 1 && schoolAudit(schoolId, request.resource.data, 0);
+  allow update: if platformOwner() && validSchool(request.resource.data)
+    && request.resource.data.revision == resource.data.revision + 1
+    && schoolAudit(schoolId, request.resource.data, resource.data.revision);
+  allow delete: if false; // Archive, retain history.
+}
+match /ownerAudit/{eventId} {
+  allow read: if platformOwner();
+  allow create: if platformOwner()
+    && request.resource.data.keys().hasOnly(['schoolId','actor','at','previousRevision','revision','snapshot'])
+    && request.resource.data.actor == request.auth.uid && request.resource.data.at == request.time
+    && request.resource.data.previousRevision is int
+    && request.resource.data.revision == request.resource.data.previousRevision + 1
+    && getAfter(/databases/$(database)/documents/schools/$(request.resource.data.schoolId)).data == request.resource.data.snapshot
+    && request.resource.data.snapshot.changeId == eventId;
+  allow update, delete: if false;
+}

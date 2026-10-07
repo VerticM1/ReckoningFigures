@@ -45,3 +45,5 @@ Preserved the original questions, 3/5/7 milestones, perfect-lesson animation, da
 Assignments now provide a unit dropdown with select/clear actions for assignable figures, per-unit totals, and preserved selections across units. Curriculum also offers Assign unit, including all eligible figures in the original unit even when search has narrowed the visible list. Assignment records retain explicit lesson IDs. Existing premium and missing-content restrictions remain enforced.
 
 School-based licenses and a separate platform-owner console are required roadmap items. See LAUNCH_READINESS.md for roles, seats/terms/course entitlements, owner support operations, content change controls and the ordered launch gates. Neither licensing nor an owner backend is live yet.
+
+Owner foundation: `preview/owner/` is a separate authenticated school/license records console. It remains denied by current production rules until the owner registry and additive rules are activated. Setup/test details are in `firebase/OWNER_SETUP.md`. The educator workspace remains a local demo and does not read these school records yet.

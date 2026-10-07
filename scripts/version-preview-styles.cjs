@@ -19,3 +19,14 @@ if(fs.existsSync(org+'index.html')){
   .replace(/src="organization\.js(?:\?v=[^"]*)?"/,`src="organization.js?v=${digest(org+'organization.js')}"`);
  fs.writeFileSync(org+'index.html',html);
 }
+// Owner workspace is shipped locked; database rules and trusted registration authorize access.
+const owner='preview/owner/';
+if(fs.existsSync(owner+'client.js')){
+ fs.writeFileSync(owner+'owner.js',fs.readFileSync(owner+'owner.js','utf8').replace(/from '\.\/client\.js(?:\?v=[^']*)?'/,`from './client.js?v=${digest(owner+'client.js')}'`));
+ let html=fs.readFileSync(owner+'index.html','utf8');
+ for(const [url,file] of [['../styles.css','preview/styles.css'],['../organization/organization.css','preview/organization/organization.css'],['owner.css',owner+'owner.css'],['owner.js',owner+'owner.js']]){
+  const escaped=url.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  html=html.replace(new RegExp('(["\\\'])'+escaped+'(?:\\?v=[^"\\\']*)?(["\\\'])','g'),`$1${url}?v=${digest(file)}$2`);
+ }
+ fs.writeFileSync(owner+'index.html',html);
+}

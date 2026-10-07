@@ -40,3 +40,5 @@ Pre-algebra as its own course/path; broader course library; optional integration
 
 ## Recommended next implementation
 Establish the secure school/account and licensing foundation, then connect one end-to-end real assignment flow. Build the owner's school/license controls against that same foundation. An additional local-only dashboard would not replace these services.
+
+Owner foundation update: `/preview/owner/` now has Firebase-backed school/license record management and atomic administrative history, with locally tested owner registry rules. Production activation is pending manual registry provisioning and rule publication; see `firebase/OWNER_SETUP.md`. This does not complete school roles, real license enforcement, billing, support-ticket delivery or the legacy profile/security migration.
