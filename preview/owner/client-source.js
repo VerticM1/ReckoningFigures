@@ -43,3 +43,7 @@ export async function saveMember(schoolId,memberUid,values,expectedRevision){
   if(delta)tx.set(usage,{occupied,memberUid,changeId:audit.id,updatedAt:serverTimestamp()});
  });
 }
+
+import {classroomAPI} from '../school/classroom-api.js';
+export const classroom=classroomAPI(db,auth);
+export const currentUid=()=>auth.currentUser?.uid||null;
