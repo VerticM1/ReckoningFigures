@@ -155,4 +155,75 @@ match /schools/{schoolId}/membershipAudit/{eventId} {
   allow update, delete: if false;
 }
 
+// Generated from the shipped course; unavailable and premium content excluded.
+function availableLessons() { return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]; }
+function scoredQuestions(id) { return {'1':9,'2':10,'3':9,'4':9,'5':9,'6':9,'7':9,'8':9,'9':9,'10':9,'11':9,'12':9,'13':9,'14':9,'15':9,'16':6,'17':9,'18':9}[string(id)]; }
+
+// Connected pilot classes. Roles always come from trusted memberships.
+function schoolTeacher(s) {
+ return activeMember(s) && get(/databases/$(database)/documents/schools/$(s)/members/$(request.auth.uid)).data.role == 'teacher';
+}
+function classManager(s,c) {
+ return schoolManager(s) || (schoolTeacher(s) && get(/databases/$(database)/documents/schools/$(s)/classes/$(c)).data.teacherUid == request.auth.uid);
+}
+function classStudent(s,c) {
+ return activeMember(s)
+  && get(/databases/$(database)/documents/schools/$(s)/members/$(request.auth.uid)).data.role == 'student'
+  && exists(/databases/$(database)/documents/schools/$(s)/classes/$(c)/students/$(request.auth.uid));
+}
+function classReader(s,c) { return classManager(s,c) || classStudent(s,c); }
+match /schools/{s}/classes/{c} {
+ allow get: if classReader(s,c);
+ allow list: if schoolManager(s) || (schoolTeacher(s) && resource.data.teacherUid == request.auth.uid);
+ allow create: if licenseOpen(s) && (schoolManager(s) || schoolTeacher(s))
+  && request.resource.data.keys().hasOnly(['name','teacherUid','createdBy','createdAt'])
+  && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 80
+  && request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time
+  && (schoolManager(s) || request.resource.data.teacherUid == request.auth.uid)
+  && get(/databases/$(database)/documents/schools/$(s)/members/$(request.resource.data.teacherUid)).data.role == 'teacher'
+  && get(/databases/$(database)/documents/schools/$(s)/members/$(request.resource.data.teacherUid)).data.state == 'active';
+ allow update, delete: if false;
+ match /students/{uid} {
+  allow get: if classManager(s,c) || (classStudent(s,c) && request.auth.uid == uid);
+  allow list: if classManager(s,c);
+  allow create: if classManager(s,c) && licenseOpen(s)
+   && get(/databases/$(database)/documents/schools/$(s)/members/$(uid)).data.state == 'active'
+   && get(/databases/$(database)/documents/schools/$(s)/members/$(uid)).data.role == 'student'
+   && request.resource.data.keys().hasOnly(['label','addedAt'])
+   && request.resource.data.label is string && request.resource.data.label.size() > 0 && request.resource.data.label.size() <= 80
+   && request.resource.data.addedAt == request.time;
+  allow delete: if classManager(s,c);
+  allow update: if false;
+ }
+ match /assignments/{a} {
+  allow read: if classReader(s,c);
+  allow create: if classManager(s,c) && licenseOpen(s)
+   && request.resource.data.keys().hasOnly(['title','instructions','lessonIds','due','createdBy','createdAt'])
+   && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 80
+   && request.resource.data.instructions is string && request.resource.data.instructions.size() <= 500
+   && request.resource.data.lessonIds is list && request.resource.data.lessonIds.size() > 0 && request.resource.data.lessonIds.size() <= 100
+   && request.resource.data.lessonIds.toSet().size() == request.resource.data.lessonIds.size()
+   && availableLessons().hasAll(request.resource.data.lessonIds)
+   && request.resource.data.due is string && request.resource.data.due.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+   && request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time;
+  allow update, delete: if false;
+  match /results/{r} {
+   allow read: if classManager(s,c) || (classStudent(s,c) && resource.data.uid == request.auth.uid);
+   allow create: if classStudent(s,c) && licenseOpen(s)
+    && request.resource.data.keys().hasOnly(['uid','lessonId','questions','firstTry','supportSteps','seconds','completedAt','sessionId'])
+    && request.resource.data.uid == request.auth.uid
+    && request.resource.data.lessonId is int
+    && r == request.auth.uid + '_' + string(request.resource.data.lessonId)
+    && request.resource.data.lessonId in get(/databases/$(database)/documents/schools/$(s)/classes/$(c)/assignments/$(a)).data.lessonIds
+    && request.resource.data.questions == scoredQuestions(request.resource.data.lessonId)
+    && request.resource.data.firstTry is int && request.resource.data.firstTry >= 0 && request.resource.data.firstTry <= request.resource.data.questions
+    && request.resource.data.supportSteps is int && request.resource.data.supportSteps >= 0 && request.resource.data.supportSteps <= 200
+    && request.resource.data.seconds is int && request.resource.data.seconds >= 1 && request.resource.data.seconds <= 604800
+    && request.resource.data.completedAt == request.time
+    && request.resource.data.sessionId is string && request.resource.data.sessionId.size() > 0 && request.resource.data.sessionId.size() <= 100;
+   allow update, delete: if false;
+  }
+ }
+}
+
 }}

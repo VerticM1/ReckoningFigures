@@ -11,7 +11,8 @@
     "test:sync": "node preview/scripts/test-sync.mjs",
     "test:lesson": "node preview/scripts/test-two-step.mjs",
     "build:owner": "esbuild preview/owner/client-source.js --bundle --format=esm --minify --outfile=preview/owner/client.js",
-    "test:owner": "node firebase/build-owner-test-rules.cjs && firebase emulators:exec --config firebase/owner-emulator.json --project demo-reckoning-owner --only firestore \"node firebase/tests/owner-rules.mjs && node firebase/tests/membership-rules.mjs\""
+    "test:owner": "node firebase/build-classroom-catalog.mjs && node firebase/build-owner-test-rules.cjs && firebase emulators:exec --config firebase/owner-emulator.json --project demo-reckoning-owner --only firestore \"node firebase/tests/owner-rules.mjs && node firebase/tests/membership-rules.mjs && node firebase/tests/classroom-rules.mjs\"",
+    "test:classroom-ui": "node --experimental-vm-modules preview/scripts/test-classroom.cjs"
   },
   "dependencies": {
     "@capacitor/core": "8.5.2",
@@ -22,7 +23,8 @@
     "@capacitor/cli": "8.5.2",
     "@firebase/rules-unit-testing": "^5.0.2",
     "esbuild": "0.28.2",
-    "firebase-tools": "^13.35.1"
+    "firebase-tools": "^13.35.1",
+    "jsdom": "^30.1.2"
   },
   "type": "module"
 }

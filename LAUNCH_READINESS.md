@@ -1,7 +1,7 @@
 # Reckoning Figures launch readiness
 
 This is an implementation checklist, not a claim of school or App Store readiness.
-The learner preview works; the educator workspace, assignments, reports and support drafts are browser-local demos. Real organization access and cross-device delivery remain unconnected.
+The learner preview works; the educator workspace, assignments, reports and support drafts are browser-local demos. School membership is connected. The new class/assignment path is implemented and locally tested; its additional rules and real-device verification remain pending.
 
 ## Before a real school pilot
 - [ ] Review existing deployed Firebase rules and authentication configuration before extending access.
@@ -20,6 +20,8 @@ The learner preview works; the educator workspace, assignments, reports and supp
 ## Before paid school launch
 - [ ] Finalize seat/term pricing, school purchase and renewal workflow, invoicing/payment handling, cancellation terms and who can change licenses.
 - [ ] Provide teacher onboarding, curriculum documentation and a support process you can actually staff.
+- [ ] Add a simple, replayable how-to widget with role-specific instructions: teachers create classes, assign units/figures and review results; school administrators manage members and seats and find support. Use short steps, contextual help, and the established custom icons/animation style without emojis. Clearly distinguish demo workflows from connected features.
+- [ ] Automate Firebase rules releases after permission tests pass, using a securely authenticated deployment pipeline. One-time Firebase/Google Cloud authorization is required; automation is not connected yet. Keep versioned rules and a rollback procedure.
 - [ ] Review pilot feedback and learning evidence separately from XP and engagement. Avoid unsupported efficacy claims.
 - [ ] Verify premium course access uses school entitlements consistently in teacher assignment selection and learner delivery. Existing premium restrictions remain in the demo.
 
@@ -41,4 +43,7 @@ Pre-algebra as its own course/path; broader course library; optional integration
 ## Recommended next implementation
 Establish the secure school/account and licensing foundation, then connect one end-to-end real assignment flow. Build the owner's school/license controls against that same foundation. An additional local-only dashboard would not replace these services.
 
-Owner foundation update: `/preview/owner/` now has Firebase-backed school/license record management and atomic administrative history, with locally tested owner registry rules. The user verified production owner activation and Spark Pilot School creation on 2026-10-07. School membership roles, atomic seat allocation and audit history are now implemented and emulator-tested; the updated membership rules still require manual publication. See `firebase/OWNER_SETUP.md`. Course entitlement, real assignments, billing, support delivery and legacy profile/security migration remain incomplete.
+Owner foundation update: `/preview/owner/` now has Firebase-backed school/license record management and atomic administrative history, with locally tested owner registry rules. The user verified production owner activation and Spark Pilot School creation on 2026-10-07. School membership roles, atomic seat allocation and audit history are implemented and emulator-tested. On 2026-10-08 the user reported activating the updated membership rules; production multi-account verification is still pending. See `firebase/OWNER_SETUP.md`. Connected class assignments and first-completion reports are implemented under `/preview/school/classroom.html`, with generated available-lesson restrictions and permission tests. Additional classroom-rule publication and separate-device production verification remain pending. Billing, support delivery, premium entitlements and legacy profile/security migration remain incomplete.
+
+
+Connected class update (2026-10-08): added a short replayable how-to panel for class managers and students. Broader administrator onboarding and the full role-specific help widget remain on the checklist. Existing lesson renderer, sounds, animations and milestone logic are reused. Interrupted figures restart; completed results save across devices after activation. Firebase deployment automation still requires authenticated setup and has not been enabled.

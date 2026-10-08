@@ -1,6 +1,6 @@
 // Version the stylesheet URL so iPhone caches cannot mix new artwork with old CSS.
 const fs=require('fs'),crypto=require('crypto');
-if(fs.existsSync('preview/homework.js')){const hash=crypto.createHash('sha256').update(fs.readFileSync('preview/homework.js')).digest('hex').slice(0,12);fs.writeFileSync('preview/app.js',fs.readFileSync('preview/app.js','utf8').replace(/from '\.\/homework\.js(?:\?v=[^']*)?'/,`from './homework.js?v=${hash}'`));}
+if(fs.existsSync('preview/homework.js')){fs.writeFileSync('preview/homework.js',fs.readFileSync('preview/homework.js','utf8').replace(/import\('\.\/owner\/client\.js(?:\?v=[^']*)?'\)/,`import('./owner/client.js?v=${crypto.createHash('sha256').update(fs.readFileSync('preview/owner/client.js')).digest('hex').slice(0,12)}')`));const hash=crypto.createHash('sha256').update(fs.readFileSync('preview/homework.js')).digest('hex').slice(0,12);fs.writeFileSync('preview/app.js',fs.readFileSync('preview/app.js','utf8').replace(/from '\.\/homework\.js(?:\?v=[^']*)?'/,`from './homework.js?v=${hash}'`));}
 const version=crypto.createHash('sha256').update(fs.readFileSync('preview/styles.css')).digest('hex').slice(0,12);
 for(const file of ['preview/index.html','preview/celebration-preview.html']){
  const html=fs.readFileSync(file,'utf8');
@@ -40,3 +40,13 @@ if(fs.existsSync(school+'school.js')){
  }
  fs.writeFileSync(school+'index.html',html);
 }
+
+fs.writeFileSync(school+'classroom.js',fs.readFileSync(school+'classroom.js','utf8').replace(/from '\.\.\/owner\/client\.js(?:\?v=[^']*)?'/,`from '../owner/client.js?v=${digest(owner+'client.js')}'`));
+let classroomHtml=fs.readFileSync(school+'classroom.html','utf8');
+for(const [url,file] of [['../styles.css','preview/styles.css'],['../organization/organization.css',org+'organization.css'],['../owner/owner.css',owner+'owner.css'],['school.css',school+'school.css'],['classroom.js',school+'classroom.js']]){
+ classroomHtml=classroomHtml.split('"'+url+'"').join('"'+url+'?v='+digest(file)+'"');
+ const start='"'+url+'?v=';
+ const idx=classroomHtml.indexOf(start);
+ if(idx>=0){const end=classroomHtml.indexOf('"',idx+start.length);classroomHtml=classroomHtml.slice(0,idx)+start+digest(file)+classroomHtml.slice(end);}
+}
+fs.writeFileSync(school+'classroom.html',classroomHtml);

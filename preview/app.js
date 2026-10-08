@@ -1,5 +1,5 @@
-import {homeworkRequested,homeworkContext,homeworkHome,saveHomework} from './homework.js?v=c7bbab705733';
-const homework=homeworkContext();
+import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=6ad8792f4386';
+const homework=await loadHomework();
 import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js';
 import { soundButton, bindSoundButton } from './sound.js';
 import { celebrateFinish } from './celebrations.js';
@@ -17,7 +17,7 @@ let activeModule=0,activeLesson=course[0].lessons[0],problems=activeLesson.quest
 import { animateEntrance, answerMotion, selectMotion, transitionQuestion } from './motion.js';
 import { dateKey, markDay, streak, weekDays } from './activity.js';
 const app = document.querySelector('#app');
-let key = homeworkRequested?'rfHomeworkDemo_'+(homework?.learner.id||'unavailable'):'reckoningPreviewV1',accountUser=null,syncStatus='Not synced yet',syncTimer=null,syncBusy=false;
+let key = homeworkRequested?(homework?.cloud?'rfSchoolPractice_'+homework.school+'_'+homework.uid:'rfHomeworkDemo_'+(homework?.learner.id||'unavailable')):'reckoningPreviewV1',accountUser=null,syncStatus='Not synced yet',syncTimer=null,syncBusy=false;
 let device;try{device=localStorage.getItem('rfDeviceId')||crypto.randomUUID();localStorage.setItem('rfDeviceId',device);}catch{device=crypto.randomUUID();}
 const xpDevice=()=>key==='reckoningPreviewV1'?'guest-'+device:device;
 let progress = {xp:0, completed:false, sessions:0};
@@ -139,9 +139,9 @@ function finish(){
  if(activeLesson.id===2){const summary=document.createElement('div');summary.className='solver-summary';summary.innerHTML='<strong>'+ (state.challengeIndependent?'A new equation. Solved independently.':'You worked through a new equation.')+'</strong>'+ (state.challengeIndependent?'You solved the final challenge on your first try without hints.':'You used practice and feedback to get there. Try again another day to see what sticks.');document.querySelector('.results').before(summary);}
  document.querySelector('h1').focus();
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches)for(let i=0;i<32;i++){const el=document.createElement('i');el.className='confetti';el.style.left=Math.random()*100+'%';el.style.background=['#ffd15c','#5ed8f3','#9cdeac'][i%3];el.style.animationDelay=Math.random()*.4+'s';document.body.append(el);setTimeout(()=>el.remove(),2400);}
- document.querySelector('#claim').onclick=()=>{
-  if(state.claimed)return;
-  if(homework){try{saveHomework(homework,activeLesson.id,state,scored,seconds);}catch(error){document.querySelector('#save-status').textContent=error.message;return;}}
+ document.querySelector('#claim').onclick=async()=>{
+  if(state.claimed||state.saving)return;
+  if(homework){state.saving=true;document.querySelector('#claim').disabled=true;document.querySelector('#save-status').textContent=homework.cloud?'Saving your result to your class…':'Saving practice…';try{await saveHomework(homework,activeLesson.id,state,scored,seconds);}catch(error){document.querySelector('#save-status').textContent='Result not saved. Check your connection and class access, then retry. '+error.message;document.querySelector('#claim').disabled=false;state.saving=false;return;}state.saving=false;}
   state.claimed=true;progress=earnXP(progress,state.earned,xpDevice());const round=league().round;progress.leagueXP=progress.leagueXP||{};progress.leagueXP[round]=(progress.leagueXP[round]||0)+state.earned;progress.completedLessons=[...new Set([...progress.completedLessons,activeLesson.id])];progress.completed=progress.completedLessons.includes(1);progress.sessions++;
   try{localStorage.setItem(key,JSON.stringify(progress));queueSync();home();}catch{storageAvailable=false;document.querySelector('#save-status').textContent='Device storage is unavailable. Your progress will last for this visit only.';const b=document.querySelector('#claim');b.textContent='Back to learning';b.onclick=home;}
  };
