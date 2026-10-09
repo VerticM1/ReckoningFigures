@@ -22,7 +22,7 @@ function studentSeat(d) {
 }
 function validMembership(d) {
   return d.keys().hasAll(['label','role','state','revision','updatedAt','updatedBy','changeId'])
-    && d.keys().hasOnly(['label','role','state','revision','updatedAt','updatedBy','changeId','joinToken'])
+    && d.keys().hasOnly(['label','role','state','revision','updatedAt','updatedBy','changeId','joinToken','staffToken'])
     && d.label is string && d.label.size() > 0 && d.label.size() <= 80
     && d.role in ['administrator','teacher','student'] && d.state in ['active','removed']
     && d.revision is int && d.revision > 0 && d.updatedAt == request.time

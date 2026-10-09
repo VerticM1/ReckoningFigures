@@ -1,7 +1,12 @@
 # Reckoning Figures launch readiness
 
 This is an implementation checklist, not a claim of school or App Store readiness.
-The learner preview works; the educator workspace, assignments, reports and support drafts are browser-local demos. School membership is connected. The new class/assignment path is implemented and locally tested; its additional rules and real-device verification remain pending.
+The learner preview and connected school/class assignment path are implemented. The older educator demo and support drafts remain browser-local. The user confirmed student class-link enrollment works. Staff invitations are implemented and tested locally; production rules activation and a full separate-account assignment test remain pending.
+
+## Current priority order
+1. Activate staff invitation rules and verify one teacher invitation with a separate account.
+2. Migrate legacy public profile reads and unrestricted social writes before real student data.
+3. Verify teacher assignment → student completion → teacher report on separate devices, then address pilot operations and curriculum review.
 
 ## Before a real school pilot
 - [ ] Review existing deployed Firebase rules and authentication configuration before extending access.
@@ -41,6 +46,7 @@ The learner preview works; the educator workspace, assignments, reports and supp
 Pre-algebra as its own course/path; broader course library; optional integrations requested by pilot schools. These do not block the first Algebra 1 pilot.
 
 ## Recommended next implementation
+- [x] Student registration label and placeholder simplified to “Name”.
 Establish the secure school/account and licensing foundation, then connect one end-to-end real assignment flow. Build the owner's school/license controls against that same foundation. An additional local-only dashboard would not replace these services.
 
 Owner foundation update: `/preview/owner/` now has Firebase-backed school/license record management and atomic administrative history, with locally tested owner registry rules. The user verified production owner activation and Spark Pilot School creation on 2026-10-07. School membership roles, atomic seat allocation and audit history are implemented and emulator-tested. On 2026-10-08 the user reported activating the updated membership rules; production multi-account verification is still pending. See `firebase/OWNER_SETUP.md`. Connected class assignments and first-completion reports are implemented under `/preview/school/classroom.html`, with generated available-lesson restrictions and permission tests. Additional classroom-rule publication and separate-device production verification remain pending. Billing, support delivery, premium entitlements and legacy profile/security migration remain incomplete.
@@ -50,3 +56,5 @@ Connected class update (2026-10-08): added a short replayable how-to panel for c
 
 
 Student join and staff UX update (2026-10-08): student account registration and class-link admission are implemented with optional teacher approval, link expiry/revocation, automatic atomic seat allocation, and reuse of existing student seats. Teacher class creation no longer exposes UIDs; managers select a teacher by name. Staff screens now have a shared midnight/ivory design, compact class tabs, task dialogs, a direct owner-to-class shortcut, and inline setup guides. Staff invitation/registration, production enrollment verification, legacy security migration, and operational launch requirements remain pending. New join rules require console publication; this is a pilot feature, not a school launch.
+
+Staff invitation update (2026-10-09): private, email-bound, seven-day teacher/administrator invitations; email verification, atomic membership/audit acceptance, issuer revalidation, revocation, and no student seat consumption. School managers generate and copy links; email delivery is not automatic. Only platform owners invite administrators. Production activation and a separate-account smoke test remain required. Next launch priority: migrate public legacy profiles and unrestricted social writes before real students.

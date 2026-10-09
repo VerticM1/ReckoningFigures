@@ -1,0 +1,64 @@
+// Staff invitations are private, email-bound, verified, and one-time.
+function staffIssuer(i) {
+  let owner = /databases/$(database)/documents/platformOwners/$(i.createdBy);
+  let member = /databases/$(database)/documents/schools/$(i.schoolId)/members/$(i.createdBy);
+  return (exists(owner) && get(owner).data.active == true)
+    || (i.role == 'teacher' && exists(member) && get(member).data.state == 'active' && get(member).data.role == 'administrator');
+}
+function staffRecipient(i) {
+  return request.auth != null && request.auth.token.email is string
+    && request.auth.token.email.lower() == i.email;
+}
+function staffAccepting(t, schoolId, uid) {
+  let p = /databases/$(database)/documents/staffInvites/$(t);
+  let before = get(p).data;
+  let after = getAfter(p).data;
+  return request.auth.uid == uid && before.schoolId == schoolId
+    && before.state == 'pending' && after.state == 'accepted'
+    && after.acceptedBy == uid && after.acceptedAt == request.time;
+}
+match /staffInvites/{token} {
+  allow get: if request.auth != null && (schoolManager(resource.data.schoolId) || staffRecipient(resource.data));
+  allow list: if request.auth != null && schoolManager(resource.data.schoolId);
+  allow create: if request.auth != null && schoolManager(request.resource.data.schoolId)
+    && (request.resource.data.role == 'teacher' || (request.resource.data.role == 'administrator' && platformOwner()))
+    && request.resource.data.keys().hasAll(['schoolId','schoolName','email','role','createdBy','createdAt','expiresAt','state','acceptedBy','acceptedAt'])
+    && request.resource.data.keys().hasOnly(['schoolId','schoolName','email','role','createdBy','createdAt','expiresAt','state','acceptedBy','acceptedAt'])
+    && request.resource.data.schoolName == get(/databases/$(database)/documents/schools/$(request.resource.data.schoolId)).data.name
+    && request.resource.data.email is string && request.resource.data.email.size() <= 254
+    && request.resource.data.email.matches('[^ @]+@[^ @]+[.][^ @]+')
+    && request.resource.data.email == request.resource.data.email.lower()
+    && request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time
+    && request.resource.data.expiresAt is timestamp && request.resource.data.expiresAt > request.time
+    && request.resource.data.expiresAt <= request.time + duration.value(8, 'd')
+    && request.resource.data.state == 'pending' && request.resource.data.acceptedBy == null && request.resource.data.acceptedAt == null
+    && licenseOpen(request.resource.data.schoolId);
+  allow update: if request.auth != null && resource.data.state == 'pending' && (
+    (schoolManager(resource.data.schoolId) && (resource.data.role == 'teacher' || platformOwner())
+      && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['state']) && request.resource.data.state == 'revoked')
+    || (staffRecipient(resource.data) && request.auth.token.email_verified == true
+      && resource.data.expiresAt > request.time && licenseOpen(resource.data.schoolId) && staffIssuer(resource.data)
+      && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['state','acceptedBy','acceptedAt'])
+      && request.resource.data.state == 'accepted' && request.resource.data.acceptedBy == request.auth.uid && request.resource.data.acceptedAt == request.time
+      && getAfter(/databases/$(database)/documents/schools/$(resource.data.schoolId)/members/$(request.auth.uid)).data.role == resource.data.role
+      && getAfter(/databases/$(database)/documents/schools/$(resource.data.schoolId)/members/$(request.auth.uid)).data.state == 'active')
+  );
+  allow delete: if false;
+}
+match /schools/{schoolId}/members/{uid} {
+  allow create: if request.auth != null && validMembership(request.resource.data)
+    && request.resource.data.role in ['teacher','administrator'] && request.resource.data.state == 'active' && request.resource.data.revision == 1
+    && staffAccepting(request.resource.data.staffToken, schoolId, uid)
+    && request.resource.data.role == get(/databases/$(database)/documents/staffInvites/$(request.resource.data.staffToken)).data.role
+    && memberAudit(schoolId,uid,request.resource.data,0);
+}
+match /schools/{schoolId}/membershipAudit/{eventId} {
+  allow create: if request.auth != null
+    && request.resource.data.keys().hasOnly(['memberUid','actor','at','previousRevision','revision','snapshot'])
+    && request.resource.data.memberUid == request.auth.uid && request.resource.data.actor == request.auth.uid
+    && request.resource.data.at == request.time && request.resource.data.previousRevision == 0 && request.resource.data.revision == 1
+    && request.resource.data.snapshot.changeId == eventId
+    && !exists(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.auth.uid))
+    && getAfter(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.auth.uid)).data == request.resource.data.snapshot
+    && staffAccepting(request.resource.data.snapshot.staffToken,schoolId,request.auth.uid);
+}
