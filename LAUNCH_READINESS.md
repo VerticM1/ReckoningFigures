@@ -1,12 +1,12 @@
 # Reckoning Figures launch readiness
 
 This is an implementation checklist, not a claim of school or App Store readiness.
-The learner preview and connected school/class assignment path are implemented. The older educator demo and support drafts remain browser-local. The user confirmed student class-link enrollment works. Staff invitations are implemented and tested locally; production rules activation and a full separate-account assignment test remain pending.
+The learner preview and connected school/class assignment path are implemented. The older educator demo and its support drafts remain browser-local; connected school support is implemented separately. The user confirmed student class-link enrollment works. Staff invitations are implemented and tested locally; production rules activation and a full separate-account assignment test were subsequently confirmed by the user on 2026-10-09.
 
 ## Current priority order
-1. Activate the combined privacy/staff invitation rules and verify one teacher invitation with a separate account.
-2. Verify private profile/progress access and optional friend requests with separate accounts. Migration is implemented and awaits production activation.
-3. Verify teacher assignment → student completion → teacher report on separate devices, then address pilot operations and curriculum review.
+1. Activate connected support rules and test a teacher request → owner reply → teacher follow-up. Define who checks the inbox and response expectations.
+2. Review curriculum coverage and answer accuracy with an educator, including missing figures 020–024.
+3. Complete accessibility, privacy/retention, and operational checks for a small supervised pilot.
 
 ## Before a real school pilot
 - [ ] Review existing deployed Firebase rules and authentication configuration before extending access.
@@ -16,7 +16,7 @@ The learner preview and connected school/class assignment path are implemented. 
 - [ ] Validate all curriculum content, answers, prerequisite order and lesson coverage with an educator. Resolve or explicitly exclude missing figures 020–024. Verify standards claims before publishing them.
 - [ ] Define school licensing and course access: school ID, plan, licensed courses, student seat limit, assigned seats, term start/end, trial/active/expired status, renewal contact and billing reference. Decide how archived students and staff count. Enforce access on the server; never delete learning records merely because a license expires.
 - [ ] Build a separate owner console for the app owner: school directory, authorized school/license management, seat usage, account troubleshooting, support inbox and ticket replies/status, and course draft/review/publish controls with rollback. Use strong owner authentication and audited privileged operations. Do not rely on a hidden URL or expose all student records by default.
-- [ ] Replace local support drafts with authenticated tickets, confirmation of receipt, reply history, school association, triage status and a defined support contact. No support replies are currently sent by the app.
+- [ ] Activate and production-test connected school support. Authenticated tickets, saved receipts, reply history, school association, and status are implemented. Define the owner inbox monitoring routine and response expectations before pilot use.
 - [ ] Set up operational monitoring, backups, restore testing and incident handling. Keep personal/student information out of routine logs.
 - [ ] Review privacy notices, school agreements, consent requirements, retention/deletion and export procedures with appropriate review for the intended learners and schools.
 - [ ] Test keyboard/screen-reader access, contrast, reduced motion, sound controls and phone layouts. Keep help-seeking non-punitive.
@@ -60,3 +60,7 @@ Student join and staff UX update (2026-10-08): student account registration and 
 Staff invitation update (2026-10-09): private, email-bound, seven-day teacher/administrator invitations; email verification, atomic membership/audit acceptance, issuer revalidation, revocation, and no student seat consumption. School managers generate and copy links; email delivery is not automatic. Only platform owners invite administrators. Production activation and a separate-account smoke test remain required. Next launch priority: migrate public legacy profiles and unrestricted social writes before real students.
 
 Privacy migration (2026-10-09): personal profiles are owner-only; progress rules are included in the complete rules; legacy social records are quarantined without deletion. Social discovery is explicitly opt-in, shares only a username, disallows directory listing, and requires exact username lookup. New friendships require atomic recipient acceptance and participant-only reads/removal. The legacy Friends page redirects to the new flow. Production activation, separate-device checks, and social abuse controls remain pending. See `firebase/PRIVACY_MIGRATION.md`.
+
+Production validation reported by user (2026-10-09): user confirmed completing the requested combined-rules activation and separate-account classroom test (teacher invitation, class/student enrollment, assignment completion, teacher result, one-seat check). This is user-reported confirmation, not an independent live inspection. Next implementation: connected school support requests and owner replies.
+
+Connected support update (2026-10-09): school tickets, saved submission confirmation, owner inbox, immutable replies/status history, and resolve/reopen behavior implemented. Teachers see their own requests; administrators see their school; owners see all. Access is checked independently of license dates, but revoked staff lose access. Emulator and browser verification precede publication. Support production activation/test and a defined inbox monitoring routine remain pending; no email notifications are sent.

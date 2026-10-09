@@ -65,3 +65,10 @@ Use separate test accounts to verify the emailed verification link and the final
 
 ## Privacy migration (2026-10-09)
 The latest complete rules replace legacy public profile access and unrestricted social writes. Read `PRIVACY_MIGRATION.md` before activation; it documents compatibility, old-connection quarantine, and production verification. The website update alone does not activate these protections.
+
+## Connected support (2026-10-09)
+Publish the updated complete rules from `/preview/owner/activate.html`. Active teachers can submit and read their own school requests. Active school administrators can read/reply to all requests in that school. Registered platform owners use `/preview/support.html` for the shared inbox and can set Open, Waiting for school, or Resolved while replying. A school reply reopens the request. License expiry or pause does not prevent active staff from requesting help; removed memberships lose access.
+
+Tickets and messages are committed atomically; messages cannot be edited or deleted. Reusing a draft/reply ID makes transport retries idempotent. The teacher form retains text on save failure. The UI displays a saved receipt only after the write succeeds. Message history is retained; the UI loads the latest 100 entries. Inbox lists load up to 100 requests, with a direct request link available for returning to a thread. No attachments, outbound email, push notifications, response-time promises, or automated replies are provided. Local demo support drafts remain unsent. Establish who checks the owner inbox and when before a supervised pilot.
+
+Production test: submit a fictional teacher request; reply and resolve it from a separate owner account; refresh the teacher thread; reply to reopen. The permission suite also verifies cross-school and colleague denial, status/author forgery prevention, concurrent replies, role revocation and paused-license access.

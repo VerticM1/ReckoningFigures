@@ -1,5 +1,5 @@
 // Add inside match /databases/{database}/documents, alongside existing matches.
-// Grants no access to student data. Does not repair legacy testing rules.
+// Owner registry and school-license controls. Shared rules also protect profiles and school data.
 function platformOwner() {
   return request.auth != null
     && exists(/databases/$(database)/documents/platformOwners/$(request.auth.uid))

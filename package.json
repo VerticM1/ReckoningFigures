@@ -11,7 +11,7 @@
     "test:sync": "node preview/scripts/test-sync.mjs",
     "test:lesson": "node preview/scripts/test-two-step.mjs",
     "build:owner": "esbuild preview/owner/client-source.js --bundle --format=esm --minify --outfile=preview/owner/client.js",
-    "test:owner": "node firebase/build-classroom-catalog.mjs && node firebase/build-owner-test-rules.cjs && firebase emulators:exec --config firebase/owner-emulator.json --project demo-reckoning-owner --only firestore \"node firebase/tests/owner-rules.mjs && node firebase/tests/membership-rules.mjs && node firebase/tests/classroom-rules.mjs && node firebase/tests/join-rules.mjs && node firebase/tests/staff-rules.mjs && node firebase/tests/privacy-rules.mjs\"",
+    "test:owner": "node firebase/build-classroom-catalog.mjs && node firebase/build-owner-test-rules.cjs && firebase emulators:exec --config firebase/owner-emulator.json --project demo-reckoning-owner --only firestore \"node firebase/tests/owner-rules.mjs && node firebase/tests/membership-rules.mjs && node firebase/tests/classroom-rules.mjs && node firebase/tests/join-rules.mjs && node firebase/tests/staff-rules.mjs && node firebase/tests/privacy-rules.mjs && node firebase/tests/support-rules.mjs\"",
     "test:classroom-ui": "node --experimental-vm-modules preview/scripts/test-classroom.cjs"
   },
   "dependencies": {

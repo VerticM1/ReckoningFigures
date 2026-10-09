@@ -59,3 +59,6 @@ export async function refreshIdentity(){await reload(auth.currentUser);await get
 
 import {socialAPI} from '../social-api.js';
 export const social=socialAPI(db,auth);
+
+import {supportAPI} from '../support-api.js';
+export const support=supportAPI(db,auth);

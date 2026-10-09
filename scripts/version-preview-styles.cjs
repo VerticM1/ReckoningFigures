@@ -72,3 +72,10 @@ for(const url of ['styles.css','organization/organization.css','workspace.css','
 }
 fs.writeFileSync('preview/friends.html',friendsHTML);
 fs.writeFileSync('auth.html',fs.readFileSync('auth.html','utf8').replace(/src="firebase-friends-system\.js(?:\?v=[^"]*)?"/,`src="firebase-friends-system.js?v=${digest('firebase-friends-system.js')}"`));
+
+fs.writeFileSync('preview/support.js',fs.readFileSync('preview/support.js','utf8').replace(/from '\.\/owner\/client\.js(?:\?v=[^']*)?'/,`from './owner/client.js?v=${digest(owner+'client.js')}'`));
+let supportHTML=fs.readFileSync('preview/support.html','utf8');
+for(const url of ['styles.css','organization/organization.css','workspace.css','support.js']){
+ const start='"'+url,at=supportHTML.indexOf(start);if(at>=0){const end=supportHTML.indexOf('"',at+1);supportHTML=supportHTML.slice(0,at)+start+'?v='+digest('preview/'+url)+supportHTML.slice(end);}
+}
+fs.writeFileSync('preview/support.html',supportHTML);

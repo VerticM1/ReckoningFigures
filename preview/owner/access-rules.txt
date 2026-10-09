@@ -89,7 +89,7 @@ match /users/{uid}/appProgress/{version} {
   allow delete: if request.auth != null && request.auth.uid == uid && version == 'v2';
 }
 // Add inside match /databases/{database}/documents, alongside existing matches.
-// Grants no access to student data. Does not repair legacy testing rules.
+// Owner registry and school-license controls. Shared rules also protect profiles and school data.
 function platformOwner() {
   return request.auth != null
     && exists(/databases/$(database)/documents/platformOwners/$(request.auth.uid))
@@ -472,6 +472,61 @@ match /schools/{schoolId}/membershipAudit/{eventId} {
     && !exists(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.auth.uid))
     && getAfter(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.auth.uid)).data == request.resource.data.snapshot
     && staffAccepting(request.resource.data.snapshot.staffToken,schoolId,request.auth.uid);
+}
+
+// Support remains available to active staff even when a school license is paused.
+function supportStaff(s) {
+ return activeMember(s) && get(/databases/$(database)/documents/schools/$(s)/members/$(request.auth.uid)).data.role in ['teacher','administrator'];
+}
+function supportAccess(t) {
+ return platformOwner() || (supportStaff(t.schoolId) && (t.createdBy == request.auth.uid || schoolManager(t.schoolId)));
+}
+function supportEvent(id,t) {
+ let p = /databases/$(database)/documents/supportTickets/$(id)/messages/$(t.lastMessageId);
+ let e = getAfter(p).data;
+ return !exists(p) && e.revision == t.revision && e.at == request.time
+  && e.authorUid == request.auth.uid && e.status == t.status;
+}
+match /supportTickets/{id} {
+ allow read: if request.auth != null && supportAccess(resource.data);
+ // Allow the author to check an unused draft ID, without revealing other requests.
+ allow get: if request.auth != null && !exists(/databases/$(database)/documents/supportTickets/$(id));
+ allow create: if request.auth != null && supportStaff(request.resource.data.schoolId)
+  && exists(/databases/$(database)/documents/schools/$(request.resource.data.schoolId))
+  && request.resource.data.keys().hasAll(['schoolId','subject','category','createdBy','createdAt','updatedAt','status','revision','lastMessageId'])
+  && request.resource.data.keys().hasOnly(['schoolId','subject','category','createdBy','createdAt','updatedAt','status','revision','lastMessageId'])
+  && request.resource.data.subject is string && request.resource.data.subject.size() > 0 && request.resource.data.subject.size() <= 120
+  && request.resource.data.category in ['Getting started','Lessons and answers','Reporting','Technical issue','School access']
+  && request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time
+  && request.resource.data.updatedAt == request.time && request.resource.data.status == 'open'
+  && request.resource.data.revision == 1 && request.resource.data.lastMessageId == 'first'
+  && supportEvent(id,request.resource.data);
+ allow update: if request.auth != null && supportAccess(resource.data)
+  && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt','status','revision','lastMessageId'])
+  && request.resource.data.updatedAt == request.time && request.resource.data.revision == resource.data.revision + 1
+  && request.resource.data.status in ['open','waiting','resolved']
+  && (platformOwner() || request.resource.data.status == 'open')
+  && request.resource.data.lastMessageId is string && request.resource.data.lastMessageId.size() > 0 && request.resource.data.lastMessageId.size() <= 100
+  && supportEvent(id,request.resource.data);
+ allow delete: if false;
+ match /messages/{messageId} {
+  allow read: if request.auth != null && supportAccess(get(/databases/$(database)/documents/supportTickets/$(id)).data);
+  allow create: if request.auth != null
+   && request.resource.data.keys().hasAll(['authorUid','body','at','status','revision','side'])
+   && request.resource.data.keys().hasOnly(['authorUid','body','at','status','revision','side'])
+   && request.resource.data.authorUid == request.auth.uid && request.resource.data.at == request.time
+   && request.resource.data.body is string && request.resource.data.body.size() > 0 && request.resource.data.body.size() <= 5000
+   && request.resource.data.side in ['owner','school']
+   && (request.resource.data.side == 'owner' ? platformOwner() : supportStaff(getAfter(/databases/$(database)/documents/supportTickets/$(id)).data.schoolId))
+   && getAfter(/databases/$(database)/documents/supportTickets/$(id)).data.lastMessageId == messageId
+   && getAfter(/databases/$(database)/documents/supportTickets/$(id)).data.revision == request.resource.data.revision
+   && getAfter(/databases/$(database)/documents/supportTickets/$(id)).data.updatedAt == request.time
+   && getAfter(/databases/$(database)/documents/supportTickets/$(id)).data.status == request.resource.data.status
+   && (exists(/databases/$(database)/documents/supportTickets/$(id))
+     ? request.resource.data.revision == get(/databases/$(database)/documents/supportTickets/$(id)).data.revision + 1
+     : request.resource.data.revision == 1);
+  allow update, delete: if false;
+ }
 }
 
 }}
