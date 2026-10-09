@@ -22,7 +22,7 @@ function studentSeat(d) {
 }
 function validMembership(d) {
   return d.keys().hasAll(['label','role','state','revision','updatedAt','updatedBy','changeId'])
-    && d.keys().hasOnly(['label','role','state','revision','updatedAt','updatedBy','changeId'])
+    && d.keys().hasOnly(['label','role','state','revision','updatedAt','updatedBy','changeId','joinToken'])
     && d.label is string && d.label.size() > 0 && d.label.size() <= 80
     && d.role in ['administrator','teacher','student'] && d.state in ['active','removed']
     && d.revision is int && d.revision > 0 && d.updatedAt == request.time
@@ -64,7 +64,7 @@ function validSeatWrite(schoolId) {
   let before = exists(memberPath) ? studentSeat(get(memberPath).data) : 0;
   let after = getAfter(memberPath).data;
   return d.keys().hasAll(['occupied','memberUid','changeId','updatedAt'])
-    && d.keys().hasOnly(['occupied','memberUid','changeId','updatedAt'])
+    && d.keys().hasOnly(['occupied','memberUid','changeId','updatedAt','joinToken'])
     && d.updatedAt == request.time && d.occupied is int && d.occupied >= 0
     && d.occupied <= getAfter(/databases/$(database)/documents/schools/$(schoolId)).data.license.seatLimit
     && d.occupied == occupied(schoolId) + studentSeat(after) - before

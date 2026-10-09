@@ -50,3 +50,16 @@ for(const [url,file] of [['../styles.css','preview/styles.css'],['../organizatio
  if(idx>=0){const end=classroomHtml.indexOf('"',idx+start.length);classroomHtml=classroomHtml.slice(0,idx)+start+digest(file)+classroomHtml.slice(end);}
 }
 fs.writeFileSync(school+'classroom.html',classroomHtml);
+
+// Shared staff visual system and join entry assets.
+for(const name of ['join']){
+ const js=school+name+'.js';fs.writeFileSync(js,fs.readFileSync(js,'utf8').replace(/from '\.\.\/owner\/client\.js(?:\?v=[^']*)?'/,`from '../owner/client.js?v=${digest(owner+'client.js')}'`));
+}
+for(const file of [school+'join.html',school+'classroom.html',school+'index.html',owner+'index.html',org+'index.html']){
+ let html=fs.readFileSync(file,'utf8');
+ html=html.replace(/href="\.\.\/workspace\.css(?:\?v=[^"]*)?"/,`href="../workspace.css?v=${digest('preview/workspace.css')}"`);
+ if(file===school+'join.html')for(const [url,source] of [['join.js',school+'join.js'],['../styles.css','preview/styles.css'],['../organization/organization.css',org+'organization.css']]){
+  const start='"'+url;const at=html.indexOf(start);if(at>=0){const end=html.indexOf('"',at+1);html=html.slice(0,at)+start+'?v='+digest(source)+html.slice(end);}
+ }
+ fs.writeFileSync(file,html);
+}

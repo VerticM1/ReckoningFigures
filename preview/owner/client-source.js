@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut} from 'firebase/auth';
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword} from 'firebase/auth';
 import {getFirestore,doc,getDoc,getDocs,collection,query,orderBy,limit,runTransaction,serverTimestamp,Timestamp} from 'firebase/firestore';
 const app=initializeApp({apiKey:'AIzaSyA3uLzOVcNw9cFQ37pHnktHAVbBRASXico',authDomain:'reckoningfigures-bbdae.firebaseapp.com',projectId:'reckoningfigures-bbdae',appId:'1:174051558845:web:d459a96c6d94c108e63ed4'});
 const auth=getAuth(app),db=getFirestore(app);
@@ -47,3 +47,7 @@ export async function saveMember(schoolId,memberUid,values,expectedRevision){
 import {classroomAPI} from '../school/classroom-api.js';
 export const classroom=classroomAPI(db,auth);
 export const currentUid=()=>auth.currentUser?.uid||null;
+
+export const register=(email,password)=>createUserWithEmailAndPassword(auth,email,password);
+import {joinAPI} from '../school/join-api.js';
+export const invitations=joinAPI(db,auth);

@@ -28,7 +28,7 @@ export const schoolHomeworkRequested=cloudParams.has('schoolHomework');
 export async function loadHomework(){
  if(!schoolHomeworkRequested)return homeworkContext();
  try{
-  cloudApi=await import('./owner/client.js?v=e4a08315fb05');
+  cloudApi=await import('./owner/client.js?v=2c45eaf143e4');
   const user=await new Promise(resolve=>{const unsubscribe=cloudApi.observe(u=>{unsubscribe();resolve(u);});});
   if(!user)throw Error('Sign in through your class page, then open this assignment again.');
   const school=cloudParams.get('school'),classId=cloudParams.get('class'),assignmentId=cloudParams.get('schoolHomework');

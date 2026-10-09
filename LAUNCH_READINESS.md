@@ -47,3 +47,6 @@ Owner foundation update: `/preview/owner/` now has Firebase-backed school/licens
 
 
 Connected class update (2026-10-08): added a short replayable how-to panel for class managers and students. Broader administrator onboarding and the full role-specific help widget remain on the checklist. Existing lesson renderer, sounds, animations and milestone logic are reused. Interrupted figures restart; completed results save across devices after activation. Firebase deployment automation still requires authenticated setup and has not been enabled.
+
+
+Student join and staff UX update (2026-10-08): student account registration and class-link admission are implemented with optional teacher approval, link expiry/revocation, automatic atomic seat allocation, and reuse of existing student seats. Teacher class creation no longer exposes UIDs; managers select a teacher by name. Staff screens now have a shared midnight/ivory design, compact class tabs, task dialogs, a direct owner-to-class shortcut, and inline setup guides. Staff invitation/registration, production enrollment verification, legacy security migration, and operational launch requirements remain pending. New join rules require console publication; this is a pilot feature, not a school launch.

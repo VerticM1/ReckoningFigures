@@ -4,18 +4,19 @@ const wait=()=>new Promise(r=>setTimeout(r,30));
 (async()=>{
  const {course}=await import(root+'/course.js');
  const dom=new JSDOM('<main id="classroom-app"></main>',{url:'https://example.org/preview/school/classroom.html?school=a&class=c',runScripts:'outside-only'});
+ dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new dom.window.Event('close'));};
  let assignment,removed=false;
- const api={observe:fn=>{queueMicrotask(()=>fn({uid:'teacher'}));return ()=>{};},logout:async()=>{},schoolContext:async()=>({school:{name:'School'},member:{role:'teacher'}}),classroom:{classInfo:async()=>({name:'Class'}),assignments:async()=>assignment?[{id:'hw',...assignment}]:[],classRoster:async()=>removed?[]:[{id:'student',label:'Test student'}],enroll:async()=>{},unenroll:async()=>{removed=true;},createAssignment:async(s,c,v)=>{assignment=v;},results:async()=>[{uid:'student',lessonId:1,questions:9,firstTry:8,supportSteps:1}]}};
+ const api={observe:fn=>{queueMicrotask(()=>fn({uid:'teacher'}));return ()=>{};},logout:async()=>{},invitations:{current:async()=>null},schoolContext:async()=>({school:{name:'School'},member:{role:'teacher'}}),classroom:{classInfo:async()=>({name:'Class'}),assignments:async()=>assignment?[{id:'hw',...assignment}]:[],classRoster:async()=>removed?[]:[{id:'student',label:'Test student'}],enroll:async()=>{},unenroll:async()=>{removed=true;},createAssignment:async(s,c,v)=>{assignment=v;},results:async()=>[{uid:'student',lessonId:1,questions:9,firstTry:8,supportSteps:1}]}};
  let source=fs.readFileSync(root+'/school/classroom.js','utf8').replace(/^import .*;\n/gm,'');
  dom.window.Function('api','course',source)(api,course);await wait();
  const doc=dom.window.document;
- assert(doc.querySelector('summary').textContent.includes('How to'));
+ assert(doc.querySelector('summary').textContent.includes('guide'));doc.querySelector('#assign').click();
  doc.querySelector('#select-unit').click();const first=doc.querySelector('#selected-count').textContent;
  doc.querySelector('#unit').value='1';doc.querySelector('#unit').dispatchEvent(new dom.window.Event('change'));assert.equal(doc.querySelector('#selected-count').textContent,first);
  doc.querySelector('#select-unit').click();
  const form=doc.querySelector('#assignment');form.elements.title.value='Test practice';form.elements.due.value='2026-12-01';form.dispatchEvent(new dom.window.Event('submit',{cancelable:true}));await wait();assert(assignment.lessonIds.length>1);assert(new Set(assignment.lessonIds).size===assignment.lessonIds.length);
- doc.querySelector('[data-report]').click();await wait();assert(doc.body.textContent.includes('1 steps with app support'));
- doc.querySelector('[data-remove]').click();await wait();assert(removed);dom.window.close();
+ doc.querySelector('[data-report]').click();await wait();assert(doc.body.textContent.includes('1 steps'));
+ doc.querySelector('.staff-close').click();doc.querySelector('[data-tab=students]').click();doc.querySelector('[data-remove]').click();await wait();assert(removed);dom.window.close();
  console.log('PASS class controls, cross-unit selection, assignment save, report and roster removal');
  // Execute the actual lesson modules in a DOM with only the Firebase transport mocked.
  const lessonDom=new JSDOM('<main id="app"></main>',{url:'https://example.org/preview/?schoolHomework=hw&school=a&class=c',runScripts:'outside-only',pretendToBeVisual:true});

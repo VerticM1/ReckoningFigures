@@ -2,6 +2,7 @@
 // Grants no access to student data. Does not repair legacy testing rules.
 function platformOwner() {
   return request.auth != null
+    && exists(/databases/$(database)/documents/platformOwners/$(request.auth.uid))
     && get(/databases/$(database)/documents/platformOwners/$(request.auth.uid)).data.active == true;
 }
 match /platformOwners/{uid} {
