@@ -10,7 +10,7 @@ export function joinAPI(db,auth){
    const iDoc=await tx.get(inviteRef(t));if(!iDoc.exists())throw Error('Invitation not found.');const i=iDoc.data();usable(i);
    const req=requestRef(t,uid),old=await tx.get(req);
    if(old.exists()&&old.data().state!=='pending'){outcome={...i,state:old.data().state};return;}
-   const name=old.exists()?old.data().label:label.trim();if(!name||name.length>80)throw Error('Enter the name your teacher knows (1–80 characters).');
+   const name=old.exists()?old.data().label:label.trim();if(!name||name.length>80)throw Error('Enter your name (1–80 characters).');
    if(!approve&&i.mode==='approval'){if(!old.exists())tx.set(req,{label:name,state:'pending',createdAt:serverTimestamp(),updatedAt:serverTimestamp()});outcome={...i,state:'pending'};return;}
    const member=doc(db,'schools',i.schoolId,'members',uid),roster=doc(db,'schools',i.schoolId,'classes',i.classId,'students',uid);
    const [m,r]=await Promise.all([tx.get(member),tx.get(roster)]);

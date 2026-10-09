@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword} from 'firebase/auth';
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword,sendEmailVerification,reload,getIdToken} from 'firebase/auth';
 import {getFirestore,doc,getDoc,getDocs,collection,query,orderBy,limit,runTransaction,serverTimestamp,Timestamp} from 'firebase/firestore';
 const app=initializeApp({apiKey:'AIzaSyA3uLzOVcNw9cFQ37pHnktHAVbBRASXico',authDomain:'reckoningfigures-bbdae.firebaseapp.com',projectId:'reckoningfigures-bbdae',appId:'1:174051558845:web:d459a96c6d94c108e63ed4'});
 const auth=getAuth(app),db=getFirestore(app);
@@ -51,3 +51,8 @@ export const currentUid=()=>auth.currentUser?.uid||null;
 export const register=(email,password)=>createUserWithEmailAndPassword(auth,email,password);
 import {joinAPI} from '../school/join-api.js';
 export const invitations=joinAPI(db,auth);
+
+import {staffAPI} from "../school/staff-api.js";
+export const staffInvitations=staffAPI(db,auth);
+export const verifyEmail=()=>sendEmailVerification(auth.currentUser);
+export async function refreshIdentity(){await reload(auth.currentUser);await getIdToken(auth.currentUser,true);return auth.currentUser;}
