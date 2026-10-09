@@ -1,0 +1,36 @@
+import {readFileSync} from 'node:fs';
+import assert from 'node:assert/strict';
+import {initializeTestEnvironment,assertFails,assertSucceeds} from '@firebase/rules-unit-testing';
+import {doc,setDoc,getDoc,updateDoc,Timestamp,getDocs,collection,serverTimestamp} from 'firebase/firestore';
+import {joinAPI} from '../../preview/school/join-api.js';
+const env=await initializeTestEnvironment({projectId:'demo-reckoning-owner',firestore:{host:'127.0.0.1',port:8085,rules:readFileSync('firebase/owner-test.rules','utf8')}});
+const db=u=>env.authenticatedContext(u).firestore(),teacher=db('teacher'),api=u=>joinAPI(db(u),{currentUser:{uid:u}}),staff=api('teacher');
+try{
+ await env.clearFirestore();await env.withSecurityRulesDisabled(async c=>{const d=c.firestore();await setDoc(doc(d,'schools','s'),{name:'Pilot',status:'pilot',license:{seatLimit:2,startsOn:Timestamp.fromMillis(0),endsOn:Timestamp.fromMillis(Date.now()+86400000),courses:['algebra1']}});await setDoc(doc(d,'schools','s','members','teacher'),{role:'teacher',state:'active'});for(const id of ['c','d'])await setDoc(doc(d,'schools','s','classes',id),{name:'Algebra',teacherUid:'teacher'});});
+ const link=await assertSucceeds(staff.create('s','c',{schoolName:'Pilot',className:'Algebra'}));
+ await assertSucceeds(getDoc(doc(env.unauthenticatedContext().firestore(),'classInvites',link.token)));
+ await assertFails(getDocs(collection(db('new'),'classInvites')));
+ assert.equal((await assertSucceeds(api('one').join(link.token,'Student One'))).state,'admitted');
+ await assertSucceeds(api('one').join(link.token,'Student One'));
+ const count=async()=>{let n;await env.withSecurityRulesDisabled(async c=>{n=(await getDoc(doc(c.firestore(),'schools','s','usage','seats'))).data().occupied;});return n;};
+ assert.equal(await count(),1);
+ const secondClass=await staff.create('s','d',{schoolName:'Pilot',className:'Algebra'});await assertSucceeds(api('one').join(secondClass.token,'Student One'));assert.equal(await count(),1);
+ const approval=await staff.create('s','c',{schoolName:'Pilot',className:'Algebra',mode:'approval',previous:link.token});
+ await assert.rejects(api('two').join(link.token,'Student Two')); 
+ assert.equal((await api('two').join(approval.token,'Student Two')).state,'pending');assert.equal(await count(),1);
+ await assertFails(api('two').approve(approval.token,'two'));
+ await assertFails(api('outsider').approve(approval.token,'two'));
+ await assertSucceeds(staff.approve(approval.token,'two'));assert.equal(await count(),2);
+ await assertSucceeds(staff.approve(approval.token,'two'));assert.equal(await count(),2);
+ await assertFails(api('three').join(secondClass.token,'Student Three'));assert.equal(await count(),2);
+ await env.withSecurityRulesDisabled(c=>updateDoc(doc(c.firestore(),'schools','s'),{'license.seatLimit':3}));
+ const races=await Promise.allSettled([api('three').join(secondClass.token,'Three'),api('four').join(secondClass.token,'Four')]);assert.equal(races.filter(r=>r.status==='fulfilled').length,1);assert.equal(await count(),3);
+ await assertFails(setDoc(doc(db('outsider'),'schools','s','members','outsider'),{role:'administrator',state:'active',label:'Bad',revision:1,joinToken:secondClass.token,updatedAt:serverTimestamp(),updatedBy:'outsider',changeId:'bad'}));
+ await assertFails(setDoc(doc(db('outsider'),'classInvites',approval.token,'requests','other'),{label:'Other',state:'pending',createdAt:serverTimestamp(),updatedAt:serverTimestamp()}));
+ await env.withSecurityRulesDisabled(c=>updateDoc(doc(c.firestore(),'schools','s','members','one'),{state:'removed'}));
+ const fresh=await staff.create('s','d',{schoolName:'Pilot',className:'Algebra',previous:secondClass.token});await assert.rejects(api('one').join(fresh.token,'One')); 
+ await assertSucceeds(api('five').join(approval.token,'Five'));await assertSucceeds(staff.reject(approval.token,'five'));assert.equal((await api('five').request(approval.token)).state,'rejected');
+ await staff.revoke(fresh.token);await assert.rejects(api('six').join(fresh.token,'Six')); 
+ await env.withSecurityRulesDisabled(c=>updateDoc(doc(c.firestore(),'classInvites',approval.token),{expiresAt:Timestamp.fromMillis(1)}));await assert.rejects(api('six').join(approval.token,'Six')); 
+ console.log('PASS automatic join, approval, seat reuse, capacity race, retries, rejection, revocation, expiry and role escalation denial');
+}finally{await env.cleanup();}

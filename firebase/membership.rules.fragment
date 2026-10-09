@@ -1,0 +1,89 @@
+// School membership is separate from client-editable profiles.
+function activeMember(schoolId) {
+  return request.auth != null
+    && exists(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.auth.uid))
+    && get(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.auth.uid)).data.state == 'active';
+}
+function schoolManager(schoolId) {
+  return platformOwner() || (activeMember(schoolId)
+    && get(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.auth.uid)).data.role == 'administrator');
+}
+function licenseOpen(schoolId) {
+  let s = get(/databases/$(database)/documents/schools/$(schoolId)).data;
+  return s.status in ['pilot','active'] && s.license.startsOn <= request.time
+    && request.time < s.license.endsOn && 'algebra1' in s.license.courses;
+}
+function occupied(schoolId) {
+  let p = /databases/$(database)/documents/schools/$(schoolId)/usage/seats;
+  return exists(p) ? get(p).data.occupied : 0;
+}
+function studentSeat(d) {
+  return d.role == 'student' && d.state == 'active' ? 1 : 0;
+}
+function validMembership(d) {
+  return d.keys().hasAll(['label','role','state','revision','updatedAt','updatedBy','changeId'])
+    && d.keys().hasOnly(['label','role','state','revision','updatedAt','updatedBy','changeId','joinToken','staffToken'])
+    && d.label is string && d.label.size() > 0 && d.label.size() <= 80
+    && d.role in ['administrator','teacher','student'] && d.state in ['active','removed']
+    && d.revision is int && d.revision > 0 && d.updatedAt == request.time
+    && d.updatedBy == request.auth.uid && d.changeId is string && d.changeId.size() > 0 && d.changeId.size() <= 100;
+}
+function memberAudit(schoolId, uid, d, previousRevision) {
+  let p = /databases/$(database)/documents/schools/$(schoolId)/membershipAudit/$(d.changeId);
+  let a = getAfter(p).data;
+  return !exists(p) && a.memberUid == uid && a.actor == request.auth.uid
+    && a.at == request.time && a.previousRevision == previousRevision && a.revision == d.revision && a.snapshot == d;
+}
+function seatChange(schoolId, uid, d, previousSeat) {
+  let delta = studentSeat(d) - previousSeat;
+  let p = /databases/$(database)/documents/schools/$(schoolId)/usage/seats;
+  let next = getAfter(p).data;
+  return delta == 0 || (next.memberUid == uid && next.changeId == d.changeId
+    && next.occupied == occupied(schoolId) + delta);
+}
+match /schools/{schoolId}/members/{uid} {
+  allow get: if request.auth != null && (request.auth.uid == uid || schoolManager(schoolId));
+  allow list: if schoolManager(schoolId);
+  allow create: if schoolManager(schoolId) && validMembership(request.resource.data)
+    && request.resource.data.revision == 1
+    && (platformOwner() || (uid != request.auth.uid && request.resource.data.role != 'administrator'))
+    && (request.resource.data.state == 'removed' || licenseOpen(schoolId))
+    && memberAudit(schoolId, uid, request.resource.data, 0)
+    && seatChange(schoolId, uid, request.resource.data, 0);
+  allow update: if schoolManager(schoolId) && validMembership(request.resource.data)
+    && request.resource.data.revision == resource.data.revision + 1
+    && (platformOwner() || (uid != request.auth.uid && resource.data.role != 'administrator' && request.resource.data.role != 'administrator'))
+    && (request.resource.data.state == 'removed' || licenseOpen(schoolId))
+    && memberAudit(schoolId, uid, request.resource.data, resource.data.revision)
+    && seatChange(schoolId, uid, request.resource.data, studentSeat(resource.data));
+  allow delete: if false;
+}
+function validSeatWrite(schoolId) {
+  let d = request.resource.data;
+  let memberPath = /databases/$(database)/documents/schools/$(schoolId)/members/$(d.memberUid);
+  let before = exists(memberPath) ? studentSeat(get(memberPath).data) : 0;
+  let after = getAfter(memberPath).data;
+  return d.keys().hasAll(['occupied','memberUid','changeId','updatedAt'])
+    && d.keys().hasOnly(['occupied','memberUid','changeId','updatedAt','joinToken'])
+    && d.updatedAt == request.time && d.occupied is int && d.occupied >= 0
+    && d.occupied <= getAfter(/databases/$(database)/documents/schools/$(schoolId)).data.license.seatLimit
+    && d.occupied == occupied(schoolId) + studentSeat(after) - before
+    && after.changeId == d.changeId && after.updatedAt == request.time
+    && (!exists(memberPath) || get(memberPath).data.changeId != after.changeId);
+}
+match /schools/{schoolId}/usage/seats {
+  allow read: if schoolManager(schoolId);
+  allow create, update: if schoolManager(schoolId) && validSeatWrite(schoolId);
+  allow delete: if false;
+}
+match /schools/{schoolId}/membershipAudit/{eventId} {
+  allow read: if schoolManager(schoolId);
+  allow create: if schoolManager(schoolId)
+    && request.resource.data.keys().hasOnly(['memberUid','actor','at','previousRevision','revision','snapshot'])
+    && request.resource.data.actor == request.auth.uid && request.resource.data.at == request.time
+    && request.resource.data.previousRevision is int
+    && request.resource.data.revision == request.resource.data.previousRevision + 1
+    && getAfter(/databases/$(database)/documents/schools/$(schoolId)/members/$(request.resource.data.memberUid)).data == request.resource.data.snapshot
+    && request.resource.data.snapshot.changeId == eventId;
+  allow update, delete: if false;
+}

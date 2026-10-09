@@ -1,0 +1,20 @@
+// Merge this match block inside your existing service cloud.firestore /
+// match /databases/{database}/documents. Do not replace existing application rules.
+// Verify that no broader wildcard rule grants public access to this subcollection.
+match /users/{uid}/appProgress/{version} {
+  allow get: if request.auth != null && request.auth.uid == uid && version == 'v2';
+  allow list: if false;
+  allow create, update: if request.auth != null && request.auth.uid == uid
+    && version == 'v2'
+    && request.resource.data.keys().hasOnly(['xp','cloud','completedLessons','visits','practiceDays','sessions','schemaVersion'])
+    && request.resource.data.schemaVersion == 2
+    && request.resource.data.xp is number && request.resource.data.xp >= 0
+    && request.resource.data.cloud is map
+    && request.resource.data.cloud.keys().hasOnly(['xpByDevice'])
+    && request.resource.data.cloud.xpByDevice is map
+    && request.resource.data.completedLessons is list
+    && request.resource.data.visits is list
+    && request.resource.data.practiceDays is list
+    && request.resource.data.sessions is number;
+  allow delete: if request.auth != null && request.auth.uid == uid && version == 'v2';
+}
