@@ -1,8 +1,8 @@
 export function answerMatches(value, answer){
- const entered=String(value).trim().replaceAll('−','-');const expected=String(answer).trim();
+ const entered=String(value).trim().replaceAll('−','-');const expected=String(answer).trim().replaceAll('−','-');
  return entered!=='' && (Number.isFinite(Number(expected))?Number.isFinite(Number(entered))&&Number(entered)===Number(expected):entered===expected);
 }
-export function graphMatches(value,answer){return value&&Number(value.position)===answer.position&&value.circleType===answer.circleType&&value.direction===answer.direction;}
+export function graphMatches(value,answer){return value&&value.position!==''&&value.position!==null&&value.position!==undefined&&Number.isFinite(Number(value.position))&&Number(value.position)===answer.position&&value.circleType===answer.circleType&&value.direction===answer.direction;}
 function line(position=0,circleType='open',direction='right',basic=false){
  const x=155+position*23;
  return `<svg class="number-line" viewBox="0 0 310 100" role="img" aria-label="${basic?'Number line from minus five to five':`${circleType} circle at ${position}, shaded ${direction}`}"><path d="M22 45H288" stroke="#89a9bb" stroke-width="2"/>${basic?'':`<path d="M${x} 45H${direction==='left'?22:288}" stroke="#5ed8f3" stroke-width="6"/><path d="${direction==='left'?'M30 37 22 45 30 53':'M280 37 288 45 280 53'}" stroke="#5ed8f3" stroke-width="3" fill="none"/>`}${Array.from({length:11},(_,i)=>{const n=i-5;return `<path d="M${40+i*23} 39v12" stroke="#adc4d2"/><text x="${40+i*23}" y="74" text-anchor="middle" fill="#c5dce7" font-size="12">${n}</text>`;}).join('')}${basic?'':`<circle cx="${x}" cy="45" r="7" stroke="#ffd15c" stroke-width="3" fill="${circleType==='open'?'#192632':'#ffd15c'}"/>`}</svg>`;

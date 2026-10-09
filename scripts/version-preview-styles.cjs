@@ -1,5 +1,11 @@
 // Version the stylesheet URL so iPhone caches cannot mix new artwork with old CSS.
 const fs=require('fs'),crypto=require('crypto');
+// Version shared curriculum dependencies before hashing their consuming entry files.
+for(const file of ['preview/app.js','preview/homework.js','preview/school/classroom.js','preview/organization/organization.js']){
+ let content=fs.readFileSync(file,'utf8');
+ content=content.replace(/from '(\.\.?\/)(course|lesson-types)\.js(?:\?v=[^']*)?'/g,(_,prefix,name)=>`from '${prefix}${name}.js?v=${crypto.createHash('sha256').update(fs.readFileSync('preview/'+name+'.js')).digest('hex').slice(0,12)}'`);
+ fs.writeFileSync(file,content);
+}
 if(fs.existsSync('preview/homework.js')){fs.writeFileSync('preview/homework.js',fs.readFileSync('preview/homework.js','utf8').replace(/import\('\.\/owner\/client\.js(?:\?v=[^']*)?'\)/,`import('./owner/client.js?v=${crypto.createHash('sha256').update(fs.readFileSync('preview/owner/client.js')).digest('hex').slice(0,12)}')`));const hash=crypto.createHash('sha256').update(fs.readFileSync('preview/homework.js')).digest('hex').slice(0,12);fs.writeFileSync('preview/app.js',fs.readFileSync('preview/app.js','utf8').replace(/from '\.\/homework\.js(?:\?v=[^']*)?'/,`from './homework.js?v=${hash}'`));}
 const version=crypto.createHash('sha256').update(fs.readFileSync('preview/styles.css')).digest('hex').slice(0,12);
 for(const file of ['preview/index.html','preview/celebration-preview.html']){

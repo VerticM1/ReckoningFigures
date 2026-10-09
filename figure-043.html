@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Product rule
-            {
-                mode: 'learn',
-                concept: 'When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class="example-box"><div class="example-label">Product Rule: x^a × x^b = x^(a+b)</div><div class="example-item">x³ × x⁵ = x^(3+5) = <span class="highlight">x⁸</span></div><div class="example-item">2⁴ × 2³ = 2^(4+3) = <span class="highlight">2⁷</span></div></div>',
-                q: 'Simplify: x⁴ × x⁶',
-                choices: [
-                    'x²⁴',
-                    'x²',
-                    'x¹⁰',
-                    '2x¹⁰'
-                ],
-                answer: 'x¹⁰'
-            },
-
-            // LEARN 2: Same base requirement
-            {
-                mode: 'learn',
-                concept: 'The product rule ONLY works when bases are the same. Different bases cannot be combined! <div class="example-box"><div class="example-label">Can combine:</div><div class="example-item">x³ × x² = x⁵ <span class="highlight">(same base)</span></div><div class="example-label">Cannot combine:</div><div class="example-item">x³ × y² stays as x³y²</div><div class="example-item">(different bases)</div></div>',
-                q: 'Which can be simplified using the product rule?',
-                choices: [
-                    'x² × y²',
-                    'x³ × x⁵',
-                    'a² × b³',
-                    '2³ × 3²'
-                ],
-                answer: 'x³ × x⁵'
-            },
-
-            // LEARN 3: Quotient rule
-            {
-                mode: 'learn',
-                concept: 'When dividing powers with the same base, SUBTRACT the exponents. <div class="example-box"><div class="example-label">Quotient Rule: x^a ÷ x^b = x^(a-b)</div><div class="example-item">x⁸ ÷ x³ = x^(8-3) = <span class="highlight">x⁵</span></div><div class="example-item">2⁶ ÷ 2² = 2^(6-2) = <span class="highlight">2⁴</span></div></div>',
-                q: 'Simplify: x⁹ ÷ x⁴',
-                choices: [
-                    'x³⁶',
-                    'x¹³',
-                    'x⁵',
-                    'x²'
-                ],
-                answer: 'x⁵'
-            },
-
-            // LEARN 4: Why the rules work
-            {
-                mode: 'learn',
-                concept: 'These rules work because exponents represent repeated multiplication. <div class="example-box"><div class="example-label">Product: x³ × x²</div><div class="example-item">(x·x·x) × (x·x) = x·x·x·x·x</div><div class="example-item">That\'s 5 x\'s → <span class="highlight">x⁵</span></div><div class="example-label">Quotient: x⁵ ÷ x²</div><div class="example-item">(x·x·x·x·x) ÷ (x·x) = x·x·x</div><div class="example-item">Cancel 2 → <span class="highlight">x³</span></div></div>',
-                q: 'Why does x⁴ ÷ x⁴ = x⁰?',
-                choices: [
-                    'You always get zero when dividing',
-                    'All four x\'s cancel out',
-                    'Exponent rule: 4 - 4 = 0',
-                    'You can\'t divide same numbers'
-                ],
-                answer: 'Exponent rule: 4 - 4 = 0'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Simplify: x² × x⁷',
-                choices: [
-                    'x¹⁴',
-                    'x⁵',
-                    'x⁹',
-                    '2x⁹'
-                ],
-                answer: 'x⁹'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: 5³ × 5⁴',
-                choices: [
-                    '5¹²',
-                    '25⁷',
-                    '5⁷',
-                    '10⁷'
-                ],
-                answer: '5⁷'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: x¹⁰ ÷ x³',
-                choices: [
-                    'x³⁰',
-                    'x¹³',
-                    'x⁷',
-                    'x³'
-                ],
-                answer: 'x⁷'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: 2⁸ ÷ 2⁵',
-                choices: [
-                    '2⁴⁰',
-                    '2³',
-                    '2¹³',
-                    '1'
-                ],
-                answer: '2³'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Simplify: x³ × x⁴ × x²',
-                choices: [
-                    'x²⁴',
-                    'x⁹',
-                    '3x⁹',
-                    'x⁶'
-                ],
-                answer: 'x⁹'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: (a⁵ × a³) ÷ a⁴',
-                choices: [
-                    'a⁴',
-                    'a¹²',
-                    'a⁶⁰',
-                    'a²'
-                ],
-                answer: 'a⁴'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'If x⁸ ÷ x^n = x³, what is n?',
-                choices: [
-                    'n = 11',
-                    'n = 24',
-                    'n = 5',
-                    'n = 2'
-                ],
-                answer: 'n = 5'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: (x² × x⁶) ÷ (x³ × x)',
-                choices: [
-                    'x⁴',
-                    'x¹²',
-                    'x⁸',
-                    'x⁶'
-                ],
-                answer: 'x⁴'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class=\"example-box\"><div class=\"example-label\">Product Rule: x^a × x^b = x^(a+b)</div><div class=\"example-item\">x³ × x⁵ = x^(3+5) = <span class=\"highlight\">x⁸</span></div><div class=\"example-item\">2⁴ × 2³ = 2^(4+3) = <span class=\"highlight\">2⁷</span></div></div><p>Assume bases in denominators are nonzero; in the exponent-identification question assume x > 0 and x ≠ 1.</p>",
+        "q": "Simplify: x⁴ × x⁶",
+        "choices": [
+            "x²⁴",
+            "x²",
+            "x¹⁰",
+            "2x¹⁰"
+        ],
+        "answer": "x¹⁰"
+    },
+    {
+        "mode": "learn",
+        "concept": "The product rule ONLY works when bases are the same. Different bases cannot be combined! <div class=\"example-box\"><div class=\"example-label\">Can combine:</div><div class=\"example-item\">x³ × x² = x⁵ <span class=\"highlight\">(same base)</span></div><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">x³ × y² stays as x³y²</div><div class=\"example-item\">(different bases)</div></div>",
+        "q": "Which can be simplified using the product rule?",
+        "choices": [
+            "x² × y²",
+            "x³ × x⁵",
+            "a² × b³",
+            "2³ × 3²"
+        ],
+        "answer": "x³ × x⁵"
+    },
+    {
+        "mode": "learn",
+        "concept": "When dividing powers with the same base, SUBTRACT the exponents. <div class=\"example-box\"><div class=\"example-label\">Quotient Rule: x^a ÷ x^b = x^(a-b)</div><div class=\"example-item\">x⁸ ÷ x³ = x^(8-3) = <span class=\"highlight\">x⁵</span></div><div class=\"example-item\">2⁶ ÷ 2² = 2^(6-2) = <span class=\"highlight\">2⁴</span></div></div>",
+        "q": "Simplify: x⁹ ÷ x⁴",
+        "choices": [
+            "x³⁶",
+            "x¹³",
+            "x⁵",
+            "x²"
+        ],
+        "answer": "x⁵"
+    },
+    {
+        "mode": "learn",
+        "concept": "These rules work because exponents represent repeated multiplication. <div class=\"example-box\"><div class=\"example-label\">Product: x³ × x²</div><div class=\"example-item\">(x·x·x) × (x·x) = x·x·x·x·x</div><div class=\"example-item\">That's 5 x's → <span class=\"highlight\">x⁵</span></div><div class=\"example-label\">Quotient: x⁵ ÷ x²</div><div class=\"example-item\">(x·x·x·x·x) ÷ (x·x) = x·x·x</div><div class=\"example-item\">Cancel 2 → <span class=\"highlight\">x³</span></div></div>",
+        "q": "Why does x⁴ ÷ x⁴ = x⁰?",
+        "choices": [
+            "You always get zero when dividing",
+            "All four x's cancel out",
+            "Exponent rule: 4 - 4 = 0",
+            "You can't divide same numbers"
+        ],
+        "answer": "Exponent rule: 4 - 4 = 0"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: x² × x⁷",
+        "choices": [
+            "x¹⁴",
+            "x⁵",
+            "x⁹",
+            "2x⁹"
+        ],
+        "answer": "x⁹"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: 5³ × 5⁴",
+        "choices": [
+            "5¹²",
+            "25⁷",
+            "5⁷",
+            "10⁷"
+        ],
+        "answer": "5⁷"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: x¹⁰ ÷ x³",
+        "choices": [
+            "x³⁰",
+            "x¹³",
+            "x⁷",
+            "x³"
+        ],
+        "answer": "x⁷"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: 2⁸ ÷ 2⁵",
+        "choices": [
+            "2⁴⁰",
+            "2³",
+            "2¹³",
+            "1"
+        ],
+        "answer": "2³"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: x³ × x⁴ × x²",
+        "choices": [
+            "x²⁴",
+            "x⁹",
+            "3x⁹",
+            "x⁶"
+        ],
+        "answer": "x⁹"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (a⁵ × a³) ÷ a⁴",
+        "choices": [
+            "a⁴",
+            "a¹²",
+            "a⁶⁰",
+            "a²"
+        ],
+        "answer": "a⁴"
+    },
+    {
+        "mode": "challenge",
+        "q": "If x⁸ ÷ x^n = x³, what is n?",
+        "choices": [
+            "n = 11",
+            "n = 24",
+            "n = 5",
+            "n = 2"
+        ],
+        "answer": "n = 5"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (x² × x⁶) ÷ (x³ × x)",
+        "choices": [
+            "x⁴",
+            "x¹²",
+            "x⁸",
+            "x⁶"
+        ],
+        "answer": "x⁴"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

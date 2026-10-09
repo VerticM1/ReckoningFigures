@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Adding functions
-            {
-                mode: 'learn',
-                concept: 'To add functions, add their outputs. (f + g)(x) = f(x) + g(x). Evaluate each function, then add the results. <div class="example-box"><div class="example-label">Example: f(x) = 2x, g(x) = x + 3</div><div class="example-item">(f + g)(x) = 2x + (x + 3)</div><div class="example-item">= <span class="highlight">3x + 3</span></div></div>',
-                q: 'If f(x) = x + 2 and g(x) = x + 1, what is (f + g)(x)?',
-                choices: [
-                    'x + 3',
-                    '2x + 2',
-                    '2x + 3',
-                    'x² + 3x + 2'
-                ],
-                answer: '2x + 3'
-            },
-
-            // LEARN 2: Subtracting functions
-            {
-                mode: 'learn',
-                concept: 'To subtract functions: (f - g)(x) = f(x) - g(x). Watch the signs carefully! <div class="example-box"><div class="example-label">Example: f(x) = 3x + 5, g(x) = x + 2</div><div class="example-item">(f - g)(x) = (3x + 5) - (x + 2)</div><div class="example-item">= 3x + 5 - x - 2</div><div class="example-item">= <span class="highlight">2x + 3</span></div></div>',
-                q: 'If f(x) = 5x and g(x) = 2x, what is (f - g)(x)?',
-                choices: [
-                    '7x',
-                    '3x',
-                    '10x',
-                    '3'
-                ],
-                answer: '3x'
-            },
-
-            // LEARN 3: Multiplying functions
-            {
-                mode: 'learn',
-                concept: 'To multiply functions: (f · g)(x) = f(x) × g(x). Multiply the entire outputs. <div class="example-box"><div class="example-label">Example: f(x) = 2x, g(x) = x + 1</div><div class="example-item">(f · g)(x) = 2x(x + 1)</div><div class="example-item">= 2x² + 2x</div><div class="example-item">= <span class="highlight">2x² + 2x</span></div></div>',
-                q: 'If f(x) = 3 and g(x) = x, what is (f · g)(x)?',
-                choices: [
-                    '3 + x',
-                    '3x',
-                    'x³',
-                    '3/x'
-                ],
-                answer: '3x'
-            },
-
-            // LEARN 4: Dividing functions
-            {
-                mode: 'learn',
-                concept: 'To divide functions: (f / g)(x) = f(x) / g(x). Remember: g(x) cannot equal zero! <div class="example-box"><div class="example-label">Example: f(x) = 6x, g(x) = 2</div><div class="example-item">(f / g)(x) = 6x / 2</div><div class="example-item">= <span class="highlight">3x</span></div><div class="example-item">Valid for all x (g(x) never 0)</div></div>',
-                q: 'If f(x) = 10x and g(x) = 5, what is (f / g)(x)?',
-                choices: [
-                    '2x',
-                    '15x',
-                    '50x',
-                    '5x'
-                ],
-                answer: '2x'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'If f(x) = 4x and g(x) = 3x, what is (f + g)(x)?',
-                choices: [
-                    '12x',
-                    'x',
-                    '7x',
-                    '12x²'
-                ],
-                answer: '7x'
-            },
-
-            {
-                mode: 'practice',
-                q: 'If f(x) = 2x + 1 and g(x) = x, what is (f - g)(x)?',
-                choices: [
-                    'x + 1',
-                    '2x',
-                    '3x + 1',
-                    'x - 1'
-                ],
-                answer: 'x + 1'
-            },
-
-            {
-                mode: 'practice',
-                q: 'If f(x) = 2 and g(x) = 5, what is (f · g)(x)?',
-                choices: [
-                    '7',
-                    '3',
-                    '10',
-                    '25'
-                ],
-                answer: '10'
-            },
-
-            {
-                mode: 'practice',
-                q: 'If f(x) = x² and g(x) = x, what is (f / g)(x)?',
-                choices: [
-                    'x',
-                    'x³',
-                    '1',
-                    '2x'
-                ],
-                answer: 'x'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'If f(x) = 2x + 3 and g(x) = x - 1, what is (f + g)(x)?',
-                choices: [
-                    '3x + 4',
-                    '2x + 2',
-                    '3x + 2',
-                    'x + 4'
-                ],
-                answer: '3x + 2'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'If f(x) = x² and g(x) = 3x, what is (f · g)(x)?',
-                choices: [
-                    '3x³',
-                    'x² + 3x',
-                    '3x²',
-                    'x⁵'
-                ],
-                answer: '3x³'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'If f(x) = 4x - 2 and g(x) = 2x - 1, what is (f - g)(x)?',
-                choices: [
-                    '2x + 1',
-                    '6x - 3',
-                    '2x - 1',
-                    '2x - 3'
-                ],
-                answer: '2x - 1'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)?',
-                choices: [
-                    '3x',
-                    '3x²',
-                    '12x³',
-                    '3'
-                ],
-                answer: '3x'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "To add functions, add their outputs. (f + g)(x) = f(x) + g(x). Evaluate each function, then add the results. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = 2x, g(x) = x + 3</div><div class=\"example-item\">(f + g)(x) = 2x + (x + 3)</div><div class=\"example-item\">= <span class=\"highlight\">3x + 3</span></div></div>",
+        "q": "If f(x) = x + 2 and g(x) = x + 1, what is (f + g)(x)?",
+        "choices": [
+            "x + 3",
+            "2x + 2",
+            "2x + 3",
+            "x² + 3x + 2"
+        ],
+        "answer": "2x + 3"
+    },
+    {
+        "mode": "learn",
+        "concept": "To subtract functions: (f - g)(x) = f(x) - g(x). Watch the signs carefully! <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = 3x + 5, g(x) = x + 2</div><div class=\"example-item\">(f - g)(x) = (3x + 5) - (x + 2)</div><div class=\"example-item\">= 3x + 5 - x - 2</div><div class=\"example-item\">= <span class=\"highlight\">2x + 3</span></div></div>",
+        "q": "If f(x) = 5x and g(x) = 2x, what is (f - g)(x)?",
+        "choices": [
+            "7x",
+            "3x",
+            "10x",
+            "3"
+        ],
+        "answer": "3x"
+    },
+    {
+        "mode": "learn",
+        "concept": "To multiply functions: (f · g)(x) = f(x) × g(x). Multiply the entire outputs. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = 2x, g(x) = x + 1</div><div class=\"example-item\">(f · g)(x) = 2x(x + 1)</div><div class=\"example-item\">= 2x² + 2x</div><div class=\"example-item\">= <span class=\"highlight\">2x² + 2x</span></div></div>",
+        "q": "If f(x) = 3 and g(x) = x, what is (f · g)(x)?",
+        "choices": [
+            "3 + x",
+            "3x",
+            "x³",
+            "3/x"
+        ],
+        "answer": "3x"
+    },
+    {
+        "mode": "learn",
+        "concept": "To divide functions: (f / g)(x) = f(x) / g(x). Remember: g(x) cannot equal zero! <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = 6x, g(x) = 2</div><div class=\"example-item\">(f / g)(x) = 6x / 2</div><div class=\"example-item\">= <span class=\"highlight\">3x</span></div><div class=\"example-item\">Valid for all x (g(x) never 0)</div></div>",
+        "q": "If f(x) = 10x and g(x) = 5, what is (f / g)(x)?",
+        "choices": [
+            "2x",
+            "15x",
+            "50x",
+            "5x"
+        ],
+        "answer": "2x"
+    },
+    {
+        "mode": "practice",
+        "q": "If f(x) = 4x and g(x) = 3x, what is (f + g)(x)?",
+        "choices": [
+            "12x",
+            "x",
+            "7x",
+            "12x²"
+        ],
+        "answer": "7x"
+    },
+    {
+        "mode": "practice",
+        "q": "If f(x) = 2x + 1 and g(x) = x, what is (f - g)(x)?",
+        "choices": [
+            "x + 1",
+            "2x",
+            "3x + 1",
+            "x - 1"
+        ],
+        "answer": "x + 1"
+    },
+    {
+        "mode": "practice",
+        "q": "If f(x) = 2 and g(x) = 5, what is (f · g)(x)?",
+        "choices": [
+            "7",
+            "3",
+            "10",
+            "25"
+        ],
+        "answer": "10"
+    },
+    {
+        "mode": "practice",
+        "q": "If f(x) = x² and g(x) = x, what is (f / g)(x)? State the restriction on x.",
+        "choices": [
+            "x, x ≠ 0",
+            "x³",
+            "1",
+            "2x"
+        ],
+        "answer": "x, x ≠ 0"
+    },
+    {
+        "mode": "challenge",
+        "q": "If f(x) = 2x + 3 and g(x) = x - 1, what is (f + g)(x)?",
+        "choices": [
+            "3x + 4",
+            "2x + 2",
+            "3x + 2",
+            "x + 4"
+        ],
+        "answer": "3x + 2"
+    },
+    {
+        "mode": "challenge",
+        "q": "If f(x) = x² and g(x) = 3x, what is (f · g)(x)?",
+        "choices": [
+            "3x³",
+            "x² + 3x",
+            "3x²",
+            "x⁵"
+        ],
+        "answer": "3x³"
+    },
+    {
+        "mode": "challenge",
+        "q": "If f(x) = 4x - 2 and g(x) = 2x - 1, what is (f - g)(x)?",
+        "choices": [
+            "2x + 1",
+            "6x - 3",
+            "2x - 1",
+            "2x - 3"
+        ],
+        "answer": "2x - 1"
+    },
+    {
+        "mode": "challenge",
+        "q": "If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)? State the restriction on x.",
+        "choices": [
+            "3x, x ≠ 0",
+            "3x²",
+            "12x³",
+            "3"
+        ],
+        "answer": "3x, x ≠ 0"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

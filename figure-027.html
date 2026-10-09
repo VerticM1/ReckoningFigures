@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: What is a quadratic?
-            {
-                mode: 'learn',
-                concept: 'A quadratic equation has an x² term (x-squared). Linear equations only have x. Quadratics make curved graphs called parabolas. <div class="example-box"><div class="example-label">Compare:</div><div class="example-item">Linear: y = 2x + 3 (straight line)</div><div class="example-item">Quadratic: y = x² + 2x + 3 <span class="highlight">(parabola curve)</span></div></div>',
-                q: 'What makes an equation quadratic?',
-                choices: [
-                    'It has two x terms',
-                    'It has an x² term',
-                    'It equals zero',
-                    'It has a fraction'
-                ],
-                answer: 'It has an x² term'
-            },
-
-            // LEARN 2: Standard form
-            {
-                mode: 'learn',
-                concept: 'Standard form is ax² + bx + c. The letters a, b, and c are just numbers (called coefficients). <div class="example-box"><div class="example-label">Example: 3x² + 5x - 2</div><div class="example-item">a = <span class="highlight">3</span> (number with x²)</div><div class="example-item">b = <span class="highlight">5</span> (number with x)</div><div class="example-item">c = <span class="highlight">-2</span> (number alone)</div></div>',
-                q: 'In the equation 2x² + 7x + 1, what is the value of b?',
-                choices: [
-                    '2',
-                    '1',
-                    '7',
-                    'x'
-                ],
-                answer: '7'
-            },
-
-            // LEARN 3: Recognizing parts
-            {
-                mode: 'learn',
-                concept: 'The a value is ALWAYS with x². The b value is ALWAYS with x (just x, not x²). The c value has NO x at all. <div class="example-box"><div class="example-label">Another example: x² - 4x + 9</div><div class="example-item">a = <span class="highlight">1</span> (when you see x², a = 1)</div><div class="example-item">b = <span class="highlight">-4</span> (negative 4)</div><div class="example-item">c = <span class="highlight">9</span></div></div>',
-                q: 'In x² + 3x - 5, what is c?',
-                choices: [
-                    '3',
-                    '1',
-                    '-5',
-                    '5'
-                ],
-                answer: '-5'
-            },
-
-            // LEARN 4: Why parabolas?
-            {
-                mode: 'learn',
-                concept: 'When you square x, you get the parabola shape. Think about it: (-2)² = 4 and (2)² = 4. Both negative and positive x give the same y! This creates the U-shape (or upside-down U).',
-                q: 'Why does x² create a curved graph?',
-                choices: [
-                    'x² is always negative',
-                    'Parabolas are random',
-                    'Squaring x makes both positive and negative x give positive results',
-                    'x² equals zero'
-                ],
-                answer: 'Squaring x makes both positive and negative x give positive results'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Which equation is quadratic?',
-                choices: [
-                    'y = 2x + 4',
-                    'y = 4',
-                    'y = x² + 4',
-                    'y = 1/x'
-                ],
-                answer: 'y = x² + 4'
-            },
-
-            {
-                mode: 'practice',
-                q: 'In 5x² - 3x + 7, what is a?',
-                choices: [
-                    '-3',
-                    '5',
-                    '7',
-                    'x'
-                ],
-                answer: '5'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Which is in standard form ax² + bx + c?',
-                choices: [
-                    '2x + 6',
-                    'x² = 9',
-                    '2x² + 6x - 1',
-                    '(x + 3)(x - 1)'
-                ],
-                answer: '2x² + 6x - 1'
-            },
-
-            {
-                mode: 'practice',
-                q: 'In -x² + 2x + 8, what is a?',
-                choices: [
-                    '1',
-                    '2',
-                    '-1',
-                    '8'
-                ],
-                answer: '-1'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Rewrite 2x² - 5 + 3x in standard form. What is b?',
-                choices: [
-                    '-5',
-                    '2',
-                    '3',
-                    '0'
-                ],
-                answer: '3'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'In 4x² = 16, written in standard form 4x² + 0x - 16, what is c?',
-                choices: [
-                    '16',
-                    '0',
-                    '-16',
-                    '4'
-                ],
-                answer: '-16'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Which equation is NOT quadratic?',
-                choices: [
-                    'y = x² - 9',
-                    'y = -x²',
-                    'y = x³ + 2x',
-                    'y = 5x² + x + 1'
-                ],
-                answer: 'y = x³ + 2x'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'In <div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; font-size: 18px;"><div style="border-bottom: 2px solid white; padding: 2px 8px;">x²</div><div style="padding: 2px 8px;">2</div></div> + 3x - 1, what is a?',
-                choices: [
-                    '2',
-                    '3',
-                    '0.5',
-                    '1'
-                ],
-                answer: '0.5'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "A quadratic equation in one variable can be written as ax² + bx + c = 0 with a ≠ 0; its highest power is 2. Linear equations have highest power 1. Quadratics make curved graphs called parabolas. <div class=\"example-box\"><div class=\"example-label\">Compare:</div><div class=\"example-item\">Linear: y = 2x + 3 (straight line)</div><div class=\"example-item\">Quadratic: y = x² + 2x + 3 <span class=\"highlight\">(parabola curve)</span></div></div>",
+        "q": "What makes a polynomial equation quadratic?",
+        "choices": [
+            "Its highest variable power is 2 after simplifying",
+            "It has an x term",
+            "It has three solutions",
+            "It contains a fraction"
+        ],
+        "answer": "Its highest variable power is 2 after simplifying"
+    },
+    {
+        "mode": "learn",
+        "concept": "A quadratic expression has standard form ax² + bx + c with a ≠ 0. A quadratic equation is written ax² + bx + c = 0. The letters a, b, and c are just numbers (called coefficients). <div class=\"example-box\"><div class=\"example-label\">Example: 3x² + 5x - 2</div><div class=\"example-item\">a = <span class=\"highlight\">3</span> (number with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">5</span> (number with x)</div><div class=\"example-item\">c = <span class=\"highlight\">-2</span> (number alone)</div></div>",
+        "q": "In the equation 2x² + 7x + 1, what is the value of b?",
+        "choices": [
+            "2",
+            "1",
+            "7",
+            "x"
+        ],
+        "answer": "7"
+    },
+    {
+        "mode": "learn",
+        "concept": "The a value is ALWAYS with x². The b value is ALWAYS with x (just x, not x²). The c value has NO x at all. <div class=\"example-box\"><div class=\"example-label\">Another example: x² - 4x + 9</div><div class=\"example-item\">a = <span class=\"highlight\">1</span> (when you see x², a = 1)</div><div class=\"example-item\">b = <span class=\"highlight\">-4</span> (negative 4)</div><div class=\"example-item\">c = <span class=\"highlight\">9</span></div></div>",
+        "q": "In x² + 3x - 5, what is c?",
+        "choices": [
+            "3",
+            "1",
+            "-5",
+            "5"
+        ],
+        "answer": "-5"
+    },
+    {
+        "mode": "learn",
+        "concept": "When you square x, you get the parabola shape. Think about it: (-2)² = 4 and (2)² = 4. Both negative and positive x give the same y! This creates the U-shape (or upside-down U).",
+        "q": "For y = x², why do x = 2 and x = -2 give the same y-value?",
+        "choices": [
+            "x² is always negative",
+            "Parabolas are random",
+            "Squaring x makes both positive and negative x give positive results",
+            "x² equals zero"
+        ],
+        "answer": "Squaring x makes both positive and negative x give positive results"
+    },
+    {
+        "mode": "practice",
+        "q": "Which equation is quadratic?",
+        "choices": [
+            "y = 2x + 4",
+            "y = 4",
+            "y = x² + 4",
+            "y = 1/x"
+        ],
+        "answer": "y = x² + 4"
+    },
+    {
+        "mode": "practice",
+        "q": "In 5x² - 3x + 7, what is a?",
+        "choices": [
+            "-3",
+            "5",
+            "7",
+            "x"
+        ],
+        "answer": "5"
+    },
+    {
+        "mode": "practice",
+        "q": "Which is in standard form ax² + bx + c?",
+        "choices": [
+            "2x + 6",
+            "x² = 9",
+            "2x² + 6x - 1",
+            "(x + 3)(x - 1)"
+        ],
+        "answer": "2x² + 6x - 1"
+    },
+    {
+        "mode": "practice",
+        "q": "In -x² + 2x + 8, what is a?",
+        "choices": [
+            "1",
+            "2",
+            "-1",
+            "8"
+        ],
+        "answer": "-1"
+    },
+    {
+        "mode": "challenge",
+        "q": "Rewrite 2x² - 5 + 3x in standard form. What is b?",
+        "choices": [
+            "-5",
+            "2",
+            "3",
+            "0"
+        ],
+        "answer": "3"
+    },
+    {
+        "mode": "challenge",
+        "q": "In 4x² = 16, written in standard form 4x² + 0x - 16, what is c?",
+        "choices": [
+            "16",
+            "0",
+            "-16",
+            "4"
+        ],
+        "answer": "-16"
+    },
+    {
+        "mode": "challenge",
+        "q": "Which equation is NOT quadratic?",
+        "choices": [
+            "y = x² - 9",
+            "y = -x²",
+            "y = x³ + 2x",
+            "y = 5x² + x + 1"
+        ],
+        "answer": "y = x³ + 2x"
+    },
+    {
+        "mode": "challenge",
+        "q": "In <div style=\"display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; font-size: 18px;\"><div style=\"border-bottom: 2px solid white; padding: 2px 8px;\">x²</div><div style=\"padding: 2px 8px;\">2</div></div> + 3x - 1, what is a?",
+        "choices": [
+            "2",
+            "3",
+            "0.5",
+            "1"
+        ],
+        "answer": "0.5"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

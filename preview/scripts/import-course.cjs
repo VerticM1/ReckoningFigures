@@ -8,7 +8,7 @@ for(let id=1;id<=7;id++){
  const questions=items.map(item=>{let q={...item};if(format==='content'){
  if(item.mode==='tutorial'||item.type==='walkthrough')q={...item,type:'tutorial',q:item.title,eq:''};
  else if(item.mode==='interactive')q={...item,type:'graph',q:item.question,eq:item.inequality,answer:item.correctAnswer};
- else {if(!item.choices){console.log(f.file,item);throw Error('unknown')}q.type='multiple-choice';q.q=item.q||item.question;q.eq=item.eq||'';if(typeof item.choices[0]==='object'){q.answer=item.choices.findIndex(c=>c.correct);q.choices=item.choices.map(c=>c.text);}else q.answer=item.choices.indexOf(item.answer);if(q.answer<0)throw Error('Unmatched answer '+f.file);}
+ else {if(!item.choices){console.log(f.file,item);throw Error('unknown')}q.type='multiple-choice';q.q=item.q||item.question;q.eq=item.eq||item.inequality||'';if(typeof item.choices[0]==='object'){q.answer=item.choices.findIndex(c=>c.correct);q.choices=item.choices.map(c=>c.text);}else q.answer=item.choices.indexOf(item.answer);if(q.answer<0)throw Error('Unmatched answer '+f.file);}
  }if(!q.type){q.type='multiple-choice';q.answer=q.choices.indexOf(q.answer);}types[q.type]=(types[q.type]||0)+1;return q;});
  return {...lesson,available:true,premium:/function checkPremiumAccess/.test(text)||/function checkPremiumAccess/.test(html),questions,original:items};});modules.push({id,name,lessons});
 }

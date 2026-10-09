@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Zero product property
-            {
-                mode: 'learn',
-                concept: 'The Zero Product Property: If two things multiply to zero, at least one must BE zero. <div class="example-box"><div class="example-label">Key Rule:</div><div class="example-item">If a × b = 0, then a = 0 OR b = 0</div><div class="example-item">Example: If (x + 2)(x - 3) = 0</div><div class="example-item">Then <span class="highlight">x + 2 = 0</span> or <span class="highlight">x - 3 = 0</span></div></div>',
-                q: 'If (x + 5)(x - 1) = 0, what must be true?',
-                choices: [
-                    'x must equal 5',
-                    'x + 5 = 0 OR x - 1 = 0',
-                    'Both factors equal zero',
-                    'x must equal 1'
-                ],
-                answer: 'x + 5 = 0 OR x - 1 = 0'
-            },
-
-            // LEARN 2: Must equal zero
-            {
-                mode: 'learn',
-                concept: 'Before using zero product property, the equation MUST equal zero. Move everything to one side first. <div class="example-box"><div class="example-label">Example: x² + 3x = 10</div><div class="example-item">Wrong side → x² + 3x - 10 = 0</div><div class="example-item">Now factor: (x + 5)(x - 2) = 0</div><div class="example-item">Solutions: <span class="highlight">x = -5 or x = 2</span></div></div>',
-                q: 'To solve x² = 9 by factoring, what is the first step?',
-                choices: [
-                    'Factor x²',
-                    'Take square root',
-                    'Rewrite as x² - 9 = 0',
-                    'Divide by x'
-                ],
-                answer: 'Rewrite as x² - 9 = 0'
-            },
-
-            // LEARN 3: Solving each factor
-            {
-                mode: 'learn',
-                concept: 'After factoring, set each factor equal to zero and solve separately. You get TWO solutions! <div class="example-box"><div class="example-label">Example: (x + 3)(x - 7) = 0</div><div class="example-item">Factor 1: x + 3 = 0 → x = -3</div><div class="example-item">Factor 2: x - 7 = 0 → x = 7</div><div class="example-item">Solutions: <span class="highlight">x = -3 or x = 7</span></div></div>',
-                q: 'If (x - 4)(x + 2) = 0, what are the solutions?',
-                choices: [
-                    'x = -4 or x = 2',
-                    'x = 4 or x = -2',
-                    'x = 4 or x = 2',
-                    'x = -4 or x = -2'
-                ],
-                answer: 'x = 4 or x = -2'
-            },
-
-            // LEARN 4: Complete process
-            {
-                mode: 'learn',
-                concept: 'Complete solving process: (1) Set to zero, (2) Factor, (3) Use zero product property, (4) Solve each. <div class="example-box"><div class="example-label">Full example: x² + 5x + 6 = 0</div><div class="example-item">Already = 0 ✓</div><div class="example-item">Factor: (x + 2)(x + 3) = 0</div><div class="example-item">x + 2 = 0 → x = -2</div><div class="example-item">x + 3 = 0 → x = -3</div></div>',
-                q: 'What is the correct order for solving by factoring?',
-                choices: [
-                    'Factor, solve, set to zero',
-                    'Set to zero, solve, factor',
-                    'Set to zero, factor, solve',
-                    'Solve, factor, set to zero'
-                ],
-                answer: 'Set to zero, factor, solve'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Solve: (x + 6)(x - 2) = 0',
-                choices: [
-                    'x = 6 or x = -2',
-                    'x = -6 or x = 2',
-                    'x = -6 or x = -2',
-                    'x = 6 or x = 2'
-                ],
-                answer: 'x = -6 or x = 2'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Solve: x² - 5x + 6 = 0 (factors to (x - 2)(x - 3) = 0)',
-                choices: [
-                    'x = -2 or x = -3',
-                    'x = 2 or x = 3',
-                    'x = 2 or x = -3',
-                    'x = -2 or x = 3'
-                ],
-                answer: 'x = 2 or x = 3'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Solve: x² = 16 (hint: rewrite then factor)',
-                choices: [
-                    'x = 16',
-                    'x = 4',
-                    'x = 4 or x = -4',
-                    'x = 8 or x = 2'
-                ],
-                answer: 'x = 4 or x = -4'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Solve: x² + 7x + 12 = 0',
-                choices: [
-                    'x = -3 or x = -4',
-                    'x = 3 or x = 4',
-                    'x = -3 or x = 4',
-                    'x = 3 or x = -4'
-                ],
-                answer: 'x = -3 or x = -4'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Solve: x² + 2x = 15 (must move 15 first!)',
-                choices: [
-                    'x = 3 or x = -5',
-                    'x = -3 or x = 5',
-                    'x = 3 or x = 5',
-                    'x = -3 or x = -5'
-                ],
-                answer: 'x = 3 or x = -5'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Solve: x² - 9 = 0',
-                choices: [
-                    'x = 9',
-                    'x = 3',
-                    'x = 3 or x = -3',
-                    'x = 9 or x = -9'
-                ],
-                answer: 'x = 3 or x = -3'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Solve: 2x² + 6x + 4 = 0 (factor out 2 first!)',
-                choices: [
-                    'x = -1 or x = -2',
-                    'x = 1 or x = 2',
-                    'x = -1 or x = 2',
-                    'x = 1 or x = -2'
-                ],
-                answer: 'x = -1 or x = -2'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Solve: x² - x - 12 = 0',
-                choices: [
-                    'x = -3 or x = 4',
-                    'x = 3 or x = -4',
-                    'x = -4 or x = 3',
-                    'x = 4 or x = -3'
-                ],
-                answer: 'x = -3 or x = 4'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "The Zero Product Property: If two things multiply to zero, at least one must BE zero. <div class=\"example-box\"><div class=\"example-label\">Key Rule:</div><div class=\"example-item\">If a × b = 0, then a = 0 OR b = 0</div><div class=\"example-item\">Example: If (x + 2)(x - 3) = 0</div><div class=\"example-item\">Then <span class=\"highlight\">x + 2 = 0</span> or <span class=\"highlight\">x - 3 = 0</span></div></div>",
+        "q": "If (x + 5)(x - 1) = 0, what must be true?",
+        "choices": [
+            "x must equal 5",
+            "x + 5 = 0 OR x - 1 = 0",
+            "Both factors equal zero",
+            "x must equal 1"
+        ],
+        "answer": "x + 5 = 0 OR x - 1 = 0"
+    },
+    {
+        "mode": "learn",
+        "concept": "Before using zero product property, the equation MUST equal zero. Move everything to one side first. <div class=\"example-box\"><div class=\"example-label\">Example: x² + 3x = 10</div><div class=\"example-item\">Wrong side → x² + 3x - 10 = 0</div><div class=\"example-item\">Now factor: (x + 5)(x - 2) = 0</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -5 or x = 2</span></div></div>",
+        "q": "To solve x² = 9 by factoring, what is the first step?",
+        "choices": [
+            "Factor x²",
+            "Take square root",
+            "Rewrite as x² - 9 = 0",
+            "Divide by x"
+        ],
+        "answer": "Rewrite as x² - 9 = 0"
+    },
+    {
+        "mode": "learn",
+        "concept": "After factoring, set each factor equal to zero and solve separately. Distinct linear factors give two solutions; repeated factors give only one distinct solution. <div class=\"example-box\"><div class=\"example-label\">Example: (x + 3)(x - 7) = 0</div><div class=\"example-item\">Factor 1: x + 3 = 0 → x = -3</div><div class=\"example-item\">Factor 2: x - 7 = 0 → x = 7</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -3 or x = 7</span></div></div>",
+        "q": "If (x - 4)(x + 2) = 0, what are the solutions?",
+        "choices": [
+            "x = -4 or x = 2",
+            "x = 4 or x = -2",
+            "x = 4 or x = 2",
+            "x = -4 or x = -2"
+        ],
+        "answer": "x = 4 or x = -2"
+    },
+    {
+        "mode": "learn",
+        "concept": "Complete solving process: (1) Set to zero, (2) Factor, (3) Use zero product property, (4) Solve each. <div class=\"example-box\"><div class=\"example-label\">Full example: x² + 5x + 6 = 0</div><div class=\"example-item\">Already = 0 ✓</div><div class=\"example-item\">Factor: (x + 2)(x + 3) = 0</div><div class=\"example-item\">x + 2 = 0 → x = -2</div><div class=\"example-item\">x + 3 = 0 → x = -3</div></div>",
+        "q": "What is the correct order for solving by factoring?",
+        "choices": [
+            "Factor, solve, set to zero",
+            "Set to zero, solve, factor",
+            "Set to zero, factor, solve",
+            "Solve, factor, set to zero"
+        ],
+        "answer": "Set to zero, factor, solve"
+    },
+    {
+        "mode": "practice",
+        "q": "Solve: (x + 6)(x - 2) = 0",
+        "choices": [
+            "x = 6 or x = -2",
+            "x = -6 or x = 2",
+            "x = -6 or x = -2",
+            "x = 6 or x = 2"
+        ],
+        "answer": "x = -6 or x = 2"
+    },
+    {
+        "mode": "practice",
+        "q": "Solve: x² - 5x + 6 = 0 (factors to (x - 2)(x - 3) = 0)",
+        "choices": [
+            "x = -2 or x = -3",
+            "x = 2 or x = 3",
+            "x = 2 or x = -3",
+            "x = -2 or x = 3"
+        ],
+        "answer": "x = 2 or x = 3"
+    },
+    {
+        "mode": "practice",
+        "q": "Solve: x² = 16 (hint: rewrite then factor)",
+        "choices": [
+            "x = 16",
+            "x = 4",
+            "x = 4 or x = -4",
+            "x = 8 or x = 2"
+        ],
+        "answer": "x = 4 or x = -4"
+    },
+    {
+        "mode": "practice",
+        "q": "Solve: x² + 7x + 12 = 0",
+        "choices": [
+            "x = -3 or x = -4",
+            "x = 3 or x = 4",
+            "x = -3 or x = 4",
+            "x = 3 or x = -4"
+        ],
+        "answer": "x = -3 or x = -4"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve: x² + 2x = 15 (must move 15 first!)",
+        "choices": [
+            "x = 3 or x = -5",
+            "x = -3 or x = 5",
+            "x = 3 or x = 5",
+            "x = -3 or x = -5"
+        ],
+        "answer": "x = 3 or x = -5"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve: x² - 9 = 0",
+        "choices": [
+            "x = 9",
+            "x = 3",
+            "x = 3 or x = -3",
+            "x = 9 or x = -9"
+        ],
+        "answer": "x = 3 or x = -3"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve: 2x² + 6x + 4 = 0 (factor out 2 first!)",
+        "choices": [
+            "x = -1 or x = -2",
+            "x = 1 or x = 2",
+            "x = -1 or x = 2",
+            "x = 1 or x = -2"
+        ],
+        "answer": "x = -1 or x = -2"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve: x² - x - 12 = 0",
+        "choices": [
+            "x = -3 or x = 4",
+            "x = 3 or x = -4",
+            "x = -4 or x = 3",
+            "x = 4 or x = -3"
+        ],
+        "answer": "x = -3 or x = 4"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

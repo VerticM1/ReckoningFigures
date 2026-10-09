@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Product rule for radicals
-            {
-                mode: 'learn',
-                concept: 'The product rule: √(ab) = √a × √b. You can split radicals when multiplying! <div class="example-box"><div class="example-label">Example: √12</div><div class="example-item">√12 = √(4 × 3)</div><div class="example-item">= √4 × √3</div><div class="example-item">= <span class="highlight">2√3</span></div></div>',
-                q: 'Simplify: √(9 × 5)',
-                choices: [
-                    '√45',
-                    '9√5',
-                    '3√5',
-                    '√14'
-                ],
-                answer: '3√5'
-            },
-
-            // LEARN 2: Finding perfect square factors
-            {
-                mode: 'learn',
-                concept: 'To simplify, find the largest perfect square factor. Pull it out! <div class="example-box"><div class="example-label">Example: √50</div><div class="example-item">50 = 25 × 2 (25 is perfect square!)</div><div class="example-item">√50 = √25 × √2</div><div class="example-item">= <span class="highlight">5√2</span></div></div>',
-                q: 'What is the largest perfect square factor of 32?',
-                choices: [
-                    '4',
-                    '8',
-                    '16',
-                    '2'
-                ],
-                answer: '16'
-            },
-
-            // LEARN 3: Simplifying process
-            {
-                mode: 'learn',
-                concept: 'Steps: 1) Find perfect square factors, 2) Split the radical, 3) Simplify the perfect square. <div class="example-box"><div class="example-label">Example: √72</div><div class="example-item">72 = 36 × 2</div><div class="example-item">√72 = √36 × √2</div><div class="example-item">= <span class="highlight">6√2</span></div></div>',
-                q: 'Simplify: √18',
-                choices: [
-                    '9√2',
-                    '2√9',
-                    '3√2',
-                    '6√3'
-                ],
-                answer: '3√2'
-            },
-
-            // LEARN 4: When radicals are already simplified
-            {
-                mode: 'learn',
-                concept: 'A radical is simplified when no perfect square factors remain under the radical. <div class="example-box"><div class="example-label">Examples:</div><div class="example-item">√7 <span class="highlight">already simplified</span> (7 has no perfect square factors)</div><div class="example-item">√8 = 2√2 <span class="highlight">not simplified</span> (8 = 4 × 2)</div></div>',
-                q: 'Which is already simplified?',
-                choices: [
-                    '√12',
-                    '√20',
-                    '√5',
-                    '√8'
-                ],
-                answer: '√5'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Simplify: √16',
-                choices: [
-                    '4',
-                    '8',
-                    '2√4',
-                    '√16'
-                ],
-                answer: '4'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: √20',
-                choices: [
-                    '10√2',
-                    '4√5',
-                    '2√5',
-                    '5√4'
-                ],
-                answer: '2√5'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: √45',
-                choices: [
-                    '9√5',
-                    '5√9',
-                    '3√5',
-                    '15√3'
-                ],
-                answer: '3√5'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: √8',
-                choices: [
-                    '4√2',
-                    '2√2',
-                    '8',
-                    '√8'
-                ],
-                answer: '2√2'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Simplify: √98',
-                choices: [
-                    '7√2',
-                    '2√49',
-                    '49√2',
-                    '14√7'
-                ],
-                answer: '7√2'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: √75',
-                choices: [
-                    '25√3',
-                    '5√3',
-                    '3√25',
-                    '15√5'
-                ],
-                answer: '5√3'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: √128',
-                choices: [
-                    '8√2',
-                    '64√2',
-                    '16√8',
-                    '4√32'
-                ],
-                answer: '8√2'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: √200',
-                choices: [
-                    '100√2',
-                    '10√2',
-                    '20√10',
-                    '2√100'
-                ],
-                answer: '10√2'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "For a ≥ 0 and b ≥ 0, the real square-root product rule is √(ab) = √a × √b. You can split radicals when multiplying! <div class=\"example-box\"><div class=\"example-label\">Example: √12</div><div class=\"example-item\">√12 = √(4 × 3)</div><div class=\"example-item\">= √4 × √3</div><div class=\"example-item\">= <span class=\"highlight\">2√3</span></div></div>",
+        "q": "Simplify: √(9 × 5)",
+        "choices": [
+            "√45",
+            "9√5",
+            "3√5",
+            "√14"
+        ],
+        "answer": "3√5"
+    },
+    {
+        "mode": "learn",
+        "concept": "To simplify, find the largest perfect square factor. Pull it out! <div class=\"example-box\"><div class=\"example-label\">Example: √50</div><div class=\"example-item\">50 = 25 × 2 (25 is perfect square!)</div><div class=\"example-item\">√50 = √25 × √2</div><div class=\"example-item\">= <span class=\"highlight\">5√2</span></div></div>",
+        "q": "What is the largest perfect square factor of 32?",
+        "choices": [
+            "4",
+            "8",
+            "16",
+            "2"
+        ],
+        "answer": "16"
+    },
+    {
+        "mode": "learn",
+        "concept": "Steps: 1) Find perfect square factors, 2) Split the radical, 3) Simplify the perfect square. <div class=\"example-box\"><div class=\"example-label\">Example: √72</div><div class=\"example-item\">72 = 36 × 2</div><div class=\"example-item\">√72 = √36 × √2</div><div class=\"example-item\">= <span class=\"highlight\">6√2</span></div></div>",
+        "q": "Simplify: √18",
+        "choices": [
+            "9√2",
+            "2√9",
+            "3√2",
+            "6√3"
+        ],
+        "answer": "3√2"
+    },
+    {
+        "mode": "learn",
+        "concept": "A radical is simplified when no perfect square factors greater than 1 remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 is not simplified (8 = 4 × 2); its simplified form is 2√2</div></div>",
+        "q": "Which is already simplified?",
+        "choices": [
+            "√12",
+            "√20",
+            "√5",
+            "√8"
+        ],
+        "answer": "√5"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: √16",
+        "choices": [
+            "4",
+            "8",
+            "2√4",
+            "√16"
+        ],
+        "answer": "4"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: √20",
+        "choices": [
+            "10√2",
+            "4√5",
+            "2√5",
+            "5√4"
+        ],
+        "answer": "2√5"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: √45",
+        "choices": [
+            "9√5",
+            "5√9",
+            "3√5",
+            "15√3"
+        ],
+        "answer": "3√5"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: √8",
+        "choices": [
+            "4√2",
+            "2√2",
+            "8",
+            "√8"
+        ],
+        "answer": "2√2"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: √98",
+        "choices": [
+            "7√2",
+            "2√49",
+            "49√2",
+            "14√7"
+        ],
+        "answer": "7√2"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: √75",
+        "choices": [
+            "25√3",
+            "5√3",
+            "3√25",
+            "15√5"
+        ],
+        "answer": "5√3"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: √128",
+        "choices": [
+            "8√2",
+            "64√2",
+            "16√8",
+            "4√32"
+        ],
+        "answer": "8√2"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: √200",
+        "choices": [
+            "100√2",
+            "10√2",
+            "20√10",
+            "2√100"
+        ],
+        "answer": "10√2"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

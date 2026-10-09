@@ -1,0 +1,532 @@
+[
+  {
+    "lesson": 10,
+    "step": 4,
+    "reason": "Remove budget ambiguity and correct the total-cost truth value.",
+    "before": {
+      "q": "If a ticket costs $12 and you have x dollars, the equation for buying 3 tickets is: <div style=\"display: inline-block; background: #374151; border: 2px solid #4B5563; border-radius: 8px; padding: 8px 16px; margin: 8px 0; font-size: 20px; font-weight: 900;\">3(12) = x</div>",
+      "answer": false
+    },
+    "after": {
+      "q": "Each ticket costs $12. If x is the total cost of exactly 3 tickets, is 3(12) = x correct?",
+      "answer": true
+    }
+  },
+  {
+    "lesson": 11,
+    "step": 3,
+    "reason": "The keyed $11 is the pre-tip share, not the $15 total each pays.",
+    "before": {
+      "q": "Three friends split a bill equally and added a $12 tip. Total was $45. How much did each pay?"
+    },
+    "after": {
+      "q": "Three friends split the bill equally before adding a $12 tip. The total including the tip was $45. What was each friend’s share before the tip?"
+    }
+  },
+  {
+    "lesson": 9,
+    "step": 6,
+    "reason": "Make the denominator unambiguous.",
+    "before": {
+      "choices": [
+        "r = C ÷ 2π",
+        "r = 2πC",
+        "r = C − 2π"
+      ]
+    },
+    "after": {
+      "choices": [
+        "r = C ÷ (2π)",
+        "r = 2πC",
+        "r = C − 2π"
+      ]
+    }
+  },
+  {
+    "lesson": 19,
+    "step": 9,
+    "reason": "Remove conflicting truck capacity and distinguish equivalent full loads from whole trips.",
+    "before": {
+      "q": "A tank holds 6000 gallons. A truck holds 1 cubic foot. There are 7.5 gallons per cubic foot. How many truck loads to fill a 5240 ft³ pool?"
+    },
+    "after": {
+      "q": "A water truck carries 6000 gallons per load. Using 7.5 gallons per cubic foot, which expression gives the number of equivalent full loads needed for a 5240 ft³ pool?"
+    }
+  },
+  {
+    "lesson": 26,
+    "step": 9,
+    "reason": "Solve x² − x − 1 = 0; old ordered pairs satisfied neither both equations.",
+    "before": {
+      "choices": [
+        "(2, 4) and (-1, 1)",
+        "(1, 2) only",
+        "(3, 9) only",
+        "No solution"
+      ],
+      "answer": "(2, 4) and (-1, 1)"
+    },
+    "after": {
+      "choices": [
+        "((1 + √5)/2, (3 + √5)/2) and ((1 − √5)/2, (3 − √5)/2)",
+        "(1, 2) only",
+        "(3, 9) only",
+        "No solution"
+      ],
+      "answer": "((1 + √5)/2, (3 + √5)/2) and ((1 − √5)/2, (3 − √5)/2)"
+    }
+  },
+  {
+    "lesson": 26,
+    "step": 10,
+    "reason": "x² − 2x + 1 = (x − 1)² has one distinct solution, (1, 2).",
+    "before": {
+      "answer": "Two solutions"
+    },
+    "after": {
+      "answer": "One solution"
+    }
+  },
+  {
+    "lesson": 27,
+    "step": 1,
+    "reason": "An x² term alone does not establish degree two.",
+    "before": {
+      "concept": "A quadratic equation has an x² term (x-squared). Linear equations only have x. Quadratics make curved graphs called parabolas. <div class=\"example-box\"><div class=\"example-label\">Compare:</div><div class=\"example-item\">Linear: y = 2x + 3 (straight line)</div><div class=\"example-item\">Quadratic: y = x² + 2x + 3 <span class=\"highlight\">(parabola curve)</span></div></div>"
+    },
+    "after": {
+      "concept": "A quadratic equation in one variable can be written as ax² + bx + c = 0 with a ≠ 0; its highest power is 2. Linear equations have highest power 1. Quadratics make curved graphs called parabolas. <div class=\"example-box\"><div class=\"example-label\">Compare:</div><div class=\"example-item\">Linear: y = 2x + 3 (straight line)</div><div class=\"example-item\">Quadratic: y = x² + 2x + 3 <span class=\"highlight\">(parabola curve)</span></div></div>"
+    }
+  },
+  {
+    "lesson": 27,
+    "step": 1,
+    "reason": "Require degree two rather than merely an x² term.",
+    "before": {
+      "q": "What makes an equation quadratic?",
+      "choices": [
+        "It has two x terms",
+        "It has an x² term",
+        "It equals zero",
+        "It has a fraction"
+      ],
+      "answer": "It has an x² term"
+    },
+    "after": {
+      "q": "What makes a polynomial equation quadratic?",
+      "choices": [
+        "Its highest variable power is 2 after simplifying",
+        "It has an x term",
+        "It has three solutions",
+        "It contains a fraction"
+      ],
+      "answer": "Its highest variable power is 2 after simplifying"
+    }
+  },
+  {
+    "lesson": 27,
+    "step": 4,
+    "reason": "Symmetry alone does not explain all curved graphs; ask the specific squaring fact.",
+    "before": {
+      "q": "Why does x² create a curved graph?"
+    },
+    "after": {
+      "q": "For y = x², why do x = 2 and x = -2 give the same y-value?"
+    }
+  },
+  {
+    "lesson": 27,
+    "step": 2,
+    "reason": "Distinguish an expression from an equation.",
+    "before": {
+      "concept": "Standard form is ax² + bx + c. The letters a, b, and c are just numbers (called coefficients). <div class=\"example-box\"><div class=\"example-label\">Example: 3x² + 5x - 2</div><div class=\"example-item\">a = <span class=\"highlight\">3</span> (number with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">5</span> (number with x)</div><div class=\"example-item\">c = <span class=\"highlight\">-2</span> (number alone)</div></div>"
+    },
+    "after": {
+      "concept": "A quadratic expression has standard form ax² + bx + c with a ≠ 0. A quadratic equation is written ax² + bx + c = 0. The letters a, b, and c are just numbers (called coefficients). <div class=\"example-box\"><div class=\"example-label\">Example: 3x² + 5x - 2</div><div class=\"example-item\">a = <span class=\"highlight\">3</span> (number with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">5</span> (number with x)</div><div class=\"example-item\">c = <span class=\"highlight\">-2</span> (number alone)</div></div>"
+    }
+  },
+  {
+    "lesson": 30,
+    "step": 3,
+    "reason": "Repeated roots are not two distinct solutions.",
+    "before": {
+      "concept": "After factoring, set each factor equal to zero and solve separately. You get TWO solutions! <div class=\"example-box\"><div class=\"example-label\">Example: (x + 3)(x - 7) = 0</div><div class=\"example-item\">Factor 1: x + 3 = 0 → x = -3</div><div class=\"example-item\">Factor 2: x - 7 = 0 → x = 7</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -3 or x = 7</span></div></div>"
+    },
+    "after": {
+      "concept": "After factoring, set each factor equal to zero and solve separately. Distinct linear factors give two solutions; repeated factors give only one distinct solution. <div class=\"example-box\"><div class=\"example-label\">Example: (x + 3)(x - 7) = 0</div><div class=\"example-item\">Factor 1: x + 3 = 0 → x = -3</div><div class=\"example-item\">Factor 2: x - 7 = 0 → x = 7</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -3 or x = 7</span></div></div>"
+    }
+  },
+  {
+    "lesson": 31,
+    "step": 2,
+    "reason": "The middle coefficient is not twice the constant.",
+    "before": {
+      "concept": "This creates a perfect square because (x + n)² = x² + 2nx + n². The middle term is always TWICE the last number. <div class=\"example-box\"><div class=\"example-label\">Check: (x + 4)²</div><div class=\"example-item\">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class=\"example-item\">= x² + 8x + 16</div><div class=\"example-item\">Middle is <span class=\"highlight\">2 × 4 = 8</span> ✓</div></div>"
+    },
+    "after": {
+      "concept": "This creates a perfect square because (x + n)² = x² + 2nx + n². The coefficient of x is twice n; the constant term is n². <div class=\"example-box\"><div class=\"example-label\">Check: (x + 4)²</div><div class=\"example-item\">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class=\"example-item\">= x² + 8x + 16</div><div class=\"example-item\">Middle is <span class=\"highlight\">2 × 4 = 8</span> ✓</div></div>"
+    }
+  },
+  {
+    "lesson": 32,
+    "step": 1,
+    "reason": "Do not promise two real roots for every quadratic.",
+    "before": {
+      "concept": "The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class=\"example-box\"><div class=\"example-label\">Remember:</div><div class=\"example-item\">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class=\"example-item\">Denominator: 2a</div><div class=\"example-item\">The ± gives you <span class=\"highlight\">TWO solutions</span></div></div>"
+    },
+    "after": {
+      "concept": "The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class=\"example-box\"><div class=\"example-label\">Remember:</div><div class=\"example-item\">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class=\"example-item\">Denominator: 2a</div><div class=\"example-item\">For real coefficients with a ≠ 0, the discriminant determines whether there are <span class=\"highlight\">two, one, or no real solutions</span></div></div>"
+    }
+  },
+  {
+    "lesson": 42,
+    "step": 4,
+    "reason": "x and x+2 are consecutive even integers when x is even.",
+    "before": {
+      "q": "What is the product of consecutive integers x and (x + 2)?"
+    },
+    "after": {
+      "q": "What is the product of consecutive even integers x and (x + 2), where x is even?"
+    }
+  },
+  {
+    "lesson": 42,
+    "step": 2,
+    "reason": "A constant dimension can leave degree two.",
+    "before": {
+      "concept": "Volume of a box is length × width × height. This creates cubic polynomials. <div class=\"example-box\"><div class=\"example-label\">Box: length 2x, width x, height 3</div><div class=\"example-item\">Volume = 2x × x × 3</div><div class=\"example-item\">= 6x × x</div><div class=\"example-item\">= <span class=\"highlight\">6x²</span></div></div>"
+    },
+    "after": {
+      "concept": "Volume of a box is length × width × height. The degree depends on which dimensions vary; three variable dimensions can create a cubic polynomial. <div class=\"example-box\"><div class=\"example-label\">Box: length 2x, width x, height 3</div><div class=\"example-item\">Volume = 2x × x × 3</div><div class=\"example-item\">= 6x × x</div><div class=\"example-item\">= <span class=\"highlight\">6x²</span></div></div>"
+    }
+  },
+  {
+    "lesson": 45,
+    "step": 2,
+    "reason": "The zero-power rule excludes zero.",
+    "before": {
+      "q": "Why does any number to the zero power equal 1?"
+    },
+    "after": {
+      "q": "Why does any nonzero number to the zero power equal 1?"
+    }
+  },
+  {
+    "lesson": 48,
+    "step": 1,
+    "reason": "State the real-domain condition.",
+    "before": {
+      "concept": "The product rule: √(ab) = √a × √b. You can split radicals when multiplying! <div class=\"example-box\"><div class=\"example-label\">Example: √12</div><div class=\"example-item\">√12 = √(4 × 3)</div><div class=\"example-item\">= √4 × √3</div><div class=\"example-item\">= <span class=\"highlight\">2√3</span></div></div>"
+    },
+    "after": {
+      "concept": "For a ≥ 0 and b ≥ 0, the real square-root product rule is √(ab) = √a × √b. You can split radicals when multiplying! <div class=\"example-box\"><div class=\"example-label\">Example: √12</div><div class=\"example-item\">√12 = √(4 × 3)</div><div class=\"example-item\">= √4 × √3</div><div class=\"example-item\">= <span class=\"highlight\">2√3</span></div></div>"
+    }
+  },
+  {
+    "lesson": 48,
+    "step": 4,
+    "reason": "Every integer has square factor 1.",
+    "before": {
+      "concept": "A radical is simplified when no perfect square factors remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 = 2√2 <span class=\"highlight\">not simplified</span> (8 = 4 × 2)</div></div>"
+    },
+    "after": {
+      "concept": "A radical is simplified when no perfect square factors greater than 1 remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 = 2√2 <span class=\"highlight\">not simplified</span> (8 = 4 × 2)</div></div>"
+    }
+  },
+  {
+    "lesson": 48,
+    "step": 4,
+    "reason": "The example incorrectly labels the simplified form as unsimplified.",
+    "before": {
+      "concept": "A radical is simplified when no perfect square factors greater than 1 remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 = 2√2 <span class=\"highlight\">not simplified</span> (8 = 4 × 2)</div></div>"
+    },
+    "after": {
+      "concept": "A radical is simplified when no perfect square factors greater than 1 remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 is not simplified (8 = 4 × 2); its simplified form is 2√2</div></div>"
+    }
+  },
+  {
+    "lesson": 49,
+    "step": 2,
+    "reason": "Different starting radicands can become like radicals after simplification.",
+    "before": {
+      "concept": "Unlike radicals (different radicands) CANNOT be combined. They stay separate! <div class=\"example-box\"><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">2√3 + 5√2 stays as <span class=\"highlight\">2√3 + 5√2</span></div><div class=\"example-label\">Can combine:</div><div class=\"example-item\">2√3 + 5√3 = <span class=\"highlight\">7√3</span></div></div>"
+    },
+    "after": {
+      "concept": "Simplify radicals first. If their radicands are still different, they cannot be combined as like radical terms. <div class=\"example-box\"><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">2√3 + 5√2 stays as <span class=\"highlight\">2√3 + 5√2</span></div><div class=\"example-label\">Can combine:</div><div class=\"example-item\">2√3 + 5√3 = <span class=\"highlight\">7√3</span></div></div>"
+    }
+  },
+  {
+    "lesson": 52,
+    "step": 1,
+    "reason": "Avoid claiming exactly four possible representations.",
+    "before": {
+      "concept": "Functions can be shown in four ways: equations, tables, graphs, and mappings. All show the same relationship! <div class=\"example-box\"><div class=\"example-label\">Example: y = 2x</div><div class=\"example-item\">Equation: y = 2x</div><div class=\"example-item\">Table: x=1→y=2, x=2→y=4</div><div class=\"example-item\">Graph: <span class=\"highlight\">straight line through origin</span></div></div>"
+    },
+    "after": {
+      "concept": "Four common ways to represent functions are equations, tables, graphs, and mappings. All show the same relationship! <div class=\"example-box\"><div class=\"example-label\">Example: y = 2x</div><div class=\"example-item\">Equation: y = 2x</div><div class=\"example-item\">Table: x=1→y=2, x=2→y=4</div><div class=\"example-item\">Graph: <span class=\"highlight\">straight line through origin</span></div></div>"
+    }
+  },
+  {
+    "lesson": 52,
+    "step": 1,
+    "reason": "Scope the question to the representations taught.",
+    "before": {
+      "q": "How many ways can you represent a function?"
+    },
+    "after": {
+      "q": "How many common representations are listed here: equations, tables, graphs, and mappings?"
+    }
+  },
+  {
+    "lesson": 52,
+    "step": 3,
+    "reason": "Repeated inputs are only a problem when outputs differ.",
+    "before": {
+      "concept": "In a function table, each input (x) appears only once. If an input appears twice with different outputs, it's not a function. <div class=\"example-box\"><div class=\"example-label\">Function table:</div><div class=\"example-item\">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">x=1→y=3, x=1→y=5 <span class=\"highlight\">(same input, different outputs)</span></div></div>"
+    },
+    "after": {
+      "concept": "In a function table, each input (x) has exactly one output. Repeating an identical input-output pair is allowed. If an input appears twice with different outputs, it's not a function. <div class=\"example-box\"><div class=\"example-label\">Function table:</div><div class=\"example-item\">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">x=1→y=3, x=1→y=5 <span class=\"highlight\">(same input, different outputs)</span></div></div>"
+    }
+  },
+  {
+    "lesson": 52,
+    "step": 3,
+    "reason": "Explain conflicting outputs, not repeated inputs alone.",
+    "before": {
+      "choices": [
+        "Yes, all different outputs",
+        "No, x=2 appears twice",
+        "Yes, inputs can repeat",
+        "Need the equation"
+      ],
+      "answer": "No, x=2 appears twice"
+    },
+    "after": {
+      "choices": [
+        "Yes, all different outputs",
+        "No, x=2 has two different outputs",
+        "Yes, inputs can repeat",
+        "Need the equation"
+      ],
+      "answer": "No, x=2 has two different outputs"
+    }
+  },
+  {
+    "lesson": 52,
+    "step": 9,
+    "reason": "Explain conflicting outputs, not repeated inputs alone.",
+    "before": {
+      "choices": [
+        "Yes, all y-values different",
+        "No, x=2 appears twice",
+        "Yes, x-values can repeat",
+        "Not enough data"
+      ],
+      "answer": "No, x=2 appears twice"
+    },
+    "after": {
+      "choices": [
+        "Yes, all y-values different",
+        "No, x=2 has two different outputs",
+        "Yes, x-values can repeat",
+        "Not enough data"
+      ],
+      "answer": "No, x=2 has two different outputs"
+    }
+  },
+  {
+    "lesson": 53,
+    "step": 4,
+    "reason": "A line does not start at its y-intercept.",
+    "before": {
+      "q": "For f(x) = x + 4, where does the graph start?"
+    },
+    "after": {
+      "q": "For f(x) = x + 4, where does the graph cross the y-axis?"
+    }
+  },
+  {
+    "lesson": 54,
+    "step": 8,
+    "reason": "Retain the excluded zero input when cancelling x.",
+    "before": {
+      "q": "If f(x) = x² and g(x) = x, what is (f / g)(x)?",
+      "choices": [
+        "x",
+        "x³",
+        "1",
+        "2x"
+      ],
+      "answer": "x"
+    },
+    "after": {
+      "q": "If f(x) = x² and g(x) = x, what is (f / g)(x)? State the restriction on x.",
+      "choices": [
+        "x, x ≠ 0",
+        "x³",
+        "1",
+        "2x"
+      ],
+      "answer": "x, x ≠ 0"
+    }
+  },
+  {
+    "lesson": 54,
+    "step": 12,
+    "reason": "Retain the excluded zero input when cancelling x.",
+    "before": {
+      "q": "If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)?",
+      "choices": [
+        "3x",
+        "3x²",
+        "12x³",
+        "3"
+      ],
+      "answer": "3x"
+    },
+    "after": {
+      "q": "If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)? State the restriction on x.",
+      "choices": [
+        "3x, x ≠ 0",
+        "3x²",
+        "12x³",
+        "3"
+      ],
+      "answer": "3x, x ≠ 0"
+    }
+  },
+  {
+    "lesson": 56,
+    "step": 1,
+    "reason": "Not every function has an inverse function on its original domain.",
+    "before": {
+      "concept": "An inverse function \"undoes\" what the original function does. If f takes you from 2 to 7, then f⁻¹ takes you back from 7 to 2. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = x + 3</div><div class=\"example-item\">f(2) = 5 (add 3)</div><div class=\"example-item\">f⁻¹(5) = 2 <span class=\"highlight\">(subtract 3 to undo)</span></div></div>"
+    },
+    "after": {
+      "concept": "A one-to-one function has an inverse function that \"undoes\" it. Other functions need a suitable domain restriction first. If f takes you from 2 to 7, then f⁻¹ takes you back from 7 to 2. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = x + 3</div><div class=\"example-item\">f(2) = 5 (add 3)</div><div class=\"example-item\">f⁻¹(5) = 2 <span class=\"highlight\">(subtract 3 to undo)</span></div></div>"
+    }
+  },
+  {
+    "lesson": 56,
+    "step": 12,
+    "reason": "Remove a second equivalent correct choice (-x+5 equals 5-x).",
+    "before": {
+      "choices": [
+        "x - 5",
+        "-x + 5",
+        "5 - x",
+        "-x - 5"
+      ]
+    },
+    "after": {
+      "choices": [
+        "x - 5",
+        "x + 5",
+        "5 - x",
+        "-x - 5"
+      ]
+    }
+  },
+  {
+    "lesson": 58,
+    "step": 4,
+    "reason": "A ticket count can be zero unless a purchase is required.",
+    "before": {
+      "q": "For T(m) = cost of m movie tickets at $12 each, what's a reasonable domain?",
+      "choices": [
+        "All real numbers",
+        "Positive integers only",
+        "Negative numbers",
+        "Fractions only"
+      ],
+      "answer": "Positive integers only"
+    },
+    "after": {
+      "q": "For T(m) = 12m, the cost of m movie tickets including buying zero tickets, what is a reasonable domain?",
+      "choices": [
+        "All real numbers",
+        "Nonnegative integers (0, 1, 2, ...)",
+        "Negative numbers",
+        "Fractions only"
+      ],
+      "answer": "Nonnegative integers (0, 1, 2, ...)"
+    }
+  },
+  {
+    "lesson": 9,
+    "step": 1,
+    "reason": "Make domain assumptions visible.",
+    "before": {
+      "concept": null
+    },
+    "after": {
+      "concept": "<p>Assume each variable used as a divisor is nonzero.</p>"
+    }
+  },
+  {
+    "lesson": 41,
+    "step": 1,
+    "reason": "Make domain assumptions visible.",
+    "before": {
+      "concept": "To divide a polynomial by a monomial, divide EACH term separately. <div class=\"example-box\"><div class=\"example-label\">Example: (6x³ + 12x²) ÷ 3x</div><div class=\"example-item\">6x³ ÷ 3x = 2x²</div><div class=\"example-item\">12x² ÷ 3x = 4x</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² + 4x</span></div></div>"
+    },
+    "after": {
+      "concept": "To divide a polynomial by a monomial, divide EACH term separately. <div class=\"example-box\"><div class=\"example-label\">Example: (6x³ + 12x²) ÷ 3x</div><div class=\"example-item\">6x³ ÷ 3x = 2x²</div><div class=\"example-item\">12x² ÷ 3x = 4x</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² + 4x</span></div></div><p>Assume every divisor is nonzero; in questions dividing by a power of x, x ≠ 0.</p>"
+    }
+  },
+  {
+    "lesson": 43,
+    "step": 1,
+    "reason": "Make domain assumptions visible.",
+    "before": {
+      "concept": "When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class=\"example-box\"><div class=\"example-label\">Product Rule: x^a × x^b = x^(a+b)</div><div class=\"example-item\">x³ × x⁵ = x^(3+5) = <span class=\"highlight\">x⁸</span></div><div class=\"example-item\">2⁴ × 2³ = 2^(4+3) = <span class=\"highlight\">2⁷</span></div></div>"
+    },
+    "after": {
+      "concept": "When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class=\"example-box\"><div class=\"example-label\">Product Rule: x^a × x^b = x^(a+b)</div><div class=\"example-item\">x³ × x⁵ = x^(3+5) = <span class=\"highlight\">x⁸</span></div><div class=\"example-item\">2⁴ × 2³ = 2^(4+3) = <span class=\"highlight\">2⁷</span></div></div><p>Assume bases in denominators are nonzero; in the exponent-identification question assume x > 0 and x ≠ 1.</p>"
+    }
+  },
+  {
+    "lesson": 44,
+    "step": 1,
+    "reason": "Make domain assumptions visible.",
+    "before": {
+      "concept": "When raising a power to another power, MULTIPLY the exponents. <div class=\"example-box\"><div class=\"example-label\">Power of a Power: (x^a)^b = x^(a×b)</div><div class=\"example-item\">(x³)⁴ = x^(3×4) = <span class=\"highlight\">x¹²</span></div><div class=\"example-item\">(2²)³ = 2^(2×3) = <span class=\"highlight\">2⁶</span></div></div>"
+    },
+    "after": {
+      "concept": "When raising a power to another power, MULTIPLY the exponents. <div class=\"example-box\"><div class=\"example-label\">Power of a Power: (x^a)^b = x^(a×b)</div><div class=\"example-item\">(x³)⁴ = x^(3×4) = <span class=\"highlight\">x¹²</span></div><div class=\"example-item\">(2²)³ = 2^(2×3) = <span class=\"highlight\">2⁶</span></div></div><p>Assume denominators are nonzero.</p>"
+    }
+  },
+  {
+    "lesson": 45,
+    "step": 1,
+    "reason": "Make domain assumptions visible.",
+    "before": {
+      "concept": "ANY nonzero number raised to the power of zero equals 1. This is always true! <div class=\"example-box\"><div class=\"example-label\">Zero Exponent Rule: x⁰ = 1</div><div class=\"example-item\">5⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">100⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">x⁰ = <span class=\"highlight\">1</span> (if x ≠ 0)</div></div>"
+    },
+    "after": {
+      "concept": "ANY nonzero number raised to the power of zero equals 1. This is always true! <div class=\"example-box\"><div class=\"example-label\">Zero Exponent Rule: x⁰ = 1</div><div class=\"example-item\">5⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">100⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">x⁰ = <span class=\"highlight\">1</span> (if x ≠ 0)</div></div><p>Assume variable bases are nonzero wherever zero or negative powers appear.</p>"
+    }
+  },
+  {
+    "lesson": 47,
+    "step": 1,
+    "reason": "Make domain assumptions visible.",
+    "before": {
+      "concept": "A radical asks \"what number, when multiplied by itself, gives this?\" The square root √ is the most common radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√9 = <span class=\"highlight\">3</span> (because 3 × 3 = 9)</div><div class=\"example-item\">√16 = <span class=\"highlight\">4</span> (because 4 × 4 = 16)</div><div class=\"example-item\">√25 = <span class=\"highlight\">5</span></div></div>"
+    },
+    "after": {
+      "concept": "A radical asks \"what number, when multiplied by itself, gives this?\" The square root √ is the most common radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√9 = <span class=\"highlight\">3</span> (because 3 × 3 = 9)</div><div class=\"example-item\">√16 = <span class=\"highlight\">4</span> (because 4 × 4 = 16)</div><div class=\"example-item\">√25 = <span class=\"highlight\">5</span></div></div><p>Work over the real numbers; radicands of even roots must be nonnegative.</p>"
+    }
+  },
+  {
+    "lesson": 50,
+    "step": 1,
+    "reason": "Make domain assumptions visible.",
+    "before": {
+      "concept": "A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(1/n) = ⁿ√x</div><div class=\"example-item\">x^(1/2) = √x (square root)</div><div class=\"example-item\">x^(1/3) = ³√x (cube root)</div><div class=\"example-item\">8^(1/3) = ³√8 = <span class=\"highlight\">2</span></div></div>"
+    },
+    "after": {
+      "concept": "A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(1/n) = ⁿ√x</div><div class=\"example-item\">x^(1/2) = √x (square root)</div><div class=\"example-item\">x^(1/3) = ³√x (cube root)</div><div class=\"example-item\">8^(1/3) = ³√8 = <span class=\"highlight\">2</span></div></div><p>For the variable-base exponent rules in this lesson, assume x > 0.</p>"
+    }
+  }
+]

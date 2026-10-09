@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Four representations
-            {
-                mode: 'learn',
-                concept: 'Functions can be shown in four ways: equations, tables, graphs, and mappings. All show the same relationship! <div class="example-box"><div class="example-label">Example: y = 2x</div><div class="example-item">Equation: y = 2x</div><div class="example-item">Table: x=1→y=2, x=2→y=4</div><div class="example-item">Graph: <span class="highlight">straight line through origin</span></div></div>',
-                q: 'How many ways can you represent a function?',
-                choices: [
-                    'One way only',
-                    'Two ways',
-                    'Four ways',
-                    'Infinite ways'
-                ],
-                answer: 'Four ways'
-            },
-
-            // LEARN 2: Vertical line test
-            {
-                mode: 'learn',
-                concept: 'The vertical line test tells if a graph is a function. If ANY vertical line touches the graph more than once, it\'s NOT a function! <div class="example-box"><div class="example-label">Why it works:</div><div class="example-item">Vertical line = one x-value</div><div class="example-item">If it hits twice = one input, two outputs</div><div class="example-item">That means <span class="highlight">NOT a function!</span></div></div>',
-                q: 'A vertical line touches a graph at 2 points. Is it a function?',
-                choices: [
-                    'Yes, it passes the test',
-                    'No, one input has two outputs',
-                    'Yes, vertical lines don\'t matter',
-                    'Need more information'
-                ],
-                answer: 'No, one input has two outputs'
-            },
-
-            // LEARN 3: Reading from tables
-            {
-                mode: 'learn',
-                concept: 'In a function table, each input (x) appears only once. If an input appears twice with different outputs, it\'s not a function. <div class="example-box"><div class="example-label">Function table:</div><div class="example-item">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class="example-label">NOT a function:</div><div class="example-item">x=1→y=3, x=1→y=5 <span class="highlight">(same input, different outputs)</span></div></div>',
-                q: 'Is this a function? x=2→y=4, x=3→y=9, x=2→y=8',
-                choices: [
-                    'Yes, all different outputs',
-                    'No, x=2 appears twice',
-                    'Yes, inputs can repeat',
-                    'Need the equation'
-                ],
-                answer: 'No, x=2 appears twice'
-            },
-
-            // LEARN 4: Mapping diagrams
-            {
-                mode: 'learn',
-                concept: 'Mapping diagrams show inputs on the left, outputs on the right, with arrows connecting them. Each input can have only ONE arrow! <div class="example-box"><div class="example-label">Function mapping:</div><div class="example-item">1 → 5 ✓</div><div class="example-item">2 → 7 ✓</div><div class="example-label">NOT a function:</div><div class="example-item">1 → 5 and 1 → 9 <span class="highlight">(two arrows from one input)</span></div></div>',
-                q: 'In a function mapping, each input must have how many arrows?',
-                choices: [
-                    'Exactly one arrow',
-                    'At least one arrow',
-                    'Multiple arrows allowed',
-                    'No arrows'
-                ],
-                answer: 'Exactly one arrow'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Which graph fails the vertical line test?',
-                choices: [
-                    'A circle',
-                    'A straight line y = 2x',
-                    'A parabola y = x²',
-                    'The line y = 5'
-                ],
-                answer: 'A circle'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Is this a function? x=1→y=2, x=3→y=2, x=5→y=2',
-                choices: [
-                    'No, outputs repeat',
-                    'Yes, each input has one output',
-                    'No, need different outputs',
-                    'Not enough information'
-                ],
-                answer: 'Yes, each input has one output'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Which is NOT a way to represent a function?',
-                choices: [
-                    'Table of values',
-                    'Graph on coordinate plane',
-                    'Random number list',
-                    'Mapping diagram'
-                ],
-                answer: 'Random number list'
-            },
-
-            {
-                mode: 'practice',
-                q: 'A function has the points (2,5) and (3,5). Is this allowed?',
-                choices: [
-                    'No, outputs must be different',
-                    'Yes, different inputs can have same output',
-                    'No, violates function rule',
-                    'Need more points'
-                ],
-                answer: 'Yes, different inputs can have same output'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Is this table a function? x: 1,2,3,2  y: 5,7,9,11',
-                choices: [
-                    'Yes, all y-values different',
-                    'No, x=2 appears twice',
-                    'Yes, x-values can repeat',
-                    'Not enough data'
-                ],
-                answer: 'No, x=2 appears twice'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Which passes the vertical line test?',
-                choices: [
-                    'x = 3 (vertical line)',
-                    'x² + y² = 25 (circle)',
-                    'y = |x| (absolute value)',
-                    'x = y² (sideways parabola)'
-                ],
-                answer: 'y = |x| (absolute value)'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Can two different inputs have the same output in a function?',
-                choices: [
-                    'No, violates function rule',
-                    'Yes, as long as each input has only one output',
-                    'Only if outputs are positive',
-                    'Only in linear functions'
-                ],
-                answer: 'Yes, as long as each input has only one output'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Is {(1,2), (3,4), (1,6)} a function?',
-                choices: [
-                    'Yes, three ordered pairs',
-                    'No, input 1 has two outputs',
-                    'Yes, all numbers different',
-                    'Need graph to decide'
-                ],
-                answer: 'No, input 1 has two outputs'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "Four common ways to represent functions are equations, tables, graphs, and mappings. All show the same relationship! <div class=\"example-box\"><div class=\"example-label\">Example: y = 2x</div><div class=\"example-item\">Equation: y = 2x</div><div class=\"example-item\">Table: x=1→y=2, x=2→y=4</div><div class=\"example-item\">Graph: <span class=\"highlight\">straight line through origin</span></div></div>",
+        "q": "How many common representations are listed here: equations, tables, graphs, and mappings?",
+        "choices": [
+            "One way only",
+            "Two ways",
+            "Four ways",
+            "Infinite ways"
+        ],
+        "answer": "Four ways"
+    },
+    {
+        "mode": "learn",
+        "concept": "The vertical line test tells if a graph is a function. If ANY vertical line touches the graph more than once, it's NOT a function! <div class=\"example-box\"><div class=\"example-label\">Why it works:</div><div class=\"example-item\">Vertical line = one x-value</div><div class=\"example-item\">If it hits twice = one input, two outputs</div><div class=\"example-item\">That means <span class=\"highlight\">NOT a function!</span></div></div>",
+        "q": "A vertical line touches a graph at 2 points. Is it a function?",
+        "choices": [
+            "Yes, it passes the test",
+            "No, one input has two outputs",
+            "Yes, vertical lines don't matter",
+            "Need more information"
+        ],
+        "answer": "No, one input has two outputs"
+    },
+    {
+        "mode": "learn",
+        "concept": "In a function table, each input (x) has exactly one output. Repeating an identical input-output pair is allowed. If an input appears twice with different outputs, it's not a function. <div class=\"example-box\"><div class=\"example-label\">Function table:</div><div class=\"example-item\">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">x=1→y=3, x=1→y=5 <span class=\"highlight\">(same input, different outputs)</span></div></div>",
+        "q": "Is this a function? x=2→y=4, x=3→y=9, x=2→y=8",
+        "choices": [
+            "Yes, all different outputs",
+            "No, x=2 has two different outputs",
+            "Yes, inputs can repeat",
+            "Need the equation"
+        ],
+        "answer": "No, x=2 has two different outputs"
+    },
+    {
+        "mode": "learn",
+        "concept": "Mapping diagrams show inputs on the left, outputs on the right, with arrows connecting them. Each input can have only ONE arrow! <div class=\"example-box\"><div class=\"example-label\">Function mapping:</div><div class=\"example-item\">1 → 5 ✓</div><div class=\"example-item\">2 → 7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">1 → 5 and 1 → 9 <span class=\"highlight\">(two arrows from one input)</span></div></div>",
+        "q": "In a function mapping, each input must have how many arrows?",
+        "choices": [
+            "Exactly one arrow",
+            "At least one arrow",
+            "Multiple arrows allowed",
+            "No arrows"
+        ],
+        "answer": "Exactly one arrow"
+    },
+    {
+        "mode": "practice",
+        "q": "Which graph fails the vertical line test?",
+        "choices": [
+            "A circle",
+            "A straight line y = 2x",
+            "A parabola y = x²",
+            "The line y = 5"
+        ],
+        "answer": "A circle"
+    },
+    {
+        "mode": "practice",
+        "q": "Is this a function? x=1→y=2, x=3→y=2, x=5→y=2",
+        "choices": [
+            "No, outputs repeat",
+            "Yes, each input has one output",
+            "No, need different outputs",
+            "Not enough information"
+        ],
+        "answer": "Yes, each input has one output"
+    },
+    {
+        "mode": "practice",
+        "q": "Which is NOT a way to represent a function?",
+        "choices": [
+            "Table of values",
+            "Graph on coordinate plane",
+            "Random number list",
+            "Mapping diagram"
+        ],
+        "answer": "Random number list"
+    },
+    {
+        "mode": "practice",
+        "q": "A function has the points (2,5) and (3,5). Is this allowed?",
+        "choices": [
+            "No, outputs must be different",
+            "Yes, different inputs can have same output",
+            "No, violates function rule",
+            "Need more points"
+        ],
+        "answer": "Yes, different inputs can have same output"
+    },
+    {
+        "mode": "challenge",
+        "q": "Is this table a function? x: 1,2,3,2  y: 5,7,9,11",
+        "choices": [
+            "Yes, all y-values different",
+            "No, x=2 has two different outputs",
+            "Yes, x-values can repeat",
+            "Not enough data"
+        ],
+        "answer": "No, x=2 has two different outputs"
+    },
+    {
+        "mode": "challenge",
+        "q": "Which passes the vertical line test?",
+        "choices": [
+            "x = 3 (vertical line)",
+            "x² + y² = 25 (circle)",
+            "y = |x| (absolute value)",
+            "x = y² (sideways parabola)"
+        ],
+        "answer": "y = |x| (absolute value)"
+    },
+    {
+        "mode": "challenge",
+        "q": "Can two different inputs have the same output in a function?",
+        "choices": [
+            "No, violates function rule",
+            "Yes, as long as each input has only one output",
+            "Only if outputs are positive",
+            "Only in linear functions"
+        ],
+        "answer": "Yes, as long as each input has only one output"
+    },
+    {
+        "mode": "challenge",
+        "q": "Is {(1,2), (3,4), (1,6)} a function?",
+        "choices": [
+            "Yes, three ordered pairs",
+            "No, input 1 has two outputs",
+            "Yes, all numbers different",
+            "Need graph to decide"
+        ],
+        "answer": "No, input 1 has two outputs"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

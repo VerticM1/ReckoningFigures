@@ -1474,7 +1474,8 @@ export const course = [
               "Divide by 2",
               "Add 5 to both sides"
             ],
-            "answer": 0
+            "answer": 0,
+            "concept": "<p>Assume each variable used as a divisor is nonzero.</p>"
           },
           {
             "type": "multiple-choice",
@@ -1516,7 +1517,7 @@ export const course = [
             "eq": "C = 2πr, solve for r",
             "q": "What is <span class=\"var\">r</span> equal to?",
             "choices": [
-              "r = C ÷ 2π",
+              "r = C ÷ (2π)",
               "r = 2πC",
               "r = C − 2π"
             ],
@@ -1562,7 +1563,8 @@ export const course = [
               "Divide by 2",
               "Add 5 to both sides"
             ],
-            "answer": 0
+            "answer": 0,
+            "concept": "<p>Assume each variable used as a divisor is nonzero.</p>"
           },
           {
             "type": "multiple-choice",
@@ -1604,7 +1606,7 @@ export const course = [
             "eq": "C = 2πr, solve for r",
             "q": "What is <span class=\"var\">r</span> equal to?",
             "choices": [
-              "r = C ÷ 2π",
+              "r = C ÷ (2π)",
               "r = 2πC",
               "r = C − 2π"
             ],
@@ -1680,8 +1682,8 @@ export const course = [
           {
             "type": "true-false",
             "eq": "",
-            "q": "If a ticket costs $12 and you have x dollars, the equation for buying 3 tickets is: <div style=\"display: inline-block; background: #374151; border: 2px solid #4B5563; border-radius: 8px; padding: 8px 16px; margin: 8px 0; font-size: 20px; font-weight: 900;\">3(12) = x</div>",
-            "answer": false
+            "q": "Each ticket costs $12. If x is the total cost of exactly 3 tickets, is 3(12) = x correct?",
+            "answer": true
           },
           {
             "type": "multiple-choice",
@@ -1768,8 +1770,8 @@ export const course = [
           {
             "type": "true-false",
             "eq": "",
-            "q": "If a ticket costs $12 and you have x dollars, the equation for buying 3 tickets is: <div style=\"display: inline-block; background: #374151; border: 2px solid #4B5563; border-radius: 8px; padding: 8px 16px; margin: 8px 0; font-size: 20px; font-weight: 900;\">3(12) = x</div>",
-            "answer": false
+            "q": "Each ticket costs $12. If x is the total cost of exactly 3 tickets, is 3(12) = x correct?",
+            "answer": true
           },
           {
             "type": "multiple-choice",
@@ -1856,7 +1858,7 @@ export const course = [
           {
             "type": "fill-blank",
             "eq": "3x + 12 = 45",
-            "q": "Three friends split a bill equally and added a $12 tip. Total was $45. How much did each pay?",
+            "q": "Three friends split the bill equally before adding a $12 tip. The total including the tip was $45. What was each friend’s share before the tip?",
             "answer": "11",
             "placeholder": "Each paid $?"
           },
@@ -1944,7 +1946,7 @@ export const course = [
           {
             "type": "fill-blank",
             "eq": "3x + 12 = 45",
-            "q": "Three friends split a bill equally and added a $12 tip. Total was $45. How much did each pay?",
+            "q": "Three friends split the bill equally before adding a $12 tip. The total including the tip was $45. What was each friend’s share before the tip?",
             "answer": "11",
             "placeholder": "Each paid $?"
           },
@@ -2930,7 +2932,7 @@ export const course = [
             ],
             "type": "multiple-choice",
             "q": "Which is the correct graph for x ≥ -3?",
-            "eq": "",
+            "eq": "x ≥ -3",
             "answer": 0
           },
           {
@@ -2944,7 +2946,7 @@ export const course = [
             ],
             "type": "multiple-choice",
             "q": "Which statement is true?",
-            "eq": "",
+            "eq": "x < 4",
             "answer": 1
           },
           {
@@ -2958,7 +2960,7 @@ export const course = [
             ],
             "type": "multiple-choice",
             "q": "Which direction do we shade?",
-            "eq": "",
+            "eq": "x > 1",
             "answer": 0
           }
         ],
@@ -3605,7 +3607,7 @@ export const course = [
           },
           {
             "mode": "challenge",
-            "q": "A tank holds 6000 gallons. A truck holds 1 cubic foot. There are 7.5 gallons per cubic foot. How many truck loads to fill a 5240 ft³ pool?",
+            "q": "A water truck carries 6000 gallons per load. Using 7.5 gallons per cubic foot, which expression gives the number of equivalent full loads needed for a 5240 ft³ pool?",
             "choices": [
               "(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (6000 gal ÷ 1 load)",
               "(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (1 load ÷ 6000 gal)",
@@ -3706,7 +3708,7 @@ export const course = [
           },
           {
             "mode": "challenge",
-            "q": "A tank holds 6000 gallons. A truck holds 1 cubic foot. There are 7.5 gallons per cubic foot. How many truck loads to fill a 5240 ft³ pool?",
+            "q": "A water truck carries 6000 gallons per load. Using 7.5 gallons per cubic foot, which expression gives the number of equivalent full loads needed for a 5240 ft³ pool?",
             "choices": [
               "(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (6000 gal ÷ 1 load)",
               "(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (1 load ÷ 6000 gal)",
@@ -4189,7 +4191,7 @@ export const course = [
             "mode": "challenge",
             "q": "Solve: y = x + 1 and y = x². What are the solutions?",
             "choices": [
-              "(2, 4) and (-1, 1)",
+              "((1 + √5)/2, (3 + √5)/2) and ((1 − √5)/2, (3 − √5)/2)",
               "(1, 2) only",
               "(3, 9) only",
               "No solution"
@@ -4207,7 +4209,7 @@ export const course = [
               "No solution",
               "Three solutions"
             ],
-            "answer": 0,
+            "answer": 1,
             "type": "multiple-choice",
             "eq": ""
           },
@@ -4335,12 +4337,12 @@ export const course = [
             "mode": "challenge",
             "q": "Solve: y = x + 1 and y = x². What are the solutions?",
             "choices": [
-              "(2, 4) and (-1, 1)",
+              "((1 + √5)/2, (3 + √5)/2) and ((1 − √5)/2, (3 − √5)/2)",
               "(1, 2) only",
               "(3, 9) only",
               "No solution"
             ],
-            "answer": "(2, 4) and (-1, 1)"
+            "answer": "((1 + √5)/2, (3 + √5)/2) and ((1 − √5)/2, (3 − √5)/2)"
           },
           {
             "mode": "challenge",
@@ -4351,7 +4353,7 @@ export const course = [
               "No solution",
               "Three solutions"
             ],
-            "answer": "Two solutions"
+            "answer": "One solution"
           },
           {
             "mode": "challenge",
@@ -4392,21 +4394,21 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "A quadratic equation has an x² term (x-squared). Linear equations only have x. Quadratics make curved graphs called parabolas. <div class=\"example-box\"><div class=\"example-label\">Compare:</div><div class=\"example-item\">Linear: y = 2x + 3 (straight line)</div><div class=\"example-item\">Quadratic: y = x² + 2x + 3 <span class=\"highlight\">(parabola curve)</span></div></div>",
-            "q": "What makes an equation quadratic?",
+            "concept": "A quadratic equation in one variable can be written as ax² + bx + c = 0 with a ≠ 0; its highest power is 2. Linear equations have highest power 1. Quadratics make curved graphs called parabolas. <div class=\"example-box\"><div class=\"example-label\">Compare:</div><div class=\"example-item\">Linear: y = 2x + 3 (straight line)</div><div class=\"example-item\">Quadratic: y = x² + 2x + 3 <span class=\"highlight\">(parabola curve)</span></div></div>",
+            "q": "What makes a polynomial equation quadratic?",
             "choices": [
-              "It has two x terms",
-              "It has an x² term",
-              "It equals zero",
-              "It has a fraction"
+              "Its highest variable power is 2 after simplifying",
+              "It has an x term",
+              "It has three solutions",
+              "It contains a fraction"
             ],
-            "answer": 1,
+            "answer": 0,
             "type": "multiple-choice",
             "eq": ""
           },
           {
             "mode": "learn",
-            "concept": "Standard form is ax² + bx + c. The letters a, b, and c are just numbers (called coefficients). <div class=\"example-box\"><div class=\"example-label\">Example: 3x² + 5x - 2</div><div class=\"example-item\">a = <span class=\"highlight\">3</span> (number with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">5</span> (number with x)</div><div class=\"example-item\">c = <span class=\"highlight\">-2</span> (number alone)</div></div>",
+            "concept": "A quadratic expression has standard form ax² + bx + c with a ≠ 0. A quadratic equation is written ax² + bx + c = 0. The letters a, b, and c are just numbers (called coefficients). <div class=\"example-box\"><div class=\"example-label\">Example: 3x² + 5x - 2</div><div class=\"example-item\">a = <span class=\"highlight\">3</span> (number with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">5</span> (number with x)</div><div class=\"example-item\">c = <span class=\"highlight\">-2</span> (number alone)</div></div>",
             "q": "In the equation 2x² + 7x + 1, what is the value of b?",
             "choices": [
               "2",
@@ -4435,7 +4437,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "When you square x, you get the parabola shape. Think about it: (-2)² = 4 and (2)² = 4. Both negative and positive x give the same y! This creates the U-shape (or upside-down U).",
-            "q": "Why does x² create a curved graph?",
+            "q": "For y = x², why do x = 2 and x = -2 give the same y-value?",
             "choices": [
               "x² is always negative",
               "Parabolas are random",
@@ -4554,19 +4556,19 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "A quadratic equation has an x² term (x-squared). Linear equations only have x. Quadratics make curved graphs called parabolas. <div class=\"example-box\"><div class=\"example-label\">Compare:</div><div class=\"example-item\">Linear: y = 2x + 3 (straight line)</div><div class=\"example-item\">Quadratic: y = x² + 2x + 3 <span class=\"highlight\">(parabola curve)</span></div></div>",
-            "q": "What makes an equation quadratic?",
+            "concept": "A quadratic equation in one variable can be written as ax² + bx + c = 0 with a ≠ 0; its highest power is 2. Linear equations have highest power 1. Quadratics make curved graphs called parabolas. <div class=\"example-box\"><div class=\"example-label\">Compare:</div><div class=\"example-item\">Linear: y = 2x + 3 (straight line)</div><div class=\"example-item\">Quadratic: y = x² + 2x + 3 <span class=\"highlight\">(parabola curve)</span></div></div>",
+            "q": "What makes a polynomial equation quadratic?",
             "choices": [
-              "It has two x terms",
-              "It has an x² term",
-              "It equals zero",
-              "It has a fraction"
+              "Its highest variable power is 2 after simplifying",
+              "It has an x term",
+              "It has three solutions",
+              "It contains a fraction"
             ],
-            "answer": "It has an x² term"
+            "answer": "Its highest variable power is 2 after simplifying"
           },
           {
             "mode": "learn",
-            "concept": "Standard form is ax² + bx + c. The letters a, b, and c are just numbers (called coefficients). <div class=\"example-box\"><div class=\"example-label\">Example: 3x² + 5x - 2</div><div class=\"example-item\">a = <span class=\"highlight\">3</span> (number with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">5</span> (number with x)</div><div class=\"example-item\">c = <span class=\"highlight\">-2</span> (number alone)</div></div>",
+            "concept": "A quadratic expression has standard form ax² + bx + c with a ≠ 0. A quadratic equation is written ax² + bx + c = 0. The letters a, b, and c are just numbers (called coefficients). <div class=\"example-box\"><div class=\"example-label\">Example: 3x² + 5x - 2</div><div class=\"example-item\">a = <span class=\"highlight\">3</span> (number with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">5</span> (number with x)</div><div class=\"example-item\">c = <span class=\"highlight\">-2</span> (number alone)</div></div>",
             "q": "In the equation 2x² + 7x + 1, what is the value of b?",
             "choices": [
               "2",
@@ -4591,7 +4593,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "When you square x, you get the parabola shape. Think about it: (-2)² = 4 and (2)² = 4. Both negative and positive x give the same y! This creates the U-shape (or upside-down U).",
-            "q": "Why does x² create a curved graph?",
+            "q": "For y = x², why do x = 2 and x = -2 give the same y-value?",
             "choices": [
               "x² is always negative",
               "Parabolas are random",
@@ -5341,7 +5343,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "After factoring, set each factor equal to zero and solve separately. You get TWO solutions! <div class=\"example-box\"><div class=\"example-label\">Example: (x + 3)(x - 7) = 0</div><div class=\"example-item\">Factor 1: x + 3 = 0 → x = -3</div><div class=\"example-item\">Factor 2: x - 7 = 0 → x = 7</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -3 or x = 7</span></div></div>",
+            "concept": "After factoring, set each factor equal to zero and solve separately. Distinct linear factors give two solutions; repeated factors give only one distinct solution. <div class=\"example-box\"><div class=\"example-label\">Example: (x + 3)(x - 7) = 0</div><div class=\"example-item\">Factor 1: x + 3 = 0 → x = -3</div><div class=\"example-item\">Factor 2: x - 7 = 0 → x = 7</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -3 or x = 7</span></div></div>",
             "q": "If (x - 4)(x + 2) = 0, what are the solutions?",
             "choices": [
               "x = -4 or x = 2",
@@ -5499,7 +5501,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "After factoring, set each factor equal to zero and solve separately. You get TWO solutions! <div class=\"example-box\"><div class=\"example-label\">Example: (x + 3)(x - 7) = 0</div><div class=\"example-item\">Factor 1: x + 3 = 0 → x = -3</div><div class=\"example-item\">Factor 2: x - 7 = 0 → x = 7</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -3 or x = 7</span></div></div>",
+            "concept": "After factoring, set each factor equal to zero and solve separately. Distinct linear factors give two solutions; repeated factors give only one distinct solution. <div class=\"example-box\"><div class=\"example-label\">Example: (x + 3)(x - 7) = 0</div><div class=\"example-item\">Factor 1: x + 3 = 0 → x = -3</div><div class=\"example-item\">Factor 2: x - 7 = 0 → x = 7</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = -3 or x = 7</span></div></div>",
             "q": "If (x - 4)(x + 2) = 0, what are the solutions?",
             "choices": [
               "x = -4 or x = 2",
@@ -5634,7 +5636,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "This creates a perfect square because (x + n)² = x² + 2nx + n². The middle term is always TWICE the last number. <div class=\"example-box\"><div class=\"example-label\">Check: (x + 4)²</div><div class=\"example-item\">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class=\"example-item\">= x² + 8x + 16</div><div class=\"example-item\">Middle is <span class=\"highlight\">2 × 4 = 8</span> ✓</div></div>",
+            "concept": "This creates a perfect square because (x + n)² = x² + 2nx + n². The coefficient of x is twice n; the constant term is n². <div class=\"example-box\"><div class=\"example-label\">Check: (x + 4)²</div><div class=\"example-item\">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class=\"example-item\">= x² + 8x + 16</div><div class=\"example-item\">Middle is <span class=\"highlight\">2 × 4 = 8</span> ✓</div></div>",
             "q": "If you complete the square for x² + 8x, what perfect square do you get?",
             "choices": [
               "(x + 2)²",
@@ -5794,7 +5796,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "This creates a perfect square because (x + n)² = x² + 2nx + n². The middle term is always TWICE the last number. <div class=\"example-box\"><div class=\"example-label\">Check: (x + 4)²</div><div class=\"example-item\">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class=\"example-item\">= x² + 8x + 16</div><div class=\"example-item\">Middle is <span class=\"highlight\">2 × 4 = 8</span> ✓</div></div>",
+            "concept": "This creates a perfect square because (x + n)² = x² + 2nx + n². The coefficient of x is twice n; the constant term is n². <div class=\"example-box\"><div class=\"example-label\">Check: (x + 4)²</div><div class=\"example-item\">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class=\"example-item\">= x² + 8x + 16</div><div class=\"example-item\">Middle is <span class=\"highlight\">2 × 4 = 8</span> ✓</div></div>",
             "q": "If you complete the square for x² + 8x, what perfect square do you get?",
             "choices": [
               "(x + 2)²",
@@ -5927,7 +5929,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class=\"example-box\"><div class=\"example-label\">Remember:</div><div class=\"example-item\">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class=\"example-item\">Denominator: 2a</div><div class=\"example-item\">The ± gives you <span class=\"highlight\">TWO solutions</span></div></div>",
+            "concept": "The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class=\"example-box\"><div class=\"example-label\">Remember:</div><div class=\"example-item\">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class=\"example-item\">Denominator: 2a</div><div class=\"example-item\">For real coefficients with a ≠ 0, the discriminant determines whether there are <span class=\"highlight\">two, one, or no real solutions</span></div></div>",
             "q": "In the quadratic formula, what goes under the square root?",
             "choices": [
               "b² - 4ac",
@@ -6089,7 +6091,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class=\"example-box\"><div class=\"example-label\">Remember:</div><div class=\"example-item\">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class=\"example-item\">Denominator: 2a</div><div class=\"example-item\">The ± gives you <span class=\"highlight\">TWO solutions</span></div></div>",
+            "concept": "The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class=\"example-box\"><div class=\"example-label\">Remember:</div><div class=\"example-item\">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class=\"example-item\">Denominator: 2a</div><div class=\"example-item\">For real coefficients with a ≠ 0, the discriminant determines whether there are <span class=\"highlight\">two, one, or no real solutions</span></div></div>",
             "q": "In the quadratic formula, what goes under the square root?",
             "choices": [
               "b² - 4ac",
@@ -8696,7 +8698,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "To divide a polynomial by a monomial, divide EACH term separately. <div class=\"example-box\"><div class=\"example-label\">Example: (6x³ + 12x²) ÷ 3x</div><div class=\"example-item\">6x³ ÷ 3x = 2x²</div><div class=\"example-item\">12x² ÷ 3x = 4x</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² + 4x</span></div></div>",
+            "concept": "To divide a polynomial by a monomial, divide EACH term separately. <div class=\"example-box\"><div class=\"example-label\">Example: (6x³ + 12x²) ÷ 3x</div><div class=\"example-item\">6x³ ÷ 3x = 2x²</div><div class=\"example-item\">12x² ÷ 3x = 4x</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² + 4x</span></div></div><p>Assume every divisor is nonzero; in questions dividing by a power of x, x ≠ 0.</p>",
             "q": "Divide: (8x² + 4x) ÷ 2x",
             "choices": [
               "4x + 2",
@@ -8858,7 +8860,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "To divide a polynomial by a monomial, divide EACH term separately. <div class=\"example-box\"><div class=\"example-label\">Example: (6x³ + 12x²) ÷ 3x</div><div class=\"example-item\">6x³ ÷ 3x = 2x²</div><div class=\"example-item\">12x² ÷ 3x = 4x</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² + 4x</span></div></div>",
+            "concept": "To divide a polynomial by a monomial, divide EACH term separately. <div class=\"example-box\"><div class=\"example-label\">Example: (6x³ + 12x²) ÷ 3x</div><div class=\"example-item\">6x³ ÷ 3x = 2x²</div><div class=\"example-item\">12x² ÷ 3x = 4x</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² + 4x</span></div></div><p>Assume every divisor is nonzero; in questions dividing by a power of x, x ≠ 0.</p>",
             "q": "Divide: (8x² + 4x) ÷ 2x",
             "choices": [
               "4x + 2",
@@ -9017,7 +9019,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "Volume of a box is length × width × height. This creates cubic polynomials. <div class=\"example-box\"><div class=\"example-label\">Box: length 2x, width x, height 3</div><div class=\"example-item\">Volume = 2x × x × 3</div><div class=\"example-item\">= 6x × x</div><div class=\"example-item\">= <span class=\"highlight\">6x²</span></div></div>",
+            "concept": "Volume of a box is length × width × height. The degree depends on which dimensions vary; three variable dimensions can create a cubic polynomial. <div class=\"example-box\"><div class=\"example-label\">Box: length 2x, width x, height 3</div><div class=\"example-item\">Volume = 2x × x × 3</div><div class=\"example-item\">= 6x × x</div><div class=\"example-item\">= <span class=\"highlight\">6x²</span></div></div>",
             "q": "A box has dimensions x, x, and 2. What is its volume?",
             "choices": [
               "2x",
@@ -9046,7 +9048,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "Consecutive integers are n, n+1, n+2. Their product creates polynomials. <div class=\"example-box\"><div class=\"example-label\">Product of x and (x + 1)</div><div class=\"example-item\">x(x + 1) = x² + x</div><div class=\"example-label\">Product of 3 consecutive: x, x+1, x+2</div><div class=\"example-item\">x(x+1)(x+2) creates cubic polynomial</div></div>",
-            "q": "What is the product of consecutive integers x and (x + 2)?",
+            "q": "What is the product of consecutive even integers x and (x + 2), where x is even?",
             "choices": [
               "x² + 2",
               "2x + 2",
@@ -9177,7 +9179,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "Volume of a box is length × width × height. This creates cubic polynomials. <div class=\"example-box\"><div class=\"example-label\">Box: length 2x, width x, height 3</div><div class=\"example-item\">Volume = 2x × x × 3</div><div class=\"example-item\">= 6x × x</div><div class=\"example-item\">= <span class=\"highlight\">6x²</span></div></div>",
+            "concept": "Volume of a box is length × width × height. The degree depends on which dimensions vary; three variable dimensions can create a cubic polynomial. <div class=\"example-box\"><div class=\"example-label\">Box: length 2x, width x, height 3</div><div class=\"example-item\">Volume = 2x × x × 3</div><div class=\"example-item\">= 6x × x</div><div class=\"example-item\">= <span class=\"highlight\">6x²</span></div></div>",
             "q": "A box has dimensions x, x, and 2. What is its volume?",
             "choices": [
               "2x",
@@ -9202,7 +9204,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "Consecutive integers are n, n+1, n+2. Their product creates polynomials. <div class=\"example-box\"><div class=\"example-label\">Product of x and (x + 1)</div><div class=\"example-item\">x(x + 1) = x² + x</div><div class=\"example-label\">Product of 3 consecutive: x, x+1, x+2</div><div class=\"example-item\">x(x+1)(x+2) creates cubic polynomial</div></div>",
-            "q": "What is the product of consecutive integers x and (x + 2)?",
+            "q": "What is the product of consecutive even integers x and (x + 2), where x is even?",
             "choices": [
               "x² + 2",
               "2x + 2",
@@ -9316,7 +9318,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class=\"example-box\"><div class=\"example-label\">Product Rule: x^a × x^b = x^(a+b)</div><div class=\"example-item\">x³ × x⁵ = x^(3+5) = <span class=\"highlight\">x⁸</span></div><div class=\"example-item\">2⁴ × 2³ = 2^(4+3) = <span class=\"highlight\">2⁷</span></div></div>",
+            "concept": "When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class=\"example-box\"><div class=\"example-label\">Product Rule: x^a × x^b = x^(a+b)</div><div class=\"example-item\">x³ × x⁵ = x^(3+5) = <span class=\"highlight\">x⁸</span></div><div class=\"example-item\">2⁴ × 2³ = 2^(4+3) = <span class=\"highlight\">2⁷</span></div></div><p>Assume bases in denominators are nonzero; in the exponent-identification question assume x > 0 and x ≠ 1.</p>",
             "q": "Simplify: x⁴ × x⁶",
             "choices": [
               "x²⁴",
@@ -9478,7 +9480,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class=\"example-box\"><div class=\"example-label\">Product Rule: x^a × x^b = x^(a+b)</div><div class=\"example-item\">x³ × x⁵ = x^(3+5) = <span class=\"highlight\">x⁸</span></div><div class=\"example-item\">2⁴ × 2³ = 2^(4+3) = <span class=\"highlight\">2⁷</span></div></div>",
+            "concept": "When multiplying powers with the same base, ADD the exponents. The base stays the same! <div class=\"example-box\"><div class=\"example-label\">Product Rule: x^a × x^b = x^(a+b)</div><div class=\"example-item\">x³ × x⁵ = x^(3+5) = <span class=\"highlight\">x⁸</span></div><div class=\"example-item\">2⁴ × 2³ = 2^(4+3) = <span class=\"highlight\">2⁷</span></div></div><p>Assume bases in denominators are nonzero; in the exponent-identification question assume x > 0 and x ≠ 1.</p>",
             "q": "Simplify: x⁴ × x⁶",
             "choices": [
               "x²⁴",
@@ -9623,7 +9625,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "When raising a power to another power, MULTIPLY the exponents. <div class=\"example-box\"><div class=\"example-label\">Power of a Power: (x^a)^b = x^(a×b)</div><div class=\"example-item\">(x³)⁴ = x^(3×4) = <span class=\"highlight\">x¹²</span></div><div class=\"example-item\">(2²)³ = 2^(2×3) = <span class=\"highlight\">2⁶</span></div></div>",
+            "concept": "When raising a power to another power, MULTIPLY the exponents. <div class=\"example-box\"><div class=\"example-label\">Power of a Power: (x^a)^b = x^(a×b)</div><div class=\"example-item\">(x³)⁴ = x^(3×4) = <span class=\"highlight\">x¹²</span></div><div class=\"example-item\">(2²)³ = 2^(2×3) = <span class=\"highlight\">2⁶</span></div></div><p>Assume denominators are nonzero.</p>",
             "q": "Simplify: (x⁵)³",
             "choices": [
               "x⁸",
@@ -9785,7 +9787,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "When raising a power to another power, MULTIPLY the exponents. <div class=\"example-box\"><div class=\"example-label\">Power of a Power: (x^a)^b = x^(a×b)</div><div class=\"example-item\">(x³)⁴ = x^(3×4) = <span class=\"highlight\">x¹²</span></div><div class=\"example-item\">(2²)³ = 2^(2×3) = <span class=\"highlight\">2⁶</span></div></div>",
+            "concept": "When raising a power to another power, MULTIPLY the exponents. <div class=\"example-box\"><div class=\"example-label\">Power of a Power: (x^a)^b = x^(a×b)</div><div class=\"example-item\">(x³)⁴ = x^(3×4) = <span class=\"highlight\">x¹²</span></div><div class=\"example-item\">(2²)³ = 2^(2×3) = <span class=\"highlight\">2⁶</span></div></div><p>Assume denominators are nonzero.</p>",
             "q": "Simplify: (x⁵)³",
             "choices": [
               "x⁸",
@@ -9930,7 +9932,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "ANY nonzero number raised to the power of zero equals 1. This is always true! <div class=\"example-box\"><div class=\"example-label\">Zero Exponent Rule: x⁰ = 1</div><div class=\"example-item\">5⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">100⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">x⁰ = <span class=\"highlight\">1</span> (if x ≠ 0)</div></div>",
+            "concept": "ANY nonzero number raised to the power of zero equals 1. This is always true! <div class=\"example-box\"><div class=\"example-label\">Zero Exponent Rule: x⁰ = 1</div><div class=\"example-item\">5⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">100⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">x⁰ = <span class=\"highlight\">1</span> (if x ≠ 0)</div></div><p>Assume variable bases are nonzero wherever zero or negative powers appear.</p>",
             "q": "What is 7⁰?",
             "choices": [
               "0",
@@ -9945,7 +9947,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "The zero exponent rule comes from the quotient rule. When you divide equal powers, you get 1. <div class=\"example-box\"><div class=\"example-label\">Using quotient rule: x³ ÷ x³</div><div class=\"example-item\">= x^(3-3) = x⁰</div><div class=\"example-item\">But x³ ÷ x³ also equals 1</div><div class=\"example-item\">Therefore: <span class=\"highlight\">x⁰ = 1</span></div></div>",
-            "q": "Why does any number to the zero power equal 1?",
+            "q": "Why does any nonzero number to the zero power equal 1?",
             "choices": [
               "Zero makes everything disappear",
               "It follows from x^a ÷ x^a = 1",
@@ -10092,7 +10094,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "ANY nonzero number raised to the power of zero equals 1. This is always true! <div class=\"example-box\"><div class=\"example-label\">Zero Exponent Rule: x⁰ = 1</div><div class=\"example-item\">5⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">100⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">x⁰ = <span class=\"highlight\">1</span> (if x ≠ 0)</div></div>",
+            "concept": "ANY nonzero number raised to the power of zero equals 1. This is always true! <div class=\"example-box\"><div class=\"example-label\">Zero Exponent Rule: x⁰ = 1</div><div class=\"example-item\">5⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">100⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">x⁰ = <span class=\"highlight\">1</span> (if x ≠ 0)</div></div><p>Assume variable bases are nonzero wherever zero or negative powers appear.</p>",
             "q": "What is 7⁰?",
             "choices": [
               "0",
@@ -10105,7 +10107,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "The zero exponent rule comes from the quotient rule. When you divide equal powers, you get 1. <div class=\"example-box\"><div class=\"example-label\">Using quotient rule: x³ ÷ x³</div><div class=\"example-item\">= x^(3-3) = x⁰</div><div class=\"example-item\">But x³ ÷ x³ also equals 1</div><div class=\"example-item\">Therefore: <span class=\"highlight\">x⁰ = 1</span></div></div>",
-            "q": "Why does any number to the zero power equal 1?",
+            "q": "Why does any nonzero number to the zero power equal 1?",
             "choices": [
               "Zero makes everything disappear",
               "It follows from x^a ÷ x^a = 1",
@@ -10544,7 +10546,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "A radical asks \"what number, when multiplied by itself, gives this?\" The square root √ is the most common radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√9 = <span class=\"highlight\">3</span> (because 3 × 3 = 9)</div><div class=\"example-item\">√16 = <span class=\"highlight\">4</span> (because 4 × 4 = 16)</div><div class=\"example-item\">√25 = <span class=\"highlight\">5</span></div></div>",
+            "concept": "A radical asks \"what number, when multiplied by itself, gives this?\" The square root √ is the most common radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√9 = <span class=\"highlight\">3</span> (because 3 × 3 = 9)</div><div class=\"example-item\">√16 = <span class=\"highlight\">4</span> (because 4 × 4 = 16)</div><div class=\"example-item\">√25 = <span class=\"highlight\">5</span></div></div><p>Work over the real numbers; radicands of even roots must be nonnegative.</p>",
             "q": "What is √36?",
             "choices": [
               "18",
@@ -10706,7 +10708,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "A radical asks \"what number, when multiplied by itself, gives this?\" The square root √ is the most common radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√9 = <span class=\"highlight\">3</span> (because 3 × 3 = 9)</div><div class=\"example-item\">√16 = <span class=\"highlight\">4</span> (because 4 × 4 = 16)</div><div class=\"example-item\">√25 = <span class=\"highlight\">5</span></div></div>",
+            "concept": "A radical asks \"what number, when multiplied by itself, gives this?\" The square root √ is the most common radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√9 = <span class=\"highlight\">3</span> (because 3 × 3 = 9)</div><div class=\"example-item\">√16 = <span class=\"highlight\">4</span> (because 4 × 4 = 16)</div><div class=\"example-item\">√25 = <span class=\"highlight\">5</span></div></div><p>Work over the real numbers; radicands of even roots must be nonnegative.</p>",
             "q": "What is √36?",
             "choices": [
               "18",
@@ -10851,7 +10853,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "The product rule: √(ab) = √a × √b. You can split radicals when multiplying! <div class=\"example-box\"><div class=\"example-label\">Example: √12</div><div class=\"example-item\">√12 = √(4 × 3)</div><div class=\"example-item\">= √4 × √3</div><div class=\"example-item\">= <span class=\"highlight\">2√3</span></div></div>",
+            "concept": "For a ≥ 0 and b ≥ 0, the real square-root product rule is √(ab) = √a × √b. You can split radicals when multiplying! <div class=\"example-box\"><div class=\"example-label\">Example: √12</div><div class=\"example-item\">√12 = √(4 × 3)</div><div class=\"example-item\">= √4 × √3</div><div class=\"example-item\">= <span class=\"highlight\">2√3</span></div></div>",
             "q": "Simplify: √(9 × 5)",
             "choices": [
               "√45",
@@ -10893,7 +10895,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "A radical is simplified when no perfect square factors remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 = 2√2 <span class=\"highlight\">not simplified</span> (8 = 4 × 2)</div></div>",
+            "concept": "A radical is simplified when no perfect square factors greater than 1 remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 is not simplified (8 = 4 × 2); its simplified form is 2√2</div></div>",
             "q": "Which is already simplified?",
             "choices": [
               "√12",
@@ -11013,7 +11015,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "The product rule: √(ab) = √a × √b. You can split radicals when multiplying! <div class=\"example-box\"><div class=\"example-label\">Example: √12</div><div class=\"example-item\">√12 = √(4 × 3)</div><div class=\"example-item\">= √4 × √3</div><div class=\"example-item\">= <span class=\"highlight\">2√3</span></div></div>",
+            "concept": "For a ≥ 0 and b ≥ 0, the real square-root product rule is √(ab) = √a × √b. You can split radicals when multiplying! <div class=\"example-box\"><div class=\"example-label\">Example: √12</div><div class=\"example-item\">√12 = √(4 × 3)</div><div class=\"example-item\">= √4 × √3</div><div class=\"example-item\">= <span class=\"highlight\">2√3</span></div></div>",
             "q": "Simplify: √(9 × 5)",
             "choices": [
               "√45",
@@ -11049,7 +11051,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "A radical is simplified when no perfect square factors remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 = 2√2 <span class=\"highlight\">not simplified</span> (8 = 4 × 2)</div></div>",
+            "concept": "A radical is simplified when no perfect square factors greater than 1 remain under the radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√7 <span class=\"highlight\">already simplified</span> (7 has no perfect square factors)</div><div class=\"example-item\">√8 is not simplified (8 = 4 × 2); its simplified form is 2√2</div></div>",
             "q": "Which is already simplified?",
             "choices": [
               "√12",
@@ -11172,7 +11174,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "Unlike radicals (different radicands) CANNOT be combined. They stay separate! <div class=\"example-box\"><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">2√3 + 5√2 stays as <span class=\"highlight\">2√3 + 5√2</span></div><div class=\"example-label\">Can combine:</div><div class=\"example-item\">2√3 + 5√3 = <span class=\"highlight\">7√3</span></div></div>",
+            "concept": "Simplify radicals first. If their radicands are still different, they cannot be combined as like radical terms. <div class=\"example-box\"><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">2√3 + 5√2 stays as <span class=\"highlight\">2√3 + 5√2</span></div><div class=\"example-label\">Can combine:</div><div class=\"example-item\">2√3 + 5√3 = <span class=\"highlight\">7√3</span></div></div>",
             "q": "Can 3√5 + 2√7 be simplified?",
             "choices": [
               "Yes, equals 5√12",
@@ -11332,7 +11334,7 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "Unlike radicals (different radicands) CANNOT be combined. They stay separate! <div class=\"example-box\"><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">2√3 + 5√2 stays as <span class=\"highlight\">2√3 + 5√2</span></div><div class=\"example-label\">Can combine:</div><div class=\"example-item\">2√3 + 5√3 = <span class=\"highlight\">7√3</span></div></div>",
+            "concept": "Simplify radicals first. If their radicands are still different, they cannot be combined as like radical terms. <div class=\"example-box\"><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">2√3 + 5√2 stays as <span class=\"highlight\">2√3 + 5√2</span></div><div class=\"example-label\">Can combine:</div><div class=\"example-item\">2√3 + 5√3 = <span class=\"highlight\">7√3</span></div></div>",
             "q": "Can 3√5 + 2√7 be simplified?",
             "choices": [
               "Yes, equals 5√12",
@@ -11465,7 +11467,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(1/n) = ⁿ√x</div><div class=\"example-item\">x^(1/2) = √x (square root)</div><div class=\"example-item\">x^(1/3) = ³√x (cube root)</div><div class=\"example-item\">8^(1/3) = ³√8 = <span class=\"highlight\">2</span></div></div>",
+            "concept": "A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(1/n) = ⁿ√x</div><div class=\"example-item\">x^(1/2) = √x (square root)</div><div class=\"example-item\">x^(1/3) = ³√x (cube root)</div><div class=\"example-item\">8^(1/3) = ³√8 = <span class=\"highlight\">2</span></div></div><p>For the variable-base exponent rules in this lesson, assume x > 0.</p>",
             "q": "What is 16^(1/2)?",
             "choices": [
               "8",
@@ -11627,7 +11629,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(1/n) = ⁿ√x</div><div class=\"example-item\">x^(1/2) = √x (square root)</div><div class=\"example-item\">x^(1/3) = ³√x (cube root)</div><div class=\"example-item\">8^(1/3) = ³√8 = <span class=\"highlight\">2</span></div></div>",
+            "concept": "A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(1/n) = ⁿ√x</div><div class=\"example-item\">x^(1/2) = √x (square root)</div><div class=\"example-item\">x^(1/3) = ³√x (cube root)</div><div class=\"example-item\">8^(1/3) = ³√8 = <span class=\"highlight\">2</span></div></div><p>For the variable-base exponent rules in this lesson, assume x > 0.</p>",
             "q": "What is 16^(1/2)?",
             "choices": [
               "8",
@@ -12085,8 +12087,8 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "Functions can be shown in four ways: equations, tables, graphs, and mappings. All show the same relationship! <div class=\"example-box\"><div class=\"example-label\">Example: y = 2x</div><div class=\"example-item\">Equation: y = 2x</div><div class=\"example-item\">Table: x=1→y=2, x=2→y=4</div><div class=\"example-item\">Graph: <span class=\"highlight\">straight line through origin</span></div></div>",
-            "q": "How many ways can you represent a function?",
+            "concept": "Four common ways to represent functions are equations, tables, graphs, and mappings. All show the same relationship! <div class=\"example-box\"><div class=\"example-label\">Example: y = 2x</div><div class=\"example-item\">Equation: y = 2x</div><div class=\"example-item\">Table: x=1→y=2, x=2→y=4</div><div class=\"example-item\">Graph: <span class=\"highlight\">straight line through origin</span></div></div>",
+            "q": "How many common representations are listed here: equations, tables, graphs, and mappings?",
             "choices": [
               "One way only",
               "Two ways",
@@ -12113,11 +12115,11 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "In a function table, each input (x) appears only once. If an input appears twice with different outputs, it's not a function. <div class=\"example-box\"><div class=\"example-label\">Function table:</div><div class=\"example-item\">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">x=1→y=3, x=1→y=5 <span class=\"highlight\">(same input, different outputs)</span></div></div>",
+            "concept": "In a function table, each input (x) has exactly one output. Repeating an identical input-output pair is allowed. If an input appears twice with different outputs, it's not a function. <div class=\"example-box\"><div class=\"example-label\">Function table:</div><div class=\"example-item\">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">x=1→y=3, x=1→y=5 <span class=\"highlight\">(same input, different outputs)</span></div></div>",
             "q": "Is this a function? x=2→y=4, x=3→y=9, x=2→y=8",
             "choices": [
               "Yes, all different outputs",
-              "No, x=2 appears twice",
+              "No, x=2 has two different outputs",
               "Yes, inputs can repeat",
               "Need the equation"
             ],
@@ -12196,7 +12198,7 @@ export const course = [
             "q": "Is this table a function? x: 1,2,3,2  y: 5,7,9,11",
             "choices": [
               "Yes, all y-values different",
-              "No, x=2 appears twice",
+              "No, x=2 has two different outputs",
               "Yes, x-values can repeat",
               "Not enough data"
             ],
@@ -12247,8 +12249,8 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "Functions can be shown in four ways: equations, tables, graphs, and mappings. All show the same relationship! <div class=\"example-box\"><div class=\"example-label\">Example: y = 2x</div><div class=\"example-item\">Equation: y = 2x</div><div class=\"example-item\">Table: x=1→y=2, x=2→y=4</div><div class=\"example-item\">Graph: <span class=\"highlight\">straight line through origin</span></div></div>",
-            "q": "How many ways can you represent a function?",
+            "concept": "Four common ways to represent functions are equations, tables, graphs, and mappings. All show the same relationship! <div class=\"example-box\"><div class=\"example-label\">Example: y = 2x</div><div class=\"example-item\">Equation: y = 2x</div><div class=\"example-item\">Table: x=1→y=2, x=2→y=4</div><div class=\"example-item\">Graph: <span class=\"highlight\">straight line through origin</span></div></div>",
+            "q": "How many common representations are listed here: equations, tables, graphs, and mappings?",
             "choices": [
               "One way only",
               "Two ways",
@@ -12271,15 +12273,15 @@ export const course = [
           },
           {
             "mode": "learn",
-            "concept": "In a function table, each input (x) appears only once. If an input appears twice with different outputs, it's not a function. <div class=\"example-box\"><div class=\"example-label\">Function table:</div><div class=\"example-item\">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">x=1→y=3, x=1→y=5 <span class=\"highlight\">(same input, different outputs)</span></div></div>",
+            "concept": "In a function table, each input (x) has exactly one output. Repeating an identical input-output pair is allowed. If an input appears twice with different outputs, it's not a function. <div class=\"example-box\"><div class=\"example-label\">Function table:</div><div class=\"example-item\">x=1→y=3, x=2→y=5, x=3→y=7 ✓</div><div class=\"example-label\">NOT a function:</div><div class=\"example-item\">x=1→y=3, x=1→y=5 <span class=\"highlight\">(same input, different outputs)</span></div></div>",
             "q": "Is this a function? x=2→y=4, x=3→y=9, x=2→y=8",
             "choices": [
               "Yes, all different outputs",
-              "No, x=2 appears twice",
+              "No, x=2 has two different outputs",
               "Yes, inputs can repeat",
               "Need the equation"
             ],
-            "answer": "No, x=2 appears twice"
+            "answer": "No, x=2 has two different outputs"
           },
           {
             "mode": "learn",
@@ -12342,11 +12344,11 @@ export const course = [
             "q": "Is this table a function? x: 1,2,3,2  y: 5,7,9,11",
             "choices": [
               "Yes, all y-values different",
-              "No, x=2 appears twice",
+              "No, x=2 has two different outputs",
               "Yes, x-values can repeat",
               "Not enough data"
             ],
-            "answer": "No, x=2 appears twice"
+            "answer": "No, x=2 has two different outputs"
           },
           {
             "mode": "challenge",
@@ -12435,7 +12437,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "To graph f(x) = mx + b: start at (0, b), then use slope m to find more points. Slope = rise/run. <div class=\"example-box\"><div class=\"example-label\">f(x) = 2x + 1</div><div class=\"example-item\">Start: (0, 1)</div><div class=\"example-item\">Slope 2 = rise 2, run 1</div><div class=\"example-item\">Next point: <span class=\"highlight\">(1, 3)</span></div></div>",
-            "q": "For f(x) = x + 4, where does the graph start?",
+            "q": "For f(x) = x + 4, where does the graph cross the y-axis?",
             "choices": [
               "(0, 0)",
               "(1, 4)",
@@ -12591,7 +12593,7 @@ export const course = [
           {
             "mode": "learn",
             "concept": "To graph f(x) = mx + b: start at (0, b), then use slope m to find more points. Slope = rise/run. <div class=\"example-box\"><div class=\"example-label\">f(x) = 2x + 1</div><div class=\"example-item\">Start: (0, 1)</div><div class=\"example-item\">Slope 2 = rise 2, run 1</div><div class=\"example-item\">Next point: <span class=\"highlight\">(1, 3)</span></div></div>",
-            "q": "For f(x) = x + 4, where does the graph start?",
+            "q": "For f(x) = x + 4, where does the graph cross the y-axis?",
             "choices": [
               "(0, 0)",
               "(1, 4)",
@@ -12794,9 +12796,9 @@ export const course = [
           },
           {
             "mode": "practice",
-            "q": "If f(x) = x² and g(x) = x, what is (f / g)(x)?",
+            "q": "If f(x) = x² and g(x) = x, what is (f / g)(x)? State the restriction on x.",
             "choices": [
-              "x",
+              "x, x ≠ 0",
               "x³",
               "1",
               "2x"
@@ -12846,9 +12848,9 @@ export const course = [
           },
           {
             "mode": "challenge",
-            "q": "If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)?",
+            "q": "If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)? State the restriction on x.",
             "choices": [
-              "3x",
+              "3x, x ≠ 0",
               "3x²",
               "12x³",
               "3"
@@ -12942,14 +12944,14 @@ export const course = [
           },
           {
             "mode": "practice",
-            "q": "If f(x) = x² and g(x) = x, what is (f / g)(x)?",
+            "q": "If f(x) = x² and g(x) = x, what is (f / g)(x)? State the restriction on x.",
             "choices": [
-              "x",
+              "x, x ≠ 0",
               "x³",
               "1",
               "2x"
             ],
-            "answer": "x"
+            "answer": "x, x ≠ 0"
           },
           {
             "mode": "challenge",
@@ -12986,14 +12988,14 @@ export const course = [
           },
           {
             "mode": "challenge",
-            "q": "If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)?",
+            "q": "If f(x) = 6x² and g(x) = 2x, what is (f / g)(x)? State the restriction on x.",
             "choices": [
-              "3x",
+              "3x, x ≠ 0",
               "3x²",
               "12x³",
               "3"
             ],
-            "answer": "3x"
+            "answer": "3x, x ≠ 0"
           }
         ]
       },
@@ -13313,7 +13315,7 @@ export const course = [
         "questions": [
           {
             "mode": "learn",
-            "concept": "An inverse function \"undoes\" what the original function does. If f takes you from 2 to 7, then f⁻¹ takes you back from 7 to 2. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = x + 3</div><div class=\"example-item\">f(2) = 5 (add 3)</div><div class=\"example-item\">f⁻¹(5) = 2 <span class=\"highlight\">(subtract 3 to undo)</span></div></div>",
+            "concept": "A one-to-one function has an inverse function that \"undoes\" it. Other functions need a suitable domain restriction first. If f takes you from 2 to 7, then f⁻¹ takes you back from 7 to 2. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = x + 3</div><div class=\"example-item\">f(2) = 5 (add 3)</div><div class=\"example-item\">f⁻¹(5) = 2 <span class=\"highlight\">(subtract 3 to undo)</span></div></div>",
             "q": "What does an inverse function do?",
             "choices": [
               "Makes the function negative",
@@ -13463,7 +13465,7 @@ export const course = [
             "q": "If f(x) = -x + 5, what is f⁻¹(x)?",
             "choices": [
               "x - 5",
-              "-x + 5",
+              "x + 5",
               "5 - x",
               "-x - 5"
             ],
@@ -13475,7 +13477,7 @@ export const course = [
         "original": [
           {
             "mode": "learn",
-            "concept": "An inverse function \"undoes\" what the original function does. If f takes you from 2 to 7, then f⁻¹ takes you back from 7 to 2. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = x + 3</div><div class=\"example-item\">f(2) = 5 (add 3)</div><div class=\"example-item\">f⁻¹(5) = 2 <span class=\"highlight\">(subtract 3 to undo)</span></div></div>",
+            "concept": "A one-to-one function has an inverse function that \"undoes\" it. Other functions need a suitable domain restriction first. If f takes you from 2 to 7, then f⁻¹ takes you back from 7 to 2. <div class=\"example-box\"><div class=\"example-label\">Example: f(x) = x + 3</div><div class=\"example-item\">f(2) = 5 (add 3)</div><div class=\"example-item\">f⁻¹(5) = 2 <span class=\"highlight\">(subtract 3 to undo)</span></div></div>",
             "q": "What does an inverse function do?",
             "choices": [
               "Makes the function negative",
@@ -13603,7 +13605,7 @@ export const course = [
             "q": "If f(x) = -x + 5, what is f⁻¹(x)?",
             "choices": [
               "x - 5",
-              "-x + 5",
+              "x + 5",
               "5 - x",
               "-x - 5"
             ],
@@ -13970,10 +13972,10 @@ export const course = [
           {
             "mode": "learn",
             "concept": "In real applications, domain and range have practical limits. Not all mathematical values make sense! <div class=\"example-box\"><div class=\"example-label\">A(s) = s² (area of square, side s)</div><div class=\"example-item\">Mathematical domain: all numbers</div><div class=\"example-item\">Practical domain: <span class=\"highlight\">s > 0 only</span></div><div class=\"example-item\">(Negative side length makes no sense!)</div></div>",
-            "q": "For T(m) = cost of m movie tickets at $12 each, what's a reasonable domain?",
+            "q": "For T(m) = 12m, the cost of m movie tickets including buying zero tickets, what is a reasonable domain?",
             "choices": [
               "All real numbers",
-              "Positive integers only",
+              "Nonnegative integers (0, 1, 2, ...)",
               "Negative numbers",
               "Fractions only"
             ],
@@ -14126,14 +14128,14 @@ export const course = [
           {
             "mode": "learn",
             "concept": "In real applications, domain and range have practical limits. Not all mathematical values make sense! <div class=\"example-box\"><div class=\"example-label\">A(s) = s² (area of square, side s)</div><div class=\"example-item\">Mathematical domain: all numbers</div><div class=\"example-item\">Practical domain: <span class=\"highlight\">s > 0 only</span></div><div class=\"example-item\">(Negative side length makes no sense!)</div></div>",
-            "q": "For T(m) = cost of m movie tickets at $12 each, what's a reasonable domain?",
+            "q": "For T(m) = 12m, the cost of m movie tickets including buying zero tickets, what is a reasonable domain?",
             "choices": [
               "All real numbers",
-              "Positive integers only",
+              "Nonnegative integers (0, 1, 2, ...)",
               "Negative numbers",
               "Fractions only"
             ],
-            "answer": "Positive integers only"
+            "answer": "Nonnegative integers (0, 1, 2, ...)"
           },
           {
             "mode": "practice",

@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: What are radicals?
-            {
-                mode: 'learn',
-                concept: 'A radical asks "what number, when multiplied by itself, gives this?" The square root √ is the most common radical. <div class="example-box"><div class="example-label">Examples:</div><div class="example-item">√9 = <span class="highlight">3</span> (because 3 × 3 = 9)</div><div class="example-item">√16 = <span class="highlight">4</span> (because 4 × 4 = 16)</div><div class="example-item">√25 = <span class="highlight">5</span></div></div>',
-                q: 'What is √36?',
-                choices: [
-                    '18',
-                    '9',
-                    '6',
-                    '12'
-                ],
-                answer: '6'
-            },
-
-            // LEARN 2: Index of a radical
-            {
-                mode: 'learn',
-                concept: 'The index tells you what root to take. √ means square root (index 2), ³√ means cube root (index 3). <div class="example-box"><div class="example-label">Different roots:</div><div class="example-item">√9 = 3 (square root: 3² = 9)</div><div class="example-item">³√8 = 2 (cube root: 2³ = 8)</div><div class="example-item">⁴√16 = 2 (fourth root: 2⁴ = 16)</div></div>',
-                q: 'What is ³√27?',
-                choices: [
-                    '9',
-                    '3',
-                    '27',
-                    '6'
-                ],
-                answer: '3'
-            },
-
-            // LEARN 3: Radicals as exponents
-            {
-                mode: 'learn',
-                concept: 'Radicals can be written as fractional exponents! √x = x^(1/2), ³√x = x^(1/3). <div class="example-box"><div class="example-label">Conversions:</div><div class="example-item">√x = <span class="highlight">x^(1/2)</span></div><div class="example-item">³√x = <span class="highlight">x^(1/3)</span></div><div class="example-item">⁴√x = <span class="highlight">x^(1/4)</span></div></div>',
-                q: 'What is another way to write √x?',
-                choices: [
-                    'x²',
-                    'x^(1/2)',
-                    '2x',
-                    'x/2'
-                ],
-                answer: 'x^(1/2)'
-            },
-
-            // LEARN 4: Perfect squares
-            {
-                mode: 'learn',
-                concept: 'Perfect squares are numbers whose square roots are whole numbers. Learn the common ones! <div class="example-box"><div class="example-label">Common perfect squares:</div><div class="example-item">1, 4, 9, 16, 25, 36, 49, 64, 81, 100...</div><div class="example-item">√49 = <span class="highlight">7</span></div><div class="example-item">√64 = <span class="highlight">8</span></div></div>',
-                q: 'Which is a perfect square?',
-                choices: [
-                    '50',
-                    '48',
-                    '49',
-                    '47'
-                ],
-                answer: '49'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'What is √49?',
-                choices: [
-                    '24.5',
-                    '7',
-                    '14',
-                    '8'
-                ],
-                answer: '7'
-            },
-
-            {
-                mode: 'practice',
-                q: 'What is √64?',
-                choices: [
-                    '32',
-                    '16',
-                    '8',
-                    '4'
-                ],
-                answer: '8'
-            },
-
-            {
-                mode: 'practice',
-                q: 'What is ³√64?',
-                choices: [
-                    '8',
-                    '21',
-                    '4',
-                    '16'
-                ],
-                answer: '4'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Write √y using exponent notation',
-                choices: [
-                    'y²',
-                    'y^(1/2)',
-                    '2y',
-                    'y/2'
-                ],
-                answer: 'y^(1/2)'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'What is √100?',
-                choices: [
-                    '50',
-                    '25',
-                    '10',
-                    '20'
-                ],
-                answer: '10'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'What is ³√125?',
-                choices: [
-                    '25',
-                    '5',
-                    '15',
-                    '41'
-                ],
-                answer: '5'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Write ⁴√x using exponent notation',
-                choices: [
-                    'x⁴',
-                    'x^(1/4)',
-                    '4x',
-                    'x/4'
-                ],
-                answer: 'x^(1/4)'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'If √x = 9, what is x?',
-                choices: [
-                    '18',
-                    '4.5',
-                    '81',
-                    '3'
-                ],
-                answer: '81'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "A radical asks \"what number, when multiplied by itself, gives this?\" The square root √ is the most common radical. <div class=\"example-box\"><div class=\"example-label\">Examples:</div><div class=\"example-item\">√9 = <span class=\"highlight\">3</span> (because 3 × 3 = 9)</div><div class=\"example-item\">√16 = <span class=\"highlight\">4</span> (because 4 × 4 = 16)</div><div class=\"example-item\">√25 = <span class=\"highlight\">5</span></div></div><p>Work over the real numbers; radicands of even roots must be nonnegative.</p>",
+        "q": "What is √36?",
+        "choices": [
+            "18",
+            "9",
+            "6",
+            "12"
+        ],
+        "answer": "6"
+    },
+    {
+        "mode": "learn",
+        "concept": "The index tells you what root to take. √ means square root (index 2), ³√ means cube root (index 3). <div class=\"example-box\"><div class=\"example-label\">Different roots:</div><div class=\"example-item\">√9 = 3 (square root: 3² = 9)</div><div class=\"example-item\">³√8 = 2 (cube root: 2³ = 8)</div><div class=\"example-item\">⁴√16 = 2 (fourth root: 2⁴ = 16)</div></div>",
+        "q": "What is ³√27?",
+        "choices": [
+            "9",
+            "3",
+            "27",
+            "6"
+        ],
+        "answer": "3"
+    },
+    {
+        "mode": "learn",
+        "concept": "Radicals can be written as fractional exponents! √x = x^(1/2), ³√x = x^(1/3). <div class=\"example-box\"><div class=\"example-label\">Conversions:</div><div class=\"example-item\">√x = <span class=\"highlight\">x^(1/2)</span></div><div class=\"example-item\">³√x = <span class=\"highlight\">x^(1/3)</span></div><div class=\"example-item\">⁴√x = <span class=\"highlight\">x^(1/4)</span></div></div>",
+        "q": "What is another way to write √x?",
+        "choices": [
+            "x²",
+            "x^(1/2)",
+            "2x",
+            "x/2"
+        ],
+        "answer": "x^(1/2)"
+    },
+    {
+        "mode": "learn",
+        "concept": "Perfect squares are numbers whose square roots are whole numbers. Learn the common ones! <div class=\"example-box\"><div class=\"example-label\">Common perfect squares:</div><div class=\"example-item\">1, 4, 9, 16, 25, 36, 49, 64, 81, 100...</div><div class=\"example-item\">√49 = <span class=\"highlight\">7</span></div><div class=\"example-item\">√64 = <span class=\"highlight\">8</span></div></div>",
+        "q": "Which is a perfect square?",
+        "choices": [
+            "50",
+            "48",
+            "49",
+            "47"
+        ],
+        "answer": "49"
+    },
+    {
+        "mode": "practice",
+        "q": "What is √49?",
+        "choices": [
+            "24.5",
+            "7",
+            "14",
+            "8"
+        ],
+        "answer": "7"
+    },
+    {
+        "mode": "practice",
+        "q": "What is √64?",
+        "choices": [
+            "32",
+            "16",
+            "8",
+            "4"
+        ],
+        "answer": "8"
+    },
+    {
+        "mode": "practice",
+        "q": "What is ³√64?",
+        "choices": [
+            "8",
+            "21",
+            "4",
+            "16"
+        ],
+        "answer": "4"
+    },
+    {
+        "mode": "practice",
+        "q": "Write √y using exponent notation",
+        "choices": [
+            "y²",
+            "y^(1/2)",
+            "2y",
+            "y/2"
+        ],
+        "answer": "y^(1/2)"
+    },
+    {
+        "mode": "challenge",
+        "q": "What is √100?",
+        "choices": [
+            "50",
+            "25",
+            "10",
+            "20"
+        ],
+        "answer": "10"
+    },
+    {
+        "mode": "challenge",
+        "q": "What is ³√125?",
+        "choices": [
+            "25",
+            "5",
+            "15",
+            "41"
+        ],
+        "answer": "5"
+    },
+    {
+        "mode": "challenge",
+        "q": "Write ⁴√x using exponent notation",
+        "choices": [
+            "x⁴",
+            "x^(1/4)",
+            "4x",
+            "x/4"
+        ],
+        "answer": "x^(1/4)"
+    },
+    {
+        "mode": "challenge",
+        "q": "If √x = 9, what is x?",
+        "choices": [
+            "18",
+            "4.5",
+            "81",
+            "3"
+        ],
+        "answer": "81"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
