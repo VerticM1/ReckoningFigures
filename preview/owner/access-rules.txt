@@ -11,6 +11,7 @@ match /friendships/{friendshipId} { allow read, write: if request.auth != null; 
 // Grants no access to student data. Does not repair legacy testing rules.
 function platformOwner() {
   return request.auth != null
+    && exists(/databases/$(database)/documents/platformOwners/$(request.auth.uid))
     && get(/databases/$(database)/documents/platformOwners/$(request.auth.uid)).data.active == true;
 }
 match /platformOwners/{uid} {
@@ -89,7 +90,7 @@ function studentSeat(d) {
 }
 function validMembership(d) {
   return d.keys().hasAll(['label','role','state','revision','updatedAt','updatedBy','changeId'])
-    && d.keys().hasOnly(['label','role','state','revision','updatedAt','updatedBy','changeId'])
+    && d.keys().hasOnly(['label','role','state','revision','updatedAt','updatedBy','changeId','joinToken'])
     && d.label is string && d.label.size() > 0 && d.label.size() <= 80
     && d.role in ['administrator','teacher','student'] && d.state in ['active','removed']
     && d.revision is int && d.revision > 0 && d.updatedAt == request.time
@@ -131,7 +132,7 @@ function validSeatWrite(schoolId) {
   let before = exists(memberPath) ? studentSeat(get(memberPath).data) : 0;
   let after = getAfter(memberPath).data;
   return d.keys().hasAll(['occupied','memberUid','changeId','updatedAt'])
-    && d.keys().hasOnly(['occupied','memberUid','changeId','updatedAt'])
+    && d.keys().hasOnly(['occupied','memberUid','changeId','updatedAt','joinToken'])
     && d.updatedAt == request.time && d.occupied is int && d.occupied >= 0
     && d.occupied <= getAfter(/databases/$(database)/documents/schools/$(schoolId)).data.license.seatLimit
     && d.occupied == occupied(schoolId) + studentSeat(after) - before
@@ -224,6 +225,107 @@ match /schools/{s}/classes/{c} {
    allow update, delete: if false;
   }
  }
+}
+
+// Invite URLs expose only the class/school label. Possession never grants staff roles.
+function usableInvite(t) {
+ let i=get(/databases/$(database)/documents/classInvites/$(t)).data;
+ return i.active && (i.expiresAt == null || request.time < i.expiresAt) && licenseOpen(i.schoolId);
+}
+function inviteManager(t) {
+ let i=get(/databases/$(database)/documents/classInvites/$(t)).data;
+ return classManager(i.schoolId,i.classId);
+}
+function admitting(t,uid) {
+ let i=get(/databases/$(database)/documents/classInvites/$(t)).data;
+ let p=/databases/$(database)/documents/classInvites/$(t)/requests/$(uid);
+ let after=getAfter(p).data;
+ return usableInvite(t) && after.state == 'admitted' && after.updatedAt == request.time
+  && (!exists(p) || get(p).data.state == 'pending')
+  && ((request.auth.uid == uid && i.mode == 'automatic') || classManager(i.schoolId,i.classId));
+}
+function joinGrant(s,uid,t) {
+ let p=/databases/$(database)/documents/classInvites/$(t)/requests/$(uid);
+ return get(/databases/$(database)/documents/classInvites/$(t)).data.schoolId == s
+  && getAfter(p).data.state == 'admitted' && getAfter(p).data.updatedAt == request.time
+  && (!exists(p) || get(p).data.state == 'pending');
+}
+function joinedRoster(s,c,uid,t) {
+ let i=get(/databases/$(database)/documents/classInvites/$(t)).data;
+ let m=getAfter(/databases/$(database)/documents/schools/$(s)/members/$(uid)).data;
+ return i.schoolId == s && i.classId == c && joinGrant(s,uid,t)
+  && m.role == 'student' && m.state == 'active';
+}
+match /classInvites/{t} {
+ allow get: if true;
+ allow list: if false;
+ allow create: if t.matches('^[A-Za-z0-9_-]{20,128}$')
+  && request.resource.data.keys().hasOnly(['schoolId','classId','schoolName','className','mode','active','expiresAt','createdAt'])
+  && classManager(request.resource.data.schoolId,request.resource.data.classId)
+  && licenseOpen(request.resource.data.schoolId)
+  && request.resource.data.schoolName == get(/databases/$(database)/documents/schools/$(request.resource.data.schoolId)).data.name
+  && request.resource.data.className == get(/databases/$(database)/documents/schools/$(request.resource.data.schoolId)/classes/$(request.resource.data.classId)).data.name
+  && request.resource.data.mode in ['automatic','approval'] && request.resource.data.active == true
+  && (request.resource.data.expiresAt == null || (request.resource.data.expiresAt is timestamp && request.resource.data.expiresAt > request.time))
+  && request.resource.data.createdAt == request.time;
+ allow update: if inviteManager(t) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['active']) && request.resource.data.active == false;
+ allow delete: if false;
+ match /requests/{uid} {
+  allow get: if request.auth != null && (request.auth.uid == uid || inviteManager(t));
+  allow list: if inviteManager(t);
+  allow create: if request.auth != null && request.auth.uid == uid && usableInvite(t)
+   && validJoinRequest(request.resource.data) && request.resource.data.createdAt == request.time
+   && (request.resource.data.state == 'pending' || (get(/databases/$(database)/documents/classInvites/$(t)).data.mode == 'automatic' && admittedComplete(t,uid)));
+  allow update: if usableInvite(t) && resource.data.state == 'pending'
+   && validJoinRequest(request.resource.data)
+   && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['state','updatedAt'])
+   && ((request.resource.data.state == 'rejected' && inviteManager(t)) || admittedComplete(t,uid));
+  allow delete: if false;
+ }
+}
+function validJoinRequest(d) {
+ return d.keys().hasOnly(['label','state','createdAt','updatedAt'])
+  && d.label is string && d.label.size() > 0 && d.label.size() <= 80
+  && d.state in ['pending','admitted','rejected'] && d.createdAt is timestamp && d.updatedAt == request.time;
+}
+function admittedComplete(t,uid) {
+ let i=get(/databases/$(database)/documents/classInvites/$(t)).data;
+ let r=getAfter(/databases/$(database)/documents/schools/$(i.schoolId)/classes/$(i.classId)/students/$(uid)).data;
+ let m=getAfter(/databases/$(database)/documents/schools/$(i.schoolId)/members/$(uid)).data;
+ return admitting(t,uid) && m.state == 'active' && m.role == 'student'
+  && r.label is string;
+}
+match /schools/{s}/classes/{c}/invite/current {
+ allow read: if classManager(s,c);
+ allow create,update: if classManager(s,c) && request.resource.data.keys().hasOnly(['token'])
+  && getAfter(/databases/$(database)/documents/classInvites/$(request.resource.data.token)).data.schoolId == s
+  && getAfter(/databases/$(database)/documents/classInvites/$(request.resource.data.token)).data.classId == c;
+ allow delete: if false;
+}
+// Additional, narrow permissions for an atomic admission. Existing manager paths remain intact.
+match /schools/{s}/members/{uid} {
+ allow get: if schoolTeacher(s) && (!exists(/databases/$(database)/documents/schools/$(s)/members/$(uid)) || resource.data.role == 'student');
+ allow create: if joinGrant(s,uid,request.resource.data.joinToken) && validMembership(request.resource.data)
+  && request.resource.data.role == 'student' && request.resource.data.state == 'active' && request.resource.data.revision == 1
+  && memberAudit(s,uid,request.resource.data,0) && seatChange(s,uid,request.resource.data,0);
+}
+match /schools/{s}/usage/seats {
+ allow create,update: if joinGrant(s,request.resource.data.memberUid,request.resource.data.joinToken) && validSeatWrite(s);
+}
+match /schools/{s}/membershipAudit/{id} {
+ allow create: if joinGrant(s,request.resource.data.memberUid,request.resource.data.snapshot.joinToken)
+  && request.resource.data.keys().hasOnly(['memberUid','actor','at','previousRevision','revision','snapshot'])
+  && request.resource.data.actor == request.auth.uid && request.resource.data.at == request.time
+  && request.resource.data.previousRevision == 0 && request.resource.data.revision == 1
+  && getAfter(/databases/$(database)/documents/schools/$(s)/members/$(request.resource.data.memberUid)).data == request.resource.data.snapshot
+  && request.resource.data.snapshot.changeId == id;
+}
+match /schools/{s}/classes/{c}/students/{uid} {
+ allow get: if request.auth != null && request.auth.uid == uid;
+ allow create: if joinedRoster(s,c,uid,request.resource.data.joinToken)
+  && request.resource.data.keys().hasOnly(['label','addedAt','joinToken'])
+  && request.resource.data.addedAt == request.time
+  && request.resource.data.label == getAfter(/databases/$(database)/documents/classInvites/$(request.resource.data.joinToken)/requests/$(uid)).data.label;
 }
 
 }}
