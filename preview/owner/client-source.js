@@ -56,3 +56,6 @@ import {staffAPI} from "../school/staff-api.js";
 export const staffInvitations=staffAPI(db,auth);
 export const verifyEmail=()=>sendEmailVerification(auth.currentUser);
 export async function refreshIdentity(){await reload(auth.currentUser);await getIdToken(auth.currentUser,true);return auth.currentUser;}
+
+import {socialAPI} from '../social-api.js';
+export const social=socialAPI(db,auth);

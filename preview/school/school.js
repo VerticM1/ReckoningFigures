@@ -1,4 +1,4 @@
-import * as api from '../owner/client.js?v=f267d0fc61ae';
+import * as api from '../owner/client.js?v=478c306d23f9';
 const app=document.querySelector('#school-app'),dialog=document.querySelector('#member-editor'),params=new URLSearchParams(location.search),schoolId=params.get('school');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const brand='<a class="org-brand" href="../"><img src="../assets/brand-transparent.png" alt=""><span>Reckoning Figures<small>SCHOOL ACCESS</small></span></a>';
