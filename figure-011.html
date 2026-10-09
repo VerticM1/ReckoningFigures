@@ -1594,78 +1594,93 @@
         };
 
         const problems = [
-            // Rate problem
-            { 
-                type: 'multiple-choice',
-                eq: '', 
-                q: 'A car travels 60 mph. After <span class="var">x</span> hours it goes 180 miles. Which equation?', 
-                choices: ['60x = 180', 'x + 60 = 180', '180x = 60'], 
-                answer: 0 
-            },
-            // Solve rate problem
-            { 
-                type: 'multiple-choice',
-                eq: '60x = 180', 
-                q: 'How many hours did the car travel?', 
-                choices: ['2 hours', '3 hours', '4 hours'], 
-                answer: 1 
-            },
-            // Two-step word problem
-            {
-                type: 'fill-blank',
-                eq: '3x + 12 = 45',
-                q: 'Three friends split a bill equally and added a $12 tip. Total was $45. How much did each pay?',
-                answer: '11',
-                placeholder: 'Each paid $?'
-            },
-            // Consecutive integers
-            {
-                type: 'true-false',
-                eq: '',
-                q: 'Two consecutive numbers add up to 25. If the first number is x, the equation is x + (x + 1) = 25',
-                answer: true
-            },
-            // Solve consecutive
-            { 
-                type: 'multiple-choice',
-                eq: '2x + 1 = 25', 
-                q: 'What is the first number?', 
-                choices: ['11', '12', '13'], 
-                answer: 1 
-            },
-            // Mixture problem
-            { 
-                type: 'multiple-choice',
-                eq: '', 
-                q: 'You have <span class="var">x</span> dimes and twice as many quarters. Total is 15 coins. Equation?', 
-                choices: ['x + 2x = 15', '2x = 15', 'x + x = 15'], 
-                answer: 0 
-            },
-            // Solve mixture
-            {
-                type: 'fill-blank',
-                eq: '3x = 15',
-                q: 'How many dimes?',
-                answer: '5',
-                placeholder: 'x = ?'
-            },
-            // Percent problem
-            { 
-                type: 'multiple-choice',
-                eq: '', 
-                q: 'A shirt costs $40 after a $<span class="var">x</span> discount. Original was $50. Equation?', 
-                choices: ['50 − x = 40', '50 + x = 40', 'x − 50 = 40'], 
-                answer: 0 
-            },
-            // Final challenge
-            { 
-                type: 'multiple-choice',
-                eq: '50 − x = 40', 
-                q: 'What was the discount amount?', 
-                choices: ['$5', '$10', '$15'], 
-                answer: 1 
-            }
-        ];
+    {
+        "type": "multiple-choice",
+        "eq": "",
+        "q": "A car travels 60 mph. After <span class=\"var\">x</span> hours it goes 180 miles. Which equation?",
+        "choices": [
+            "60x = 180",
+            "x + 60 = 180",
+            "180x = 60"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "60x = 180",
+        "q": "How many hours did the car travel?",
+        "choices": [
+            "2 hours",
+            "3 hours",
+            "4 hours"
+        ],
+        "answer": 1
+    },
+    {
+        "type": "fill-blank",
+        "eq": "3x + 12 = 45",
+        "q": "Three friends split the bill equally before adding a $12 tip. The total including the tip was $45. What was each friend’s share before the tip?",
+        "answer": "11",
+        "placeholder": "Each paid $?"
+    },
+    {
+        "type": "true-false",
+        "eq": "",
+        "q": "Two consecutive numbers add up to 25. If the first number is x, the equation is x + (x + 1) = 25",
+        "answer": true
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "2x + 1 = 25",
+        "q": "What is the first number?",
+        "choices": [
+            "11",
+            "12",
+            "13"
+        ],
+        "answer": 1
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "",
+        "q": "You have <span class=\"var\">x</span> dimes and twice as many quarters. Total is 15 coins. Equation?",
+        "choices": [
+            "x + 2x = 15",
+            "2x = 15",
+            "x + x = 15"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "fill-blank",
+        "eq": "3x = 15",
+        "q": "How many dimes?",
+        "answer": "5",
+        "placeholder": "x = ?"
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "",
+        "q": "A shirt costs $40 after a $<span class=\"var\">x</span> discount. Original was $50. Equation?",
+        "choices": [
+            "50 − x = 40",
+            "50 + x = 40",
+            "x − 50 = 40"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "50 − x = 40",
+        "q": "What was the discount amount?",
+        "choices": [
+            "$5",
+            "$10",
+            "$15"
+        ],
+        "answer": 1
+    }
+];
 
         const feedback = {
             correct: ['Amazing!', 'Perfect!', 'Excellent!', 'Brilliant!', 'Good job!', 'Incredible!'],

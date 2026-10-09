@@ -547,166 +547,102 @@
         };
 
         const content = [
-            // WALKTHROUGH 1: Basic Concept
-            {
-                type: 'walkthrough',
-                mode: 'learn',
-                title: 'Understanding Unit Conversions',
-                content: `
-                    <div class="walkthrough-text">Unit conversions let you change measurements while keeping the value the same.</div>
-                    <div class="example-box">
-                        <div class="example-title">Key Concept</div>
-                        <div class="step">Multiply by conversion factors</div>
-                        <div class="step">Units cancel like fractions</div>
-                        <div class="step">Check: unwanted units cancel</div>
-                    </div>
-                    <div class="walkthrough-text">Example: Convert 5 feet to inches</div>
-                    <div class="conversion-step">
-                        <div class="conversion-row">
-                            <span style="font-size: 18px; font-weight: 800;">5 ft ×</span>
-                            <div class="fraction">
-                                <div class="fraction-top">12 in</div>
-                                <div class="fraction-bottom">1 ft</div>
-                            </div>
-                            <span style="font-size: 18px; font-weight: 800;">= 60 in</span>
-                        </div>
-                    </div>
-                    <div class="walkthrough-text">The "ft" cancels, leaving inches.</div>
-                `
-            },
-
-            // WALKTHROUGH 2: Dimensional Analysis
-            {
-                type: 'walkthrough',
-                mode: 'learn',
-                title: 'Converting Units Step by Step',
-                content: `
-                    <div class="walkthrough-text">Set up conversions so units cancel correctly.</div>
-                    <div class="example-box">
-                        <div class="example-title">Example: 400 meters to miles</div>
-                        <div class="step">Start: 400 meters</div>
-                        <div class="step">Convert: meters → miles</div>
-                        <div class="conversion-step">
-                            <div class="conversion-row">
-                                <span style="font-size: 16px; font-weight: 800;">400 m ×</span>
-                                <div class="fraction">
-                                    <div class="fraction-top">0.62 mi</div>
-                                    <div class="fraction-bottom">1000 m</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step">Meters cancel</div>
-                        <div class="step">Result: 0.248 miles ✓</div>
-                    </div>
-                `
-            },
-
-            // WALKTHROUGH 3: Multi-Step Conversions
-            {
-                type: 'walkthrough',
-                mode: 'learn',
-                title: 'Chain Multiple Conversions',
-                content: `
-                    <div class="walkthrough-text">Some problems need multiple conversion factors.</div>
-                    <div class="example-box">
-                        <div class="example-title">Example: Pool volume (5240 ft³ to gallons)</div>
-                        <div class="step">Given: 7.5 gallons per cubic foot</div>
-                        <div class="conversion-step">
-                            <div class="conversion-row">
-                                <span style="font-size: 16px; font-weight: 800;">5240 ft³ ×</span>
-                                <div class="fraction">
-                                    <div class="fraction-top">7.5 gal</div>
-                                    <div class="fraction-bottom">1 ft³</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="step">Cubic feet cancel</div>
-                        <div class="step">Result: 39,300 gallons ✓</div>
-                    </div>
-                `
-            },
-
-            // PRACTICE MODE - JMAP Questions (easier)
-            { 
-                mode: 'practice',
-                q: 'A runner completes 400 meters in 43.03 seconds. Which calculation gives his average speed in miles per hour?', 
-                choices: [
-                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (3600 sec ÷ 1 hr)',
-                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 100 m) × (60 sec ÷ 1 hr)',
-                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (1 hr ÷ 3600 sec)',
-                    '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (1 hr ÷ 60 sec)'
-                ],
-                answer: '(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (3600 sec ÷ 1 hr)'
-            },
-            { 
-                mode: 'practice',
-                q: 'A pool holds 5240 cubic feet of water. There are 7.5 gallons in 1 cubic foot. How many gallons does the pool hold?', 
-                choices: [
-                    '698 gallons',
-                    '5,248 gallons',
-                    '39,300 gallons',
-                    '78,600 gallons'
-                ],
-                answer: '39,300 gallons'
-            },
-            { 
-                mode: 'practice',
-                q: 'A runner completes 50 meters in 7 seconds. She wants this speed in inches per minute. Which expression is correct?', 
-                choices: [
-                    '(7 sec ÷ 50 m) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)',
-                    '(7 sec ÷ 50 m) × (1 min ÷ 60 sec) × (39.37 in ÷ 1 m)',
-                    '(50 m ÷ 7 sec) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)',
-                    '(50 m ÷ 7 sec) × (1 min ÷ 60 sec) × (1 m ÷ 39.37 in)'
-                ],
-                answer: '(50 m ÷ 7 sec) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)'
-            },
-            { 
-                mode: 'practice',
-                q: 'A train travels at 49 mph. Each car is 56 feet long. How many cars pass a point in 1 minute?', 
-                choices: [
-                    '(49 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (60 min ÷ 1 hr) × (1 car ÷ 56 ft)',
-                    '(49 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)',
-                    '(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)',
-                    '(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (60 min ÷ 1 hr) × (1 car ÷ 56 ft)'
-                ],
-                answer: '(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)'
-            },
-
-            // CHALLENGE MODE - Harder conversions
-            { 
-                mode: 'challenge',
-                q: 'Usain Bolt ran 100 meters in 9.58 seconds (world record). Which calculation gives his speed in kilometers per hour?', 
-                choices: [
-                    '(9.58 sec ÷ 100 m) × (1000 m ÷ 1 km) × (1 min ÷ 60 sec) × (1 hr ÷ 60 min)',
-                    '(100 m ÷ 9.58 sec) × (60 sec ÷ 1 min) × (1000 m ÷ 1 km) × (1 hr ÷ 60 min)',
-                    '(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (1 min ÷ 60 sec) × (1 hr ÷ 60 min)',
-                    '(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (60 sec ÷ 1 min) × (60 min ÷ 1 hr)'
-                ],
-                answer: '(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (60 sec ÷ 1 min) × (60 min ÷ 1 hr)'
-            },
-            { 
-                mode: 'challenge',
-                q: 'A tank holds 6000 gallons. A truck holds 1 cubic foot. There are 7.5 gallons per cubic foot. How many truck loads to fill a 5240 ft³ pool?', 
-                choices: [
-                    '(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (6000 gal ÷ 1 load)',
-                    '(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (1 load ÷ 6000 gal)',
-                    '(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (6000 gal ÷ 1 load)',
-                    '(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (1 load ÷ 6000 gal)'
-                ],
-                answer: '(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (1 load ÷ 6000 gal)'
-            },
-            { 
-                mode: 'challenge',
-                q: 'Convert 65 miles per hour to feet per second. (1 mile = 5280 feet)', 
-                choices: [
-                    '(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 3600 sec) ≈ 95 ft/sec',
-                    '(65 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (3600 sec ÷ 1 hr) ≈ 44 ft/sec',
-                    '(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (3600 sec ÷ 1 hr) ≈ 343,200 ft/sec',
-                    '(65 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (1 hr ÷ 3600 sec) ≈ 0.01 ft/sec'
-                ],
-                answer: '(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 3600 sec) ≈ 95 ft/sec'
-            }
-        ];
+    {
+        "type": "walkthrough",
+        "mode": "learn",
+        "title": "Understanding Unit Conversions",
+        "content": "\n                    <div class=\"walkthrough-text\">Unit conversions let you change measurements while keeping the value the same.</div>\n                    <div class=\"example-box\">\n                        <div class=\"example-title\">Key Concept</div>\n                        <div class=\"step\">Multiply by conversion factors</div>\n                        <div class=\"step\">Units cancel like fractions</div>\n                        <div class=\"step\">Check: unwanted units cancel</div>\n                    </div>\n                    <div class=\"walkthrough-text\">Example: Convert 5 feet to inches</div>\n                    <div class=\"conversion-step\">\n                        <div class=\"conversion-row\">\n                            <span style=\"font-size: 18px; font-weight: 800;\">5 ft ×</span>\n                            <div class=\"fraction\">\n                                <div class=\"fraction-top\">12 in</div>\n                                <div class=\"fraction-bottom\">1 ft</div>\n                            </div>\n                            <span style=\"font-size: 18px; font-weight: 800;\">= 60 in</span>\n                        </div>\n                    </div>\n                    <div class=\"walkthrough-text\">The \"ft\" cancels, leaving inches.</div>\n                "
+    },
+    {
+        "type": "walkthrough",
+        "mode": "learn",
+        "title": "Converting Units Step by Step",
+        "content": "\n                    <div class=\"walkthrough-text\">Set up conversions so units cancel correctly.</div>\n                    <div class=\"example-box\">\n                        <div class=\"example-title\">Example: 400 meters to miles</div>\n                        <div class=\"step\">Start: 400 meters</div>\n                        <div class=\"step\">Convert: meters → miles</div>\n                        <div class=\"conversion-step\">\n                            <div class=\"conversion-row\">\n                                <span style=\"font-size: 16px; font-weight: 800;\">400 m ×</span>\n                                <div class=\"fraction\">\n                                    <div class=\"fraction-top\">0.62 mi</div>\n                                    <div class=\"fraction-bottom\">1000 m</div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"step\">Meters cancel</div>\n                        <div class=\"step\">Result: 0.248 miles ✓</div>\n                    </div>\n                "
+    },
+    {
+        "type": "walkthrough",
+        "mode": "learn",
+        "title": "Chain Multiple Conversions",
+        "content": "\n                    <div class=\"walkthrough-text\">Some problems need multiple conversion factors.</div>\n                    <div class=\"example-box\">\n                        <div class=\"example-title\">Example: Pool volume (5240 ft³ to gallons)</div>\n                        <div class=\"step\">Given: 7.5 gallons per cubic foot</div>\n                        <div class=\"conversion-step\">\n                            <div class=\"conversion-row\">\n                                <span style=\"font-size: 16px; font-weight: 800;\">5240 ft³ ×</span>\n                                <div class=\"fraction\">\n                                    <div class=\"fraction-top\">7.5 gal</div>\n                                    <div class=\"fraction-bottom\">1 ft³</div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"step\">Cubic feet cancel</div>\n                        <div class=\"step\">Result: 39,300 gallons ✓</div>\n                    </div>\n                "
+    },
+    {
+        "mode": "practice",
+        "q": "A runner completes 400 meters in 43.03 seconds. Which calculation gives his average speed in miles per hour?",
+        "choices": [
+            "(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (3600 sec ÷ 1 hr)",
+            "(400 m ÷ 43.03 sec) × (0.62 mi ÷ 100 m) × (60 sec ÷ 1 hr)",
+            "(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (1 hr ÷ 3600 sec)",
+            "(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (1 hr ÷ 60 sec)"
+        ],
+        "answer": "(400 m ÷ 43.03 sec) × (0.62 mi ÷ 1000 m) × (3600 sec ÷ 1 hr)"
+    },
+    {
+        "mode": "practice",
+        "q": "A pool holds 5240 cubic feet of water. There are 7.5 gallons in 1 cubic foot. How many gallons does the pool hold?",
+        "choices": [
+            "698 gallons",
+            "5,248 gallons",
+            "39,300 gallons",
+            "78,600 gallons"
+        ],
+        "answer": "39,300 gallons"
+    },
+    {
+        "mode": "practice",
+        "q": "A runner completes 50 meters in 7 seconds. She wants this speed in inches per minute. Which expression is correct?",
+        "choices": [
+            "(7 sec ÷ 50 m) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)",
+            "(7 sec ÷ 50 m) × (1 min ÷ 60 sec) × (39.37 in ÷ 1 m)",
+            "(50 m ÷ 7 sec) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)",
+            "(50 m ÷ 7 sec) × (1 min ÷ 60 sec) × (1 m ÷ 39.37 in)"
+        ],
+        "answer": "(50 m ÷ 7 sec) × (60 sec ÷ 1 min) × (39.37 in ÷ 1 m)"
+    },
+    {
+        "mode": "practice",
+        "q": "A train travels at 49 mph. Each car is 56 feet long. How many cars pass a point in 1 minute?",
+        "choices": [
+            "(49 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (60 min ÷ 1 hr) × (1 car ÷ 56 ft)",
+            "(49 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)",
+            "(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)",
+            "(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (60 min ÷ 1 hr) × (1 car ÷ 56 ft)"
+        ],
+        "answer": "(49 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 60 min) × (1 car ÷ 56 ft)"
+    },
+    {
+        "mode": "challenge",
+        "q": "Usain Bolt ran 100 meters in 9.58 seconds (world record). Which calculation gives his speed in kilometers per hour?",
+        "choices": [
+            "(9.58 sec ÷ 100 m) × (1000 m ÷ 1 km) × (1 min ÷ 60 sec) × (1 hr ÷ 60 min)",
+            "(100 m ÷ 9.58 sec) × (60 sec ÷ 1 min) × (1000 m ÷ 1 km) × (1 hr ÷ 60 min)",
+            "(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (1 min ÷ 60 sec) × (1 hr ÷ 60 min)",
+            "(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (60 sec ÷ 1 min) × (60 min ÷ 1 hr)"
+        ],
+        "answer": "(100 m ÷ 9.58 sec) × (1 km ÷ 1000 m) × (60 sec ÷ 1 min) × (60 min ÷ 1 hr)"
+    },
+    {
+        "mode": "challenge",
+        "q": "A water truck carries 6000 gallons per load. Using 7.5 gallons per cubic foot, which expression gives the number of equivalent full loads needed for a 5240 ft³ pool?",
+        "choices": [
+            "(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (6000 gal ÷ 1 load)",
+            "(5240 ft³ ÷ 1 pool) × (1 ft³ ÷ 7.5 gal) × (1 load ÷ 6000 gal)",
+            "(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (6000 gal ÷ 1 load)",
+            "(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (1 load ÷ 6000 gal)"
+        ],
+        "answer": "(5240 ft³ ÷ 1 pool) × (7.5 gal ÷ 1 ft³) × (1 load ÷ 6000 gal)"
+    },
+    {
+        "mode": "challenge",
+        "q": "Convert 65 miles per hour to feet per second. (1 mile = 5280 feet)",
+        "choices": [
+            "(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 3600 sec) ≈ 95 ft/sec",
+            "(65 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (3600 sec ÷ 1 hr) ≈ 44 ft/sec",
+            "(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (3600 sec ÷ 1 hr) ≈ 343,200 ft/sec",
+            "(65 mi ÷ 1 hr) × (1 mi ÷ 5280 ft) × (1 hr ÷ 3600 sec) ≈ 0.01 ft/sec"
+        ],
+        "answer": "(65 mi ÷ 1 hr) × (5280 ft ÷ 1 mi) × (1 hr ÷ 3600 sec) ≈ 95 ft/sec"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

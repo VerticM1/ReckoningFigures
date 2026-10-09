@@ -1594,78 +1594,93 @@
         };
 
         const problems = [
-            // Simple age problem
-            { 
-                type: 'multiple-choice',
-                eq: '', 
-                q: 'Sarah is 5 years older than Tom. If Tom is <span class="var">x</span> years old, how old is Sarah?', 
-                choices: ['x + 5', 'x − 5', '5x'], 
-                answer: 0 
-            },
-            // Simple total problem
-            { 
-                type: 'multiple-choice',
-                eq: '', 
-                q: 'A number plus 7 equals 15. What equation represents this?', 
-                choices: ['x + 7 = 15', 'x − 7 = 15', '7x = 15'], 
-                answer: 0 
-            },
-            // Fill in the answer
-            {
-                type: 'fill-blank',
-                eq: 'x + 7 = 15',
-                q: 'What is the number?',
-                answer: '8',
-                placeholder: 'x = ?'
-            },
-            // Cost problem
-            {
-                type: 'true-false',
-                eq: '',
-                q: 'If a ticket costs $12 and you have x dollars, the equation for buying 3 tickets is: <div style="display: inline-block; background: #374151; border: 2px solid #4B5563; border-radius: 8px; padding: 8px 16px; margin: 8px 0; font-size: 20px; font-weight: 900;">3(12) = x</div>',
-                answer: false
-            },
-            // Money problem
-            { 
-                type: 'multiple-choice',
-                eq: '', 
-                q: 'Jake has $50. He spends <span class="var">x</span> dollars and has $23 left. Which equation is correct?', 
-                choices: ['50 − x = 23', '50 + x = 23', 'x − 50 = 23'], 
-                answer: 0 
-            },
-            // Solve money problem
-            { 
-                type: 'multiple-choice',
-                eq: '50 − x = 23', 
-                q: 'How much did Jake spend?', 
-                choices: ['$23', '$27', '$73'], 
-                answer: 1 
-            },
-            // Perimeter problem
-            {
-                type: 'fill-blank',
-                eq: '2x + 8 = 24',
-                q: 'A rectangle has a perimeter of 24. If the width is 4, what is the length?',
-                answer: '8',
-                placeholder: 'length = ?'
-            },
-            // Temperature problem
-            { 
-                type: 'multiple-choice',
-                eq: '', 
-                q: 'The temperature was <span class="var">x</span>°. It rose 15° to reach 72°. Which equation?', 
-                choices: ['x + 15 = 72', 'x − 15 = 72', '15x = 72'], 
-                answer: 0 
-            },
-            // Final challenge
-            { 
-                type: 'multiple-choice',
-                eq: 'x + 15 = 72', 
-                q: 'What was the starting temperature?', 
-                choices: ['52°', '57°', '87°'], 
-                answer: 1 
-            }
-        ];
+    {
+        "type": "multiple-choice",
+        "eq": "",
+        "q": "Sarah is 5 years older than Tom. If Tom is <span class=\"var\">x</span> years old, how old is Sarah?",
+        "choices": [
+            "x + 5",
+            "x − 5",
+            "5x"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "",
+        "q": "A number plus 7 equals 15. What equation represents this?",
+        "choices": [
+            "x + 7 = 15",
+            "x − 7 = 15",
+            "7x = 15"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "fill-blank",
+        "eq": "x + 7 = 15",
+        "q": "What is the number?",
+        "answer": "8",
+        "placeholder": "x = ?"
+    },
+    {
+        "type": "true-false",
+        "eq": "",
+        "q": "Each ticket costs $12. If x is the total cost of exactly 3 tickets, is 3(12) = x correct?",
+        "answer": true
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "",
+        "q": "Jake has $50. He spends <span class=\"var\">x</span> dollars and has $23 left. Which equation is correct?",
+        "choices": [
+            "50 − x = 23",
+            "50 + x = 23",
+            "x − 50 = 23"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "50 − x = 23",
+        "q": "How much did Jake spend?",
+        "choices": [
+            "$23",
+            "$27",
+            "$73"
+        ],
+        "answer": 1
+    },
+    {
+        "type": "fill-blank",
+        "eq": "2x + 8 = 24",
+        "q": "A rectangle has a perimeter of 24. If the width is 4, what is the length?",
+        "answer": "8",
+        "placeholder": "length = ?"
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "",
+        "q": "The temperature was <span class=\"var\">x</span>°. It rose 15° to reach 72°. Which equation?",
+        "choices": [
+            "x + 15 = 72",
+            "x − 15 = 72",
+            "15x = 72"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "x + 15 = 72",
+        "q": "What was the starting temperature?",
+        "choices": [
+            "52°",
+            "57°",
+            "87°"
+        ],
+        "answer": 1
+    }
+];
 
         const feedback = {
             correct: ['Amazing!', 'Perfect!', 'Excellent!', 'Brilliant!', 'Good job!', 'Incredible!'],

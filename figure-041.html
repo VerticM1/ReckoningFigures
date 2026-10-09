@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Dividing by a monomial
-            {
-                mode: 'learn',
-                concept: 'To divide a polynomial by a monomial, divide EACH term separately. <div class="example-box"><div class="example-label">Example: (6x³ + 12x²) ÷ 3x</div><div class="example-item">6x³ ÷ 3x = 2x²</div><div class="example-item">12x² ÷ 3x = 4x</div><div class="example-item">Answer: <span class="highlight">2x² + 4x</span></div></div>',
-                q: 'Divide: (8x² + 4x) ÷ 2x',
-                choices: [
-                    '4x + 2',
-                    '6x + 2x',
-                    '8x + 4',
-                    '4x² + 2x'
-                ],
-                answer: '4x + 2'
-            },
-
-            // LEARN 2: Exponent subtraction
-            {
-                mode: 'learn',
-                concept: 'When dividing powers with the same base, SUBTRACT the exponents. <div class="example-box"><div class="example-label">Rule: x^a ÷ x^b = x^(a-b)</div><div class="example-item">x⁵ ÷ x² = x^(5-2) = <span class="highlight">x³</span></div><div class="example-item">x⁴ ÷ x = x^(4-1) = <span class="highlight">x³</span></div></div>',
-                q: 'Simplify: x⁶ ÷ x⁴',
-                choices: [
-                    'x¹⁰',
-                    'x³',
-                    'x²',
-                    'x'
-                ],
-                answer: 'x²'
-            },
-
-            // LEARN 3: Coefficient division
-            {
-                mode: 'learn',
-                concept: 'Divide coefficients (numbers) separately from variables. <div class="example-box"><div class="example-label">Example: 15x⁴ ÷ 3x²</div><div class="example-item">Coefficients: 15 ÷ 3 = 5</div><div class="example-item">Variables: x⁴ ÷ x² = x²</div><div class="example-item">Answer: <span class="highlight">5x²</span></div></div>',
-                q: 'Divide: 20x⁵ ÷ 4x²',
-                choices: [
-                    '5x³',
-                    '16x³',
-                    '5x⁷',
-                    '80x³'
-                ],
-                answer: '5x³'
-            },
-
-            // LEARN 4: Multiple terms
-            {
-                mode: 'learn',
-                concept: 'For polynomials with multiple terms, divide each term by the divisor. <div class="example-box"><div class="example-label">(10x³ - 15x² + 5x) ÷ 5x</div><div class="example-item">10x³ ÷ 5x = 2x²</div><div class="example-item">-15x² ÷ 5x = -3x</div><div class="example-item">5x ÷ 5x = 1</div><div class="example-item">Answer: <span class="highlight">2x² - 3x + 1</span></div></div>',
-                q: 'Divide: (12x³ + 6x²) ÷ 3x',
-                choices: [
-                    '4x² + 2x',
-                    '9x³ + 3x²',
-                    '4x + 2',
-                    '15x² + 9x'
-                ],
-                answer: '4x² + 2x'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Divide: (10x² + 5x) ÷ 5',
-                choices: [
-                    '2x² + x',
-                    '5x² + x',
-                    '10x + 5',
-                    '2x + 1'
-                ],
-                answer: '2x² + x'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: x⁸ ÷ x³',
-                choices: [
-                    'x²⁴',
-                    'x¹¹',
-                    'x⁵',
-                    'x⁶'
-                ],
-                answer: 'x⁵'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Divide: 18x⁴ ÷ 6x',
-                choices: [
-                    '12x³',
-                    '3x⁵',
-                    '3x³',
-                    '18x³'
-                ],
-                answer: '3x³'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Divide: (8x³ - 4x²) ÷ 4x²',
-                choices: [
-                    '2x - 1',
-                    '8x - 4',
-                    '4x - 2',
-                    '2x² - x'
-                ],
-                answer: '2x - 1'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Divide: (15x⁴ - 10x³ + 5x²) ÷ 5x²',
-                choices: [
-                    '3x² + 2x + 1',
-                    '10x² - 5x',
-                    '3x² - 2x + 1',
-                    '15x² - 10x + 5'
-                ],
-                answer: '3x² - 2x + 1'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Divide: (24x⁵ - 18x³ + 6x²) ÷ 6x²',
-                choices: [
-                    '4x³ - 3x + 1',
-                    '18x³ - 12x + 1',
-                    '4x² - 3x + 6',
-                    '4x⁷ - 3x⁵ + x⁴'
-                ],
-                answer: '4x³ - 3x + 1'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Divide: (21x⁴ + 14x³ - 7x²) ÷ 7x',
-                choices: [
-                    '3x³ + 2x² - x',
-                    '14x³ + 7x² - x',
-                    '3x + 2 - 1',
-                    '3x⁵ + 2x⁴ - x³'
-                ],
-                answer: '3x³ + 2x² - x'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: (x⁶ - x⁴) ÷ x³',
-                choices: [
-                    'x² - 1',
-                    'x³ - x',
-                    'x⁹ - x⁷',
-                    'x² - x'
-                ],
-                answer: 'x³ - x'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "To divide a polynomial by a monomial, divide EACH term separately. <div class=\"example-box\"><div class=\"example-label\">Example: (6x³ + 12x²) ÷ 3x</div><div class=\"example-item\">6x³ ÷ 3x = 2x²</div><div class=\"example-item\">12x² ÷ 3x = 4x</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² + 4x</span></div></div><p>Assume every divisor is nonzero; in questions dividing by a power of x, x ≠ 0.</p>",
+        "q": "Divide: (8x² + 4x) ÷ 2x",
+        "choices": [
+            "4x + 2",
+            "6x + 2x",
+            "8x + 4",
+            "4x² + 2x"
+        ],
+        "answer": "4x + 2"
+    },
+    {
+        "mode": "learn",
+        "concept": "When dividing powers with the same base, SUBTRACT the exponents. <div class=\"example-box\"><div class=\"example-label\">Rule: x^a ÷ x^b = x^(a-b)</div><div class=\"example-item\">x⁵ ÷ x² = x^(5-2) = <span class=\"highlight\">x³</span></div><div class=\"example-item\">x⁴ ÷ x = x^(4-1) = <span class=\"highlight\">x³</span></div></div>",
+        "q": "Simplify: x⁶ ÷ x⁴",
+        "choices": [
+            "x¹⁰",
+            "x³",
+            "x²",
+            "x"
+        ],
+        "answer": "x²"
+    },
+    {
+        "mode": "learn",
+        "concept": "Divide coefficients (numbers) separately from variables. <div class=\"example-box\"><div class=\"example-label\">Example: 15x⁴ ÷ 3x²</div><div class=\"example-item\">Coefficients: 15 ÷ 3 = 5</div><div class=\"example-item\">Variables: x⁴ ÷ x² = x²</div><div class=\"example-item\">Answer: <span class=\"highlight\">5x²</span></div></div>",
+        "q": "Divide: 20x⁵ ÷ 4x²",
+        "choices": [
+            "5x³",
+            "16x³",
+            "5x⁷",
+            "80x³"
+        ],
+        "answer": "5x³"
+    },
+    {
+        "mode": "learn",
+        "concept": "For polynomials with multiple terms, divide each term by the divisor. <div class=\"example-box\"><div class=\"example-label\">(10x³ - 15x² + 5x) ÷ 5x</div><div class=\"example-item\">10x³ ÷ 5x = 2x²</div><div class=\"example-item\">-15x² ÷ 5x = -3x</div><div class=\"example-item\">5x ÷ 5x = 1</div><div class=\"example-item\">Answer: <span class=\"highlight\">2x² - 3x + 1</span></div></div>",
+        "q": "Divide: (12x³ + 6x²) ÷ 3x",
+        "choices": [
+            "4x² + 2x",
+            "9x³ + 3x²",
+            "4x + 2",
+            "15x² + 9x"
+        ],
+        "answer": "4x² + 2x"
+    },
+    {
+        "mode": "practice",
+        "q": "Divide: (10x² + 5x) ÷ 5",
+        "choices": [
+            "2x² + x",
+            "5x² + x",
+            "10x + 5",
+            "2x + 1"
+        ],
+        "answer": "2x² + x"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: x⁸ ÷ x³",
+        "choices": [
+            "x²⁴",
+            "x¹¹",
+            "x⁵",
+            "x⁶"
+        ],
+        "answer": "x⁵"
+    },
+    {
+        "mode": "practice",
+        "q": "Divide: 18x⁴ ÷ 6x",
+        "choices": [
+            "12x³",
+            "3x⁵",
+            "3x³",
+            "18x³"
+        ],
+        "answer": "3x³"
+    },
+    {
+        "mode": "practice",
+        "q": "Divide: (8x³ - 4x²) ÷ 4x²",
+        "choices": [
+            "2x - 1",
+            "8x - 4",
+            "4x - 2",
+            "2x² - x"
+        ],
+        "answer": "2x - 1"
+    },
+    {
+        "mode": "challenge",
+        "q": "Divide: (15x⁴ - 10x³ + 5x²) ÷ 5x²",
+        "choices": [
+            "3x² + 2x + 1",
+            "10x² - 5x",
+            "3x² - 2x + 1",
+            "15x² - 10x + 5"
+        ],
+        "answer": "3x² - 2x + 1"
+    },
+    {
+        "mode": "challenge",
+        "q": "Divide: (24x⁵ - 18x³ + 6x²) ÷ 6x²",
+        "choices": [
+            "4x³ - 3x + 1",
+            "18x³ - 12x + 1",
+            "4x² - 3x + 6",
+            "4x⁷ - 3x⁵ + x⁴"
+        ],
+        "answer": "4x³ - 3x + 1"
+    },
+    {
+        "mode": "challenge",
+        "q": "Divide: (21x⁴ + 14x³ - 7x²) ÷ 7x",
+        "choices": [
+            "3x³ + 2x² - x",
+            "14x³ + 7x² - x",
+            "3x + 2 - 1",
+            "3x⁵ + 2x⁴ - x³"
+        ],
+        "answer": "3x³ + 2x² - x"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (x⁶ - x⁴) ÷ x³",
+        "choices": [
+            "x² - 1",
+            "x³ - x",
+            "x⁹ - x⁷",
+            "x² - x"
+        ],
+        "answer": "x³ - x"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: The pattern
-            {
-                mode: 'learn',
-                concept: 'Completing the square makes a perfect square trinomial. Take HALF of b, square it, then add it. <div class="example-box"><div class="example-label">Pattern:</div><div class="example-item">x² + bx + ? → take half of b, square it</div><div class="example-item">Example: x² + 6x + ?</div><div class="example-item">Half of 6 is 3, squared is 9</div><div class="example-item">x² + 6x + 9 = <span class="highlight">(x + 3)²</span></div></div>',
-                q: 'To complete the square for x² + 10x, what do you add?',
-                choices: [
-                    '10',
-                    '5',
-                    '25',
-                    '100'
-                ],
-                answer: '25'
-            },
-
-            // LEARN 2: Why it works
-            {
-                mode: 'learn',
-                concept: 'This creates a perfect square because (x + n)² = x² + 2nx + n². The middle term is always TWICE the last number. <div class="example-box"><div class="example-label">Check: (x + 4)²</div><div class="example-item">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class="example-item">= x² + 8x + 16</div><div class="example-item">Middle is <span class="highlight">2 × 4 = 8</span> ✓</div></div>',
-                q: 'If you complete the square for x² + 8x, what perfect square do you get?',
-                choices: [
-                    '(x + 2)²',
-                    '(x + 8)²',
-                    '(x + 4)²',
-                    '(x + 16)²'
-                ],
-                answer: '(x + 4)²'
-            },
-
-            // LEARN 3: Solving equations
-            {
-                mode: 'learn',
-                concept: 'To solve by completing the square: move c to the other side, complete the square, then take the square root of both sides. <div class="example-box"><div class="example-label">Example: x² + 6x = 7</div><div class="example-item">Add 9 to both sides: x² + 6x + 9 = 16</div><div class="example-item">(x + 3)² = 16</div><div class="example-item">x + 3 = ±4 → <span class="highlight">x = 1 or x = -7</span></div></div>',
-                q: 'After completing the square on x² + 4x = 5, what equation do you get?',
-                choices: [
-                    '(x + 2)² = 9',
-                    '(x + 4)² = 5',
-                    '(x + 2)² = 5',
-                    '(x + 2)² = 7'
-                ],
-                answer: '(x + 2)² = 9'
-            },
-
-            // LEARN 4: The ± symbol
-            {
-                mode: 'learn',
-                concept: 'When you take the square root of both sides, you MUST use ±. Both positive and negative roots work! <div class="example-box"><div class="example-label">Example: (x - 2)² = 25</div><div class="example-item">x - 2 = ±5</div><div class="example-item">x - 2 = 5 → x = 7</div><div class="example-item">x - 2 = -5 → x = -3</div><div class="example-item">Solutions: <span class="highlight">x = 7 or x = -3</span></div></div>',
-                q: 'If (x + 1)² = 16, what are the solutions?',
-                choices: [
-                    'x = 4',
-                    'x = 3 or x = -5',
-                    'x = 15 or x = -17',
-                    'x = 4 or x = -4'
-                ],
-                answer: 'x = 3 or x = -5'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Complete the square: x² + 12x + ?',
-                choices: [
-                    '6',
-                    '24',
-                    '36',
-                    '144'
-                ],
-                answer: '36'
-            },
-
-            {
-                mode: 'practice',
-                q: 'What is x² + 14x + 49 in factored form?',
-                choices: [
-                    '(x + 7)(x + 7)',
-                    '(x + 14)(x + 49)',
-                    '(x + 7)(x - 7)',
-                    '(x + 49)²'
-                ],
-                answer: '(x + 7)(x + 7)'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Solve: (x + 5)² = 9',
-                choices: [
-                    'x = -2 or x = -8',
-                    'x = 4 or x = -6',
-                    'x = 2 or x = 8',
-                    'x = -4 or x = 6'
-                ],
-                answer: 'x = -2 or x = -8'
-            },
-
-            {
-                mode: 'practice',
-                q: 'To solve x² + 8x = 9, what do you add to both sides?',
-                choices: [
-                    '4',
-                    '8',
-                    '16',
-                    '64'
-                ],
-                answer: '16'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Solve: x² + 10x - 11 = 0 by completing the square',
-                choices: [
-                    'x = 1 or x = -11',
-                    'x = -1 or x = 11',
-                    'x = 5 or x = -5',
-                    'x = 11 or x = -1'
-                ],
-                answer: 'x = 1 or x = -11'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Complete the square for x² - 6x. What perfect square do you create?',
-                choices: [
-                    '(x - 3)²',
-                    '(x + 3)²',
-                    '(x - 6)²',
-                    '(x - 9)²'
-                ],
-                answer: '(x - 3)²'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Solve: (x - 4)² = 36',
-                choices: [
-                    'x = 10 or x = -2',
-                    'x = 8 or x = 0',
-                    'x = 40 or x = -32',
-                    'x = 6 or x = -6'
-                ],
-                answer: 'x = 10 or x = -2'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'For x² + 2x - 3 = 0, after completing the square you get (x + 1)² = 4. What are the solutions?',
-                choices: [
-                    'x = 3 or x = -1',
-                    'x = 1 or x = -3',
-                    'x = -1 or x = 3',
-                    'x = 1 or x = 3'
-                ],
-                answer: 'x = 1 or x = -3'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "Completing the square makes a perfect square trinomial. Take HALF of b, square it, then add it. <div class=\"example-box\"><div class=\"example-label\">Pattern:</div><div class=\"example-item\">x² + bx + ? → take half of b, square it</div><div class=\"example-item\">Example: x² + 6x + ?</div><div class=\"example-item\">Half of 6 is 3, squared is 9</div><div class=\"example-item\">x² + 6x + 9 = <span class=\"highlight\">(x + 3)²</span></div></div>",
+        "q": "To complete the square for x² + 10x, what do you add?",
+        "choices": [
+            "10",
+            "5",
+            "25",
+            "100"
+        ],
+        "answer": "25"
+    },
+    {
+        "mode": "learn",
+        "concept": "This creates a perfect square because (x + n)² = x² + 2nx + n². The coefficient of x is twice n; the constant term is n². <div class=\"example-box\"><div class=\"example-label\">Check: (x + 4)²</div><div class=\"example-item\">(x + 4)(x + 4) = x² + 4x + 4x + 16</div><div class=\"example-item\">= x² + 8x + 16</div><div class=\"example-item\">Middle is <span class=\"highlight\">2 × 4 = 8</span> ✓</div></div>",
+        "q": "If you complete the square for x² + 8x, what perfect square do you get?",
+        "choices": [
+            "(x + 2)²",
+            "(x + 8)²",
+            "(x + 4)²",
+            "(x + 16)²"
+        ],
+        "answer": "(x + 4)²"
+    },
+    {
+        "mode": "learn",
+        "concept": "To solve by completing the square: move c to the other side, complete the square, then take the square root of both sides. <div class=\"example-box\"><div class=\"example-label\">Example: x² + 6x = 7</div><div class=\"example-item\">Add 9 to both sides: x² + 6x + 9 = 16</div><div class=\"example-item\">(x + 3)² = 16</div><div class=\"example-item\">x + 3 = ±4 → <span class=\"highlight\">x = 1 or x = -7</span></div></div>",
+        "q": "After completing the square on x² + 4x = 5, what equation do you get?",
+        "choices": [
+            "(x + 2)² = 9",
+            "(x + 4)² = 5",
+            "(x + 2)² = 5",
+            "(x + 2)² = 7"
+        ],
+        "answer": "(x + 2)² = 9"
+    },
+    {
+        "mode": "learn",
+        "concept": "When you take the square root of both sides, you MUST use ±. Both positive and negative roots work! <div class=\"example-box\"><div class=\"example-label\">Example: (x - 2)² = 25</div><div class=\"example-item\">x - 2 = ±5</div><div class=\"example-item\">x - 2 = 5 → x = 7</div><div class=\"example-item\">x - 2 = -5 → x = -3</div><div class=\"example-item\">Solutions: <span class=\"highlight\">x = 7 or x = -3</span></div></div>",
+        "q": "If (x + 1)² = 16, what are the solutions?",
+        "choices": [
+            "x = 4",
+            "x = 3 or x = -5",
+            "x = 15 or x = -17",
+            "x = 4 or x = -4"
+        ],
+        "answer": "x = 3 or x = -5"
+    },
+    {
+        "mode": "practice",
+        "q": "Complete the square: x² + 12x + ?",
+        "choices": [
+            "6",
+            "24",
+            "36",
+            "144"
+        ],
+        "answer": "36"
+    },
+    {
+        "mode": "practice",
+        "q": "What is x² + 14x + 49 in factored form?",
+        "choices": [
+            "(x + 7)(x + 7)",
+            "(x + 14)(x + 49)",
+            "(x + 7)(x - 7)",
+            "(x + 49)²"
+        ],
+        "answer": "(x + 7)(x + 7)"
+    },
+    {
+        "mode": "practice",
+        "q": "Solve: (x + 5)² = 9",
+        "choices": [
+            "x = -2 or x = -8",
+            "x = 4 or x = -6",
+            "x = 2 or x = 8",
+            "x = -4 or x = 6"
+        ],
+        "answer": "x = -2 or x = -8"
+    },
+    {
+        "mode": "practice",
+        "q": "To solve x² + 8x = 9, what do you add to both sides?",
+        "choices": [
+            "4",
+            "8",
+            "16",
+            "64"
+        ],
+        "answer": "16"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve: x² + 10x - 11 = 0 by completing the square",
+        "choices": [
+            "x = 1 or x = -11",
+            "x = -1 or x = 11",
+            "x = 5 or x = -5",
+            "x = 11 or x = -1"
+        ],
+        "answer": "x = 1 or x = -11"
+    },
+    {
+        "mode": "challenge",
+        "q": "Complete the square for x² - 6x. What perfect square do you create?",
+        "choices": [
+            "(x - 3)²",
+            "(x + 3)²",
+            "(x - 6)²",
+            "(x - 9)²"
+        ],
+        "answer": "(x - 3)²"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve: (x - 4)² = 36",
+        "choices": [
+            "x = 10 or x = -2",
+            "x = 8 or x = 0",
+            "x = 40 or x = -32",
+            "x = 6 or x = -6"
+        ],
+        "answer": "x = 10 or x = -2"
+    },
+    {
+        "mode": "challenge",
+        "q": "For x² + 2x - 3 = 0, after completing the square you get (x + 1)² = 4. What are the solutions?",
+        "choices": [
+            "x = 3 or x = -1",
+            "x = 1 or x = -3",
+            "x = -1 or x = 3",
+            "x = 1 or x = 3"
+        ],
+        "answer": "x = 1 or x = -3"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

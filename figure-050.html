@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Fractional exponents as roots
-            {
-                mode: 'learn',
-                concept: 'A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class="example-box"><div class="example-label">Pattern: x^(1/n) = ⁿ√x</div><div class="example-item">x^(1/2) = √x (square root)</div><div class="example-item">x^(1/3) = ³√x (cube root)</div><div class="example-item">8^(1/3) = ³√8 = <span class="highlight">2</span></div></div>',
-                q: 'What is 16^(1/2)?',
-                choices: [
-                    '8',
-                    '32',
-                    '4',
-                    '2'
-                ],
-                answer: '4'
-            },
-
-            // LEARN 2: General rational exponents
-            {
-                mode: 'learn',
-                concept: 'For x^(m/n): the denominator n is the root, the numerator m is the power. <div class="example-box"><div class="example-label">Pattern: x^(m/n) = ⁿ√(x^m) or (ⁿ√x)^m</div><div class="example-item">8^(2/3) = ³√(8²) or (³√8)²</div><div class="example-item">= (2)² = <span class="highlight">4</span></div></div>',
-                q: 'What is 27^(2/3)?',
-                choices: [
-                    '9',
-                    '18',
-                    '6',
-                    '3'
-                ],
-                answer: '9'
-            },
-
-            // LEARN 3: Converting between forms
-            {
-                mode: 'learn',
-                concept: 'You can convert freely between radical notation and rational exponents. <div class="example-box"><div class="example-label">Conversions:</div><div class="example-item">√x = <span class="highlight">x^(1/2)</span></div><div class="example-item">³√x² = <span class="highlight">x^(2/3)</span></div><div class="example-item">⁴√x³ = <span class="highlight">x^(3/4)</span></div></div>',
-                q: 'Write ⁵√x² using exponents',
-                choices: [
-                    'x^(5/2)',
-                    'x^(1/5)',
-                    'x^(2/5)',
-                    'x^(10)'
-                ],
-                answer: 'x^(2/5)'
-            },
-
-            // LEARN 4: Using exponent rules
-            {
-                mode: 'learn',
-                concept: 'All exponent rules work with rational exponents too! <div class="example-box"><div class="example-label">Example: x^(1/2) × x^(1/3)</div><div class="example-item">Add exponents: 1/2 + 1/3 = 3/6 + 2/6</div><div class="example-item">= 5/6</div><div class="example-item">Answer: <span class="highlight">x^(5/6)</span></div></div>',
-                q: 'Simplify: x^(1/4) × x^(1/4)',
-                choices: [
-                    'x^(1/16)',
-                    'x^(1/8)',
-                    'x^(1/2)',
-                    'x^(2/4)'
-                ],
-                answer: 'x^(1/2)'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'What is 9^(1/2)?',
-                choices: [
-                    '4.5',
-                    '18',
-                    '3',
-                    '81'
-                ],
-                answer: '3'
-            },
-
-            {
-                mode: 'practice',
-                q: 'What is 64^(1/3)?',
-                choices: [
-                    '21',
-                    '8',
-                    '4',
-                    '16'
-                ],
-                answer: '4'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Write √x³ using exponents',
-                choices: [
-                    'x^(1/3)',
-                    'x^(2/3)',
-                    'x^(3/2)',
-                    'x^(1/2)'
-                ],
-                answer: 'x^(3/2)'
-            },
-
-            {
-                mode: 'practice',
-                q: 'What is 4^(3/2)?',
-                choices: [
-                    '6',
-                    '8',
-                    '16',
-                    '12'
-                ],
-                answer: '8'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'What is 125^(2/3)?',
-                choices: [
-                    '25',
-                    '15',
-                    '50',
-                    '10'
-                ],
-                answer: '25'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: x^(1/3) × x^(2/3)',
-                choices: [
-                    'x^(2/9)',
-                    'x^(3/6)',
-                    'x',
-                    'x^(1/6)'
-                ],
-                answer: 'x'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'What is 16^(3/4)?',
-                choices: [
-                    '12',
-                    '8',
-                    '4',
-                    '64'
-                ],
-                answer: '8'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: (x^(1/2))^4',
-                choices: [
-                    'x^(1/8)',
-                    'x⁴',
-                    'x²',
-                    'x^(4/2)'
-                ],
-                answer: 'x²'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "A fractional exponent with 1 in the numerator means a root! The denominator tells you which root. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(1/n) = ⁿ√x</div><div class=\"example-item\">x^(1/2) = √x (square root)</div><div class=\"example-item\">x^(1/3) = ³√x (cube root)</div><div class=\"example-item\">8^(1/3) = ³√8 = <span class=\"highlight\">2</span></div></div><p>For the variable-base exponent rules in this lesson, assume x > 0.</p>",
+        "q": "What is 16^(1/2)?",
+        "choices": [
+            "8",
+            "32",
+            "4",
+            "2"
+        ],
+        "answer": "4"
+    },
+    {
+        "mode": "learn",
+        "concept": "For x^(m/n): the denominator n is the root, the numerator m is the power. <div class=\"example-box\"><div class=\"example-label\">Pattern: x^(m/n) = ⁿ√(x^m) or (ⁿ√x)^m</div><div class=\"example-item\">8^(2/3) = ³√(8²) or (³√8)²</div><div class=\"example-item\">= (2)² = <span class=\"highlight\">4</span></div></div>",
+        "q": "What is 27^(2/3)?",
+        "choices": [
+            "9",
+            "18",
+            "6",
+            "3"
+        ],
+        "answer": "9"
+    },
+    {
+        "mode": "learn",
+        "concept": "You can convert freely between radical notation and rational exponents. <div class=\"example-box\"><div class=\"example-label\">Conversions:</div><div class=\"example-item\">√x = <span class=\"highlight\">x^(1/2)</span></div><div class=\"example-item\">³√x² = <span class=\"highlight\">x^(2/3)</span></div><div class=\"example-item\">⁴√x³ = <span class=\"highlight\">x^(3/4)</span></div></div>",
+        "q": "Write ⁵√x² using exponents",
+        "choices": [
+            "x^(5/2)",
+            "x^(1/5)",
+            "x^(2/5)",
+            "x^(10)"
+        ],
+        "answer": "x^(2/5)"
+    },
+    {
+        "mode": "learn",
+        "concept": "All exponent rules work with rational exponents too! <div class=\"example-box\"><div class=\"example-label\">Example: x^(1/2) × x^(1/3)</div><div class=\"example-item\">Add exponents: 1/2 + 1/3 = 3/6 + 2/6</div><div class=\"example-item\">= 5/6</div><div class=\"example-item\">Answer: <span class=\"highlight\">x^(5/6)</span></div></div>",
+        "q": "Simplify: x^(1/4) × x^(1/4)",
+        "choices": [
+            "x^(1/16)",
+            "x^(1/8)",
+            "x^(1/2)",
+            "x^(2/4)"
+        ],
+        "answer": "x^(1/2)"
+    },
+    {
+        "mode": "practice",
+        "q": "What is 9^(1/2)?",
+        "choices": [
+            "4.5",
+            "18",
+            "3",
+            "81"
+        ],
+        "answer": "3"
+    },
+    {
+        "mode": "practice",
+        "q": "What is 64^(1/3)?",
+        "choices": [
+            "21",
+            "8",
+            "4",
+            "16"
+        ],
+        "answer": "4"
+    },
+    {
+        "mode": "practice",
+        "q": "Write √x³ using exponents",
+        "choices": [
+            "x^(1/3)",
+            "x^(2/3)",
+            "x^(3/2)",
+            "x^(1/2)"
+        ],
+        "answer": "x^(3/2)"
+    },
+    {
+        "mode": "practice",
+        "q": "What is 4^(3/2)?",
+        "choices": [
+            "6",
+            "8",
+            "16",
+            "12"
+        ],
+        "answer": "8"
+    },
+    {
+        "mode": "challenge",
+        "q": "What is 125^(2/3)?",
+        "choices": [
+            "25",
+            "15",
+            "50",
+            "10"
+        ],
+        "answer": "25"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: x^(1/3) × x^(2/3)",
+        "choices": [
+            "x^(2/9)",
+            "x^(3/6)",
+            "x",
+            "x^(1/6)"
+        ],
+        "answer": "x"
+    },
+    {
+        "mode": "challenge",
+        "q": "What is 16^(3/4)?",
+        "choices": [
+            "12",
+            "8",
+            "4",
+            "64"
+        ],
+        "answer": "8"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (x^(1/2))^4",
+        "choices": [
+            "x^(1/8)",
+            "x⁴",
+            "x²",
+            "x^(4/2)"
+        ],
+        "answer": "x²"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

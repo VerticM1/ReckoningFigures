@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Adding like radicals
-            {
-                mode: 'learn',
-                concept: 'You can only add or subtract radicals with the SAME radicand (number under the radical). Think of them like variables! <div class="example-box"><div class="example-label">Example: 3√5 + 2√5</div><div class="example-item">Same radicand (5)</div><div class="example-item">Add coefficients: 3 + 2 = 5</div><div class="example-item">Answer: <span class="highlight">5√5</span></div></div>',
-                q: 'Simplify: 4√7 + 3√7',
-                choices: [
-                    '7√7',
-                    '12√7',
-                    '7√14',
-                    '7√10'
-                ],
-                answer: '7√7'
-            },
-
-            // LEARN 2: Unlike radicals cannot combine
-            {
-                mode: 'learn',
-                concept: 'Unlike radicals (different radicands) CANNOT be combined. They stay separate! <div class="example-box"><div class="example-label">Cannot combine:</div><div class="example-item">2√3 + 5√2 stays as <span class="highlight">2√3 + 5√2</span></div><div class="example-label">Can combine:</div><div class="example-item">2√3 + 5√3 = <span class="highlight">7√3</span></div></div>',
-                q: 'Can 3√5 + 2√7 be simplified?',
-                choices: [
-                    'Yes, equals 5√12',
-                    'Yes, equals 5√35',
-                    'No, different radicands',
-                    'Yes, equals √35'
-                ],
-                answer: 'No, different radicands'
-            },
-
-            // LEARN 3: Multiplying radicals
-            {
-                mode: 'learn',
-                concept: 'To multiply radicals: multiply the coefficients, then multiply the radicands. <div class="example-box"><div class="example-label">Example: (2√3)(4√5)</div><div class="example-item">Coefficients: 2 × 4 = 8</div><div class="example-item">Radicands: √3 × √5 = √15</div><div class="example-item">Answer: <span class="highlight">8√15</span></div></div>',
-                q: 'Multiply: (3√2)(2√3)',
-                choices: [
-                    '5√5',
-                    '6√5',
-                    '6√6',
-                    '5√6'
-                ],
-                answer: '6√6'
-            },
-
-            // LEARN 4: Multiplying same radicals
-            {
-                mode: 'learn',
-                concept: 'When multiplying radicals with the same radicand, the radical disappears! <div class="example-box"><div class="example-label">Example: √5 × √5</div><div class="example-item">√5 × √5 = √25 = <span class="highlight">5</span></div><div class="example-label">Another: (2√3)(3√3)</div><div class="example-item">2 × 3 = 6, √3 × √3 = 3</div><div class="example-item">Answer: <span class="highlight">6 × 3 = 18</span></div></div>',
-                q: 'Multiply: √7 × √7',
-                choices: [
-                    '7',
-                    '√14',
-                    '14',
-                    '√49'
-                ],
-                answer: '7'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Simplify: 5√2 + 3√2',
-                choices: [
-                    '8√2',
-                    '8√4',
-                    '15√2',
-                    '5√5'
-                ],
-                answer: '8√2'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: 7√3 - 2√3',
-                choices: [
-                    '9√3',
-                    '5√3',
-                    '5√0',
-                    '14√3'
-                ],
-                answer: '5√3'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Multiply: √2 × √8',
-                choices: [
-                    '√10',
-                    '4',
-                    '√16',
-                    '2√2'
-                ],
-                answer: '4'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Multiply: (2√5)(3√2)',
-                choices: [
-                    '6√7',
-                    '5√10',
-                    '6√10',
-                    '5√7'
-                ],
-                answer: '6√10'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Simplify: 4√6 + 2√6 - √6',
-                choices: [
-                    '7√6',
-                    '5√6',
-                    '6√6',
-                    '3√6'
-                ],
-                answer: '5√6'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Multiply: (√3)(√12)',
-                choices: [
-                    '√15',
-                    '3√4',
-                    '6',
-                    '√36'
-                ],
-                answer: '6'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Multiply: (2√6)(3√6)',
-                choices: [
-                    '36',
-                    '6√12',
-                    '6√36',
-                    '5√12'
-                ],
-                answer: '36'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: 3√8 + 2√2',
-                choices: [
-                    '5√10',
-                    '8√2',
-                    '5√8',
-                    '6√2 + 2√2'
-                ],
-                answer: '8√2'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "You can only add or subtract radicals with the SAME radicand (number under the radical). Think of them like variables! <div class=\"example-box\"><div class=\"example-label\">Example: 3√5 + 2√5</div><div class=\"example-item\">Same radicand (5)</div><div class=\"example-item\">Add coefficients: 3 + 2 = 5</div><div class=\"example-item\">Answer: <span class=\"highlight\">5√5</span></div></div>",
+        "q": "Simplify: 4√7 + 3√7",
+        "choices": [
+            "7√7",
+            "12√7",
+            "7√14",
+            "7√10"
+        ],
+        "answer": "7√7"
+    },
+    {
+        "mode": "learn",
+        "concept": "Simplify radicals first. If their radicands are still different, they cannot be combined as like radical terms. <div class=\"example-box\"><div class=\"example-label\">Cannot combine:</div><div class=\"example-item\">2√3 + 5√2 stays as <span class=\"highlight\">2√3 + 5√2</span></div><div class=\"example-label\">Can combine:</div><div class=\"example-item\">2√3 + 5√3 = <span class=\"highlight\">7√3</span></div></div>",
+        "q": "Can 3√5 + 2√7 be simplified?",
+        "choices": [
+            "Yes, equals 5√12",
+            "Yes, equals 5√35",
+            "No, different radicands",
+            "Yes, equals √35"
+        ],
+        "answer": "No, different radicands"
+    },
+    {
+        "mode": "learn",
+        "concept": "To multiply radicals: multiply the coefficients, then multiply the radicands. <div class=\"example-box\"><div class=\"example-label\">Example: (2√3)(4√5)</div><div class=\"example-item\">Coefficients: 2 × 4 = 8</div><div class=\"example-item\">Radicands: √3 × √5 = √15</div><div class=\"example-item\">Answer: <span class=\"highlight\">8√15</span></div></div>",
+        "q": "Multiply: (3√2)(2√3)",
+        "choices": [
+            "5√5",
+            "6√5",
+            "6√6",
+            "5√6"
+        ],
+        "answer": "6√6"
+    },
+    {
+        "mode": "learn",
+        "concept": "When multiplying radicals with the same radicand, the radical disappears! <div class=\"example-box\"><div class=\"example-label\">Example: √5 × √5</div><div class=\"example-item\">√5 × √5 = √25 = <span class=\"highlight\">5</span></div><div class=\"example-label\">Another: (2√3)(3√3)</div><div class=\"example-item\">2 × 3 = 6, √3 × √3 = 3</div><div class=\"example-item\">Answer: <span class=\"highlight\">6 × 3 = 18</span></div></div>",
+        "q": "Multiply: √7 × √7",
+        "choices": [
+            "7",
+            "√14",
+            "14",
+            "√49"
+        ],
+        "answer": "7"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: 5√2 + 3√2",
+        "choices": [
+            "8√2",
+            "8√4",
+            "15√2",
+            "5√5"
+        ],
+        "answer": "8√2"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: 7√3 - 2√3",
+        "choices": [
+            "9√3",
+            "5√3",
+            "5√0",
+            "14√3"
+        ],
+        "answer": "5√3"
+    },
+    {
+        "mode": "practice",
+        "q": "Multiply: √2 × √8",
+        "choices": [
+            "√10",
+            "4",
+            "√16",
+            "2√2"
+        ],
+        "answer": "4"
+    },
+    {
+        "mode": "practice",
+        "q": "Multiply: (2√5)(3√2)",
+        "choices": [
+            "6√7",
+            "5√10",
+            "6√10",
+            "5√7"
+        ],
+        "answer": "6√10"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: 4√6 + 2√6 - √6",
+        "choices": [
+            "7√6",
+            "5√6",
+            "6√6",
+            "3√6"
+        ],
+        "answer": "5√6"
+    },
+    {
+        "mode": "challenge",
+        "q": "Multiply: (√3)(√12)",
+        "choices": [
+            "√15",
+            "3√4",
+            "6",
+            "√36"
+        ],
+        "answer": "6"
+    },
+    {
+        "mode": "challenge",
+        "q": "Multiply: (2√6)(3√6)",
+        "choices": [
+            "36",
+            "6√12",
+            "6√36",
+            "5√12"
+        ],
+        "answer": "36"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: 3√8 + 2√2",
+        "choices": [
+            "5√10",
+            "8√2",
+            "5√8",
+            "6√2 + 2√2"
+        ],
+        "answer": "8√2"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

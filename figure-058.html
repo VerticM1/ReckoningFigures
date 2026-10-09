@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Functions model relationships
-            {
-                mode: 'learn',
-                concept: 'Functions describe real-world relationships where one thing depends on another. Input = independent variable, Output = dependent variable. <div class="example-box"><div class="example-label">Example: C(t) = 50t</div><div class="example-item">C = cost (depends on time)</div><div class="example-item">t = time in hours</div><div class="example-item">$50 per hour rate</div></div>',
-                q: 'If C(h) = 15h models cost based on hours, what does C(3) represent?',
-                choices: [
-                    'Cost for 15 hours',
-                    'Cost for 3 hours',
-                    'Cost per hour',
-                    '3 times the rate'
-                ],
-                answer: 'Cost for 3 hours'
-            },
-
-            // LEARN 2: Interpreting function values
-            {
-                mode: 'learn',
-                concept: 'Function values tell you specific information. The input and output have units and meaning! <div class="example-box"><div class="example-label">d(t) = 60t (distance in miles, t in hours)</div><div class="example-item">d(2) = 120 means:</div><div class="example-item"><span class="highlight">After 2 hours, distance is 120 miles</span></div></div>',
-                q: 'If P(t) = 100 + 20t gives profit in dollars after t days, what does P(5) = 200 mean?',
-                choices: [
-                    'Profit is $200 on day 5',
-                    'Profit after 5 days is $200',
-                    '5 days cost $200',
-                    'Profit rate is $200'
-                ],
-                answer: 'Profit after 5 days is $200'
-            },
-
-            // LEARN 3: Rate of change in context
-            {
-                mode: 'learn',
-                concept: 'In f(x) = mx + b, the slope m is the rate of change - how much the output changes per unit input. <div class="example-box"><div class="example-label">W(t) = 150 + 5t (weight in grams)</div><div class="example-item">m = 5 means: <span class="highlight">gains 5 grams per day</span></div><div class="example-item">b = 150 means: started at 150 grams</div></div>',
-                q: 'If H(d) = 500 - 20d models water level (liters) after d days, what does -20 represent?',
-                choices: [
-                    'Water increases 20 liters/day',
-                    'Water decreases 20 liters/day',
-                    'Starting water amount',
-                    'Total water'
-                ],
-                answer: 'Water decreases 20 liters/day'
-            },
-
-            // LEARN 4: Domain in real contexts
-            {
-                mode: 'learn',
-                concept: 'In real applications, domain and range have practical limits. Not all mathematical values make sense! <div class="example-box"><div class="example-label">A(s) = s² (area of square, side s)</div><div class="example-item">Mathematical domain: all numbers</div><div class="example-item">Practical domain: <span class="highlight">s > 0 only</span></div><div class="example-item">(Negative side length makes no sense!)</div></div>',
-                q: 'For T(m) = cost of m movie tickets at $12 each, what\'s a reasonable domain?',
-                choices: [
-                    'All real numbers',
-                    'Positive integers only',
-                    'Negative numbers',
-                    'Fractions only'
-                ],
-                answer: 'Positive integers only'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'If C(n) = 5n models cost for n items at $5 each, what is C(10)?',
-                choices: [
-                    '$15',
-                    '$50',
-                    '$5',
-                    '$500'
-                ],
-                answer: '$50'
-            },
-
-            {
-                mode: 'practice',
-                q: 'If d(t) = 30t gives distance in miles after t hours, what is the speed?',
-                choices: [
-                    '30 mph',
-                    't mph',
-                    'd mph',
-                    '30t mph'
-                ],
-                answer: '30 mph'
-            },
-
-            {
-                mode: 'practice',
-                q: 'If P(x) = 100 - 10x models profit, what does -10 mean?',
-                choices: [
-                    'Profit increases $10',
-                    'Profit decreases $10 per unit',
-                    'Starting profit',
-                    'Total profit'
-                ],
-                answer: 'Profit decreases $10 per unit'
-            },
-
-            {
-                mode: 'practice',
-                q: 'If T(h) = 20 + 2h models temperature after h hours, what was the starting temperature?',
-                choices: [
-                    '2 degrees',
-                    'h degrees',
-                    '20 degrees',
-                    '22 degrees'
-                ],
-                answer: '20 degrees'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'A phone plan: C(m) = 40 + 0.10m (m = minutes). What\'s the cost for 100 minutes?',
-                choices: [
-                    '$40',
-                    '$50',
-                    '$140',
-                    '$100'
-                ],
-                answer: '$50'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'A car rental: C(d) = 35d + 50. What does the 50 represent?',
-                choices: [
-                    'Daily rate',
-                    'One-time fee',
-                    'Cost per mile',
-                    'Total cost'
-                ],
-                answer: 'One-time fee'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Population: P(t) = 5000 + 200t (t in years). When does population reach 6000?',
-                choices: [
-                    't = 5 years',
-                    't = 10 years',
-                    't = 200 years',
-                    't = 1 year'
-                ],
-                answer: 't = 5 years'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Account balance: B(m) = 1000 - 50m (m = months). After how many months is balance $500?',
-                choices: [
-                    '5 months',
-                    '10 months',
-                    '20 months',
-                    '50 months'
-                ],
-                answer: '10 months'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "Functions describe real-world relationships where one thing depends on another. Input = independent variable, Output = dependent variable. <div class=\"example-box\"><div class=\"example-label\">Example: C(t) = 50t</div><div class=\"example-item\">C = cost (depends on time)</div><div class=\"example-item\">t = time in hours</div><div class=\"example-item\">$50 per hour rate</div></div>",
+        "q": "If C(h) = 15h models cost based on hours, what does C(3) represent?",
+        "choices": [
+            "Cost for 15 hours",
+            "Cost for 3 hours",
+            "Cost per hour",
+            "3 times the rate"
+        ],
+        "answer": "Cost for 3 hours"
+    },
+    {
+        "mode": "learn",
+        "concept": "Function values tell you specific information. The input and output have units and meaning! <div class=\"example-box\"><div class=\"example-label\">d(t) = 60t (distance in miles, t in hours)</div><div class=\"example-item\">d(2) = 120 means:</div><div class=\"example-item\"><span class=\"highlight\">After 2 hours, distance is 120 miles</span></div></div>",
+        "q": "If P(t) = 100 + 20t gives profit in dollars after t days, what does P(5) = 200 mean?",
+        "choices": [
+            "Profit is $200 on day 5",
+            "Profit after 5 days is $200",
+            "5 days cost $200",
+            "Profit rate is $200"
+        ],
+        "answer": "Profit after 5 days is $200"
+    },
+    {
+        "mode": "learn",
+        "concept": "In f(x) = mx + b, the slope m is the rate of change - how much the output changes per unit input. <div class=\"example-box\"><div class=\"example-label\">W(t) = 150 + 5t (weight in grams)</div><div class=\"example-item\">m = 5 means: <span class=\"highlight\">gains 5 grams per day</span></div><div class=\"example-item\">b = 150 means: started at 150 grams</div></div>",
+        "q": "If H(d) = 500 - 20d models water level (liters) after d days, what does -20 represent?",
+        "choices": [
+            "Water increases 20 liters/day",
+            "Water decreases 20 liters/day",
+            "Starting water amount",
+            "Total water"
+        ],
+        "answer": "Water decreases 20 liters/day"
+    },
+    {
+        "mode": "learn",
+        "concept": "In real applications, domain and range have practical limits. Not all mathematical values make sense! <div class=\"example-box\"><div class=\"example-label\">A(s) = s² (area of square, side s)</div><div class=\"example-item\">Mathematical domain: all numbers</div><div class=\"example-item\">Practical domain: <span class=\"highlight\">s > 0 only</span></div><div class=\"example-item\">(Negative side length makes no sense!)</div></div>",
+        "q": "For T(m) = 12m, the cost of m movie tickets including buying zero tickets, what is a reasonable domain?",
+        "choices": [
+            "All real numbers",
+            "Nonnegative integers (0, 1, 2, ...)",
+            "Negative numbers",
+            "Fractions only"
+        ],
+        "answer": "Nonnegative integers (0, 1, 2, ...)"
+    },
+    {
+        "mode": "practice",
+        "q": "If C(n) = 5n models cost for n items at $5 each, what is C(10)?",
+        "choices": [
+            "$15",
+            "$50",
+            "$5",
+            "$500"
+        ],
+        "answer": "$50"
+    },
+    {
+        "mode": "practice",
+        "q": "If d(t) = 30t gives distance in miles after t hours, what is the speed?",
+        "choices": [
+            "30 mph",
+            "t mph",
+            "d mph",
+            "30t mph"
+        ],
+        "answer": "30 mph"
+    },
+    {
+        "mode": "practice",
+        "q": "If P(x) = 100 - 10x models profit, what does -10 mean?",
+        "choices": [
+            "Profit increases $10",
+            "Profit decreases $10 per unit",
+            "Starting profit",
+            "Total profit"
+        ],
+        "answer": "Profit decreases $10 per unit"
+    },
+    {
+        "mode": "practice",
+        "q": "If T(h) = 20 + 2h models temperature after h hours, what was the starting temperature?",
+        "choices": [
+            "2 degrees",
+            "h degrees",
+            "20 degrees",
+            "22 degrees"
+        ],
+        "answer": "20 degrees"
+    },
+    {
+        "mode": "challenge",
+        "q": "A phone plan: C(m) = 40 + 0.10m (m = minutes). What's the cost for 100 minutes?",
+        "choices": [
+            "$40",
+            "$50",
+            "$140",
+            "$100"
+        ],
+        "answer": "$50"
+    },
+    {
+        "mode": "challenge",
+        "q": "A car rental: C(d) = 35d + 50. What does the 50 represent?",
+        "choices": [
+            "Daily rate",
+            "One-time fee",
+            "Cost per mile",
+            "Total cost"
+        ],
+        "answer": "One-time fee"
+    },
+    {
+        "mode": "challenge",
+        "q": "Population: P(t) = 5000 + 200t (t in years). When does population reach 6000?",
+        "choices": [
+            "t = 5 years",
+            "t = 10 years",
+            "t = 200 years",
+            "t = 1 year"
+        ],
+        "answer": "t = 5 years"
+    },
+    {
+        "mode": "challenge",
+        "q": "Account balance: B(m) = 1000 - 50m (m = months). After how many months is balance $500?",
+        "choices": [
+            "5 months",
+            "10 months",
+            "20 months",
+            "50 months"
+        ],
+        "answer": "10 months"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

@@ -1594,78 +1594,94 @@
         };
 
         const problems = [
-            // Introduction to literal equations
-            { 
-                type: 'multiple-choice',
-                eq: 'y = 2x + 5', 
-                q: 'To solve for <span class="var">x</span>, what should we do first?', 
-                choices: ['Subtract 5 from both sides', 'Divide by 2', 'Add 5 to both sides'], 
-                answer: 0 
-            },
-            // After first step
-            { 
-                type: 'multiple-choice',
-                eq: 'y − 5 = 2x', 
-                q: 'What do we do next to isolate <span class="var">x</span>?', 
-                choices: ['Divide both sides by 2', 'Multiply by 2', 'Subtract 2'], 
-                answer: 0 
-            },
-            // True/False understanding
-            {
-                type: 'true-false',
-                eq: 'A = lw',
-                q: 'To solve for <span class="var">w</span>, we divide both sides by <span class="var">l</span>',
-                answer: true
-            },
-            // Solve for variable
-            { 
-                type: 'multiple-choice',
-                eq: 'P = 2l + 2w', 
-                q: 'If we solve for <span class="var">w</span>, the first step is:', 
-                choices: ['Subtract 2l from both sides', 'Divide by 2', 'Add 2l'], 
-                answer: 0 
-            },
-            // Fill in result
-            {
-                type: 'fill-blank',
-                eq: 'A = bh',
-                q: 'Solve for h: h = A ÷ ?',
-                answer: 'b',
-                placeholder: 'Enter variable'
-            },
-            // Complete literal equation
-            { 
-                type: 'multiple-choice',
-                eq: 'C = 2πr, solve for r', 
-                q: 'What is <span class="var">r</span> equal to?', 
-                choices: ['r = C ÷ 2π', 'r = 2πC', 'r = C − 2π'], 
-                answer: 0 
-            },
-            // Distance formula
-            {
-                type: 'fill-blank',
-                eq: 'd = rt',
-                q: 'Solve for t: t = d ÷ ?',
-                answer: 'r',
-                placeholder: 'Enter variable'
-            },
-            // More complex
-            { 
-                type: 'multiple-choice',
-                eq: 'V = lwh, solve for h', 
-                q: 'What is <span class="var">h</span> equal to?', 
-                choices: ['h = V ÷ (lw)', 'h = Vlw', 'h = V − lw'], 
-                answer: 0 
-            },
-            // Final challenge
-            { 
-                type: 'multiple-choice',
-                eq: 'y = mx + b, solve for x', 
-                q: 'What is <span class="var">x</span> equal to?', 
-                choices: ['x = (y + b) ÷ m', 'x = (y − b) ÷ m', 'x = y − b − m'], 
-                answer: 1 
-            }
-        ];
+    {
+        "type": "multiple-choice",
+        "eq": "y = 2x + 5",
+        "q": "To solve for <span class=\"var\">x</span>, what should we do first?",
+        "choices": [
+            "Subtract 5 from both sides",
+            "Divide by 2",
+            "Add 5 to both sides"
+        ],
+        "answer": 0,
+        "concept": "<p>Assume each variable used as a divisor is nonzero.</p>"
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "y − 5 = 2x",
+        "q": "What do we do next to isolate <span class=\"var\">x</span>?",
+        "choices": [
+            "Divide both sides by 2",
+            "Multiply by 2",
+            "Subtract 2"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "true-false",
+        "eq": "A = lw",
+        "q": "To solve for <span class=\"var\">w</span>, we divide both sides by <span class=\"var\">l</span>",
+        "answer": true
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "P = 2l + 2w",
+        "q": "If we solve for <span class=\"var\">w</span>, the first step is:",
+        "choices": [
+            "Subtract 2l from both sides",
+            "Divide by 2",
+            "Add 2l"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "fill-blank",
+        "eq": "A = bh",
+        "q": "Solve for h: h = A ÷ ?",
+        "answer": "b",
+        "placeholder": "Enter variable"
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "C = 2πr, solve for r",
+        "q": "What is <span class=\"var\">r</span> equal to?",
+        "choices": [
+            "r = C ÷ (2π)",
+            "r = 2πC",
+            "r = C − 2π"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "fill-blank",
+        "eq": "d = rt",
+        "q": "Solve for t: t = d ÷ ?",
+        "answer": "r",
+        "placeholder": "Enter variable"
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "V = lwh, solve for h",
+        "q": "What is <span class=\"var\">h</span> equal to?",
+        "choices": [
+            "h = V ÷ (lw)",
+            "h = Vlw",
+            "h = V − lw"
+        ],
+        "answer": 0
+    },
+    {
+        "type": "multiple-choice",
+        "eq": "y = mx + b, solve for x",
+        "q": "What is <span class=\"var\">x</span> equal to?",
+        "choices": [
+            "x = (y + b) ÷ m",
+            "x = (y − b) ÷ m",
+            "x = y − b − m"
+        ],
+        "answer": 1
+    }
+];
 
         const feedback = {
             correct: ['Amazing!', 'Perfect!', 'Excellent!', 'Brilliant!', 'Good job!', 'Incredible!'],

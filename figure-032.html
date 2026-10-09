@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: The formula
-            {
-                mode: 'learn',
-                concept: 'The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class="example-box"><div class="example-label">Remember:</div><div class="example-item">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class="example-item">Denominator: 2a</div><div class="example-item">The ± gives you <span class="highlight">TWO solutions</span></div></div>',
-                q: 'In the quadratic formula, what goes under the square root?',
-                choices: [
-                    'b² - 4ac',
-                    '-b',
-                    '2a',
-                    'b² + 4ac'
-                ],
-                answer: 'b² - 4ac'
-            },
-
-            // LEARN 2: Identifying a, b, c
-            {
-                mode: 'learn',
-                concept: 'First step: identify a, b, and c correctly. The equation MUST be in standard form ax² + bx + c = 0. <div class="example-box"><div class="example-label">Example: 2x² - 5x + 3 = 0</div><div class="example-item">a = <span class="highlight">2</span> (with x²)</div><div class="example-item">b = <span class="highlight">-5</span> (with x, keep the sign!)</div><div class="example-item">c = <span class="highlight">3</span> (alone)</div></div>',
-                q: 'For x² + 7x - 2 = 0, what is b?',
-                choices: [
-                    '-7',
-                    '1',
-                    '7',
-                    '-2'
-                ],
-                answer: '7'
-            },
-
-            // LEARN 3: Plugging in
-            {
-                mode: 'learn',
-                concept: 'Substitute a, b, c into the formula carefully. Watch negative signs! <div class="example-box"><div class="example-label">Example: x² + 4x + 3 = 0</div><div class="example-item">a=1, b=4, c=3</div><div class="example-item">x = (-4 ± √(16 - 12)) / 2</div><div class="example-item">x = (-4 ± √4) / 2</div><div class="example-item">x = (-4 ± 2) / 2 → <span class="highlight">x = -1 or x = -3</span></div></div>',
-                q: 'For x² - 6x + 8 = 0, what is -b in the formula?',
-                choices: [
-                    '-6',
-                    '6',
-                    '8',
-                    '-8'
-                ],
-                answer: '6'
-            },
-
-            // LEARN 4: The discriminant
-            {
-                mode: 'learn',
-                concept: 'The discriminant b² - 4ac tells you how many solutions exist. Positive = 2 solutions, Zero = 1 solution, Negative = no real solutions. <div class="example-box"><div class="example-label">Example checks:</div><div class="example-item">b² - 4ac = 25 → <span class="highlight">2 solutions</span></div><div class="example-item">b² - 4ac = 0 → <span class="highlight">1 solution</span></div><div class="example-item">b² - 4ac = -4 → <span class="highlight">no real solutions</span></div></div>',
-                q: 'If b² - 4ac = 0, how many solutions are there?',
-                choices: [
-                    'Two solutions',
-                    'No solutions',
-                    'One solution',
-                    'Infinite solutions'
-                ],
-                answer: 'One solution'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'For 3x² + 2x - 1 = 0, what is the value of a?',
-                choices: [
-                    '2',
-                    '3',
-                    '-1',
-                    '1'
-                ],
-                answer: '3'
-            },
-
-            {
-                mode: 'practice',
-                q: 'For x² - 8x + 15 = 0, what is b² - 4ac?',
-                choices: [
-                    '64',
-                    '4',
-                    '16',
-                    '60'
-                ],
-                answer: '4'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Using the quadratic formula on x² + 2x - 3 = 0, what is -b?',
-                choices: [
-                    '2',
-                    '-2',
-                    '3',
-                    '-3'
-                ],
-                answer: '-2'
-            },
-
-            {
-                mode: 'practice',
-                q: 'For x² + 5x + 6 = 0, the discriminant is 1. How many solutions?',
-                choices: [
-                    'None',
-                    'One',
-                    'Two',
-                    'Three'
-                ],
-                answer: 'Two'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Solve x² + 6x + 5 = 0 using the quadratic formula',
-                choices: [
-                    'x = -1 or x = -5',
-                    'x = 1 or x = 5',
-                    'x = -6 or x = -5',
-                    'x = 1 or x = -5'
-                ],
-                answer: 'x = -1 or x = -5'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'For 2x² + 4x - 6 = 0, what is the discriminant b² - 4ac?',
-                choices: [
-                    '16',
-                    '64',
-                    '4',
-                    '40'
-                ],
-                answer: '64'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Solve x² - 4x + 4 = 0 using the formula. What do you get?',
-                choices: [
-                    'x = 2 (one solution)',
-                    'x = 2 or x = -2',
-                    'x = 4 or x = 0',
-                    'x = 1 or x = 4'
-                ],
-                answer: 'x = 2 (one solution)'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'For x² + x - 12 = 0, using the formula gives x = (-1 ± 7) / 2. What are the solutions?',
-                choices: [
-                    'x = 4 or x = -3',
-                    'x = 3 or x = -4',
-                    'x = -3 or x = 4',
-                    'x = 6 or x = -7'
-                ],
-                answer: 'x = 3 or x = -4'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "The Quadratic Formula solves ANY quadratic equation. For ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac)) / 2a. <div class=\"example-box\"><div class=\"example-label\">Remember:</div><div class=\"example-item\">Numerator: -b plus/minus square root of (b² - 4ac)</div><div class=\"example-item\">Denominator: 2a</div><div class=\"example-item\">For real coefficients with a ≠ 0, the discriminant determines whether there are <span class=\"highlight\">two, one, or no real solutions</span></div></div>",
+        "q": "In the quadratic formula, what goes under the square root?",
+        "choices": [
+            "b² - 4ac",
+            "-b",
+            "2a",
+            "b² + 4ac"
+        ],
+        "answer": "b² - 4ac"
+    },
+    {
+        "mode": "learn",
+        "concept": "First step: identify a, b, and c correctly. The equation MUST be in standard form ax² + bx + c = 0. <div class=\"example-box\"><div class=\"example-label\">Example: 2x² - 5x + 3 = 0</div><div class=\"example-item\">a = <span class=\"highlight\">2</span> (with x²)</div><div class=\"example-item\">b = <span class=\"highlight\">-5</span> (with x, keep the sign!)</div><div class=\"example-item\">c = <span class=\"highlight\">3</span> (alone)</div></div>",
+        "q": "For x² + 7x - 2 = 0, what is b?",
+        "choices": [
+            "-7",
+            "1",
+            "7",
+            "-2"
+        ],
+        "answer": "7"
+    },
+    {
+        "mode": "learn",
+        "concept": "Substitute a, b, c into the formula carefully. Watch negative signs! <div class=\"example-box\"><div class=\"example-label\">Example: x² + 4x + 3 = 0</div><div class=\"example-item\">a=1, b=4, c=3</div><div class=\"example-item\">x = (-4 ± √(16 - 12)) / 2</div><div class=\"example-item\">x = (-4 ± √4) / 2</div><div class=\"example-item\">x = (-4 ± 2) / 2 → <span class=\"highlight\">x = -1 or x = -3</span></div></div>",
+        "q": "For x² - 6x + 8 = 0, what is -b in the formula?",
+        "choices": [
+            "-6",
+            "6",
+            "8",
+            "-8"
+        ],
+        "answer": "6"
+    },
+    {
+        "mode": "learn",
+        "concept": "The discriminant b² - 4ac tells you how many solutions exist. Positive = 2 solutions, Zero = 1 solution, Negative = no real solutions. <div class=\"example-box\"><div class=\"example-label\">Example checks:</div><div class=\"example-item\">b² - 4ac = 25 → <span class=\"highlight\">2 solutions</span></div><div class=\"example-item\">b² - 4ac = 0 → <span class=\"highlight\">1 solution</span></div><div class=\"example-item\">b² - 4ac = -4 → <span class=\"highlight\">no real solutions</span></div></div>",
+        "q": "If b² - 4ac = 0, how many solutions are there?",
+        "choices": [
+            "Two solutions",
+            "No solutions",
+            "One solution",
+            "Infinite solutions"
+        ],
+        "answer": "One solution"
+    },
+    {
+        "mode": "practice",
+        "q": "For 3x² + 2x - 1 = 0, what is the value of a?",
+        "choices": [
+            "2",
+            "3",
+            "-1",
+            "1"
+        ],
+        "answer": "3"
+    },
+    {
+        "mode": "practice",
+        "q": "For x² - 8x + 15 = 0, what is b² - 4ac?",
+        "choices": [
+            "64",
+            "4",
+            "16",
+            "60"
+        ],
+        "answer": "4"
+    },
+    {
+        "mode": "practice",
+        "q": "Using the quadratic formula on x² + 2x - 3 = 0, what is -b?",
+        "choices": [
+            "2",
+            "-2",
+            "3",
+            "-3"
+        ],
+        "answer": "-2"
+    },
+    {
+        "mode": "practice",
+        "q": "For x² + 5x + 6 = 0, the discriminant is 1. How many solutions?",
+        "choices": [
+            "None",
+            "One",
+            "Two",
+            "Three"
+        ],
+        "answer": "Two"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve x² + 6x + 5 = 0 using the quadratic formula",
+        "choices": [
+            "x = -1 or x = -5",
+            "x = 1 or x = 5",
+            "x = -6 or x = -5",
+            "x = 1 or x = -5"
+        ],
+        "answer": "x = -1 or x = -5"
+    },
+    {
+        "mode": "challenge",
+        "q": "For 2x² + 4x - 6 = 0, what is the discriminant b² - 4ac?",
+        "choices": [
+            "16",
+            "64",
+            "4",
+            "40"
+        ],
+        "answer": "64"
+    },
+    {
+        "mode": "challenge",
+        "q": "Solve x² - 4x + 4 = 0 using the formula. What do you get?",
+        "choices": [
+            "x = 2 (one solution)",
+            "x = 2 or x = -2",
+            "x = 4 or x = 0",
+            "x = 1 or x = 4"
+        ],
+        "answer": "x = 2 (one solution)"
+    },
+    {
+        "mode": "challenge",
+        "q": "For x² + x - 12 = 0, using the formula gives x = (-1 ± 7) / 2. What are the solutions?",
+        "choices": [
+            "x = 4 or x = -3",
+            "x = 3 or x = -4",
+            "x = -3 or x = 4",
+            "x = 6 or x = -7"
+        ],
+        "answer": "x = 3 or x = -4"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

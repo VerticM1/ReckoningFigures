@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Area problems
-            {
-                mode: 'learn',
-                concept: 'Polynomials model area when dimensions are expressions. Remember: Area = length × width. <div class="example-box"><div class="example-label">Example: Rectangle with length (x + 5) and width (x + 2)</div><div class="example-item">Area = (x + 5)(x + 2)</div><div class="example-item">= x² + 2x + 5x + 10</div><div class="example-item">= <span class="highlight">x² + 7x + 10</span></div></div>',
-                q: 'A square has side length (x + 3). What is its area?',
-                choices: [
-                    'x² + 9',
-                    'x² + 3x + 9',
-                    'x² + 6x + 9',
-                    '4x + 12'
-                ],
-                answer: 'x² + 6x + 9'
-            },
-
-            // LEARN 2: Volume problems
-            {
-                mode: 'learn',
-                concept: 'Volume of a box is length × width × height. This creates cubic polynomials. <div class="example-box"><div class="example-label">Box: length 2x, width x, height 3</div><div class="example-item">Volume = 2x × x × 3</div><div class="example-item">= 6x × x</div><div class="example-item">= <span class="highlight">6x²</span></div></div>',
-                q: 'A box has dimensions x, x, and 2. What is its volume?',
-                choices: [
-                    '2x',
-                    'x³ + 2',
-                    '2x²',
-                    '2x³'
-                ],
-                answer: '2x²'
-            },
-
-            // LEARN 3: Perimeter vs Area
-            {
-                mode: 'learn',
-                concept: 'Perimeter is ADD all sides. Area is MULTIPLY dimensions. Don\'t confuse them! <div class="example-box"><div class="example-label">Rectangle: length (x + 4), width (x + 1)</div><div class="example-item">Perimeter: 2(x+4) + 2(x+1) = <span class="highlight">4x + 10</span></div><div class="example-item">Area: (x+4)(x+1) = <span class="highlight">x² + 5x + 4</span></div></div>',
-                q: 'For a square with side (2x + 1), what is the PERIMETER?',
-                choices: [
-                    '8x + 4',
-                    '4x² + 4x + 1',
-                    '2x + 1',
-                    '4x + 2'
-                ],
-                answer: '8x + 4'
-            },
-
-            // LEARN 4: Consecutive integers
-            {
-                mode: 'learn',
-                concept: 'Consecutive integers are n, n+1, n+2. Their product creates polynomials. <div class="example-box"><div class="example-label">Product of x and (x + 1)</div><div class="example-item">x(x + 1) = x² + x</div><div class="example-label">Product of 3 consecutive: x, x+1, x+2</div><div class="example-item">x(x+1)(x+2) creates cubic polynomial</div></div>',
-                q: 'What is the product of consecutive integers x and (x + 2)?',
-                choices: [
-                    'x² + 2',
-                    '2x + 2',
-                    'x² + 2x',
-                    'x + 2'
-                ],
-                answer: 'x² + 2x'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'A rectangle has length (x + 6) and width (x + 1). What is its area?',
-                choices: [
-                    'x² + 7x + 6',
-                    '2x + 7',
-                    'x² + 6x + 1',
-                    'x² + 6'
-                ],
-                answer: 'x² + 7x + 6'
-            },
-
-            {
-                mode: 'practice',
-                q: 'A cube has side length 2x. What is its volume?',
-                choices: [
-                    '6x',
-                    '2x³',
-                    '8x³',
-                    '6x²'
-                ],
-                answer: '8x³'
-            },
-
-            {
-                mode: 'practice',
-                q: 'A square has side (x + 4). What is its perimeter?',
-                choices: [
-                    'x + 4',
-                    '4x + 4',
-                    '4x + 16',
-                    'x² + 8x + 16'
-                ],
-                answer: '4x + 16'
-            },
-
-            {
-                mode: 'practice',
-                q: 'What is the product of consecutive integers x and (x + 1)?',
-                choices: [
-                    'x + 1',
-                    'x² + x',
-                    '2x + 1',
-                    'x²'
-                ],
-                answer: 'x² + x'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'A rectangle is twice as long as it is wide. If width is x, what is the area?',
-                choices: [
-                    '2x',
-                    'x²',
-                    '2x²',
-                    '3x'
-                ],
-                answer: '2x²'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'A box has length (x + 2), width x, and height 2. What is its volume?',
-                choices: [
-                    '2x² + 4x',
-                    '2x³ + 4x²',
-                    'x² + 2x',
-                    '2x + 4'
-                ],
-                answer: '2x² + 4x'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'The product of three consecutive integers starting at x is 60. What polynomial equals 60?',
-                choices: [
-                    'x³ + 3x² + 2x',
-                    'x + (x+1) + (x+2)',
-                    'x(x+1)(x+2)',
-                    '3x + 3'
-                ],
-                answer: 'x(x+1)(x+2)'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'A garden is 3 feet longer than it is wide. If width is x and area is 40, what equation do you solve?',
-                choices: [
-                    '2x + 3 = 40',
-                    'x² + 3 = 40',
-                    'x(x + 3) = 40',
-                    '3x = 40'
-                ],
-                answer: 'x(x + 3) = 40'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "Polynomials model area when dimensions are expressions. Remember: Area = length × width. <div class=\"example-box\"><div class=\"example-label\">Example: Rectangle with length (x + 5) and width (x + 2)</div><div class=\"example-item\">Area = (x + 5)(x + 2)</div><div class=\"example-item\">= x² + 2x + 5x + 10</div><div class=\"example-item\">= <span class=\"highlight\">x² + 7x + 10</span></div></div>",
+        "q": "A square has side length (x + 3). What is its area?",
+        "choices": [
+            "x² + 9",
+            "x² + 3x + 9",
+            "x² + 6x + 9",
+            "4x + 12"
+        ],
+        "answer": "x² + 6x + 9"
+    },
+    {
+        "mode": "learn",
+        "concept": "Volume of a box is length × width × height. The degree depends on which dimensions vary; three variable dimensions can create a cubic polynomial. <div class=\"example-box\"><div class=\"example-label\">Box: length 2x, width x, height 3</div><div class=\"example-item\">Volume = 2x × x × 3</div><div class=\"example-item\">= 6x × x</div><div class=\"example-item\">= <span class=\"highlight\">6x²</span></div></div>",
+        "q": "A box has dimensions x, x, and 2. What is its volume?",
+        "choices": [
+            "2x",
+            "x³ + 2",
+            "2x²",
+            "2x³"
+        ],
+        "answer": "2x²"
+    },
+    {
+        "mode": "learn",
+        "concept": "Perimeter is ADD all sides. Area is MULTIPLY dimensions. Don't confuse them! <div class=\"example-box\"><div class=\"example-label\">Rectangle: length (x + 4), width (x + 1)</div><div class=\"example-item\">Perimeter: 2(x+4) + 2(x+1) = <span class=\"highlight\">4x + 10</span></div><div class=\"example-item\">Area: (x+4)(x+1) = <span class=\"highlight\">x² + 5x + 4</span></div></div>",
+        "q": "For a square with side (2x + 1), what is the PERIMETER?",
+        "choices": [
+            "8x + 4",
+            "4x² + 4x + 1",
+            "2x + 1",
+            "4x + 2"
+        ],
+        "answer": "8x + 4"
+    },
+    {
+        "mode": "learn",
+        "concept": "Consecutive integers are n, n+1, n+2. Their product creates polynomials. <div class=\"example-box\"><div class=\"example-label\">Product of x and (x + 1)</div><div class=\"example-item\">x(x + 1) = x² + x</div><div class=\"example-label\">Product of 3 consecutive: x, x+1, x+2</div><div class=\"example-item\">x(x+1)(x+2) creates cubic polynomial</div></div>",
+        "q": "What is the product of consecutive even integers x and (x + 2), where x is even?",
+        "choices": [
+            "x² + 2",
+            "2x + 2",
+            "x² + 2x",
+            "x + 2"
+        ],
+        "answer": "x² + 2x"
+    },
+    {
+        "mode": "practice",
+        "q": "A rectangle has length (x + 6) and width (x + 1). What is its area?",
+        "choices": [
+            "x² + 7x + 6",
+            "2x + 7",
+            "x² + 6x + 1",
+            "x² + 6"
+        ],
+        "answer": "x² + 7x + 6"
+    },
+    {
+        "mode": "practice",
+        "q": "A cube has side length 2x. What is its volume?",
+        "choices": [
+            "6x",
+            "2x³",
+            "8x³",
+            "6x²"
+        ],
+        "answer": "8x³"
+    },
+    {
+        "mode": "practice",
+        "q": "A square has side (x + 4). What is its perimeter?",
+        "choices": [
+            "x + 4",
+            "4x + 4",
+            "4x + 16",
+            "x² + 8x + 16"
+        ],
+        "answer": "4x + 16"
+    },
+    {
+        "mode": "practice",
+        "q": "What is the product of consecutive integers x and (x + 1)?",
+        "choices": [
+            "x + 1",
+            "x² + x",
+            "2x + 1",
+            "x²"
+        ],
+        "answer": "x² + x"
+    },
+    {
+        "mode": "challenge",
+        "q": "A rectangle is twice as long as it is wide. If width is x, what is the area?",
+        "choices": [
+            "2x",
+            "x²",
+            "2x²",
+            "3x"
+        ],
+        "answer": "2x²"
+    },
+    {
+        "mode": "challenge",
+        "q": "A box has length (x + 2), width x, and height 2. What is its volume?",
+        "choices": [
+            "2x² + 4x",
+            "2x³ + 4x²",
+            "x² + 2x",
+            "2x + 4"
+        ],
+        "answer": "2x² + 4x"
+    },
+    {
+        "mode": "challenge",
+        "q": "The product of three consecutive integers starting at x is 60. What polynomial equals 60?",
+        "choices": [
+            "x³ + 3x² + 2x",
+            "x + (x+1) + (x+2)",
+            "x(x+1)(x+2)",
+            "3x + 3"
+        ],
+        "answer": "x(x+1)(x+2)"
+    },
+    {
+        "mode": "challenge",
+        "q": "A garden is 3 feet longer than it is wide. If width is x and area is 40, what equation do you solve?",
+        "choices": [
+            "2x + 3 = 40",
+            "x² + 3 = 40",
+            "x(x + 3) = 40",
+            "3x = 40"
+        ],
+        "answer": "x(x + 3) = 40"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Zero exponent rule
-            {
-                mode: 'learn',
-                concept: 'ANY nonzero number raised to the power of zero equals 1. This is always true! <div class="example-box"><div class="example-label">Zero Exponent Rule: x⁰ = 1</div><div class="example-item">5⁰ = <span class="highlight">1</span></div><div class="example-item">100⁰ = <span class="highlight">1</span></div><div class="example-item">x⁰ = <span class="highlight">1</span> (if x ≠ 0)</div></div>',
-                q: 'What is 7⁰?',
-                choices: [
-                    '0',
-                    '7',
-                    '1',
-                    'undefined'
-                ],
-                answer: '1'
-            },
-
-            // LEARN 2: Why zero exponent equals 1
-            {
-                mode: 'learn',
-                concept: 'The zero exponent rule comes from the quotient rule. When you divide equal powers, you get 1. <div class="example-box"><div class="example-label">Using quotient rule: x³ ÷ x³</div><div class="example-item">= x^(3-3) = x⁰</div><div class="example-item">But x³ ÷ x³ also equals 1</div><div class="example-item">Therefore: <span class="highlight">x⁰ = 1</span></div></div>',
-                q: 'Why does any number to the zero power equal 1?',
-                choices: [
-                    'Zero makes everything disappear',
-                    'It follows from x^a ÷ x^a = 1',
-                    'Zero is neutral',
-                    'It\'s a special rule'
-                ],
-                answer: 'It follows from x^a ÷ x^a = 1'
-            },
-
-            // LEARN 3: Negative exponents
-            {
-                mode: 'learn',
-                concept: 'A negative exponent means "reciprocal". Flip the base to make the exponent positive! <div class="example-box"><div class="example-label">Negative Exponent: x^(-a) = 1/x^a</div><div class="example-item">2^(-3) = 1/2³ = <span class="highlight">1/8</span></div><div class="example-item">x^(-2) = <span class="highlight">1/x²</span></div></div>',
-                q: 'What is 5^(-2)?',
-                choices: [
-                    '-25',
-                    '-10',
-                    '1/25',
-                    '1/10'
-                ],
-                answer: '1/25'
-            },
-
-            // LEARN 4: Negative exponents in fractions
-            {
-                mode: 'learn',
-                concept: 'If the negative exponent is in the denominator, flip it to the numerator! <div class="example-box"><div class="example-label">Example: 1/x^(-3)</div><div class="example-item">Flip x^(-3) to numerator</div><div class="example-item">= x³/1 = <span class="highlight">x³</span></div><div class="example-label">Also: (a/b)^(-2) = (b/a)²</div></div>',
-                q: 'Simplify: 1/x^(-4)',
-                choices: [
-                    '1/x⁴',
-                    '-x⁴',
-                    'x⁴',
-                    '-1/x⁴'
-                ],
-                answer: 'x⁴'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'What is 10⁰?',
-                choices: [
-                    '10',
-                    '0',
-                    '1',
-                    'undefined'
-                ],
-                answer: '1'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: 3^(-1)',
-                choices: [
-                    '-3',
-                    '1/3',
-                    '3',
-                    '-1/3'
-                ],
-                answer: '1/3'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: x^(-3)',
-                choices: [
-                    '-x³',
-                    '1/x³',
-                    '-3x',
-                    'x³'
-                ],
-                answer: '1/x³'
-            },
-
-            {
-                mode: 'practice',
-                q: 'What is 2^(-4)?',
-                choices: [
-                    '-8',
-                    '1/16',
-                    '-16',
-                    '1/8'
-                ],
-                answer: '1/16'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Simplify: (3x)⁰',
-                choices: [
-                    '0',
-                    '3',
-                    '1',
-                    'x'
-                ],
-                answer: '1'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: x³ × x^(-5)',
-                choices: [
-                    'x⁸',
-                    '1/x²',
-                    'x^(-2)',
-                    'x²'
-                ],
-                answer: '1/x²'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: (2/3)^(-2)',
-                choices: [
-                    '4/9',
-                    '-4/9',
-                    '9/4',
-                    '3/2'
-                ],
-                answer: '9/4'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: x^(-2) × x⁵',
-                choices: [
-                    'x³',
-                    'x⁷',
-                    '1/x³',
-                    'x^(-7)'
-                ],
-                answer: 'x³'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "ANY nonzero number raised to the power of zero equals 1. This is always true! <div class=\"example-box\"><div class=\"example-label\">Zero Exponent Rule: x⁰ = 1</div><div class=\"example-item\">5⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">100⁰ = <span class=\"highlight\">1</span></div><div class=\"example-item\">x⁰ = <span class=\"highlight\">1</span> (if x ≠ 0)</div></div><p>Assume variable bases are nonzero wherever zero or negative powers appear.</p>",
+        "q": "What is 7⁰?",
+        "choices": [
+            "0",
+            "7",
+            "1",
+            "undefined"
+        ],
+        "answer": "1"
+    },
+    {
+        "mode": "learn",
+        "concept": "The zero exponent rule comes from the quotient rule. When you divide equal powers, you get 1. <div class=\"example-box\"><div class=\"example-label\">Using quotient rule: x³ ÷ x³</div><div class=\"example-item\">= x^(3-3) = x⁰</div><div class=\"example-item\">But x³ ÷ x³ also equals 1</div><div class=\"example-item\">Therefore: <span class=\"highlight\">x⁰ = 1</span></div></div>",
+        "q": "Why does any nonzero number to the zero power equal 1?",
+        "choices": [
+            "Zero makes everything disappear",
+            "It follows from x^a ÷ x^a = 1",
+            "Zero is neutral",
+            "It's a special rule"
+        ],
+        "answer": "It follows from x^a ÷ x^a = 1"
+    },
+    {
+        "mode": "learn",
+        "concept": "A negative exponent means \"reciprocal\". Flip the base to make the exponent positive! <div class=\"example-box\"><div class=\"example-label\">Negative Exponent: x^(-a) = 1/x^a</div><div class=\"example-item\">2^(-3) = 1/2³ = <span class=\"highlight\">1/8</span></div><div class=\"example-item\">x^(-2) = <span class=\"highlight\">1/x²</span></div></div>",
+        "q": "What is 5^(-2)?",
+        "choices": [
+            "-25",
+            "-10",
+            "1/25",
+            "1/10"
+        ],
+        "answer": "1/25"
+    },
+    {
+        "mode": "learn",
+        "concept": "If the negative exponent is in the denominator, flip it to the numerator! <div class=\"example-box\"><div class=\"example-label\">Example: 1/x^(-3)</div><div class=\"example-item\">Flip x^(-3) to numerator</div><div class=\"example-item\">= x³/1 = <span class=\"highlight\">x³</span></div><div class=\"example-label\">Also: (a/b)^(-2) = (b/a)²</div></div>",
+        "q": "Simplify: 1/x^(-4)",
+        "choices": [
+            "1/x⁴",
+            "-x⁴",
+            "x⁴",
+            "-1/x⁴"
+        ],
+        "answer": "x⁴"
+    },
+    {
+        "mode": "practice",
+        "q": "What is 10⁰?",
+        "choices": [
+            "10",
+            "0",
+            "1",
+            "undefined"
+        ],
+        "answer": "1"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: 3^(-1)",
+        "choices": [
+            "-3",
+            "1/3",
+            "3",
+            "-1/3"
+        ],
+        "answer": "1/3"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: x^(-3)",
+        "choices": [
+            "-x³",
+            "1/x³",
+            "-3x",
+            "x³"
+        ],
+        "answer": "1/x³"
+    },
+    {
+        "mode": "practice",
+        "q": "What is 2^(-4)?",
+        "choices": [
+            "-8",
+            "1/16",
+            "-16",
+            "1/8"
+        ],
+        "answer": "1/16"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (3x)⁰",
+        "choices": [
+            "0",
+            "3",
+            "1",
+            "x"
+        ],
+        "answer": "1"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: x³ × x^(-5)",
+        "choices": [
+            "x⁸",
+            "1/x²",
+            "x^(-2)",
+            "x²"
+        ],
+        "answer": "1/x²"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (2/3)^(-2)",
+        "choices": [
+            "4/9",
+            "-4/9",
+            "9/4",
+            "3/2"
+        ],
+        "answer": "9/4"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: x^(-2) × x⁵",
+        "choices": [
+            "x³",
+            "x⁷",
+            "1/x³",
+            "x^(-7)"
+        ],
+        "answer": "x³"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],

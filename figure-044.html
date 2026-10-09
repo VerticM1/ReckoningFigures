@@ -589,160 +589,143 @@
         };
 
         const content = [
-            // LEARN 1: Power of a power
-            {
-                mode: 'learn',
-                concept: 'When raising a power to another power, MULTIPLY the exponents. <div class="example-box"><div class="example-label">Power of a Power: (x^a)^b = x^(a×b)</div><div class="example-item">(x³)⁴ = x^(3×4) = <span class="highlight">x¹²</span></div><div class="example-item">(2²)³ = 2^(2×3) = <span class="highlight">2⁶</span></div></div>',
-                q: 'Simplify: (x⁵)³',
-                choices: [
-                    'x⁸',
-                    'x²',
-                    'x¹⁵',
-                    '3x⁵'
-                ],
-                answer: 'x¹⁵'
-            },
-
-            // LEARN 2: Power of a product
-            {
-                mode: 'learn',
-                concept: 'When raising a product to a power, raise EACH factor to that power. <div class="example-box"><div class="example-label">Power of a Product: (xy)^a = x^a × y^a</div><div class="example-item">(xy)³ = x³y³</div><div class="example-item">(2x)⁴ = 2⁴ × x⁴ = <span class="highlight">16x⁴</span></div></div>',
-                q: 'Simplify: (ab)⁵',
-                choices: [
-                    'ab⁵',
-                    'a⁵b',
-                    'a⁵b⁵',
-                    '5ab'
-                ],
-                answer: 'a⁵b⁵'
-            },
-
-            // LEARN 3: Power of a quotient
-            {
-                mode: 'learn',
-                concept: 'When raising a fraction to a power, raise both numerator and denominator to that power. <div class="example-box"><div class="example-label">Power of a Quotient: (x/y)^a = x^a / y^a</div><div class="example-item">(x/y)³ = x³/y³</div><div class="example-item">(2/3)² = 2²/3² = <span class="highlight">4/9</span></div></div>',
-                q: 'Simplify: (a/b)⁴',
-                choices: [
-                    'a⁴/b',
-                    'a/b⁴',
-                    'a⁴/b⁴',
-                    '4a/4b'
-                ],
-                answer: 'a⁴/b⁴'
-            },
-
-            // LEARN 4: Combining rules
-            {
-                mode: 'learn',
-                concept: 'You can use multiple exponent rules together! Work from inside parentheses outward. <div class="example-box"><div class="example-label">Example: (x²y)³</div><div class="example-item">Power of product: (x²)³ × y³</div><div class="example-item">Power of power: x⁶ × y³</div><div class="example-item">Answer: <span class="highlight">x⁶y³</span></div></div>',
-                q: 'Simplify: (a³)²',
-                choices: [
-                    'a⁵',
-                    'a⁹',
-                    'a⁶',
-                    '2a³'
-                ],
-                answer: 'a⁶'
-            },
-
-            // PRACTICE
-            {
-                mode: 'practice',
-                q: 'Simplify: (x⁴)²',
-                choices: [
-                    'x⁶',
-                    'x¹⁶',
-                    'x⁸',
-                    '2x⁴'
-                ],
-                answer: 'x⁸'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: (3x)²',
-                choices: [
-                    '6x²',
-                    '9x',
-                    '9x²',
-                    '3x²'
-                ],
-                answer: '9x²'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: (x/2)³',
-                choices: [
-                    'x³/6',
-                    'x³/8',
-                    'x/6',
-                    '3x/6'
-                ],
-                answer: 'x³/8'
-            },
-
-            {
-                mode: 'practice',
-                q: 'Simplify: (2²)⁴',
-                choices: [
-                    '2⁶',
-                    '4⁴',
-                    '2⁸',
-                    '16'
-                ],
-                answer: '2⁸'
-            },
-
-            // CHALLENGE
-            {
-                mode: 'challenge',
-                q: 'Simplify: (x²y³)²',
-                choices: [
-                    'x⁴y⁵',
-                    'x⁴y⁶',
-                    'x²y⁶',
-                    'x⁸y⁹'
-                ],
-                answer: 'x⁴y⁶'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: (2x³)³',
-                choices: [
-                    '6x⁹',
-                    '8x⁶',
-                    '8x⁹',
-                    '6x⁶'
-                ],
-                answer: '8x⁹'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: ((x²)³)²',
-                choices: [
-                    'x⁷',
-                    'x¹²',
-                    'x³⁶',
-                    'x²⁴'
-                ],
-                answer: 'x¹²'
-            },
-
-            {
-                mode: 'challenge',
-                q: 'Simplify: (3a²b)²',
-                choices: [
-                    '6a⁴b²',
-                    '9a²b²',
-                    '9a⁴b²',
-                    '3a⁴b²'
-                ],
-                answer: '9a⁴b²'
-            }
-        ];
+    {
+        "mode": "learn",
+        "concept": "When raising a power to another power, MULTIPLY the exponents. <div class=\"example-box\"><div class=\"example-label\">Power of a Power: (x^a)^b = x^(a×b)</div><div class=\"example-item\">(x³)⁴ = x^(3×4) = <span class=\"highlight\">x¹²</span></div><div class=\"example-item\">(2²)³ = 2^(2×3) = <span class=\"highlight\">2⁶</span></div></div><p>Assume denominators are nonzero.</p>",
+        "q": "Simplify: (x⁵)³",
+        "choices": [
+            "x⁸",
+            "x²",
+            "x¹⁵",
+            "3x⁵"
+        ],
+        "answer": "x¹⁵"
+    },
+    {
+        "mode": "learn",
+        "concept": "When raising a product to a power, raise EACH factor to that power. <div class=\"example-box\"><div class=\"example-label\">Power of a Product: (xy)^a = x^a × y^a</div><div class=\"example-item\">(xy)³ = x³y³</div><div class=\"example-item\">(2x)⁴ = 2⁴ × x⁴ = <span class=\"highlight\">16x⁴</span></div></div>",
+        "q": "Simplify: (ab)⁵",
+        "choices": [
+            "ab⁵",
+            "a⁵b",
+            "a⁵b⁵",
+            "5ab"
+        ],
+        "answer": "a⁵b⁵"
+    },
+    {
+        "mode": "learn",
+        "concept": "When raising a fraction to a power, raise both numerator and denominator to that power. <div class=\"example-box\"><div class=\"example-label\">Power of a Quotient: (x/y)^a = x^a / y^a</div><div class=\"example-item\">(x/y)³ = x³/y³</div><div class=\"example-item\">(2/3)² = 2²/3² = <span class=\"highlight\">4/9</span></div></div>",
+        "q": "Simplify: (a/b)⁴",
+        "choices": [
+            "a⁴/b",
+            "a/b⁴",
+            "a⁴/b⁴",
+            "4a/4b"
+        ],
+        "answer": "a⁴/b⁴"
+    },
+    {
+        "mode": "learn",
+        "concept": "You can use multiple exponent rules together! Work from inside parentheses outward. <div class=\"example-box\"><div class=\"example-label\">Example: (x²y)³</div><div class=\"example-item\">Power of product: (x²)³ × y³</div><div class=\"example-item\">Power of power: x⁶ × y³</div><div class=\"example-item\">Answer: <span class=\"highlight\">x⁶y³</span></div></div>",
+        "q": "Simplify: (a³)²",
+        "choices": [
+            "a⁵",
+            "a⁹",
+            "a⁶",
+            "2a³"
+        ],
+        "answer": "a⁶"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: (x⁴)²",
+        "choices": [
+            "x⁶",
+            "x¹⁶",
+            "x⁸",
+            "2x⁴"
+        ],
+        "answer": "x⁸"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: (3x)²",
+        "choices": [
+            "6x²",
+            "9x",
+            "9x²",
+            "3x²"
+        ],
+        "answer": "9x²"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: (x/2)³",
+        "choices": [
+            "x³/6",
+            "x³/8",
+            "x/6",
+            "3x/6"
+        ],
+        "answer": "x³/8"
+    },
+    {
+        "mode": "practice",
+        "q": "Simplify: (2²)⁴",
+        "choices": [
+            "2⁶",
+            "4⁴",
+            "2⁸",
+            "16"
+        ],
+        "answer": "2⁸"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (x²y³)²",
+        "choices": [
+            "x⁴y⁵",
+            "x⁴y⁶",
+            "x²y⁶",
+            "x⁸y⁹"
+        ],
+        "answer": "x⁴y⁶"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (2x³)³",
+        "choices": [
+            "6x⁹",
+            "8x⁶",
+            "8x⁹",
+            "6x⁶"
+        ],
+        "answer": "8x⁹"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: ((x²)³)²",
+        "choices": [
+            "x⁷",
+            "x¹²",
+            "x³⁶",
+            "x²⁴"
+        ],
+        "answer": "x¹²"
+    },
+    {
+        "mode": "challenge",
+        "q": "Simplify: (3a²b)²",
+        "choices": [
+            "6a⁴b²",
+            "9a²b²",
+            "9a⁴b²",
+            "3a⁴b²"
+        ],
+        "answer": "9a⁴b²"
+    }
+];
 
         const feedback = {
             correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
