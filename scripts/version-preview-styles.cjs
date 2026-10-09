@@ -63,3 +63,12 @@ for(const file of [school+'staff-join.html',school+'join.html',school+'classroom
  }
  fs.writeFileSync(file,html);
 }
+
+// Privacy-preserving social entry and legacy authentication bridge.
+fs.writeFileSync('preview/friends.js',fs.readFileSync('preview/friends.js','utf8').replace(/from '\.\/owner\/client\.js(?:\?v=[^']*)?'/,`from './owner/client.js?v=${digest(owner+'client.js')}'`));
+let friendsHTML=fs.readFileSync('preview/friends.html','utf8');
+for(const url of ['styles.css','organization/organization.css','workspace.css','friends.js']){
+ const start='"'+url,at=friendsHTML.indexOf(start);if(at>=0){const end=friendsHTML.indexOf('"',at+1);friendsHTML=friendsHTML.slice(0,at)+start+'?v='+digest('preview/'+url)+friendsHTML.slice(end);}
+}
+fs.writeFileSync('preview/friends.html',friendsHTML);
+fs.writeFileSync('auth.html',fs.readFileSync('auth.html','utf8').replace(/src="firebase-friends-system\.js(?:\?v=[^"]*)?"/,`src="firebase-friends-system.js?v=${digest('firebase-friends-system.js')}"`));

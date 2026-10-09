@@ -1,4 +1,4 @@
-import * as api from '../owner/client.js?v=f267d0fc61ae';
+import * as api from '../owner/client.js?v=478c306d23f9';
 import {course} from '../course.js';
 const app=document.querySelector('#classroom-app'),p=new URLSearchParams(location.search),s=p.get('school'),c=p.get('class');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

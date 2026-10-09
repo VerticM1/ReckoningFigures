@@ -1,4 +1,4 @@
-import * as api from './client.js?v=f267d0fc61ae';
+import * as api from './client.js?v=478c306d23f9';
 const app=document.querySelector('#owner-app'),dialog=document.querySelector('#school-editor');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let user=null,list=[],events=[],generation=0,authorized=false;

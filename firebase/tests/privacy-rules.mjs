@@ -1,0 +1,40 @@
+import {readFileSync} from 'node:fs';
+import assert from 'node:assert/strict';
+import {initializeTestEnvironment,assertFails,assertSucceeds} from '@firebase/rules-unit-testing';
+import {doc,setDoc,getDoc,getDocs,collection,updateDoc,deleteDoc,writeBatch,serverTimestamp,query,where} from 'firebase/firestore';
+import {socialAPI} from '../../preview/social-api.js';
+const env=await initializeTestEnvironment({projectId:'demo-reckoning-owner',firestore:{host:'127.0.0.1',port:8085,rules:readFileSync('firebase/owner-test.rules','utf8')}});
+const db=u=>env.authenticatedContext(u).firestore(),a=db('alice'),b=db('bob'),mallory=db('mallory'),anon=env.unauthenticatedContext().firestore();
+const api=u=>socialAPI(db(u),{currentUser:{uid:u}}),alice=api('alice'),bob=api('bob');
+try{
+ await env.clearFirestore();
+ await assertSucceeds(setDoc(doc(a,'users','alice'),{userName:'PrivateName',email:'alice@example.test',xp:123,completed:[1,2]}));
+ await assertSucceeds(getDoc(doc(a,'users','alice')));await assertFails(getDoc(doc(b,'users','alice')));await assertFails(getDoc(doc(anon,'users','alice')));await assertFails(getDocs(collection(a,'users')));await assertFails(updateDoc(doc(b,'users','alice'),{xp:999}));
+ await assertSucceeds(updateDoc(doc(a,'users','alice'),{xp:150,completed:[1,2,3]}));
+ const progress={xp:150,cloud:{xpByDevice:{test:150}},completedLessons:[1],visits:[1],practiceDays:['2026-10-09'],sessions:1,schemaVersion:2};
+ await assertSucceeds(setDoc(doc(a,'users','alice','appProgress','v2'),progress));await assertFails(getDoc(doc(b,'users','alice','appProgress','v2')));await assertFails(setDoc(doc(b,'users','alice','appProgress','v2'),progress));await assertFails(setDoc(doc(a,'users','alice','appProgress','v2'),{...progress,role:'administrator'}));
+ await env.withSecurityRulesDisabled(async c=>{await setDoc(doc(c.firestore(),'friendRequests','old'),{fromUserId:'alice',toUserId:'bob'});await setDoc(doc(c.firestore(),'friendships','old'),{user1:'alice',user2:'bob'});});
+ for(const path of ['friendRequests','friendships']){await assertFails(getDoc(doc(a,path,'old')));await assertFails(setDoc(doc(a,path,'new'),{}));}
+ assert.equal(await alice.profile(),null);await assertFails(alice.send('bob'));
+ await assertSucceeds(alice.enable('Algebra_A'));await assertSucceeds(bob.enable('Algebra_B'));
+ assert.equal((await bob.search('ALGEBRA_A'))[0].userName,'Algebra_A');
+ const publicProfile=(await getDoc(doc(b,'socialProfiles','alice'))).data();assert.deepEqual(Object.keys(publicProfile).sort(),['handle','updatedAt','userName']);
+ await assertFails(getDoc(doc(anon,'socialProfiles','alice')));await assertFails(getDocs(collection(b,'socialProfiles')));await assertFails(getDocs(collection(b,'socialHandles')));
+ await assertFails(updateDoc(doc(a,'socialProfiles','alice'),{email:'alice@example.test'}));await assertFails(updateDoc(doc(b,'socialProfiles','alice'),{userName:'Hijacked'}));
+ await assert.rejects(bob.enable('algebra_a'));await assertSucceeds(alice.enable('New_A'));assert.equal((await bob.search('algebra_a')).length,0);assert.equal((await bob.search('new_a')).length,1);
+ const races=await Promise.allSettled([api('one').enable('Shared_Name'),api('two').enable('SHARED_NAME')]);assert.equal(races.filter(r=>r.status==='fulfilled').length,1);
+ await assertFails(setDoc(doc(mallory,'socialHandles','stolen'),{uid:'alice'}));
+ await assertSucceeds(alice.send('bob'));assert.equal((await bob.requests())[0].incoming,true);await assert.rejects(alice.send('bob'));
+ await assertFails(getDoc(doc(mallory,'socialRequests','alice~bob')));await assertFails(getDocs(collection(mallory,'socialRequests')));await assertFails(deleteDoc(doc(mallory,'socialRequests','alice~bob')));
+ await assertFails(setDoc(doc(mallory,'socialRequests','alice~mallory'),{from:'alice',to:'mallory',createdAt:serverTimestamp()}));
+ await assertFails(setDoc(doc(a,'socialFriendships','alice~bob'),{user1:'alice',user2:'bob',createdAt:serverTimestamp()}));
+ await assertFails(setDoc(doc(b,'socialFriendships','alice~bob'),{user1:'alice',user2:'bob',createdAt:serverTimestamp()}));
+ await assertSucceeds(bob.accept('alice~bob'));assert.equal((await alice.requests()).length,0);assert.equal((await alice.friends())[0].name,'Algebra_B');
+ await assertFails(updateDoc(doc(b,'socialFriendships','alice~bob'),{user1:'mallory'}));await assertFails(getDocs(collection(mallory,'socialFriendships')));await assertFails(deleteDoc(doc(mallory,'socialFriendships','alice~bob')));
+ await assertSucceeds(alice.remove('bob'));assert.equal((await bob.friends()).length,0);
+ await assertFails(setDoc(doc(b,'socialFriendships','alice~bob'),{user1:'alice',user2:'bob',createdAt:serverTimestamp()}));
+ await alice.send('bob');await bob.disable();await assertFails(bob.accept('alice~bob'));await assertSucceeds(bob.dismiss('alice~bob'));assert.equal((await alice.search('algebra_b')).length,0);await assertFails(alice.send('bob'));
+ await bob.enable('Algebra_B');await alice.send('bob');await assertSucceeds(alice.dismiss('alice~bob'));await bob.send('alice');await assertSucceeds(alice.dismiss('bob~alice'));
+ await assertFails(deleteDoc(doc(a,'socialProfiles','alice')));await assertSucceeds(alice.disable());assert.equal((await bob.search('new_a')).length,0);
+ console.log('PASS private profiles/progress, legacy quarantine, opt-in discovery, no directory listing, handle collisions, sender integrity, consent-only atomic friendships, participant removal and discovery revocation');
+}finally{await env.cleanup();}

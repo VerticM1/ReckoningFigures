@@ -1,12 +1,93 @@
 rules_version = '2';
 service cloud.firestore { match /databases/{database}/documents {
-// LEGACY TESTING ACCESS: migrate before adding real student information.
-match /users/{userId} {
- allow read: if true;
- allow write: if request.auth != null && request.auth.uid == userId;
+// Private legacy profiles. Profile fields never confer school or owner roles.
+match /users/{uid} {
+ allow get, create, update, delete: if request.auth != null && request.auth.uid == uid;
+ allow list: if false;
 }
-match /friendRequests/{requestId} { allow read, write: if request.auth != null; }
-match /friendships/{friendshipId} { allow read, write: if request.auth != null; }
+// Quarantine old social data: earlier rules allowed arbitrary authenticated writes.
+// Do not trust these records as consent or migrate them automatically.
+match /friendRequests/{id} { allow read, write: if false; }
+match /friendships/{id} { allow read, write: if false; }
+function socialSignedIn() { return request.auth != null; }
+function socialActive(uid) { return exists(/databases/$(database)/documents/socialProfiles/$(uid)); }
+function socialPair(id) {
+ return socialSignedIn() && request.auth.uid.matches('[A-Za-z0-9_-]{1,128}') && (id.matches(request.auth.uid + '~[A-Za-z0-9_-]{1,128}') || id.matches('[A-Za-z0-9_-]{1,128}~' + request.auth.uid));
+}
+match /socialProfiles/{uid} {
+ allow get: if socialSignedIn();
+ allow list: if false;
+ allow create, update: if socialSignedIn() && request.auth.uid == uid
+  && request.resource.data.keys().hasAll(['userName','handle','updatedAt'])
+  && request.resource.data.keys().hasOnly(['userName','handle','updatedAt'])
+  && request.resource.data.userName is string && request.resource.data.userName.matches('[A-Za-z0-9_]{3,20}')
+  && request.resource.data.handle == request.resource.data.userName.lower() && request.resource.data.updatedAt == request.time
+  && getAfter(/databases/$(database)/documents/socialHandles/$(request.resource.data.handle)).data.uid == uid
+  && (!exists(/databases/$(database)/documents/socialProfiles/$(uid)) || resource.data.handle == request.resource.data.handle
+      || !existsAfter(/databases/$(database)/documents/socialHandles/$(resource.data.handle)));
+ allow delete: if socialSignedIn() && request.auth.uid == uid
+  && !existsAfter(/databases/$(database)/documents/socialHandles/$(resource.data.handle));
+}
+match /socialHandles/{handle} {
+ allow get: if socialSignedIn();
+ allow list: if false;
+ allow create: if socialSignedIn() && request.resource.data.keys().hasOnly(['uid'])
+  && request.resource.data.uid == request.auth.uid && handle.matches('[a-z0-9_]{3,20}')
+  && getAfter(/databases/$(database)/documents/socialProfiles/$(request.auth.uid)).data.handle == handle;
+ allow update: if socialSignedIn() && resource.data.uid == request.auth.uid && request.resource.data == resource.data
+  && getAfter(/databases/$(database)/documents/socialProfiles/$(request.auth.uid)).data.handle == handle;
+ allow delete: if socialSignedIn() && resource.data.uid == request.auth.uid
+  && (!existsAfter(/databases/$(database)/documents/socialProfiles/$(request.auth.uid))
+    || getAfter(/databases/$(database)/documents/socialProfiles/$(request.auth.uid)).data.handle != handle);
+}
+match /socialRequests/{id} {
+ allow get: if socialPair(id);
+ allow list: if socialSignedIn() && (resource.data.from == request.auth.uid || resource.data.to == request.auth.uid);
+ allow create: if socialSignedIn() && request.resource.data.keys().hasAll(['from','to','createdAt'])
+  && request.resource.data.keys().hasOnly(['from','to','createdAt'])
+  && request.resource.data.from == request.auth.uid && request.resource.data.to is string
+  && request.resource.data.from.matches('[A-Za-z0-9_-]{1,128}') && request.resource.data.to.matches('[A-Za-z0-9_-]{1,128}')
+  && request.resource.data.to != request.auth.uid && id == request.resource.data.from + '~' + request.resource.data.to
+  && request.resource.data.createdAt == request.time && socialActive(request.auth.uid) && socialActive(request.resource.data.to)
+  && !exists(/databases/$(database)/documents/socialFriendships/$(id))
+  && !exists(/databases/$(database)/documents/socialFriendships/$(request.resource.data.to + '~' + request.auth.uid));
+ allow update: if false;
+ allow delete: if socialSignedIn() && (resource.data.from == request.auth.uid || resource.data.to == request.auth.uid);
+}
+match /socialFriendships/{id} {
+ allow get: if socialPair(id);
+ allow list: if socialSignedIn() && (resource.data.user1 == request.auth.uid || resource.data.user2 == request.auth.uid);
+ allow create: if socialSignedIn() && request.resource.data.keys().hasAll(['user1','user2','createdAt'])
+  && request.resource.data.keys().hasOnly(['user1','user2','createdAt'])
+  && request.resource.data.user2 == request.auth.uid && request.resource.data.createdAt == request.time
+  && socialActive(request.auth.uid) && socialActive(request.resource.data.user1)
+  && get(/databases/$(database)/documents/socialRequests/$(id)).data.to == request.auth.uid
+  && get(/databases/$(database)/documents/socialRequests/$(id)).data.from == request.resource.data.user1
+  && !existsAfter(/databases/$(database)/documents/socialRequests/$(id));
+ allow update: if false;
+ allow delete: if socialSignedIn() && (resource.data.user1 == request.auth.uid || resource.data.user2 == request.auth.uid);
+}
+
+// Merge this match block inside your existing service cloud.firestore /
+// match /databases/{database}/documents. Do not replace existing application rules.
+// Verify that no broader wildcard rule grants public access to this subcollection.
+match /users/{uid}/appProgress/{version} {
+  allow get: if request.auth != null && request.auth.uid == uid && version == 'v2';
+  allow list: if false;
+  allow create, update: if request.auth != null && request.auth.uid == uid
+    && version == 'v2'
+    && request.resource.data.keys().hasOnly(['xp','cloud','completedLessons','visits','practiceDays','sessions','schemaVersion'])
+    && request.resource.data.schemaVersion == 2
+    && request.resource.data.xp is number && request.resource.data.xp >= 0
+    && request.resource.data.cloud is map
+    && request.resource.data.cloud.keys().hasOnly(['xpByDevice'])
+    && request.resource.data.cloud.xpByDevice is map
+    && request.resource.data.completedLessons is list
+    && request.resource.data.visits is list
+    && request.resource.data.practiceDays is list
+    && request.resource.data.sessions is number;
+  allow delete: if request.auth != null && request.auth.uid == uid && version == 'v2';
+}
 // Add inside match /databases/{database}/documents, alongside existing matches.
 // Grants no access to student data. Does not repair legacy testing rules.
 function platformOwner() {

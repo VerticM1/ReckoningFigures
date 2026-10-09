@@ -4,8 +4,8 @@ This is an implementation checklist, not a claim of school or App Store readines
 The learner preview and connected school/class assignment path are implemented. The older educator demo and support drafts remain browser-local. The user confirmed student class-link enrollment works. Staff invitations are implemented and tested locally; production rules activation and a full separate-account assignment test remain pending.
 
 ## Current priority order
-1. Activate staff invitation rules and verify one teacher invitation with a separate account.
-2. Migrate legacy public profile reads and unrestricted social writes before real student data.
+1. Activate the combined privacy/staff invitation rules and verify one teacher invitation with a separate account.
+2. Verify private profile/progress access and optional friend requests with separate accounts. Migration is implemented and awaits production activation.
 3. Verify teacher assignment → student completion → teacher report on separate devices, then address pilot operations and curriculum review.
 
 ## Before a real school pilot
@@ -58,3 +58,5 @@ Connected class update (2026-10-08): added a short replayable how-to panel for c
 Student join and staff UX update (2026-10-08): student account registration and class-link admission are implemented with optional teacher approval, link expiry/revocation, automatic atomic seat allocation, and reuse of existing student seats. Teacher class creation no longer exposes UIDs; managers select a teacher by name. Staff screens now have a shared midnight/ivory design, compact class tabs, task dialogs, a direct owner-to-class shortcut, and inline setup guides. Staff invitation/registration, production enrollment verification, legacy security migration, and operational launch requirements remain pending. New join rules require console publication; this is a pilot feature, not a school launch.
 
 Staff invitation update (2026-10-09): private, email-bound, seven-day teacher/administrator invitations; email verification, atomic membership/audit acceptance, issuer revalidation, revocation, and no student seat consumption. School managers generate and copy links; email delivery is not automatic. Only platform owners invite administrators. Production activation and a separate-account smoke test remain required. Next launch priority: migrate public legacy profiles and unrestricted social writes before real students.
+
+Privacy migration (2026-10-09): personal profiles are owner-only; progress rules are included in the complete rules; legacy social records are quarantined without deletion. Social discovery is explicitly opt-in, shares only a username, disallows directory listing, and requires exact username lookup. New friendships require atomic recipient acceptance and participant-only reads/removal. The legacy Friends page redirects to the new flow. Production activation, separate-device checks, and social abuse controls remain pending. See `firebase/PRIVACY_MIGRATION.md`.

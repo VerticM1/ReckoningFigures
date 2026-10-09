@@ -62,3 +62,6 @@ Validation: emulator tests cover auto/approved enrollment, duplicate joins, reus
 Publish the complete rules at `/preview/owner/activate.html` after backing up and reconciling any console-only changes. In Manage members, choose Invite staff, enter the exact email and role, create the link, and share it. Invites expire in seven days. The recipient signs in or registers, verifies their email, and joins. Google accounts with verified email skip that verification step. Only owners can invite administrators; school administrators invite teachers. Invitations cannot restore removed members or change an existing role. Staff do not consume student seats.
 
 Use separate test accounts to verify the emailed verification link and the final school access in production. Automated browser tests mock authentication; Firestore emulator tests enforce invitation authorization. Firebase rules deployment automation and invitation-email delivery are not connected.
+
+## Privacy migration (2026-10-09)
+The latest complete rules replace legacy public profile access and unrestricted social writes. Read `PRIVACY_MIGRATION.md` before activation; it documents compatibility, old-connection quarantine, and production verification. The website update alone does not activate these protections.
