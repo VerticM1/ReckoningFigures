@@ -1,4 +1,4 @@
-import {course} from '../course.js?v=c922ec7ecf4c';
+import {course} from '../course.js?v=4cb03d5dcbbc';
 import {STORAGE_KEY,seed,dayKey,daysAgo,scopedLearners,scopedAttempts,metrics,learnerStatus,assignmentProgress,addClass,addAssignment,csv} from './model.js?v=09cc560f7c2f';
 const $=s=>document.querySelector(s),escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const paths={curriculum:'M3 3h7l2 3 2-3h7v17h-7l-2 2-2-2H3zM12 6v16',overview:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',classes:'M3 6h18v15H3zM7 3v6M17 3v6M3 11h18',learners:'M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M1 22v-3a7 7 0 0 1 14 0v3M17 4a4 4 0 0 1 0 8M18 15a6 6 0 0 1 5 6',assignments:'M6 4h12v18H6zM9 2h6v4H9zM9 10h6M9 14h6M9 18h3',reports:'M3 3v18h18M7 17v-5M12 17V8M17 17V4',support:'M4 13v-2a8 8 0 0 1 16 0v2M4 12H2v6h4v-6zM20 12h2v6h-4v-6zM20 18q0 4-8 4',arrow:'M5 12h14M13 6l6 6-6 6',download:'M12 2v13M6 9l6 6 6-6M3 16v6h18v-6',plus:'M12 4v16M4 12h16'};

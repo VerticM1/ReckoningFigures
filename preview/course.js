@@ -3734,36 +3734,2512 @@ export const course = [
         "id": 20,
         "title": "Rate of Change",
         "source": "figure-020.html",
-        "available": false,
-        "questions": []
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Find the slope through (1, 3) and (5, 11).",
+            "choices": [
+              "1/2",
+              "8",
+              "4",
+              "2"
+            ],
+            "answer": 3,
+            "explanation": "Slope = (11 − 3)/(5 − 1) = 8/4 = 2.",
+            "explanations": [
+              "You used change in x divided by change in y. Slope uses change in y over change in x.",
+              "8 is the change in y. Divide by the change in x, which is 4.",
+              "4 is the change in x. Use both changes.",
+              "Slope = (11 − 3)/(5 − 1) = 8/4 = 2."
+            ],
+            "concept": "<strong>Rate of change</strong><p>Slope compares vertical change to horizontal change: m = (y₂ − y₁)/(x₂ − x₁), when x₂ ≠ x₁. Keep the point order the same in both differences.</p><p>Example: from (0, 1) to (3, 10), m = (10 − 1)/(3 − 0) = 3.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "A table has x-values 0, 2, 4 and matching y-values 9, 5, 1. What is its constant rate of change?",
+            "choices": [
+              "−4",
+              "4",
+              "−2",
+              "2"
+            ],
+            "answer": 2,
+            "explanation": "Each change of +2 in x gives −4 in y, so the rate is −4/2 = −2.",
+            "explanations": [
+              "−4 is the change in y over two x-units, not one.",
+              "Use the sign of the change and divide by the change in x.",
+              "Each change of +2 in x gives −4 in y, so the rate is −4/2 = −2.",
+              "The y-values decrease as x increases, so the rate must be negative."
+            ],
+            "concept": "<strong>Read a table in pairs</strong><p>If x increases by 3 while y falls by 6, the rate is −6/3 = −2 per x-unit. Equal x-steps must have equal y-changes for a constant rate.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "What is the slope through (2, 4) and (6, 4)?",
+            "choices": [
+              "1",
+              "0",
+              "Undefined",
+              "4"
+            ],
+            "answer": 1,
+            "explanation": "The vertical change is 4 − 4 = 0, so m = 0/(6 − 2) = 0.",
+            "explanations": [
+              "A slope of 1 would require equal nonzero vertical and horizontal changes.",
+              "The vertical change is 4 − 4 = 0, so m = 0/(6 − 2) = 0.",
+              "Undefined slope occurs when the change in x is zero; here it is 4.",
+              "The horizontal change is 4, but the vertical change is zero."
+            ],
+            "concept": "<strong>Horizontal lines</strong><p>A horizontal line keeps the same y-value. Its vertical change is zero, so its slope is 0. For example, y = 7 has slope 0.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "What is the slope through (3, 1) and (3, 5)?",
+            "choices": [
+              "Undefined",
+              "0",
+              "4",
+              "1"
+            ],
+            "answer": 0,
+            "explanation": "The change in x is 3 − 3 = 0. Division by zero is undefined; this is the vertical line x = 3.",
+            "explanations": [
+              "The change in x is 3 − 3 = 0. Division by zero is undefined; this is the vertical line x = 3.",
+              "Zero slope is horizontal. These points have the same x-value, so the line is vertical.",
+              "The vertical change is 4, but the denominator in the slope formula is zero.",
+              "There is no horizontal change to divide by."
+            ],
+            "concept": "<strong>Vertical lines</strong><p>A vertical line has the same x-value at every point. Its slope is undefined, because division by zero is not defined. Undefined is different from zero.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Find the slope through (1, 2) and (5, 4).",
+            "choices": [
+              "2",
+              "−1/2",
+              "3/2",
+              "1/2"
+            ],
+            "answer": 3,
+            "explanation": "m = (4 − 2)/(5 − 1) = 2/4 = 1/2.",
+            "explanations": [
+              "That reverses rise and run. Divide 2 by 4.",
+              "Both changes are positive when you use the same point order.",
+              "Subtract corresponding coordinates; do not add the y-values.",
+              "m = (4 − 2)/(5 − 1) = 2/4 = 1/2."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A tank holds 120 liters at 0 minutes and 90 liters at 5 minutes. What is the average rate of change?",
+            "choices": [
+              "−30 liters per minute",
+              "18 liters per minute",
+              "−6 liters per minute",
+              "6 liters per minute"
+            ],
+            "answer": 2,
+            "explanation": "(90 − 120)/(5 − 0) = −30/5 = −6 liters per minute.",
+            "explanations": [
+              "−30 liters is the total change over 5 minutes.",
+              "90/5 ignores the starting volume of 120 liters.",
+              "(90 − 120)/(5 − 0) = −30/5 = −6 liters per minute.",
+              "The volume decreases, so the signed rate is negative."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A taxi costs C = 4 + 2.5d dollars for d miles. What is the rate per mile?",
+            "choices": [
+              "$0.40 per mile",
+              "$2.50 per mile",
+              "$4 per mile",
+              "$6.50 per mile"
+            ],
+            "answer": 1,
+            "explanation": "The coefficient of d is 2.5 dollars per mile; 4 dollars is the starting charge.",
+            "explanations": [
+              "That is the reciprocal of the rate in the equation.",
+              "The coefficient of d is 2.5 dollars per mile; 4 dollars is the starting charge.",
+              "4 is the fixed starting charge, not the coefficient of miles.",
+              "6.50 is the total cost at one mile, including the starting charge."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "For f(x) = 3x − 7, how much does f(x) change when x increases from 2 to 6?",
+            "choices": [
+              "12",
+              "3",
+              "4",
+              "18"
+            ],
+            "answer": 0,
+            "explanation": "The rate is 3 and x increases by 4, so the output changes by 3 × 4 = 12.",
+            "explanations": [
+              "The rate is 3 and x increases by 4, so the output changes by 3 × 4 = 12.",
+              "3 is the change per one x-unit; x increases by 4 units here.",
+              "4 is the change in the input, not the output.",
+              "18 is 3 × 6; compare the outputs at both endpoints."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A table has x-values 1, 2, 3 and matching y-values 2, 5, 10. Is the rate of change constant?",
+            "choices": [
+              "Yes; the rate is 3",
+              "Yes; the rate is 5",
+              "Yes; the rate is 4",
+              "No; the rates are 3 and 5"
+            ],
+            "answer": 3,
+            "explanation": "For equal x-steps of 1, y first increases by 3 and then by 5.",
+            "explanations": [
+              "Check the second interval too: 10 − 5 = 5.",
+              "Check the first interval too: 5 − 2 = 3.",
+              "4 is the average rate over both intervals, but the interval rates differ.",
+              "For equal x-steps of 1, y first increases by 3 and then by 5."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Which function has the greater rate of change: A(x) = 3x + 2 or B(x) = 2x + 8?",
+            "choices": [
+              "B; its rate is 2",
+              "Both have the same rate",
+              "A; its rate is 3",
+              "B; its rate is 8"
+            ],
+            "answer": 2,
+            "explanation": "Compare the x-coefficients: 3 is greater than 2. Intercepts do not determine rate.",
+            "explanations": [
+              "B’s rate is 2, which is less than A’s rate of 3.",
+              "Their x-coefficients differ: 3 and 2.",
+              "Compare the x-coefficients: 3 is greater than 2. Intercepts do not determine rate.",
+              "8 is B’s y-intercept, not its rate."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: find the slope through (−2, 7) and (4, −5).",
+            "choices": [
+              "−6",
+              "−2",
+              "2",
+              "−1/2"
+            ],
+            "answer": 1,
+            "explanation": "m = (−5 − 7)/(4 − (−2)) = −12/6 = −2.",
+            "explanations": [
+              "4 − (−2) = 6, not 2. Subtracting a negative adds.",
+              "m = (−5 − 7)/(4 − (−2)) = −12/6 = −2.",
+              "The y-value falls as x increases. Keep the negative sign.",
+              "Use change in y over change in x, not its reciprocal."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: a car travels at a constant rate. Its distance rises from 45 miles at 1 hour to 135 miles at 3 hours. What is the rate?",
+            "choices": [
+              "45 miles per hour",
+              "90 miles per hour",
+              "30 miles per hour",
+              "135 miles per hour"
+            ],
+            "answer": 0,
+            "explanation": "The distance changes by 90 miles in 2 hours: 90/2 = 45 mph.",
+            "explanations": [
+              "The distance changes by 90 miles in 2 hours: 90/2 = 45 mph.",
+              "90 miles is the change over 2 hours, not 1 hour.",
+              "Use the change in time, 3 − 1, with the change in distance.",
+              "135 miles is a distance reading, not a rate."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          }
+        ],
+        "original": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Find the slope through (1, 3) and (5, 11).",
+            "choices": [
+              "1/2",
+              "8",
+              "4",
+              "2"
+            ],
+            "answer": "2",
+            "explanation": "Slope = (11 − 3)/(5 − 1) = 8/4 = 2.",
+            "explanations": [
+              "You used change in x divided by change in y. Slope uses change in y over change in x.",
+              "8 is the change in y. Divide by the change in x, which is 4.",
+              "4 is the change in x. Use both changes.",
+              "Slope = (11 − 3)/(5 − 1) = 8/4 = 2."
+            ],
+            "concept": "<strong>Rate of change</strong><p>Slope compares vertical change to horizontal change: m = (y₂ − y₁)/(x₂ − x₁), when x₂ ≠ x₁. Keep the point order the same in both differences.</p><p>Example: from (0, 1) to (3, 10), m = (10 − 1)/(3 − 0) = 3.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "A table has x-values 0, 2, 4 and matching y-values 9, 5, 1. What is its constant rate of change?",
+            "choices": [
+              "−4",
+              "4",
+              "−2",
+              "2"
+            ],
+            "answer": "−2",
+            "explanation": "Each change of +2 in x gives −4 in y, so the rate is −4/2 = −2.",
+            "explanations": [
+              "−4 is the change in y over two x-units, not one.",
+              "Use the sign of the change and divide by the change in x.",
+              "Each change of +2 in x gives −4 in y, so the rate is −4/2 = −2.",
+              "The y-values decrease as x increases, so the rate must be negative."
+            ],
+            "concept": "<strong>Read a table in pairs</strong><p>If x increases by 3 while y falls by 6, the rate is −6/3 = −2 per x-unit. Equal x-steps must have equal y-changes for a constant rate.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "What is the slope through (2, 4) and (6, 4)?",
+            "choices": [
+              "1",
+              "0",
+              "Undefined",
+              "4"
+            ],
+            "answer": "0",
+            "explanation": "The vertical change is 4 − 4 = 0, so m = 0/(6 − 2) = 0.",
+            "explanations": [
+              "A slope of 1 would require equal nonzero vertical and horizontal changes.",
+              "The vertical change is 4 − 4 = 0, so m = 0/(6 − 2) = 0.",
+              "Undefined slope occurs when the change in x is zero; here it is 4.",
+              "The horizontal change is 4, but the vertical change is zero."
+            ],
+            "concept": "<strong>Horizontal lines</strong><p>A horizontal line keeps the same y-value. Its vertical change is zero, so its slope is 0. For example, y = 7 has slope 0.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "What is the slope through (3, 1) and (3, 5)?",
+            "choices": [
+              "Undefined",
+              "0",
+              "4",
+              "1"
+            ],
+            "answer": "Undefined",
+            "explanation": "The change in x is 3 − 3 = 0. Division by zero is undefined; this is the vertical line x = 3.",
+            "explanations": [
+              "The change in x is 3 − 3 = 0. Division by zero is undefined; this is the vertical line x = 3.",
+              "Zero slope is horizontal. These points have the same x-value, so the line is vertical.",
+              "The vertical change is 4, but the denominator in the slope formula is zero.",
+              "There is no horizontal change to divide by."
+            ],
+            "concept": "<strong>Vertical lines</strong><p>A vertical line has the same x-value at every point. Its slope is undefined, because division by zero is not defined. Undefined is different from zero.</p>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Find the slope through (1, 2) and (5, 4).",
+            "choices": [
+              "2",
+              "−1/2",
+              "3/2",
+              "1/2"
+            ],
+            "answer": "1/2",
+            "explanation": "m = (4 − 2)/(5 − 1) = 2/4 = 1/2.",
+            "explanations": [
+              "That reverses rise and run. Divide 2 by 4.",
+              "Both changes are positive when you use the same point order.",
+              "Subtract corresponding coordinates; do not add the y-values.",
+              "m = (4 − 2)/(5 − 1) = 2/4 = 1/2."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A tank holds 120 liters at 0 minutes and 90 liters at 5 minutes. What is the average rate of change?",
+            "choices": [
+              "−30 liters per minute",
+              "18 liters per minute",
+              "−6 liters per minute",
+              "6 liters per minute"
+            ],
+            "answer": "−6 liters per minute",
+            "explanation": "(90 − 120)/(5 − 0) = −30/5 = −6 liters per minute.",
+            "explanations": [
+              "−30 liters is the total change over 5 minutes.",
+              "90/5 ignores the starting volume of 120 liters.",
+              "(90 − 120)/(5 − 0) = −30/5 = −6 liters per minute.",
+              "The volume decreases, so the signed rate is negative."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A taxi costs C = 4 + 2.5d dollars for d miles. What is the rate per mile?",
+            "choices": [
+              "$0.40 per mile",
+              "$2.50 per mile",
+              "$4 per mile",
+              "$6.50 per mile"
+            ],
+            "answer": "$2.50 per mile",
+            "explanation": "The coefficient of d is 2.5 dollars per mile; 4 dollars is the starting charge.",
+            "explanations": [
+              "That is the reciprocal of the rate in the equation.",
+              "The coefficient of d is 2.5 dollars per mile; 4 dollars is the starting charge.",
+              "4 is the fixed starting charge, not the coefficient of miles.",
+              "6.50 is the total cost at one mile, including the starting charge."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "For f(x) = 3x − 7, how much does f(x) change when x increases from 2 to 6?",
+            "choices": [
+              "12",
+              "3",
+              "4",
+              "18"
+            ],
+            "answer": "12",
+            "explanation": "The rate is 3 and x increases by 4, so the output changes by 3 × 4 = 12.",
+            "explanations": [
+              "The rate is 3 and x increases by 4, so the output changes by 3 × 4 = 12.",
+              "3 is the change per one x-unit; x increases by 4 units here.",
+              "4 is the change in the input, not the output.",
+              "18 is 3 × 6; compare the outputs at both endpoints."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A table has x-values 1, 2, 3 and matching y-values 2, 5, 10. Is the rate of change constant?",
+            "choices": [
+              "Yes; the rate is 3",
+              "Yes; the rate is 5",
+              "Yes; the rate is 4",
+              "No; the rates are 3 and 5"
+            ],
+            "answer": "No; the rates are 3 and 5",
+            "explanation": "For equal x-steps of 1, y first increases by 3 and then by 5.",
+            "explanations": [
+              "Check the second interval too: 10 − 5 = 5.",
+              "Check the first interval too: 5 − 2 = 3.",
+              "4 is the average rate over both intervals, but the interval rates differ.",
+              "For equal x-steps of 1, y first increases by 3 and then by 5."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Which function has the greater rate of change: A(x) = 3x + 2 or B(x) = 2x + 8?",
+            "choices": [
+              "B; its rate is 2",
+              "Both have the same rate",
+              "A; its rate is 3",
+              "B; its rate is 8"
+            ],
+            "answer": "A; its rate is 3",
+            "explanation": "Compare the x-coefficients: 3 is greater than 2. Intercepts do not determine rate.",
+            "explanations": [
+              "B’s rate is 2, which is less than A’s rate of 3.",
+              "Their x-coefficients differ: 3 and 2.",
+              "Compare the x-coefficients: 3 is greater than 2. Intercepts do not determine rate.",
+              "8 is B’s y-intercept, not its rate."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: find the slope through (−2, 7) and (4, −5).",
+            "choices": [
+              "−6",
+              "−2",
+              "2",
+              "−1/2"
+            ],
+            "answer": "−2",
+            "explanation": "m = (−5 − 7)/(4 − (−2)) = −12/6 = −2.",
+            "explanations": [
+              "4 − (−2) = 6, not 2. Subtracting a negative adds.",
+              "m = (−5 − 7)/(4 − (−2)) = −12/6 = −2.",
+              "The y-value falls as x increases. Keep the negative sign.",
+              "Use change in y over change in x, not its reciprocal."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: a car travels at a constant rate. Its distance rises from 45 miles at 1 hour to 135 miles at 3 hours. What is the rate?",
+            "choices": [
+              "45 miles per hour",
+              "90 miles per hour",
+              "30 miles per hour",
+              "135 miles per hour"
+            ],
+            "answer": "45 miles per hour",
+            "explanation": "The distance changes by 90 miles in 2 hours: 90/2 = 45 mph.",
+            "explanations": [
+              "The distance changes by 90 miles in 2 hours: 90/2 = 45 mph.",
+              "90 miles is the change over 2 hours, not 1 hour.",
+              "Use the change in time, 3 − 1, with the change in distance.",
+              "135 miles is a distance reading, not a rate."
+            ]
+          }
+        ]
       },
       {
         "id": 21,
         "title": "Modeling Linear Systems",
         "source": "figure-021.html",
-        "available": false,
-        "questions": []
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Let a be the number of adult tickets and s the number of student tickets. There are 18 tickets total. Which equation models the count?",
+            "choices": [
+              "a − s = 18",
+              "18a + 18s = 1",
+              "a + s = 18",
+              "as = 18"
+            ],
+            "answer": 2,
+            "explanation": "Adding the two ticket counts gives the total count of 18.",
+            "explanations": [
+              "A difference does not count all tickets.",
+              "18 is the total, not the price or coefficient of each ticket.",
+              "Adding the two ticket counts gives the total count of 18.",
+              "Multiply counts only if the relationship calls for a product; this is a total."
+            ],
+            "concept": "<strong>Define the unknowns</strong><p>A system uses the same variables in two equations. Each equation describes a relationship that must hold at the same time.</p><p>Example: if p and n count pens and notebooks and there are 7 items, p + n = 7.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Adult tickets cost $12 and student tickets cost $7. With a adult tickets and s student tickets, the revenue is $161. Which equation models revenue?",
+            "choices": [
+              "19(a + s) = 161",
+              "12a + 7s = 161",
+              "a + s = 161",
+              "7a + 12s = 161"
+            ],
+            "answer": 1,
+            "explanation": "Each price multiplies its ticket count, and the two revenues add to $161.",
+            "explanations": [
+              "Each ticket has one price, not the sum of both prices.",
+              "Each price multiplies its ticket count, and the two revenues add to $161.",
+              "a + s counts tickets, not dollars.",
+              "The prices are attached to the wrong ticket types."
+            ],
+            "concept": "<strong>Match the units</strong><p>Price × count gives money. At $2 per pen and $5 per notebook, a $23 total gives 2p + 5n = 23. A count equation and a money equation express different relationships.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "A gym charges $15 plus $4 per visit; another charges $7 per visit. Which system compares their monthly costs C for v visits?",
+            "choices": [
+              "C = 15 + 4v and C = 7v",
+              "C = 19v and C = 7v",
+              "C = 15v + 4 and C = 7v",
+              "C = 15 + 4v and C = 7 + v"
+            ],
+            "answer": 0,
+            "explanation": "Use one cost equation for each gym, with the same visit count v and cost variable C.",
+            "explanations": [
+              "Use one cost equation for each gym, with the same visit count v and cost variable C.",
+              "The $15 fee is paid once, not on every visit.",
+              "The fixed fee and per-visit rate have been swapped.",
+              "The second gym charges $7 per visit, so multiply 7 by v."
+            ],
+            "concept": "<strong>Compare two models</strong><p>A starting fee is a constant; a rate multiplies the input. For example, C = 10 + 3v means a $10 fee plus $3 for each visit. At an intersection, both models have the same input and output.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "A rectangle has perimeter 30 meters and length L is 3 meters more than width W. Which system models it?",
+            "choices": [
+              "L + W = 30 and L = W + 3",
+              "2L + 2W = 30 and W = L + 3",
+              "LW = 30 and L = W + 3",
+              "2L + 2W = 30 and L = W + 3"
+            ],
+            "answer": 3,
+            "explanation": "Perimeter counts two lengths and two widths. “3 more than width” means W + 3.",
+            "explanations": [
+              "L + W is half the perimeter.",
+              "This says the width is longer, reversing the relationship.",
+              "LW is area, not perimeter.",
+              "Perimeter counts two lengths and two widths. “3 more than width” means W + 3."
+            ],
+            "concept": "<strong>Translate carefully</strong><p>“5 more than y” means y + 5; “twice y” means 2y. A rectangle’s perimeter is 2L + 2W, while its area is LW.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A jar contains 14 quarters and dimes in total, worth $2.60. Let q and d be their counts. Which system fits?",
+            "choices": [
+              "q + d = 14 and 25q + 10d = 2.60",
+              "q − d = 14 and 0.25q + 0.10d = 2.60",
+              "q + d = 14 and 0.25q + 0.10d = 2.60",
+              "q + d = 2.60 and 0.25q + 0.10d = 14"
+            ],
+            "answer": 2,
+            "explanation": "The first equation counts coins; the second totals their dollar values.",
+            "explanations": [
+              "25 and 10 are cents, but 2.60 is dollars. Use consistent units.",
+              "The total coin count uses addition, not subtraction.",
+              "The first equation counts coins; the second totals their dollar values.",
+              "The count total and money total are swapped."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Let x be the larger of two numbers and y the smaller. Their sum is 28 and their difference is 6. Which system fits?",
+            "choices": [
+              "xy = 28 and x − y = 6",
+              "x + y = 28 and x − y = 6",
+              "x + y = 6 and x − y = 28",
+              "x + y = 28 and y − x = 6"
+            ],
+            "answer": 1,
+            "explanation": "The sum adds the numbers; larger minus smaller gives their positive difference.",
+            "explanations": [
+              "A sum is addition, not multiplication.",
+              "The sum adds the numbers; larger minus smaller gives their positive difference.",
+              "The sum and difference values are swapped.",
+              "Smaller minus larger is negative, not positive 6."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Plan A costs $8 plus $3 per hour. Plan B costs $5 per hour. Which equation finds when the costs are equal?",
+            "choices": [
+              "8 + 3h = 5h",
+              "8 + 3 = 5h",
+              "8h + 3 = 5h",
+              "8 + 3h + 5h = 0"
+            ],
+            "answer": 0,
+            "explanation": "At equal cost, set the two cost expressions equal using the same number of hours h.",
+            "explanations": [
+              "At equal cost, set the two cost expressions equal using the same number of hours h.",
+              "The $3 rate must be multiplied by hours.",
+              "The $8 fee is fixed, not hourly.",
+              "We need equal costs, not a total cost of zero."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Notebooks cost $3 and pens cost $2. A purchase has 10 items and costs $24. Which equation belongs with n + p = 10?",
+            "choices": [
+              "2n + 3p = 24",
+              "n + p = 24",
+              "5(n + p) = 24",
+              "3n + 2p = 24"
+            ],
+            "answer": 3,
+            "explanation": "Multiply each item count by its price, then add to get $24.",
+            "explanations": [
+              "The notebook and pen prices have been reversed.",
+              "This uses a dollar total as an item count.",
+              "Not every item costs $5; prices depend on type.",
+              "Multiply each item count by its price, then add to get $24."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Does n = 4, p = 6 satisfy BOTH n + p = 10 and 3n + 2p = 24?",
+            "choices": [
+              "No; 3(4) + 2(6) is 30",
+              "Yes; satisfying just one equation is enough",
+              "Yes; 4 + 6 = 10 and 12 + 12 = 24",
+              "No; 4 + 6 is not 10"
+            ],
+            "answer": 2,
+            "explanation": "A system solution must satisfy every equation, and this pair satisfies both.",
+            "explanations": [
+              "3(4) + 2(6) = 12 + 12 = 24.",
+              "The pair is a solution, but the reason is wrong: it must satisfy both equations.",
+              "A system solution must satisfy every equation, and this pair satisfies both.",
+              "4 + 6 is 10. Check the arithmetic in both equations."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Cars and bicycles have 10 vehicles and 28 wheels total. Cars have 4 wheels and bicycles have 2. Which system uses c cars and b bicycles?",
+            "choices": [
+              "c + b = 10 and 6(c + b) = 28",
+              "c + b = 10 and 4c + 2b = 28",
+              "c + b = 28 and 4c + 2b = 10",
+              "c + b = 10 and 2c + 4b = 28"
+            ],
+            "answer": 1,
+            "explanation": "The first relationship counts vehicles; the second counts wheels.",
+            "explanations": [
+              "Each vehicle has either 4 or 2 wheels, not 6.",
+              "The first relationship counts vehicles; the second counts wheels.",
+              "The vehicle and wheel totals are swapped.",
+              "Cars have 4 wheels and bicycles have 2, not the reverse."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: smoothies cost $5 and juices $3. Nine drinks cost $37. With s smoothies and j juices, which system fits?",
+            "choices": [
+              "s + j = 9 and 5s + 3j = 37",
+              "s + j = 37 and 5s + 3j = 9",
+              "s + j = 9 and 3s + 5j = 37",
+              "s − j = 9 and 5s + 3j = 37"
+            ],
+            "answer": 0,
+            "explanation": "Count the nine drinks, then add $5 per smoothie and $3 per juice to get $37.",
+            "explanations": [
+              "Count the nine drinks, then add $5 per smoothie and $3 per juice to get $37.",
+              "The count and money totals are swapped.",
+              "The two drink prices are swapped.",
+              "Nine is the total number of drinks, not their difference."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: a rectangle has perimeter 44 cm and length L is twice width W. Which system fits?",
+            "choices": [
+              "LW = 44 and L = 2W",
+              "2L + 2W = 44 and L = W + 2",
+              "L + W = 44 and L = 2W",
+              "2L + 2W = 44 and L = 2W"
+            ],
+            "answer": 3,
+            "explanation": "The perimeter counts all four sides, and “twice width” means 2W.",
+            "explanations": [
+              "LW measures area, but the given quantity is perimeter.",
+              "Twice width means multiply by 2, not add 2.",
+              "L + W counts only two of the four sides.",
+              "The perimeter counts all four sides, and “twice width” means 2W."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          }
+        ],
+        "original": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Let a be the number of adult tickets and s the number of student tickets. There are 18 tickets total. Which equation models the count?",
+            "choices": [
+              "a − s = 18",
+              "18a + 18s = 1",
+              "a + s = 18",
+              "as = 18"
+            ],
+            "answer": "a + s = 18",
+            "explanation": "Adding the two ticket counts gives the total count of 18.",
+            "explanations": [
+              "A difference does not count all tickets.",
+              "18 is the total, not the price or coefficient of each ticket.",
+              "Adding the two ticket counts gives the total count of 18.",
+              "Multiply counts only if the relationship calls for a product; this is a total."
+            ],
+            "concept": "<strong>Define the unknowns</strong><p>A system uses the same variables in two equations. Each equation describes a relationship that must hold at the same time.</p><p>Example: if p and n count pens and notebooks and there are 7 items, p + n = 7.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Adult tickets cost $12 and student tickets cost $7. With a adult tickets and s student tickets, the revenue is $161. Which equation models revenue?",
+            "choices": [
+              "19(a + s) = 161",
+              "12a + 7s = 161",
+              "a + s = 161",
+              "7a + 12s = 161"
+            ],
+            "answer": "12a + 7s = 161",
+            "explanation": "Each price multiplies its ticket count, and the two revenues add to $161.",
+            "explanations": [
+              "Each ticket has one price, not the sum of both prices.",
+              "Each price multiplies its ticket count, and the two revenues add to $161.",
+              "a + s counts tickets, not dollars.",
+              "The prices are attached to the wrong ticket types."
+            ],
+            "concept": "<strong>Match the units</strong><p>Price × count gives money. At $2 per pen and $5 per notebook, a $23 total gives 2p + 5n = 23. A count equation and a money equation express different relationships.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "A gym charges $15 plus $4 per visit; another charges $7 per visit. Which system compares their monthly costs C for v visits?",
+            "choices": [
+              "C = 15 + 4v and C = 7v",
+              "C = 19v and C = 7v",
+              "C = 15v + 4 and C = 7v",
+              "C = 15 + 4v and C = 7 + v"
+            ],
+            "answer": "C = 15 + 4v and C = 7v",
+            "explanation": "Use one cost equation for each gym, with the same visit count v and cost variable C.",
+            "explanations": [
+              "Use one cost equation for each gym, with the same visit count v and cost variable C.",
+              "The $15 fee is paid once, not on every visit.",
+              "The fixed fee and per-visit rate have been swapped.",
+              "The second gym charges $7 per visit, so multiply 7 by v."
+            ],
+            "concept": "<strong>Compare two models</strong><p>A starting fee is a constant; a rate multiplies the input. For example, C = 10 + 3v means a $10 fee plus $3 for each visit. At an intersection, both models have the same input and output.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "A rectangle has perimeter 30 meters and length L is 3 meters more than width W. Which system models it?",
+            "choices": [
+              "L + W = 30 and L = W + 3",
+              "2L + 2W = 30 and W = L + 3",
+              "LW = 30 and L = W + 3",
+              "2L + 2W = 30 and L = W + 3"
+            ],
+            "answer": "2L + 2W = 30 and L = W + 3",
+            "explanation": "Perimeter counts two lengths and two widths. “3 more than width” means W + 3.",
+            "explanations": [
+              "L + W is half the perimeter.",
+              "This says the width is longer, reversing the relationship.",
+              "LW is area, not perimeter.",
+              "Perimeter counts two lengths and two widths. “3 more than width” means W + 3."
+            ],
+            "concept": "<strong>Translate carefully</strong><p>“5 more than y” means y + 5; “twice y” means 2y. A rectangle’s perimeter is 2L + 2W, while its area is LW.</p>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "A jar contains 14 quarters and dimes in total, worth $2.60. Let q and d be their counts. Which system fits?",
+            "choices": [
+              "q + d = 14 and 25q + 10d = 2.60",
+              "q − d = 14 and 0.25q + 0.10d = 2.60",
+              "q + d = 14 and 0.25q + 0.10d = 2.60",
+              "q + d = 2.60 and 0.25q + 0.10d = 14"
+            ],
+            "answer": "q + d = 14 and 0.25q + 0.10d = 2.60",
+            "explanation": "The first equation counts coins; the second totals their dollar values.",
+            "explanations": [
+              "25 and 10 are cents, but 2.60 is dollars. Use consistent units.",
+              "The total coin count uses addition, not subtraction.",
+              "The first equation counts coins; the second totals their dollar values.",
+              "The count total and money total are swapped."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Let x be the larger of two numbers and y the smaller. Their sum is 28 and their difference is 6. Which system fits?",
+            "choices": [
+              "xy = 28 and x − y = 6",
+              "x + y = 28 and x − y = 6",
+              "x + y = 6 and x − y = 28",
+              "x + y = 28 and y − x = 6"
+            ],
+            "answer": "x + y = 28 and x − y = 6",
+            "explanation": "The sum adds the numbers; larger minus smaller gives their positive difference.",
+            "explanations": [
+              "A sum is addition, not multiplication.",
+              "The sum adds the numbers; larger minus smaller gives their positive difference.",
+              "The sum and difference values are swapped.",
+              "Smaller minus larger is negative, not positive 6."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Plan A costs $8 plus $3 per hour. Plan B costs $5 per hour. Which equation finds when the costs are equal?",
+            "choices": [
+              "8 + 3h = 5h",
+              "8 + 3 = 5h",
+              "8h + 3 = 5h",
+              "8 + 3h + 5h = 0"
+            ],
+            "answer": "8 + 3h = 5h",
+            "explanation": "At equal cost, set the two cost expressions equal using the same number of hours h.",
+            "explanations": [
+              "At equal cost, set the two cost expressions equal using the same number of hours h.",
+              "The $3 rate must be multiplied by hours.",
+              "The $8 fee is fixed, not hourly.",
+              "We need equal costs, not a total cost of zero."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Notebooks cost $3 and pens cost $2. A purchase has 10 items and costs $24. Which equation belongs with n + p = 10?",
+            "choices": [
+              "2n + 3p = 24",
+              "n + p = 24",
+              "5(n + p) = 24",
+              "3n + 2p = 24"
+            ],
+            "answer": "3n + 2p = 24",
+            "explanation": "Multiply each item count by its price, then add to get $24.",
+            "explanations": [
+              "The notebook and pen prices have been reversed.",
+              "This uses a dollar total as an item count.",
+              "Not every item costs $5; prices depend on type.",
+              "Multiply each item count by its price, then add to get $24."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Does n = 4, p = 6 satisfy BOTH n + p = 10 and 3n + 2p = 24?",
+            "choices": [
+              "No; 3(4) + 2(6) is 30",
+              "Yes; satisfying just one equation is enough",
+              "Yes; 4 + 6 = 10 and 12 + 12 = 24",
+              "No; 4 + 6 is not 10"
+            ],
+            "answer": "Yes; 4 + 6 = 10 and 12 + 12 = 24",
+            "explanation": "A system solution must satisfy every equation, and this pair satisfies both.",
+            "explanations": [
+              "3(4) + 2(6) = 12 + 12 = 24.",
+              "The pair is a solution, but the reason is wrong: it must satisfy both equations.",
+              "A system solution must satisfy every equation, and this pair satisfies both.",
+              "4 + 6 is 10. Check the arithmetic in both equations."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Cars and bicycles have 10 vehicles and 28 wheels total. Cars have 4 wheels and bicycles have 2. Which system uses c cars and b bicycles?",
+            "choices": [
+              "c + b = 10 and 6(c + b) = 28",
+              "c + b = 10 and 4c + 2b = 28",
+              "c + b = 28 and 4c + 2b = 10",
+              "c + b = 10 and 2c + 4b = 28"
+            ],
+            "answer": "c + b = 10 and 4c + 2b = 28",
+            "explanation": "The first relationship counts vehicles; the second counts wheels.",
+            "explanations": [
+              "Each vehicle has either 4 or 2 wheels, not 6.",
+              "The first relationship counts vehicles; the second counts wheels.",
+              "The vehicle and wheel totals are swapped.",
+              "Cars have 4 wheels and bicycles have 2, not the reverse."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: smoothies cost $5 and juices $3. Nine drinks cost $37. With s smoothies and j juices, which system fits?",
+            "choices": [
+              "s + j = 9 and 5s + 3j = 37",
+              "s + j = 37 and 5s + 3j = 9",
+              "s + j = 9 and 3s + 5j = 37",
+              "s − j = 9 and 5s + 3j = 37"
+            ],
+            "answer": "s + j = 9 and 5s + 3j = 37",
+            "explanation": "Count the nine drinks, then add $5 per smoothie and $3 per juice to get $37.",
+            "explanations": [
+              "Count the nine drinks, then add $5 per smoothie and $3 per juice to get $37.",
+              "The count and money totals are swapped.",
+              "The two drink prices are swapped.",
+              "Nine is the total number of drinks, not their difference."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: a rectangle has perimeter 44 cm and length L is twice width W. Which system fits?",
+            "choices": [
+              "LW = 44 and L = 2W",
+              "2L + 2W = 44 and L = W + 2",
+              "L + W = 44 and L = 2W",
+              "2L + 2W = 44 and L = 2W"
+            ],
+            "answer": "2L + 2W = 44 and L = 2W",
+            "explanation": "The perimeter counts all four sides, and “twice width” means 2W.",
+            "explanations": [
+              "LW measures area, but the given quantity is perimeter.",
+              "Twice width means multiply by 2, not add 2.",
+              "L + W counts only two of the four sides.",
+              "The perimeter counts all four sides, and “twice width” means 2W."
+            ]
+          }
+        ]
       },
       {
         "id": 22,
         "title": "Graphing Linear Systems",
         "source": "figure-022.html",
-        "available": false,
-        "questions": []
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Why does an intersection point solve a system of two lines?",
+            "choices": [
+              "Its x-coordinate must equal its y-coordinate",
+              "Its coordinates satisfy both equations",
+              "It is always on the x-axis",
+              "It only needs to satisfy one equation"
+            ],
+            "answer": 1,
+            "explanation": "A point on both lines makes both equations true at the same time.",
+            "explanations": [
+              "Intersection coordinates do not have to be equal.",
+              "A point on both lines makes both equations true at the same time.",
+              "An intersection can be anywhere in the coordinate plane.",
+              "A point on just one line is not necessarily on the other."
+            ],
+            "concept": "<strong>Find the shared point</strong><p>Graph each equation on the same axes. Where the lines meet, the point belongs to both graphs and solves the system.</p><p>Example: y = x and y = −x + 4 meet at (2, 2). Substitution gives 2 = 2 in each equation.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Read the graph. Where do y = x + 1 and y = −x + 5 intersect?",
+            "choices": [
+              "(2, 3)",
+              "(3, 2)",
+              "(0, 1)",
+              "(0, 5)"
+            ],
+            "answer": 0,
+            "explanation": "The lines meet at x = 2, y = 3. Check: 3 = 2 + 1 and 3 = −2 + 5.",
+            "explanations": [
+              "The lines meet at x = 2, y = 3. Check: 3 = 2 + 1 and 3 = −2 + 5.",
+              "Ordered pairs list x first, then y. Read the horizontal coordinate before the vertical.",
+              "(0, 1) is on the blue line but not the gold line.",
+              "(0, 5) is on the gold line but not the blue line."
+            ],
+            "concept": "<strong>Read x, then y</strong><p>Use the axes to read the horizontal coordinate first and vertical coordinate second. Check the pair in both equations; a picture alone can be approximate.</p>",
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x + 1; y = −x + 5\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 -85.0L340 215.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x + 1<br>Dashed gold: y = −x + 5. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x + 1: (-2, -1), (0, 1), (2, 3).</p><p>y = −x + 5: (0, 5), (2, 3).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "The graph shows y = x + 1 and y = x − 2. How many solutions are there?",
+            "choices": [
+              "One solution",
+              "Two solutions",
+              "Infinitely many solutions",
+              "No solutions"
+            ],
+            "answer": 3,
+            "explanation": "The lines have the same slope and different intercepts, so they are parallel and never meet.",
+            "explanations": [
+              "Distinct parallel lines do not intersect.",
+              "Two distinct straight lines cannot cross twice.",
+              "That happens when both equations describe the same line, not these parallel lines.",
+              "The lines have the same slope and different intercepts, so they are parallel and never meet."
+            ],
+            "concept": "<strong>Parallel lines</strong><p>Lines with equal slopes and different y-intercepts never meet. Example: y = 2x + 1 and y = 2x − 3 have no common point.</p>",
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x + 1; y = x − 2\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 390.0L340 90.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x + 1<br>Dashed gold: y = x − 2. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x + 1: (-2, -1), (0, 1), (2, 3).</p><p>y = x − 2: (-2, -4), (0, -2), (2, 0).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "The graph shows y = x + 1 and 2y = 2x + 2. How many solutions are there?",
+            "choices": [
+              "One solution",
+              "Two solutions",
+              "Infinitely many solutions",
+              "No solutions"
+            ],
+            "answer": 2,
+            "explanation": "Dividing 2y = 2x + 2 by 2 gives y = x + 1. Both graphs are the same line.",
+            "explanations": [
+              "Every point on the shared line satisfies both equations, not just one point.",
+              "A shared line has infinitely many common points.",
+              "Dividing 2y = 2x + 2 by 2 gives y = x + 1. Both graphs are the same line.",
+              "The graphs overlap; they are not separate parallel lines."
+            ],
+            "concept": "<strong>The same line</strong><p>Equivalent equations can graph as one line. Every point on that line solves both equations. The dashed gold line overlays the blue line in this graph.</p>",
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x + 1; 2y = 2x + 2\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x + 1<br>Dashed gold: 2y = 2x + 2. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x + 1: (-2, -1), (0, 1), (2, 3).</p><p>2y = 2x + 2: (-2, -1), (0, 1), (2, 3).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Read the graph. Solve y = 2x and y = −x + 3.",
+            "choices": [
+              "(0, 3)",
+              "(1, 2)",
+              "(2, 1)",
+              "(0, 0)"
+            ],
+            "answer": 1,
+            "explanation": "At (1, 2), both y = 2(1) and y = −1 + 3 give 2.",
+            "explanations": [
+              "This point is on y = −x + 3 but not y = 2x.",
+              "At (1, 2), both y = 2(1) and y = −1 + 3 give 2.",
+              "The coordinates are reversed; x is read first.",
+              "This point is on y = 2x but not y = −x + 3."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = 2x; y = −x + 3\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 490.0L340 -110.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 -35.0L340 265.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = 2x<br>Dashed gold: y = −x + 3. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = 2x: (-2, -4), (0, 0), (2, 4).</p><p>y = −x + 3: (-2, 5), (0, 3), (2, 1).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Read the graph. Solve y = −x and y = x + 4.",
+            "choices": [
+              "(−2, 2)",
+              "(2, −2)",
+              "(2, 2)",
+              "(−2, −2)"
+            ],
+            "answer": 0,
+            "explanation": "The intersection lies left of the y-axis and above the x-axis: (−2, 2).",
+            "explanations": [
+              "The intersection lies left of the y-axis and above the x-axis: (−2, 2).",
+              "This is on y = −x but gives −2 ≠ 2 + 4 in the other equation.",
+              "At x = 2, y = −x is −2, not 2.",
+              "At x = −2, y = −x is positive 2."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = −x; y = x + 4\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 40.0L340 340.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 240.0L340 -60.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = −x<br>Dashed gold: y = x + 4. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = −x: (-2, 2), (0, 0), (2, -2).</p><p>y = x + 4: (-2, 2), (0, 4), (2, 6).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Read the graph. Solve x = 2 and y = −1.",
+            "choices": [
+              "(−1, 2)",
+              "(2, 1)",
+              "(−2, −1)",
+              "(2, −1)"
+            ],
+            "answer": 3,
+            "explanation": "The vertical line fixes x at 2, and the horizontal line fixes y at −1.",
+            "explanations": [
+              "This reverses x and y.",
+              "The horizontal line is at y = −1, below the x-axis.",
+              "The vertical line is x = 2, to the right of the y-axis.",
+              "The vertical line fixes x at 2, and the horizontal line fixes y at −1."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. x = 2; y = −1\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M240.0 340L240.0 40\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 215.0L340 215.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: x = 2<br>Dashed gold: y = −1. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>x = 2: (2, -2), (2, 0), (2, 2).</p><p>y = −1: (-2, -1), (0, -1), (2, -1).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Which point is on BOTH y = x + 2 and y = 2x?",
+            "choices": [
+              "(1, 2)",
+              "(4, 2)",
+              "(2, 4)",
+              "(0, 2)"
+            ],
+            "answer": 2,
+            "explanation": "4 = 2 + 2 and 4 = 2(2), so (2, 4) is on both lines.",
+            "explanations": [
+              "This is on y = 2x, but y = x + 2 gives 3 at x = 1.",
+              "At x = 4, the equations give 6 and 8, not 2.",
+              "4 = 2 + 2 and 4 = 2(2), so (2, 4) is on both lines.",
+              "This is on y = x + 2, but y = 2x gives 0 at x = 0."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Two distinct lines have different slopes. How many intersection points can they have?",
+            "choices": [
+              "Infinitely many",
+              "Exactly one",
+              "Zero",
+              "Two"
+            ],
+            "answer": 1,
+            "explanation": "Different slopes make the lines nonparallel, so they intersect at exactly one point.",
+            "explanations": [
+              "Infinitely many shared points require the same line.",
+              "Different slopes make the lines nonparallel, so they intersect at exactly one point.",
+              "Different slopes mean the lines are not parallel.",
+              "Two distinct straight lines cannot intersect at two separate points."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Which system has no solution?",
+            "choices": [
+              "y = 3x + 1 and y = 3x − 4",
+              "y = x and y = −x",
+              "y = 2x and 2y = 4x",
+              "x = 1 and y = 2"
+            ],
+            "answer": 0,
+            "explanation": "Equal slopes and different intercepts give distinct parallel lines.",
+            "explanations": [
+              "Equal slopes and different intercepts give distinct parallel lines.",
+              "These lines intersect at (0, 0).",
+              "These equations describe the same line, giving infinitely many solutions.",
+              "A vertical and horizontal line intersect at (1, 2)."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: read the intersection of y = x − 3 and y = −2x + 3.",
+            "choices": [
+              "(−1, 2)",
+              "(0, −3)",
+              "(0, 3)",
+              "(2, −1)"
+            ],
+            "answer": 3,
+            "explanation": "At x = 2, both expressions equal −1. The shared point is (2, −1).",
+            "explanations": [
+              "Read x first, then y; the coordinates are reversed.",
+              "This is the blue line’s y-intercept, not a point on both lines.",
+              "This is the gold line’s y-intercept, not a point on both lines.",
+              "At x = 2, both expressions equal −1. The shared point is (2, −1)."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x − 3; y = −2x + 3\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 415.0L340 115.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 -185.0L340 415.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x − 3<br>Dashed gold: y = −2x + 3. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x − 3: (-2, -5), (0, -3), (2, -1).</p><p>y = −2x + 3: (0, 3), (2, -1).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: how many solutions does the graphed system y = 2x − 1 and 2y = 4x − 2 have?",
+            "choices": [
+              "One solution",
+              "Two solutions",
+              "Infinitely many solutions",
+              "No solutions"
+            ],
+            "answer": 2,
+            "explanation": "Divide the second equation by 2: it is the same line y = 2x − 1.",
+            "explanations": [
+              "All points on the shared line solve both equations.",
+              "The common points fill a line, not a set of two points.",
+              "Divide the second equation by 2: it is the same line y = 2x − 1.",
+              "The lines overlap; they do not stay apart."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = 2x − 1; 2y = 4x − 2\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 515.0L340 -85.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 515.0L340 -85.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = 2x − 1<br>Dashed gold: 2y = 4x − 2. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = 2x − 1: (-2, -5), (0, -1), (2, 3).</p><p>2y = 4x − 2: (-2, -5), (0, -1), (2, 3).</p></details></figure>",
+            "type": "multiple-choice",
+            "eq": ""
+          }
+        ],
+        "original": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Why does an intersection point solve a system of two lines?",
+            "choices": [
+              "Its x-coordinate must equal its y-coordinate",
+              "Its coordinates satisfy both equations",
+              "It is always on the x-axis",
+              "It only needs to satisfy one equation"
+            ],
+            "answer": "Its coordinates satisfy both equations",
+            "explanation": "A point on both lines makes both equations true at the same time.",
+            "explanations": [
+              "Intersection coordinates do not have to be equal.",
+              "A point on both lines makes both equations true at the same time.",
+              "An intersection can be anywhere in the coordinate plane.",
+              "A point on just one line is not necessarily on the other."
+            ],
+            "concept": "<strong>Find the shared point</strong><p>Graph each equation on the same axes. Where the lines meet, the point belongs to both graphs and solves the system.</p><p>Example: y = x and y = −x + 4 meet at (2, 2). Substitution gives 2 = 2 in each equation.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Read the graph. Where do y = x + 1 and y = −x + 5 intersect?",
+            "choices": [
+              "(2, 3)",
+              "(3, 2)",
+              "(0, 1)",
+              "(0, 5)"
+            ],
+            "answer": "(2, 3)",
+            "explanation": "The lines meet at x = 2, y = 3. Check: 3 = 2 + 1 and 3 = −2 + 5.",
+            "explanations": [
+              "The lines meet at x = 2, y = 3. Check: 3 = 2 + 1 and 3 = −2 + 5.",
+              "Ordered pairs list x first, then y. Read the horizontal coordinate before the vertical.",
+              "(0, 1) is on the blue line but not the gold line.",
+              "(0, 5) is on the gold line but not the blue line."
+            ],
+            "concept": "<strong>Read x, then y</strong><p>Use the axes to read the horizontal coordinate first and vertical coordinate second. Check the pair in both equations; a picture alone can be approximate.</p>",
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x + 1; y = −x + 5\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 -85.0L340 215.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x + 1<br>Dashed gold: y = −x + 5. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x + 1: (-2, -1), (0, 1), (2, 3).</p><p>y = −x + 5: (0, 5), (2, 3).</p></details></figure>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "The graph shows y = x + 1 and y = x − 2. How many solutions are there?",
+            "choices": [
+              "One solution",
+              "Two solutions",
+              "Infinitely many solutions",
+              "No solutions"
+            ],
+            "answer": "No solutions",
+            "explanation": "The lines have the same slope and different intercepts, so they are parallel and never meet.",
+            "explanations": [
+              "Distinct parallel lines do not intersect.",
+              "Two distinct straight lines cannot cross twice.",
+              "That happens when both equations describe the same line, not these parallel lines.",
+              "The lines have the same slope and different intercepts, so they are parallel and never meet."
+            ],
+            "concept": "<strong>Parallel lines</strong><p>Lines with equal slopes and different y-intercepts never meet. Example: y = 2x + 1 and y = 2x − 3 have no common point.</p>",
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x + 1; y = x − 2\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 390.0L340 90.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x + 1<br>Dashed gold: y = x − 2. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x + 1: (-2, -1), (0, 1), (2, 3).</p><p>y = x − 2: (-2, -4), (0, -2), (2, 0).</p></details></figure>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "The graph shows y = x + 1 and 2y = 2x + 2. How many solutions are there?",
+            "choices": [
+              "One solution",
+              "Two solutions",
+              "Infinitely many solutions",
+              "No solutions"
+            ],
+            "answer": "Infinitely many solutions",
+            "explanation": "Dividing 2y = 2x + 2 by 2 gives y = x + 1. Both graphs are the same line.",
+            "explanations": [
+              "Every point on the shared line satisfies both equations, not just one point.",
+              "A shared line has infinitely many common points.",
+              "Dividing 2y = 2x + 2 by 2 gives y = x + 1. Both graphs are the same line.",
+              "The graphs overlap; they are not separate parallel lines."
+            ],
+            "concept": "<strong>The same line</strong><p>Equivalent equations can graph as one line. Every point on that line solves both equations. The dashed gold line overlays the blue line in this graph.</p>",
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x + 1; 2y = 2x + 2\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 315.0L340 15.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x + 1<br>Dashed gold: 2y = 2x + 2. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x + 1: (-2, -1), (0, 1), (2, 3).</p><p>2y = 2x + 2: (-2, -1), (0, 1), (2, 3).</p></details></figure>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Read the graph. Solve y = 2x and y = −x + 3.",
+            "choices": [
+              "(0, 3)",
+              "(1, 2)",
+              "(2, 1)",
+              "(0, 0)"
+            ],
+            "answer": "(1, 2)",
+            "explanation": "At (1, 2), both y = 2(1) and y = −1 + 3 give 2.",
+            "explanations": [
+              "This point is on y = −x + 3 but not y = 2x.",
+              "At (1, 2), both y = 2(1) and y = −1 + 3 give 2.",
+              "The coordinates are reversed; x is read first.",
+              "This point is on y = 2x but not y = −x + 3."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = 2x; y = −x + 3\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 490.0L340 -110.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 -35.0L340 265.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = 2x<br>Dashed gold: y = −x + 3. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = 2x: (-2, -4), (0, 0), (2, 4).</p><p>y = −x + 3: (-2, 5), (0, 3), (2, 1).</p></details></figure>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Read the graph. Solve y = −x and y = x + 4.",
+            "choices": [
+              "(−2, 2)",
+              "(2, −2)",
+              "(2, 2)",
+              "(−2, −2)"
+            ],
+            "answer": "(−2, 2)",
+            "explanation": "The intersection lies left of the y-axis and above the x-axis: (−2, 2).",
+            "explanations": [
+              "The intersection lies left of the y-axis and above the x-axis: (−2, 2).",
+              "This is on y = −x but gives −2 ≠ 2 + 4 in the other equation.",
+              "At x = 2, y = −x is −2, not 2.",
+              "At x = −2, y = −x is positive 2."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = −x; y = x + 4\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 40.0L340 340.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 240.0L340 -60.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = −x<br>Dashed gold: y = x + 4. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = −x: (-2, 2), (0, 0), (2, -2).</p><p>y = x + 4: (-2, 2), (0, 4), (2, 6).</p></details></figure>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Read the graph. Solve x = 2 and y = −1.",
+            "choices": [
+              "(−1, 2)",
+              "(2, 1)",
+              "(−2, −1)",
+              "(2, −1)"
+            ],
+            "answer": "(2, −1)",
+            "explanation": "The vertical line fixes x at 2, and the horizontal line fixes y at −1.",
+            "explanations": [
+              "This reverses x and y.",
+              "The horizontal line is at y = −1, below the x-axis.",
+              "The vertical line is x = 2, to the right of the y-axis.",
+              "The vertical line fixes x at 2, and the horizontal line fixes y at −1."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. x = 2; y = −1\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M240.0 340L240.0 40\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 215.0L340 215.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: x = 2<br>Dashed gold: y = −1. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>x = 2: (2, -2), (2, 0), (2, 2).</p><p>y = −1: (-2, -1), (0, -1), (2, -1).</p></details></figure>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Which point is on BOTH y = x + 2 and y = 2x?",
+            "choices": [
+              "(1, 2)",
+              "(4, 2)",
+              "(2, 4)",
+              "(0, 2)"
+            ],
+            "answer": "(2, 4)",
+            "explanation": "4 = 2 + 2 and 4 = 2(2), so (2, 4) is on both lines.",
+            "explanations": [
+              "This is on y = 2x, but y = x + 2 gives 3 at x = 1.",
+              "At x = 4, the equations give 6 and 8, not 2.",
+              "4 = 2 + 2 and 4 = 2(2), so (2, 4) is on both lines.",
+              "This is on y = x + 2, but y = 2x gives 0 at x = 0."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Two distinct lines have different slopes. How many intersection points can they have?",
+            "choices": [
+              "Infinitely many",
+              "Exactly one",
+              "Zero",
+              "Two"
+            ],
+            "answer": "Exactly one",
+            "explanation": "Different slopes make the lines nonparallel, so they intersect at exactly one point.",
+            "explanations": [
+              "Infinitely many shared points require the same line.",
+              "Different slopes make the lines nonparallel, so they intersect at exactly one point.",
+              "Different slopes mean the lines are not parallel.",
+              "Two distinct straight lines cannot intersect at two separate points."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Which system has no solution?",
+            "choices": [
+              "y = 3x + 1 and y = 3x − 4",
+              "y = x and y = −x",
+              "y = 2x and 2y = 4x",
+              "x = 1 and y = 2"
+            ],
+            "answer": "y = 3x + 1 and y = 3x − 4",
+            "explanation": "Equal slopes and different intercepts give distinct parallel lines.",
+            "explanations": [
+              "Equal slopes and different intercepts give distinct parallel lines.",
+              "These lines intersect at (0, 0).",
+              "These equations describe the same line, giving infinitely many solutions.",
+              "A vertical and horizontal line intersect at (1, 2)."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: read the intersection of y = x − 3 and y = −2x + 3.",
+            "choices": [
+              "(−1, 2)",
+              "(0, −3)",
+              "(0, 3)",
+              "(2, −1)"
+            ],
+            "answer": "(2, −1)",
+            "explanation": "At x = 2, both expressions equal −1. The shared point is (2, −1).",
+            "explanations": [
+              "Read x first, then y; the coordinates are reversed.",
+              "This is the blue line’s y-intercept, not a point on both lines.",
+              "This is the gold line’s y-intercept, not a point on both lines.",
+              "At x = 2, both expressions equal −1. The shared point is (2, −1)."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = x − 3; y = −2x + 3\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 415.0L340 115.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 -185.0L340 415.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = x − 3<br>Dashed gold: y = −2x + 3. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = x − 3: (-2, -5), (0, -3), (2, -1).</p><p>y = −2x + 3: (0, 3), (2, -1).</p></details></figure>"
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: how many solutions does the graphed system y = 2x − 1 and 2y = 4x − 2 have?",
+            "choices": [
+              "One solution",
+              "Two solutions",
+              "Infinitely many solutions",
+              "No solutions"
+            ],
+            "answer": "Infinitely many solutions",
+            "explanation": "Divide the second equation by 2: it is the same line y = 2x − 1.",
+            "explanations": [
+              "All points on the shared line solve both equations.",
+              "The common points fill a line, not a set of two points.",
+              "Divide the second equation by 2: it is the same line y = 2x − 1.",
+              "The lines overlap; they do not stay apart."
+            ],
+            "diagram": "<figure class=\"coordinate-figure\" style=\"margin:20px 0\"><svg viewBox=\"0 0 380 380\" role=\"img\" aria-label=\"Coordinate graph from minus six to six on both axes. y = 2x − 1; 2y = 4x − 2\" style=\"width:100%;max-width:460px;display:block;margin:auto\"><defs><clipPath id=\"plot\"><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\"/></clipPath></defs><rect x=\"40\" y=\"40\" width=\"300\" height=\"300\" fill=\"#101a24\" stroke=\"#78909c\"/><path d=\"M40 40V340 M40 340H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"40\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-6</text><text x=\"180\" y=\"344\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-6</text><path d=\"M65 40V340 M40 315H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M90 40V340 M40 290H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"90\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-4</text><text x=\"180\" y=\"294\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-4</text><path d=\"M115 40V340 M40 265H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M140 40V340 M40 240H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"140\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">-2</text><text x=\"180\" y=\"244\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">-2</text><path d=\"M165 40V340 M40 215H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M190 40V340 M40 190H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M215 40V340 M40 165H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M240 40V340 M40 140H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"240\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">2</text><text x=\"180\" y=\"144\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">2</text><path d=\"M265 40V340 M40 115H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M290 40V340 M40 90H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"290\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">4</text><text x=\"180\" y=\"94\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">4</text><path d=\"M315 40V340 M40 65H340\" stroke=\"#344957\" stroke-width=\"1\"/><path d=\"M340 40V340 M40 40H340\" stroke=\"#344957\" stroke-width=\"1\"/><text x=\"340\" y=\"207\" text-anchor=\"middle\" fill=\"#cad9df\" font-size=\"12\">6</text><text x=\"180\" y=\"44\" text-anchor=\"end\" fill=\"#cad9df\" font-size=\"12\">6</text><path d=\"M40 190H340 M190 40V340\" stroke=\"#e4ecef\" stroke-width=\"1.5\"/><text x=\"349\" y=\"195\" fill=\"#e4ecef\">x</text><text x=\"185\" y=\"30\" fill=\"#e4ecef\">y</text><text x=\"179\" y=\"207\" fill=\"#cad9df\" font-size=\"12\">0</text><g clip-path=\"url(#plot)\"><path d=\"M40 515.0L340 -85.0\" fill=\"none\" stroke=\"#65dcf0\" stroke-width=\"3\" /><path d=\"M40 515.0L340 -85.0\" fill=\"none\" stroke=\"#efcb7e\" stroke-width=\"3\" stroke-dasharray=\"8 5\"/></g></svg><figcaption style=\"font-size:14px;line-height:1.6;text-align:center\">Solid blue: y = 2x − 1<br>Dashed gold: 2y = 4x − 2. Each grid square is 1 unit.</figcaption><details style=\"font-size:14px;margin-top:12px\"><summary>Graph values in text</summary><p>y = 2x − 1: (-2, -5), (0, -1), (2, 3).</p><p>2y = 4x − 2: (-2, -5), (0, -1), (2, 3).</p></details></figure>"
+          }
+        ]
       },
       {
         "id": 23,
         "title": "Substitution Method",
         "source": "figure-023.html",
-        "available": false,
-        "questions": []
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "For y = 2x + 1 and x + y = 10, which equation results from substituting for y?",
+            "choices": [
+              "x + (2x + 1) = 10",
+              "x + 2x = 10",
+              "(2x + 1) + y = 10",
+              "x + (2x + 10) = 1"
+            ],
+            "answer": 0,
+            "explanation": "Replace y in the second equation with the equal expression 2x + 1.",
+            "explanations": [
+              "Replace y in the second equation with the equal expression 2x + 1.",
+              "The replacement expression includes +1; do not drop it.",
+              "This replaces x, but the first equation gives an expression for y.",
+              "Substitution replaces a variable with an equal expression; it does not move constants arbitrarily."
+            ],
+            "concept": "<strong>Replace equals with equals</strong><p>If y = x + 2 and x + y = 8, replace y to get x + (x + 2) = 8. Then 2x + 2 = 8, so x = 3 and y = 5.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "After substitution gives 3x + 1 = 10, what is x?",
+            "choices": [
+              "9",
+              "11/3",
+              "10/3",
+              "3"
+            ],
+            "answer": 3,
+            "explanation": "Subtract 1 from both sides to get 3x = 9, then divide by 3.",
+            "explanations": [
+              "9 equals 3x; divide by the coefficient 3.",
+              "Subtract 1 from 10, rather than adding it.",
+              "Remove the +1 before dividing by 3.",
+              "Subtract 1 from both sides to get 3x = 9, then divide by 3."
+            ],
+            "concept": "<strong>Solve the one-variable equation</strong><p>Keep equations balanced. For 4x − 2 = 14, add 2 to get 4x = 16, then divide by 4 to get x = 4.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "If x = 3 and y = 2x + 1, what is the ordered-pair solution?",
+            "choices": [
+              "(3, 6)",
+              "(3, 4)",
+              "(3, 7)",
+              "(7, 3)"
+            ],
+            "answer": 2,
+            "explanation": "y = 2(3) + 1 = 7. The ordered pair lists x before y.",
+            "explanations": [
+              "Include the +1 after multiplying 2 × 3.",
+              "Multiply 2 by x before adding 1.",
+              "y = 2(3) + 1 = 7. The ordered pair lists x before y.",
+              "The coordinates are reversed; x comes first."
+            ],
+            "concept": "<strong>Find the second variable</strong><p>A system solution is usually a pair (x, y). Substitute your x-value into either original equation to find y, then check the pair in both equations.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "For x = y − 2 and 2x + y = 8, which substitution is correct?",
+            "choices": [
+              "2(y + 2) + y = 8",
+              "2(y − 2) + y = 8",
+              "2y − 2 + y = 8",
+              "2x + (y − 2) = 8"
+            ],
+            "answer": 1,
+            "explanation": "Replace every x with y − 2, keeping parentheses because the whole expression is doubled.",
+            "explanations": [
+              "Keep the minus sign from x = y − 2.",
+              "Replace every x with y − 2, keeping parentheses because the whole expression is doubled.",
+              "The factor 2 must multiply both y and −2.",
+              "The expression equals x, not y."
+            ],
+            "concept": "<strong>Use parentheses</strong><p>If x = y + 3, then 2x means 2(y + 3) = 2y + 6. The multiplier applies to every term in the replacement expression.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve y = x + 2 and x + y = 8.",
+            "choices": [
+              "(3, 5)",
+              "(5, 3)",
+              "(4, 4)",
+              "(2, 6)"
+            ],
+            "answer": 0,
+            "explanation": "x + (x + 2) = 8 gives x = 3; then y = 5.",
+            "explanations": [
+              "x + (x + 2) = 8 gives x = 3; then y = 5.",
+              "These coordinates do not satisfy y = x + 2.",
+              "This satisfies the sum but not y = x + 2.",
+              "This satisfies the sum but y should be 4 when x = 2."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve x = 2y and x + y = 12.",
+            "choices": [
+              "(4, 8)",
+              "(6, 6)",
+              "(12, 6)",
+              "(8, 4)"
+            ],
+            "answer": 3,
+            "explanation": "2y + y = 12 gives y = 4, and x = 2(4) = 8.",
+            "explanations": [
+              "x must be twice y, not half of y.",
+              "The values add to 12 but do not satisfy x = 2y.",
+              "This satisfies x = 2y but the sum is 18, not 12.",
+              "2y + y = 12 gives y = 4, and x = 2(4) = 8."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve y = 3x − 4 and 2x + y = 11.",
+            "choices": [
+              "(3, 9)",
+              "(1, 9)",
+              "(3, 5)",
+              "(5, 3)"
+            ],
+            "answer": 2,
+            "explanation": "2x + 3x − 4 = 11 gives 5x = 15, so x = 3 and y = 5.",
+            "explanations": [
+              "y is 3x minus 4, not just 3x.",
+              "The sum equation works, but y = 3(1) − 4 is −1.",
+              "2x + 3x − 4 = 11 gives 5x = 15, so x = 3 and y = 5.",
+              "These values do not satisfy either original equation."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve x = y − 2 and 2x + y = 8.",
+            "choices": [
+              "(0, 8)",
+              "(2, 4)",
+              "(4, 2)",
+              "(3, 5)"
+            ],
+            "answer": 1,
+            "explanation": "2(y − 2) + y = 8 gives 3y = 12, so y = 4 and x = 2.",
+            "explanations": [
+              "This satisfies 2x + y = 8 but not x = y − 2.",
+              "2(y − 2) + y = 8 gives 3y = 12, so y = 4 and x = 2.",
+              "x is 2 less than y, not 2 greater.",
+              "This satisfies x = y − 2 but 2(3) + 5 = 11."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Substituting y = 2x + 1 into y = 2x − 3 gives 1 = −3. What does this mean?",
+            "choices": [
+              "No solution",
+              "Infinitely many solutions",
+              "x = −4",
+              "One solution at (0, 1)"
+            ],
+            "answer": 0,
+            "explanation": "The contradiction means no pair can satisfy both equations.",
+            "explanations": [
+              "The contradiction means no pair can satisfy both equations.",
+              "An identity such as 1 = 1 would indicate infinitely many solutions; 1 = −3 is false.",
+              "The x-terms cancel. There is no remaining equation that gives x = −4.",
+              "(0, 1) does not satisfy y = 2x − 3."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Substituting y = 2x + 1 into 2y = 4x + 2 gives 4x + 2 = 4x + 2. What does this mean?",
+            "choices": [
+              "No solution",
+              "Only (0, 1)",
+              "Every ordered pair in the plane",
+              "Infinitely many solutions on y = 2x + 1"
+            ],
+            "answer": 3,
+            "explanation": "The equations describe the same line; every point on that line satisfies both.",
+            "explanations": [
+              "The statement is always true, not a contradiction.",
+              "(0, 1) works, but so does every other point on y = 2x + 1.",
+              "Pairs must still lie on y = 2x + 1; the identity does not erase the original condition.",
+              "The equations describe the same line; every point on that line satisfies both."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve y = 2x − 1 and x + y = 14.",
+            "choices": [
+              "(5, 10)",
+              "(7, 7)",
+              "(5, 9)",
+              "(9, 5)"
+            ],
+            "answer": 2,
+            "explanation": "x + 2x − 1 = 14 gives x = 5, then y = 9.",
+            "explanations": [
+              "Remember to subtract 1 when finding y.",
+              "The pair satisfies the sum but not the other equation.",
+              "x + 2x − 1 = 14 gives x = 5, then y = 9.",
+              "These coordinates are reversed and fail y = 2x − 1."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve x = 3y + 1 and x − y = 7.",
+            "choices": [
+              "(9, 3)",
+              "(10, 3)",
+              "(3, 10)",
+              "(7, 2)"
+            ],
+            "answer": 1,
+            "explanation": "3y + 1 − y = 7 gives 2y = 6, so y = 3 and x = 10.",
+            "explanations": [
+              "Include the +1 when computing x = 3y + 1.",
+              "3y + 1 − y = 7 gives 2y = 6, so y = 3 and x = 10.",
+              "The order is (x, y); these values are reversed.",
+              "This satisfies x = 3y + 1 but x − y is 5, not 7."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          }
+        ],
+        "original": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "For y = 2x + 1 and x + y = 10, which equation results from substituting for y?",
+            "choices": [
+              "x + (2x + 1) = 10",
+              "x + 2x = 10",
+              "(2x + 1) + y = 10",
+              "x + (2x + 10) = 1"
+            ],
+            "answer": "x + (2x + 1) = 10",
+            "explanation": "Replace y in the second equation with the equal expression 2x + 1.",
+            "explanations": [
+              "Replace y in the second equation with the equal expression 2x + 1.",
+              "The replacement expression includes +1; do not drop it.",
+              "This replaces x, but the first equation gives an expression for y.",
+              "Substitution replaces a variable with an equal expression; it does not move constants arbitrarily."
+            ],
+            "concept": "<strong>Replace equals with equals</strong><p>If y = x + 2 and x + y = 8, replace y to get x + (x + 2) = 8. Then 2x + 2 = 8, so x = 3 and y = 5.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "After substitution gives 3x + 1 = 10, what is x?",
+            "choices": [
+              "9",
+              "11/3",
+              "10/3",
+              "3"
+            ],
+            "answer": "3",
+            "explanation": "Subtract 1 from both sides to get 3x = 9, then divide by 3.",
+            "explanations": [
+              "9 equals 3x; divide by the coefficient 3.",
+              "Subtract 1 from 10, rather than adding it.",
+              "Remove the +1 before dividing by 3.",
+              "Subtract 1 from both sides to get 3x = 9, then divide by 3."
+            ],
+            "concept": "<strong>Solve the one-variable equation</strong><p>Keep equations balanced. For 4x − 2 = 14, add 2 to get 4x = 16, then divide by 4 to get x = 4.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "If x = 3 and y = 2x + 1, what is the ordered-pair solution?",
+            "choices": [
+              "(3, 6)",
+              "(3, 4)",
+              "(3, 7)",
+              "(7, 3)"
+            ],
+            "answer": "(3, 7)",
+            "explanation": "y = 2(3) + 1 = 7. The ordered pair lists x before y.",
+            "explanations": [
+              "Include the +1 after multiplying 2 × 3.",
+              "Multiply 2 by x before adding 1.",
+              "y = 2(3) + 1 = 7. The ordered pair lists x before y.",
+              "The coordinates are reversed; x comes first."
+            ],
+            "concept": "<strong>Find the second variable</strong><p>A system solution is usually a pair (x, y). Substitute your x-value into either original equation to find y, then check the pair in both equations.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "For x = y − 2 and 2x + y = 8, which substitution is correct?",
+            "choices": [
+              "2(y + 2) + y = 8",
+              "2(y − 2) + y = 8",
+              "2y − 2 + y = 8",
+              "2x + (y − 2) = 8"
+            ],
+            "answer": "2(y − 2) + y = 8",
+            "explanation": "Replace every x with y − 2, keeping parentheses because the whole expression is doubled.",
+            "explanations": [
+              "Keep the minus sign from x = y − 2.",
+              "Replace every x with y − 2, keeping parentheses because the whole expression is doubled.",
+              "The factor 2 must multiply both y and −2.",
+              "The expression equals x, not y."
+            ],
+            "concept": "<strong>Use parentheses</strong><p>If x = y + 3, then 2x means 2(y + 3) = 2y + 6. The multiplier applies to every term in the replacement expression.</p>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve y = x + 2 and x + y = 8.",
+            "choices": [
+              "(3, 5)",
+              "(5, 3)",
+              "(4, 4)",
+              "(2, 6)"
+            ],
+            "answer": "(3, 5)",
+            "explanation": "x + (x + 2) = 8 gives x = 3; then y = 5.",
+            "explanations": [
+              "x + (x + 2) = 8 gives x = 3; then y = 5.",
+              "These coordinates do not satisfy y = x + 2.",
+              "This satisfies the sum but not y = x + 2.",
+              "This satisfies the sum but y should be 4 when x = 2."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve x = 2y and x + y = 12.",
+            "choices": [
+              "(4, 8)",
+              "(6, 6)",
+              "(12, 6)",
+              "(8, 4)"
+            ],
+            "answer": "(8, 4)",
+            "explanation": "2y + y = 12 gives y = 4, and x = 2(4) = 8.",
+            "explanations": [
+              "x must be twice y, not half of y.",
+              "The values add to 12 but do not satisfy x = 2y.",
+              "This satisfies x = 2y but the sum is 18, not 12.",
+              "2y + y = 12 gives y = 4, and x = 2(4) = 8."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve y = 3x − 4 and 2x + y = 11.",
+            "choices": [
+              "(3, 9)",
+              "(1, 9)",
+              "(3, 5)",
+              "(5, 3)"
+            ],
+            "answer": "(3, 5)",
+            "explanation": "2x + 3x − 4 = 11 gives 5x = 15, so x = 3 and y = 5.",
+            "explanations": [
+              "y is 3x minus 4, not just 3x.",
+              "The sum equation works, but y = 3(1) − 4 is −1.",
+              "2x + 3x − 4 = 11 gives 5x = 15, so x = 3 and y = 5.",
+              "These values do not satisfy either original equation."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve x = y − 2 and 2x + y = 8.",
+            "choices": [
+              "(0, 8)",
+              "(2, 4)",
+              "(4, 2)",
+              "(3, 5)"
+            ],
+            "answer": "(2, 4)",
+            "explanation": "2(y − 2) + y = 8 gives 3y = 12, so y = 4 and x = 2.",
+            "explanations": [
+              "This satisfies 2x + y = 8 but not x = y − 2.",
+              "2(y − 2) + y = 8 gives 3y = 12, so y = 4 and x = 2.",
+              "x is 2 less than y, not 2 greater.",
+              "This satisfies x = y − 2 but 2(3) + 5 = 11."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Substituting y = 2x + 1 into y = 2x − 3 gives 1 = −3. What does this mean?",
+            "choices": [
+              "No solution",
+              "Infinitely many solutions",
+              "x = −4",
+              "One solution at (0, 1)"
+            ],
+            "answer": "No solution",
+            "explanation": "The contradiction means no pair can satisfy both equations.",
+            "explanations": [
+              "The contradiction means no pair can satisfy both equations.",
+              "An identity such as 1 = 1 would indicate infinitely many solutions; 1 = −3 is false.",
+              "The x-terms cancel. There is no remaining equation that gives x = −4.",
+              "(0, 1) does not satisfy y = 2x − 3."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Substituting y = 2x + 1 into 2y = 4x + 2 gives 4x + 2 = 4x + 2. What does this mean?",
+            "choices": [
+              "No solution",
+              "Only (0, 1)",
+              "Every ordered pair in the plane",
+              "Infinitely many solutions on y = 2x + 1"
+            ],
+            "answer": "Infinitely many solutions on y = 2x + 1",
+            "explanation": "The equations describe the same line; every point on that line satisfies both.",
+            "explanations": [
+              "The statement is always true, not a contradiction.",
+              "(0, 1) works, but so does every other point on y = 2x + 1.",
+              "Pairs must still lie on y = 2x + 1; the identity does not erase the original condition.",
+              "The equations describe the same line; every point on that line satisfies both."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve y = 2x − 1 and x + y = 14.",
+            "choices": [
+              "(5, 10)",
+              "(7, 7)",
+              "(5, 9)",
+              "(9, 5)"
+            ],
+            "answer": "(5, 9)",
+            "explanation": "x + 2x − 1 = 14 gives x = 5, then y = 9.",
+            "explanations": [
+              "Remember to subtract 1 when finding y.",
+              "The pair satisfies the sum but not the other equation.",
+              "x + 2x − 1 = 14 gives x = 5, then y = 9.",
+              "These coordinates are reversed and fail y = 2x − 1."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve x = 3y + 1 and x − y = 7.",
+            "choices": [
+              "(9, 3)",
+              "(10, 3)",
+              "(3, 10)",
+              "(7, 2)"
+            ],
+            "answer": "(10, 3)",
+            "explanation": "3y + 1 − y = 7 gives 2y = 6, so y = 3 and x = 10.",
+            "explanations": [
+              "Include the +1 when computing x = 3y + 1.",
+              "3y + 1 − y = 7 gives 2y = 6, so y = 3 and x = 10.",
+              "The order is (x, y); these values are reversed.",
+              "This satisfies x = 3y + 1 but x − y is 5, not 7."
+            ]
+          }
+        ]
       },
       {
         "id": 24,
         "title": "Elimination Method",
         "source": "figure-024.html",
-        "available": false,
-        "questions": []
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Add x + y = 9 and x − y = 3. Which equation results?",
+            "choices": [
+              "2y = 12",
+              "2x = 6",
+              "x = 12",
+              "2x = 12"
+            ],
+            "answer": 3,
+            "explanation": "Add corresponding sides: x + x = 2x, y − y = 0, and 9 + 3 = 12.",
+            "explanations": [
+              "The y-terms cancel; the x-terms add.",
+              "Adding equations also adds the right sides: 9 + 3, not 9 − 3.",
+              "Both x-terms remain, so the left side is 2x.",
+              "Add corresponding sides: x + x = 2x, y − y = 0, and 9 + 3 = 12."
+            ],
+            "concept": "<strong>Cancel one variable</strong><p>Adding equal quantities preserves equality. If x + y = 7 and x − y = 1, adding gives 2x = 8 because y + (−y) = 0.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Elimination gives 2x = 12. Using x + y = 9, what is the solution?",
+            "choices": [
+              "(6, 9)",
+              "(12, −3)",
+              "(6, 3)",
+              "(3, 6)"
+            ],
+            "answer": 2,
+            "explanation": "x = 6, and 6 + y = 9 gives y = 3.",
+            "explanations": [
+              "9 is x + y, not y alone.",
+              "Divide 12 by 2 to solve 2x = 12.",
+              "x = 6, and 6 + y = 9 gives y = 3.",
+              "x = 12/2 = 6; ordered pairs list x first."
+            ],
+            "concept": "<strong>Finish and check</strong><p>After finding one variable, substitute into an original equation for the other. Then check the pair in both original equations.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Subtract x + y = 4 from 3x + y = 10. Which equation results?",
+            "choices": [
+              "2x = 14",
+              "2x = 6",
+              "2x + 2y = 6",
+              "4x = 14"
+            ],
+            "answer": 1,
+            "explanation": "Subtract the entire second equation: (3x + y) − (x + y) = 10 − 4.",
+            "explanations": [
+              "Subtract on both sides: 10 − 4 = 6.",
+              "Subtract the entire second equation: (3x + y) − (x + y) = 10 − 4.",
+              "The y-terms subtract to zero; distribute the minus sign to both terms.",
+              "That adds equations instead of subtracting them."
+            ],
+            "concept": "<strong>Subtract matching coefficients</strong><p>If a variable has equal coefficients, subtraction can cancel it. Write parentheses so the minus sign applies to the entire equation.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "To eliminate y by addition from 2x + 3y = 12 and x − y = 1, what should you multiply the SECOND equation by?",
+            "choices": [
+              "3",
+              "−3",
+              "2",
+              "1/3"
+            ],
+            "answer": 0,
+            "explanation": "Multiplying x − y = 1 by 3 gives 3x − 3y = 3, whose −3y cancels +3y.",
+            "explanations": [
+              "Multiplying x − y = 1 by 3 gives 3x − 3y = 3, whose −3y cancels +3y.",
+              "This gives +3y, which would not cancel +3y by addition.",
+              "−2y does not cancel +3y.",
+              "−y/3 does not cancel +3y."
+            ],
+            "concept": "<strong>Make opposite coefficients</strong><p>Multiply every term on both sides by the same nonzero number. For x − 2y = 3, multiplying by 2 gives 2x − 4y = 6. Then choose addition or subtraction to cancel a variable.</p>",
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve x + y = 11 and x − y = 3.",
+            "choices": [
+              "(4, 7)",
+              "(8, 3)",
+              "(11, 3)",
+              "(7, 4)"
+            ],
+            "answer": 3,
+            "explanation": "Adding gives 2x = 14, so x = 7. Then y = 11 − 7 = 4.",
+            "explanations": [
+              "The pair sums to 11 but its difference is −3, not 3.",
+              "The sum is 11 but the difference is 5.",
+              "The right-side totals are not the individual variable values.",
+              "Adding gives 2x = 14, so x = 7. Then y = 11 − 7 = 4."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve 2x + y = 13 and x − y = 2.",
+            "choices": [
+              "(5, 8)",
+              "(4, 2)",
+              "(5, 3)",
+              "(3, 5)"
+            ],
+            "answer": 2,
+            "explanation": "Adding gives 3x = 15, so x = 5 and y = 3.",
+            "explanations": [
+              "From x − y = 2, y = x − 2, not x + 3.",
+              "This satisfies x − y = 2 but 2(4) + 2 = 10.",
+              "Adding gives 3x = 15, so x = 5 and y = 3.",
+              "This reverses the coordinates and fails the equations."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve 3x + y = 10 and x + y = 4.",
+            "choices": [
+              "(3, 4)",
+              "(3, 1)",
+              "(1, 3)",
+              "(2, 2)"
+            ],
+            "answer": 1,
+            "explanation": "Subtracting the second equation gives 2x = 6; then y = 1.",
+            "explanations": [
+              "The second equation says x + y = 4, so y is not 4.",
+              "Subtracting the second equation gives 2x = 6; then y = 1.",
+              "This satisfies x + y = 4 but not 3x + y = 10.",
+              "This satisfies the sum but gives 8 in the first equation."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve 2x + 3y = 12 and x − y = 1.",
+            "choices": [
+              "(3, 2)",
+              "(2, 3)",
+              "(4, 3)",
+              "(3, 1)"
+            ],
+            "answer": 0,
+            "explanation": "Multiply the second equation by 3 and add: 5x = 15, so x = 3 and y = 2.",
+            "explanations": [
+              "Multiply the second equation by 3 and add: 5x = 15, so x = 3 and y = 2.",
+              "This reverses the pair and fails both equations.",
+              "This satisfies x − y = 1 but 2(4) + 3(3) = 17.",
+              "The difference must be 1, so y = 2 when x = 3."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "For 2x + 2y = 8 and x + y = 5, elimination gives 0 = −2. What does this mean?",
+            "choices": [
+              "Infinitely many solutions",
+              "x = 0 and y = −2",
+              "Exactly one solution",
+              "No solution"
+            ],
+            "answer": 3,
+            "explanation": "Subtracting twice the second equation from the first gives a contradiction, so there is no shared pair.",
+            "explanations": [
+              "Infinitely many solutions would produce a true identity, not 0 = −2.",
+              "The variables have cancelled; 0 = −2 cannot assign values to them.",
+              "No values can make the contradictory equations true together.",
+              "Subtracting twice the second equation from the first gives a contradiction, so there is no shared pair."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "For 2x + 2y = 8 and x + y = 4, elimination gives 0 = 0. What does this mean?",
+            "choices": [
+              "Only (0, 0)",
+              "Every ordered pair in the plane",
+              "Infinitely many solutions on x + y = 4",
+              "No solution"
+            ],
+            "answer": 2,
+            "explanation": "The first equation is twice the second, so every point on their shared line works.",
+            "explanations": [
+              "(0, 0) does not satisfy x + y = 4.",
+              "Pairs still have to satisfy the original condition x + y = 4.",
+              "The first equation is twice the second, so every point on their shared line works.",
+              "0 = 0 is true, not a contradiction."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve 3x + 2y = 16 and x − 2y = 0.",
+            "choices": [
+              "(8, 4)",
+              "(4, 2)",
+              "(2, 4)",
+              "(4, −2)"
+            ],
+            "answer": 1,
+            "explanation": "Adding gives 4x = 16, so x = 4; then 4 − 2y = 0 gives y = 2.",
+            "explanations": [
+              "This satisfies the second equation but gives 32 in the first.",
+              "Adding gives 4x = 16, so x = 4; then 4 − 2y = 0 gives y = 2.",
+              "These coordinates are reversed and fail x − 2y = 0.",
+              "From 4 − 2y = 0, 2y = 4, so y is positive."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve 2x + 3y = 13 and 3x + 2y = 12.",
+            "choices": [
+              "(2, 3)",
+              "(3, 2)",
+              "(1, 4)",
+              "(4, 1)"
+            ],
+            "answer": 0,
+            "explanation": "Multiply the first equation by 3 and the second by 2. Subtract to get 5y = 15, then x = 2.",
+            "explanations": [
+              "Multiply the first equation by 3 and the second by 2. Subtract to get 5y = 15, then x = 2.",
+              "This reverses the pair and swaps the two left-side totals.",
+              "The first left side would be 14, not 13.",
+              "The first left side would be 11, not 13."
+            ],
+            "type": "multiple-choice",
+            "eq": ""
+          }
+        ],
+        "original": [
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Add x + y = 9 and x − y = 3. Which equation results?",
+            "choices": [
+              "2y = 12",
+              "2x = 6",
+              "x = 12",
+              "2x = 12"
+            ],
+            "answer": "2x = 12",
+            "explanation": "Add corresponding sides: x + x = 2x, y − y = 0, and 9 + 3 = 12.",
+            "explanations": [
+              "The y-terms cancel; the x-terms add.",
+              "Adding equations also adds the right sides: 9 + 3, not 9 − 3.",
+              "Both x-terms remain, so the left side is 2x.",
+              "Add corresponding sides: x + x = 2x, y − y = 0, and 9 + 3 = 12."
+            ],
+            "concept": "<strong>Cancel one variable</strong><p>Adding equal quantities preserves equality. If x + y = 7 and x − y = 1, adding gives 2x = 8 because y + (−y) = 0.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Elimination gives 2x = 12. Using x + y = 9, what is the solution?",
+            "choices": [
+              "(6, 9)",
+              "(12, −3)",
+              "(6, 3)",
+              "(3, 6)"
+            ],
+            "answer": "(6, 3)",
+            "explanation": "x = 6, and 6 + y = 9 gives y = 3.",
+            "explanations": [
+              "9 is x + y, not y alone.",
+              "Divide 12 by 2 to solve 2x = 12.",
+              "x = 6, and 6 + y = 9 gives y = 3.",
+              "x = 12/2 = 6; ordered pairs list x first."
+            ],
+            "concept": "<strong>Finish and check</strong><p>After finding one variable, substitute into an original equation for the other. Then check the pair in both original equations.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "Subtract x + y = 4 from 3x + y = 10. Which equation results?",
+            "choices": [
+              "2x = 14",
+              "2x = 6",
+              "2x + 2y = 6",
+              "4x = 14"
+            ],
+            "answer": "2x = 6",
+            "explanation": "Subtract the entire second equation: (3x + y) − (x + y) = 10 − 4.",
+            "explanations": [
+              "Subtract on both sides: 10 − 4 = 6.",
+              "Subtract the entire second equation: (3x + y) − (x + y) = 10 − 4.",
+              "The y-terms subtract to zero; distribute the minus sign to both terms.",
+              "That adds equations instead of subtracting them."
+            ],
+            "concept": "<strong>Subtract matching coefficients</strong><p>If a variable has equal coefficients, subtraction can cancel it. Write parentheses so the minus sign applies to the entire equation.</p>"
+          },
+          {
+            "mode": "learn",
+            "phase": "guided",
+            "q": "To eliminate y by addition from 2x + 3y = 12 and x − y = 1, what should you multiply the SECOND equation by?",
+            "choices": [
+              "3",
+              "−3",
+              "2",
+              "1/3"
+            ],
+            "answer": "3",
+            "explanation": "Multiplying x − y = 1 by 3 gives 3x − 3y = 3, whose −3y cancels +3y.",
+            "explanations": [
+              "Multiplying x − y = 1 by 3 gives 3x − 3y = 3, whose −3y cancels +3y.",
+              "This gives +3y, which would not cancel +3y by addition.",
+              "−2y does not cancel +3y.",
+              "−y/3 does not cancel +3y."
+            ],
+            "concept": "<strong>Make opposite coefficients</strong><p>Multiply every term on both sides by the same nonzero number. For x − 2y = 3, multiplying by 2 gives 2x − 4y = 6. Then choose addition or subtraction to cancel a variable.</p>"
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve x + y = 11 and x − y = 3.",
+            "choices": [
+              "(4, 7)",
+              "(8, 3)",
+              "(11, 3)",
+              "(7, 4)"
+            ],
+            "answer": "(7, 4)",
+            "explanation": "Adding gives 2x = 14, so x = 7. Then y = 11 − 7 = 4.",
+            "explanations": [
+              "The pair sums to 11 but its difference is −3, not 3.",
+              "The sum is 11 but the difference is 5.",
+              "The right-side totals are not the individual variable values.",
+              "Adding gives 2x = 14, so x = 7. Then y = 11 − 7 = 4."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve 2x + y = 13 and x − y = 2.",
+            "choices": [
+              "(5, 8)",
+              "(4, 2)",
+              "(5, 3)",
+              "(3, 5)"
+            ],
+            "answer": "(5, 3)",
+            "explanation": "Adding gives 3x = 15, so x = 5 and y = 3.",
+            "explanations": [
+              "From x − y = 2, y = x − 2, not x + 3.",
+              "This satisfies x − y = 2 but 2(4) + 2 = 10.",
+              "Adding gives 3x = 15, so x = 5 and y = 3.",
+              "This reverses the coordinates and fails the equations."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve 3x + y = 10 and x + y = 4.",
+            "choices": [
+              "(3, 4)",
+              "(3, 1)",
+              "(1, 3)",
+              "(2, 2)"
+            ],
+            "answer": "(3, 1)",
+            "explanation": "Subtracting the second equation gives 2x = 6; then y = 1.",
+            "explanations": [
+              "The second equation says x + y = 4, so y is not 4.",
+              "Subtracting the second equation gives 2x = 6; then y = 1.",
+              "This satisfies x + y = 4 but not 3x + y = 10.",
+              "This satisfies the sum but gives 8 in the first equation."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "Solve 2x + 3y = 12 and x − y = 1.",
+            "choices": [
+              "(3, 2)",
+              "(2, 3)",
+              "(4, 3)",
+              "(3, 1)"
+            ],
+            "answer": "(3, 2)",
+            "explanation": "Multiply the second equation by 3 and add: 5x = 15, so x = 3 and y = 2.",
+            "explanations": [
+              "Multiply the second equation by 3 and add: 5x = 15, so x = 3 and y = 2.",
+              "This reverses the pair and fails both equations.",
+              "This satisfies x − y = 1 but 2(4) + 3(3) = 17.",
+              "The difference must be 1, so y = 2 when x = 3."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "For 2x + 2y = 8 and x + y = 5, elimination gives 0 = −2. What does this mean?",
+            "choices": [
+              "Infinitely many solutions",
+              "x = 0 and y = −2",
+              "Exactly one solution",
+              "No solution"
+            ],
+            "answer": "No solution",
+            "explanation": "Subtracting twice the second equation from the first gives a contradiction, so there is no shared pair.",
+            "explanations": [
+              "Infinitely many solutions would produce a true identity, not 0 = −2.",
+              "The variables have cancelled; 0 = −2 cannot assign values to them.",
+              "No values can make the contradictory equations true together.",
+              "Subtracting twice the second equation from the first gives a contradiction, so there is no shared pair."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "practice",
+            "q": "For 2x + 2y = 8 and x + y = 4, elimination gives 0 = 0. What does this mean?",
+            "choices": [
+              "Only (0, 0)",
+              "Every ordered pair in the plane",
+              "Infinitely many solutions on x + y = 4",
+              "No solution"
+            ],
+            "answer": "Infinitely many solutions on x + y = 4",
+            "explanation": "The first equation is twice the second, so every point on their shared line works.",
+            "explanations": [
+              "(0, 0) does not satisfy x + y = 4.",
+              "Pairs still have to satisfy the original condition x + y = 4.",
+              "The first equation is twice the second, so every point on their shared line works.",
+              "0 = 0 is true, not a contradiction."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve 3x + 2y = 16 and x − 2y = 0.",
+            "choices": [
+              "(8, 4)",
+              "(4, 2)",
+              "(2, 4)",
+              "(4, −2)"
+            ],
+            "answer": "(4, 2)",
+            "explanation": "Adding gives 4x = 16, so x = 4; then 4 − 2y = 0 gives y = 2.",
+            "explanations": [
+              "This satisfies the second equation but gives 32 in the first.",
+              "Adding gives 4x = 16, so x = 4; then 4 − 2y = 0 gives y = 2.",
+              "These coordinates are reversed and fail x − 2y = 0.",
+              "From 4 − 2y = 0, 2y = 4, so y is positive."
+            ]
+          },
+          {
+            "mode": "practice",
+            "phase": "check",
+            "q": "Try it yourself: solve 2x + 3y = 13 and 3x + 2y = 12.",
+            "choices": [
+              "(2, 3)",
+              "(3, 2)",
+              "(1, 4)",
+              "(4, 1)"
+            ],
+            "answer": "(2, 3)",
+            "explanation": "Multiply the first equation by 3 and the second by 2. Subtract to get 5y = 15, then x = 2.",
+            "explanations": [
+              "Multiply the first equation by 3 and the second by 2. Subtract to get 5y = 15, then x = 2.",
+              "This reverses the pair and swaps the two left-side totals.",
+              "The first left side would be 14, not 13.",
+              "The first left side would be 11, not 13."
+            ]
+          }
+        ]
       },
       {
         "id": 25,

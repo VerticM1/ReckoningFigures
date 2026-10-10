@@ -1,4 +1,4 @@
-import {course} from './course.js?v=c922ec7ecf4c';
+import {course} from './course.js?v=4cb03d5dcbbc';
 const store='rfOrganizationDemoV1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const homeworkRequested=['homeworkDemo','schoolHomework'].some(k=>new URLSearchParams(location.search).has(k));

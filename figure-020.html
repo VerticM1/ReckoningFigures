@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 020: Rate of Change</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .mode-badge.learn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .mode-badge.practice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .mode-badge.challenge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #10b981;
+        }
+
+        .concept-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        #question-text {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .choice::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #4b5563;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #9ca3af;
+        }
+
+        .choice:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-2px);
+        }
+
+        .choice.selected {
+            border-color: #fbbf24;
+            background: #4b5563;
+        }
+
+        .choice.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.correct::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        .choice.incorrect::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .check-icon.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #feedback-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #1f2937;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #continue-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        #continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #victory.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .victory-content {
+            text-align: center;
+            padding: 40px;
+            max-width: 400px;
+        }
+
+        .victory-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: victoryBounce 0.8s ease;
+        }
+
+        @keyframes victoryBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #victory-msg {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        #victory-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #1f2937;
+            text-transform: uppercase;
+        }
+
+        .victory-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .victory-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="top-bar">
+            <button class="close-btn" onclick="window.location.href='module-3-simple.html'">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="mode-badge" id="mode-badge">learn</div>
+            <div id="concept-section"></div>
+            <div id="question-text"></div><div id="lesson-diagram"></div>
+            <div id="choices"></div>
+            
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <div id="victory">
+            <div class="victory-content">
+                <div class="victory-icon">🎯</div>
+                <div id="victory-msg"></div>
+                <div id="victory-badges"></div>
+                <button class="victory-btn" onclick="window.location.href='module-3-simple.html'">Return to Module 3</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function checkPremiumAccess() {
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
+            if (!isPremium) {
+                alert('⚠️ Module 3 requires Premium access.\n\nUpgrade to unlock all 70+ figures!');
+                window.location.href = 'main-menu-modules.html';
+                return;
+            }
+        })();
+
+        const state = {
+            current: 0,
+            total: 12,
+            correct: 0,
+            streak: 0,
+            selected: null
+        };
+
+        const content = [
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "Find the slope through (1, 3) and (5, 11).",
+        "choices": [
+            "1/2",
+            "8",
+            "4",
+            "2"
+        ],
+        "answer": "2",
+        "explanation": "Slope = (11 − 3)/(5 − 1) = 8/4 = 2.",
+        "explanations": [
+            "You used change in x divided by change in y. Slope uses change in y over change in x.",
+            "8 is the change in y. Divide by the change in x, which is 4.",
+            "4 is the change in x. Use both changes.",
+            "Slope = (11 − 3)/(5 − 1) = 8/4 = 2."
+        ],
+        "concept": "<strong>Rate of change</strong><p>Slope compares vertical change to horizontal change: m = (y₂ − y₁)/(x₂ − x₁), when x₂ ≠ x₁. Keep the point order the same in both differences.</p><p>Example: from (0, 1) to (3, 10), m = (10 − 1)/(3 − 0) = 3.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "A table has x-values 0, 2, 4 and matching y-values 9, 5, 1. What is its constant rate of change?",
+        "choices": [
+            "−4",
+            "4",
+            "−2",
+            "2"
+        ],
+        "answer": "−2",
+        "explanation": "Each change of +2 in x gives −4 in y, so the rate is −4/2 = −2.",
+        "explanations": [
+            "−4 is the change in y over two x-units, not one.",
+            "Use the sign of the change and divide by the change in x.",
+            "Each change of +2 in x gives −4 in y, so the rate is −4/2 = −2.",
+            "The y-values decrease as x increases, so the rate must be negative."
+        ],
+        "concept": "<strong>Read a table in pairs</strong><p>If x increases by 3 while y falls by 6, the rate is −6/3 = −2 per x-unit. Equal x-steps must have equal y-changes for a constant rate.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "What is the slope through (2, 4) and (6, 4)?",
+        "choices": [
+            "1",
+            "0",
+            "Undefined",
+            "4"
+        ],
+        "answer": "0",
+        "explanation": "The vertical change is 4 − 4 = 0, so m = 0/(6 − 2) = 0.",
+        "explanations": [
+            "A slope of 1 would require equal nonzero vertical and horizontal changes.",
+            "The vertical change is 4 − 4 = 0, so m = 0/(6 − 2) = 0.",
+            "Undefined slope occurs when the change in x is zero; here it is 4.",
+            "The horizontal change is 4, but the vertical change is zero."
+        ],
+        "concept": "<strong>Horizontal lines</strong><p>A horizontal line keeps the same y-value. Its vertical change is zero, so its slope is 0. For example, y = 7 has slope 0.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "What is the slope through (3, 1) and (3, 5)?",
+        "choices": [
+            "Undefined",
+            "0",
+            "4",
+            "1"
+        ],
+        "answer": "Undefined",
+        "explanation": "The change in x is 3 − 3 = 0. Division by zero is undefined; this is the vertical line x = 3.",
+        "explanations": [
+            "The change in x is 3 − 3 = 0. Division by zero is undefined; this is the vertical line x = 3.",
+            "Zero slope is horizontal. These points have the same x-value, so the line is vertical.",
+            "The vertical change is 4, but the denominator in the slope formula is zero.",
+            "There is no horizontal change to divide by."
+        ],
+        "concept": "<strong>Vertical lines</strong><p>A vertical line has the same x-value at every point. Its slope is undefined, because division by zero is not defined. Undefined is different from zero.</p>"
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Find the slope through (1, 2) and (5, 4).",
+        "choices": [
+            "2",
+            "−1/2",
+            "3/2",
+            "1/2"
+        ],
+        "answer": "1/2",
+        "explanation": "m = (4 − 2)/(5 − 1) = 2/4 = 1/2.",
+        "explanations": [
+            "That reverses rise and run. Divide 2 by 4.",
+            "Both changes are positive when you use the same point order.",
+            "Subtract corresponding coordinates; do not add the y-values.",
+            "m = (4 − 2)/(5 − 1) = 2/4 = 1/2."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "A tank holds 120 liters at 0 minutes and 90 liters at 5 minutes. What is the average rate of change?",
+        "choices": [
+            "−30 liters per minute",
+            "18 liters per minute",
+            "−6 liters per minute",
+            "6 liters per minute"
+        ],
+        "answer": "−6 liters per minute",
+        "explanation": "(90 − 120)/(5 − 0) = −30/5 = −6 liters per minute.",
+        "explanations": [
+            "−30 liters is the total change over 5 minutes.",
+            "90/5 ignores the starting volume of 120 liters.",
+            "(90 − 120)/(5 − 0) = −30/5 = −6 liters per minute.",
+            "The volume decreases, so the signed rate is negative."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "A taxi costs C = 4 + 2.5d dollars for d miles. What is the rate per mile?",
+        "choices": [
+            "$0.40 per mile",
+            "$2.50 per mile",
+            "$4 per mile",
+            "$6.50 per mile"
+        ],
+        "answer": "$2.50 per mile",
+        "explanation": "The coefficient of d is 2.5 dollars per mile; 4 dollars is the starting charge.",
+        "explanations": [
+            "That is the reciprocal of the rate in the equation.",
+            "The coefficient of d is 2.5 dollars per mile; 4 dollars is the starting charge.",
+            "4 is the fixed starting charge, not the coefficient of miles.",
+            "6.50 is the total cost at one mile, including the starting charge."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "For f(x) = 3x − 7, how much does f(x) change when x increases from 2 to 6?",
+        "choices": [
+            "12",
+            "3",
+            "4",
+            "18"
+        ],
+        "answer": "12",
+        "explanation": "The rate is 3 and x increases by 4, so the output changes by 3 × 4 = 12.",
+        "explanations": [
+            "The rate is 3 and x increases by 4, so the output changes by 3 × 4 = 12.",
+            "3 is the change per one x-unit; x increases by 4 units here.",
+            "4 is the change in the input, not the output.",
+            "18 is 3 × 6; compare the outputs at both endpoints."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "A table has x-values 1, 2, 3 and matching y-values 2, 5, 10. Is the rate of change constant?",
+        "choices": [
+            "Yes; the rate is 3",
+            "Yes; the rate is 5",
+            "Yes; the rate is 4",
+            "No; the rates are 3 and 5"
+        ],
+        "answer": "No; the rates are 3 and 5",
+        "explanation": "For equal x-steps of 1, y first increases by 3 and then by 5.",
+        "explanations": [
+            "Check the second interval too: 10 − 5 = 5.",
+            "Check the first interval too: 5 − 2 = 3.",
+            "4 is the average rate over both intervals, but the interval rates differ.",
+            "For equal x-steps of 1, y first increases by 3 and then by 5."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Which function has the greater rate of change: A(x) = 3x + 2 or B(x) = 2x + 8?",
+        "choices": [
+            "B; its rate is 2",
+            "Both have the same rate",
+            "A; its rate is 3",
+            "B; its rate is 8"
+        ],
+        "answer": "A; its rate is 3",
+        "explanation": "Compare the x-coefficients: 3 is greater than 2. Intercepts do not determine rate.",
+        "explanations": [
+            "B’s rate is 2, which is less than A’s rate of 3.",
+            "Their x-coefficients differ: 3 and 2.",
+            "Compare the x-coefficients: 3 is greater than 2. Intercepts do not determine rate.",
+            "8 is B’s y-intercept, not its rate."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: find the slope through (−2, 7) and (4, −5).",
+        "choices": [
+            "−6",
+            "−2",
+            "2",
+            "−1/2"
+        ],
+        "answer": "−2",
+        "explanation": "m = (−5 − 7)/(4 − (−2)) = −12/6 = −2.",
+        "explanations": [
+            "4 − (−2) = 6, not 2. Subtracting a negative adds.",
+            "m = (−5 − 7)/(4 − (−2)) = −12/6 = −2.",
+            "The y-value falls as x increases. Keep the negative sign.",
+            "Use change in y over change in x, not its reciprocal."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: a car travels at a constant rate. Its distance rises from 45 miles at 1 hour to 135 miles at 3 hours. What is the rate?",
+        "choices": [
+            "45 miles per hour",
+            "90 miles per hour",
+            "30 miles per hour",
+            "135 miles per hour"
+        ],
+        "answer": "45 miles per hour",
+        "explanation": "The distance changes by 90 miles in 2 hours: 90/2 = 45 mph.",
+        "explanations": [
+            "The distance changes by 90 miles in 2 hours: 90/2 = 45 mph.",
+            "90 miles is the change over 2 hours, not 1 hour.",
+            "Use the change in time, 3 − 1, with the change in distance.",
+            "135 miles is a distance reading, not a rate."
+        ]
+    }
+];
+
+        const feedback = {
+            correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
+            wrong: ['Not quite', 'Try again', 'Almost']
+        };
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        function showContent() {
+            const item = content[state.current];
+            
+            document.getElementById('mode-badge').className = 'mode-badge ' + item.mode;
+            document.getElementById('mode-badge').textContent = item.mode;
+
+            if (item.concept) {
+                let html = `<div class="concept-box"><div class="concept-text">${item.concept}</div></div>`;
+                document.getElementById('concept-section').innerHTML = html;
+            } else {
+                document.getElementById('concept-section').innerHTML = '';
+            }
+
+            document.getElementById('question-text').innerHTML = item.q;
+            document.getElementById('lesson-diagram').innerHTML = item.diagram || '';
+            
+            const choicesHTML = item.choices.map((c, i) => 
+                `<button class="choice" data-choice="${i}" data-letter="${letters[i]}">${c}</button>`
+            ).join('');
+            document.getElementById('choices').innerHTML = choicesHTML;
+            
+            document.querySelectorAll('.choice').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const choiceIndex = parseInt(this.getAttribute('data-choice'));
+                    selectChoice(item.choices[choiceIndex]);
+                });
+            });
+            
+            document.getElementById('continue-btn').classList.remove('show');
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            state.selected = null;
+        }
+
+        function selectChoice(choice) {
+            if (state.selected) return;
+            
+            state.selected = choice;
+            const item = content[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent;
+                
+                if (btnText === choice) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choice === item.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = item.explanation || feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.errors = (state.errors || 0) + 1;
+                            document.getElementById('feedback-text').textContent = item.explanations[item.choices.indexOf(choice)];
+                            state.streak = 0;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function nextContent() {
+            state.current++;
+            if (state.current < state.total) {
+                showContent();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === state.total && !state.errors;
+            
+            document.getElementById('victory-msg').textContent = perfect ? 
+                'Perfect practice! Every answer was correct on the first try.' : 
+                'Great work! You completed Figure 020!';
+            
+            let badgesHTML = '';
+            if (perfect) badgesHTML += '<div class="badge">Flawless</div>';
+            if (state.streak >= 5) badgesHTML += '<div class="badge">On Fire</div>';
+            
+            document.getElementById('victory-badges').innerHTML = badgesHTML || '<div class="badge">Complete</div>';
+            document.getElementById('victory').classList.add('show');
+            
+            const progress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+            if (!progress.completed.includes('figure-020')) {
+                progress.completed.push('figure-020');
+                progress.xp += 150;
+            }
+            localStorage.setItem('userProgress', JSON.stringify(progress));
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextContent);
+        
+        showContent();
+    </script>
+</body>
+</html>
