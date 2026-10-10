@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 024: Elimination Method</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .mode-badge.learn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .mode-badge.practice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .mode-badge.challenge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #10b981;
+        }
+
+        .concept-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        #question-text {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .choice::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #4b5563;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #9ca3af;
+        }
+
+        .choice:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-2px);
+        }
+
+        .choice.selected {
+            border-color: #fbbf24;
+            background: #4b5563;
+        }
+
+        .choice.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.correct::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        .choice.incorrect::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .check-icon.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #feedback-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #1f2937;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #continue-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        #continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #victory.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .victory-content {
+            text-align: center;
+            padding: 40px;
+            max-width: 400px;
+        }
+
+        .victory-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: victoryBounce 0.8s ease;
+        }
+
+        @keyframes victoryBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #victory-msg {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        #victory-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #1f2937;
+            text-transform: uppercase;
+        }
+
+        .victory-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .victory-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="top-bar">
+            <button class="close-btn" onclick="window.location.href='module-3-simple.html'">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="mode-badge" id="mode-badge">learn</div>
+            <div id="concept-section"></div>
+            <div id="question-text"></div><div id="lesson-diagram"></div>
+            <div id="choices"></div>
+            
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <div id="victory">
+            <div class="victory-content">
+                <div class="victory-icon">🎯</div>
+                <div id="victory-msg"></div>
+                <div id="victory-badges"></div>
+                <button class="victory-btn" onclick="window.location.href='module-3-simple.html'">Return to Module 3</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function checkPremiumAccess() {
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
+            if (!isPremium) {
+                alert('⚠️ Module 3 requires Premium access.\n\nUpgrade to unlock all 70+ figures!');
+                window.location.href = 'main-menu-modules.html';
+                return;
+            }
+        })();
+
+        const state = {
+            current: 0,
+            total: 12,
+            correct: 0,
+            streak: 0,
+            selected: null
+        };
+
+        const content = [
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "Add x + y = 9 and x − y = 3. Which equation results?",
+        "choices": [
+            "2y = 12",
+            "2x = 6",
+            "x = 12",
+            "2x = 12"
+        ],
+        "answer": "2x = 12",
+        "explanation": "Add corresponding sides: x + x = 2x, y − y = 0, and 9 + 3 = 12.",
+        "explanations": [
+            "The y-terms cancel; the x-terms add.",
+            "Adding equations also adds the right sides: 9 + 3, not 9 − 3.",
+            "Both x-terms remain, so the left side is 2x.",
+            "Add corresponding sides: x + x = 2x, y − y = 0, and 9 + 3 = 12."
+        ],
+        "concept": "<strong>Cancel one variable</strong><p>Adding equal quantities preserves equality. If x + y = 7 and x − y = 1, adding gives 2x = 8 because y + (−y) = 0.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "Elimination gives 2x = 12. Using x + y = 9, what is the solution?",
+        "choices": [
+            "(6, 9)",
+            "(12, −3)",
+            "(6, 3)",
+            "(3, 6)"
+        ],
+        "answer": "(6, 3)",
+        "explanation": "x = 6, and 6 + y = 9 gives y = 3.",
+        "explanations": [
+            "9 is x + y, not y alone.",
+            "Divide 12 by 2 to solve 2x = 12.",
+            "x = 6, and 6 + y = 9 gives y = 3.",
+            "x = 12/2 = 6; ordered pairs list x first."
+        ],
+        "concept": "<strong>Finish and check</strong><p>After finding one variable, substitute into an original equation for the other. Then check the pair in both original equations.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "Subtract x + y = 4 from 3x + y = 10. Which equation results?",
+        "choices": [
+            "2x = 14",
+            "2x = 6",
+            "2x + 2y = 6",
+            "4x = 14"
+        ],
+        "answer": "2x = 6",
+        "explanation": "Subtract the entire second equation: (3x + y) − (x + y) = 10 − 4.",
+        "explanations": [
+            "Subtract on both sides: 10 − 4 = 6.",
+            "Subtract the entire second equation: (3x + y) − (x + y) = 10 − 4.",
+            "The y-terms subtract to zero; distribute the minus sign to both terms.",
+            "That adds equations instead of subtracting them."
+        ],
+        "concept": "<strong>Subtract matching coefficients</strong><p>If a variable has equal coefficients, subtraction can cancel it. Write parentheses so the minus sign applies to the entire equation.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "To eliminate y by addition from 2x + 3y = 12 and x − y = 1, what should you multiply the SECOND equation by?",
+        "choices": [
+            "3",
+            "−3",
+            "2",
+            "1/3"
+        ],
+        "answer": "3",
+        "explanation": "Multiplying x − y = 1 by 3 gives 3x − 3y = 3, whose −3y cancels +3y.",
+        "explanations": [
+            "Multiplying x − y = 1 by 3 gives 3x − 3y = 3, whose −3y cancels +3y.",
+            "This gives +3y, which would not cancel +3y by addition.",
+            "−2y does not cancel +3y.",
+            "−y/3 does not cancel +3y."
+        ],
+        "concept": "<strong>Make opposite coefficients</strong><p>Multiply every term on both sides by the same nonzero number. For x − 2y = 3, multiplying by 2 gives 2x − 4y = 6. Then choose addition or subtraction to cancel a variable.</p>"
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve x + y = 11 and x − y = 3.",
+        "choices": [
+            "(4, 7)",
+            "(8, 3)",
+            "(11, 3)",
+            "(7, 4)"
+        ],
+        "answer": "(7, 4)",
+        "explanation": "Adding gives 2x = 14, so x = 7. Then y = 11 − 7 = 4.",
+        "explanations": [
+            "The pair sums to 11 but its difference is −3, not 3.",
+            "The sum is 11 but the difference is 5.",
+            "The right-side totals are not the individual variable values.",
+            "Adding gives 2x = 14, so x = 7. Then y = 11 − 7 = 4."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve 2x + y = 13 and x − y = 2.",
+        "choices": [
+            "(5, 8)",
+            "(4, 2)",
+            "(5, 3)",
+            "(3, 5)"
+        ],
+        "answer": "(5, 3)",
+        "explanation": "Adding gives 3x = 15, so x = 5 and y = 3.",
+        "explanations": [
+            "From x − y = 2, y = x − 2, not x + 3.",
+            "This satisfies x − y = 2 but 2(4) + 2 = 10.",
+            "Adding gives 3x = 15, so x = 5 and y = 3.",
+            "This reverses the coordinates and fails the equations."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve 3x + y = 10 and x + y = 4.",
+        "choices": [
+            "(3, 4)",
+            "(3, 1)",
+            "(1, 3)",
+            "(2, 2)"
+        ],
+        "answer": "(3, 1)",
+        "explanation": "Subtracting the second equation gives 2x = 6; then y = 1.",
+        "explanations": [
+            "The second equation says x + y = 4, so y is not 4.",
+            "Subtracting the second equation gives 2x = 6; then y = 1.",
+            "This satisfies x + y = 4 but not 3x + y = 10.",
+            "This satisfies the sum but gives 8 in the first equation."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve 2x + 3y = 12 and x − y = 1.",
+        "choices": [
+            "(3, 2)",
+            "(2, 3)",
+            "(4, 3)",
+            "(3, 1)"
+        ],
+        "answer": "(3, 2)",
+        "explanation": "Multiply the second equation by 3 and add: 5x = 15, so x = 3 and y = 2.",
+        "explanations": [
+            "Multiply the second equation by 3 and add: 5x = 15, so x = 3 and y = 2.",
+            "This reverses the pair and fails both equations.",
+            "This satisfies x − y = 1 but 2(4) + 3(3) = 17.",
+            "The difference must be 1, so y = 2 when x = 3."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "For 2x + 2y = 8 and x + y = 5, elimination gives 0 = −2. What does this mean?",
+        "choices": [
+            "Infinitely many solutions",
+            "x = 0 and y = −2",
+            "Exactly one solution",
+            "No solution"
+        ],
+        "answer": "No solution",
+        "explanation": "Subtracting twice the second equation from the first gives a contradiction, so there is no shared pair.",
+        "explanations": [
+            "Infinitely many solutions would produce a true identity, not 0 = −2.",
+            "The variables have cancelled; 0 = −2 cannot assign values to them.",
+            "No values can make the contradictory equations true together.",
+            "Subtracting twice the second equation from the first gives a contradiction, so there is no shared pair."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "For 2x + 2y = 8 and x + y = 4, elimination gives 0 = 0. What does this mean?",
+        "choices": [
+            "Only (0, 0)",
+            "Every ordered pair in the plane",
+            "Infinitely many solutions on x + y = 4",
+            "No solution"
+        ],
+        "answer": "Infinitely many solutions on x + y = 4",
+        "explanation": "The first equation is twice the second, so every point on their shared line works.",
+        "explanations": [
+            "(0, 0) does not satisfy x + y = 4.",
+            "Pairs still have to satisfy the original condition x + y = 4.",
+            "The first equation is twice the second, so every point on their shared line works.",
+            "0 = 0 is true, not a contradiction."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: solve 3x + 2y = 16 and x − 2y = 0.",
+        "choices": [
+            "(8, 4)",
+            "(4, 2)",
+            "(2, 4)",
+            "(4, −2)"
+        ],
+        "answer": "(4, 2)",
+        "explanation": "Adding gives 4x = 16, so x = 4; then 4 − 2y = 0 gives y = 2.",
+        "explanations": [
+            "This satisfies the second equation but gives 32 in the first.",
+            "Adding gives 4x = 16, so x = 4; then 4 − 2y = 0 gives y = 2.",
+            "These coordinates are reversed and fail x − 2y = 0.",
+            "From 4 − 2y = 0, 2y = 4, so y is positive."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: solve 2x + 3y = 13 and 3x + 2y = 12.",
+        "choices": [
+            "(2, 3)",
+            "(3, 2)",
+            "(1, 4)",
+            "(4, 1)"
+        ],
+        "answer": "(2, 3)",
+        "explanation": "Multiply the first equation by 3 and the second by 2. Subtract to get 5y = 15, then x = 2.",
+        "explanations": [
+            "Multiply the first equation by 3 and the second by 2. Subtract to get 5y = 15, then x = 2.",
+            "This reverses the pair and swaps the two left-side totals.",
+            "The first left side would be 14, not 13.",
+            "The first left side would be 11, not 13."
+        ]
+    }
+];
+
+        const feedback = {
+            correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
+            wrong: ['Not quite', 'Try again', 'Almost']
+        };
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        function showContent() {
+            const item = content[state.current];
+            
+            document.getElementById('mode-badge').className = 'mode-badge ' + item.mode;
+            document.getElementById('mode-badge').textContent = item.mode;
+
+            if (item.concept) {
+                let html = `<div class="concept-box"><div class="concept-text">${item.concept}</div></div>`;
+                document.getElementById('concept-section').innerHTML = html;
+            } else {
+                document.getElementById('concept-section').innerHTML = '';
+            }
+
+            document.getElementById('question-text').innerHTML = item.q;
+            document.getElementById('lesson-diagram').innerHTML = item.diagram || '';
+            
+            const choicesHTML = item.choices.map((c, i) => 
+                `<button class="choice" data-choice="${i}" data-letter="${letters[i]}">${c}</button>`
+            ).join('');
+            document.getElementById('choices').innerHTML = choicesHTML;
+            
+            document.querySelectorAll('.choice').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const choiceIndex = parseInt(this.getAttribute('data-choice'));
+                    selectChoice(item.choices[choiceIndex]);
+                });
+            });
+            
+            document.getElementById('continue-btn').classList.remove('show');
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            state.selected = null;
+        }
+
+        function selectChoice(choice) {
+            if (state.selected) return;
+            
+            state.selected = choice;
+            const item = content[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent;
+                
+                if (btnText === choice) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choice === item.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = item.explanation || feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.errors = (state.errors || 0) + 1;
+                            document.getElementById('feedback-text').textContent = item.explanations[item.choices.indexOf(choice)];
+                            state.streak = 0;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function nextContent() {
+            state.current++;
+            if (state.current < state.total) {
+                showContent();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === state.total && !state.errors;
+            
+            document.getElementById('victory-msg').textContent = perfect ? 
+                'Perfect practice! Every answer was correct on the first try.' : 
+                'Great work! You completed Figure 024!';
+            
+            let badgesHTML = '';
+            if (perfect) badgesHTML += '<div class="badge">Flawless</div>';
+            if (state.streak >= 5) badgesHTML += '<div class="badge">On Fire</div>';
+            
+            document.getElementById('victory-badges').innerHTML = badgesHTML || '<div class="badge">Complete</div>';
+            document.getElementById('victory').classList.add('show');
+            
+            const progress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+            if (!progress.completed.includes('figure-024')) {
+                progress.completed.push('figure-024');
+                progress.xp += 150;
+            }
+            localStorage.setItem('userProgress', JSON.stringify(progress));
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextContent);
+        
+        showContent();
+    </script>
+</body>
+</html>

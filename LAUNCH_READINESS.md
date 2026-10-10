@@ -5,7 +5,7 @@ The learner preview and connected school/class assignment path are implemented. 
 
 ## Current priority order
 1. Activate connected support rules and test a teacher request → owner reply → teacher follow-up. Define who checks the inbox and response expectations.
-2. Review curriculum coverage and answer accuracy with an educator, including missing figures 020–024.
+2. Review curriculum coverage and answer accuracy with an educator, including the newly written figures 020–024.
 3. Complete accessibility, privacy/retention, and operational checks for a small supervised pilot.
 
 ## Before a real school pilot
@@ -13,7 +13,7 @@ The learner preview and connected school/class assignment path are implemented. 
 - [ ] Add trusted school membership and separate platform owner, school administrator, teacher and learner roles. Test school/class isolation and role revocation.
 - [ ] Connect real rosters, assignment delivery, resumable learner sessions, and cross-device reports. Use assignment IDs, unique session IDs and server timestamps; verify retries do not duplicate completions.
 - [ ] Add in-class practice and short independent checks with reviewed fresh questions. Separate assistance shown by the app from teacher-observed independent performance; do not label unexplained activity as cheating.
-- [ ] Validate all curriculum content, answers, prerequisite order and lesson coverage with an educator. Resolve or explicitly exclude missing figures 020–024. Verify standards claims before publishing them.
+- [ ] Validate all curriculum content, answers, prerequisite order and lesson coverage with an educator. Review and approve the new figures 020–024 before full-course use. Verify standards claims before publishing them.
 - [ ] Define school licensing and course access: school ID, plan, licensed courses, student seat limit, assigned seats, term start/end, trial/active/expired status, renewal contact and billing reference. Decide how archived students and staff count. Enforce access on the server; never delete learning records merely because a license expires.
 - [ ] Build a separate owner console for the app owner: school directory, authorized school/license management, seat usage, account troubleshooting, support inbox and ticket replies/status, and course draft/review/publish controls with rollback. Use strong owner authentication and audited privileged operations. Do not rely on a hidden URL or expose all student records by default.
 - [ ] Activate and production-test connected school support. Authenticated tickets, saved receipts, reply history, school association, and status are implemented. Define the owner inbox monitoring routine and response expectations before pilot use.
@@ -67,3 +67,6 @@ Connected support update (2026-10-09): school tickets, saved submission confirma
 
 
 Curriculum audit (2026-10-09): technical review and verified corrections completed; see `CURRICULUM_AUDIT.md` and `/preview/curriculum.html`. 53 of 58 planned figures exist, only 18 are school-assignable, and 35 are premium. Figures 020–024, broader Algebra 1 coverage, school entitlements and educator approval remain open. Independent symbolic checks cover 192 keys; this is not exhaustive content certification. No assignment catalog or Firebase rules change was required.
+
+
+Systems content update (2026-10-09): added figures 020–024 with 60 questions and eight coordinate graphs, specific correct/incorrect feedback, and 10 closing practice questions. All 58 planned figures now have source content; 40 remain premium and only 18 school-assignable. All 60 new keys and plotted lines passed independent checks. Educator review, broader coverage gaps and premium school entitlement work remain open. No Firebase activation is required for this content release.

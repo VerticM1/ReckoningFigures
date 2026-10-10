@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 023: Substitution Method</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .mode-badge.learn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .mode-badge.practice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .mode-badge.challenge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #10b981;
+        }
+
+        .concept-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        #question-text {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .choice::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #4b5563;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #9ca3af;
+        }
+
+        .choice:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-2px);
+        }
+
+        .choice.selected {
+            border-color: #fbbf24;
+            background: #4b5563;
+        }
+
+        .choice.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.correct::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        .choice.incorrect::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .check-icon.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #feedback-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #1f2937;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #continue-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        #continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #victory.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .victory-content {
+            text-align: center;
+            padding: 40px;
+            max-width: 400px;
+        }
+
+        .victory-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: victoryBounce 0.8s ease;
+        }
+
+        @keyframes victoryBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #victory-msg {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        #victory-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #1f2937;
+            text-transform: uppercase;
+        }
+
+        .victory-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .victory-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="top-bar">
+            <button class="close-btn" onclick="window.location.href='module-3-simple.html'">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="mode-badge" id="mode-badge">learn</div>
+            <div id="concept-section"></div>
+            <div id="question-text"></div><div id="lesson-diagram"></div>
+            <div id="choices"></div>
+            
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <div id="victory">
+            <div class="victory-content">
+                <div class="victory-icon">🎯</div>
+                <div id="victory-msg"></div>
+                <div id="victory-badges"></div>
+                <button class="victory-btn" onclick="window.location.href='module-3-simple.html'">Return to Module 3</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function checkPremiumAccess() {
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
+            if (!isPremium) {
+                alert('⚠️ Module 3 requires Premium access.\n\nUpgrade to unlock all 70+ figures!');
+                window.location.href = 'main-menu-modules.html';
+                return;
+            }
+        })();
+
+        const state = {
+            current: 0,
+            total: 12,
+            correct: 0,
+            streak: 0,
+            selected: null
+        };
+
+        const content = [
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "For y = 2x + 1 and x + y = 10, which equation results from substituting for y?",
+        "choices": [
+            "x + (2x + 1) = 10",
+            "x + 2x = 10",
+            "(2x + 1) + y = 10",
+            "x + (2x + 10) = 1"
+        ],
+        "answer": "x + (2x + 1) = 10",
+        "explanation": "Replace y in the second equation with the equal expression 2x + 1.",
+        "explanations": [
+            "Replace y in the second equation with the equal expression 2x + 1.",
+            "The replacement expression includes +1; do not drop it.",
+            "This replaces x, but the first equation gives an expression for y.",
+            "Substitution replaces a variable with an equal expression; it does not move constants arbitrarily."
+        ],
+        "concept": "<strong>Replace equals with equals</strong><p>If y = x + 2 and x + y = 8, replace y to get x + (x + 2) = 8. Then 2x + 2 = 8, so x = 3 and y = 5.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "After substitution gives 3x + 1 = 10, what is x?",
+        "choices": [
+            "9",
+            "11/3",
+            "10/3",
+            "3"
+        ],
+        "answer": "3",
+        "explanation": "Subtract 1 from both sides to get 3x = 9, then divide by 3.",
+        "explanations": [
+            "9 equals 3x; divide by the coefficient 3.",
+            "Subtract 1 from 10, rather than adding it.",
+            "Remove the +1 before dividing by 3.",
+            "Subtract 1 from both sides to get 3x = 9, then divide by 3."
+        ],
+        "concept": "<strong>Solve the one-variable equation</strong><p>Keep equations balanced. For 4x − 2 = 14, add 2 to get 4x = 16, then divide by 4 to get x = 4.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "If x = 3 and y = 2x + 1, what is the ordered-pair solution?",
+        "choices": [
+            "(3, 6)",
+            "(3, 4)",
+            "(3, 7)",
+            "(7, 3)"
+        ],
+        "answer": "(3, 7)",
+        "explanation": "y = 2(3) + 1 = 7. The ordered pair lists x before y.",
+        "explanations": [
+            "Include the +1 after multiplying 2 × 3.",
+            "Multiply 2 by x before adding 1.",
+            "y = 2(3) + 1 = 7. The ordered pair lists x before y.",
+            "The coordinates are reversed; x comes first."
+        ],
+        "concept": "<strong>Find the second variable</strong><p>A system solution is usually a pair (x, y). Substitute your x-value into either original equation to find y, then check the pair in both equations.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "For x = y − 2 and 2x + y = 8, which substitution is correct?",
+        "choices": [
+            "2(y + 2) + y = 8",
+            "2(y − 2) + y = 8",
+            "2y − 2 + y = 8",
+            "2x + (y − 2) = 8"
+        ],
+        "answer": "2(y − 2) + y = 8",
+        "explanation": "Replace every x with y − 2, keeping parentheses because the whole expression is doubled.",
+        "explanations": [
+            "Keep the minus sign from x = y − 2.",
+            "Replace every x with y − 2, keeping parentheses because the whole expression is doubled.",
+            "The factor 2 must multiply both y and −2.",
+            "The expression equals x, not y."
+        ],
+        "concept": "<strong>Use parentheses</strong><p>If x = y + 3, then 2x means 2(y + 3) = 2y + 6. The multiplier applies to every term in the replacement expression.</p>"
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve y = x + 2 and x + y = 8.",
+        "choices": [
+            "(3, 5)",
+            "(5, 3)",
+            "(4, 4)",
+            "(2, 6)"
+        ],
+        "answer": "(3, 5)",
+        "explanation": "x + (x + 2) = 8 gives x = 3; then y = 5.",
+        "explanations": [
+            "x + (x + 2) = 8 gives x = 3; then y = 5.",
+            "These coordinates do not satisfy y = x + 2.",
+            "This satisfies the sum but not y = x + 2.",
+            "This satisfies the sum but y should be 4 when x = 2."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve x = 2y and x + y = 12.",
+        "choices": [
+            "(4, 8)",
+            "(6, 6)",
+            "(12, 6)",
+            "(8, 4)"
+        ],
+        "answer": "(8, 4)",
+        "explanation": "2y + y = 12 gives y = 4, and x = 2(4) = 8.",
+        "explanations": [
+            "x must be twice y, not half of y.",
+            "The values add to 12 but do not satisfy x = 2y.",
+            "This satisfies x = 2y but the sum is 18, not 12.",
+            "2y + y = 12 gives y = 4, and x = 2(4) = 8."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve y = 3x − 4 and 2x + y = 11.",
+        "choices": [
+            "(3, 9)",
+            "(1, 9)",
+            "(3, 5)",
+            "(5, 3)"
+        ],
+        "answer": "(3, 5)",
+        "explanation": "2x + 3x − 4 = 11 gives 5x = 15, so x = 3 and y = 5.",
+        "explanations": [
+            "y is 3x minus 4, not just 3x.",
+            "The sum equation works, but y = 3(1) − 4 is −1.",
+            "2x + 3x − 4 = 11 gives 5x = 15, so x = 3 and y = 5.",
+            "These values do not satisfy either original equation."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Solve x = y − 2 and 2x + y = 8.",
+        "choices": [
+            "(0, 8)",
+            "(2, 4)",
+            "(4, 2)",
+            "(3, 5)"
+        ],
+        "answer": "(2, 4)",
+        "explanation": "2(y − 2) + y = 8 gives 3y = 12, so y = 4 and x = 2.",
+        "explanations": [
+            "This satisfies 2x + y = 8 but not x = y − 2.",
+            "2(y − 2) + y = 8 gives 3y = 12, so y = 4 and x = 2.",
+            "x is 2 less than y, not 2 greater.",
+            "This satisfies x = y − 2 but 2(3) + 5 = 11."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Substituting y = 2x + 1 into y = 2x − 3 gives 1 = −3. What does this mean?",
+        "choices": [
+            "No solution",
+            "Infinitely many solutions",
+            "x = −4",
+            "One solution at (0, 1)"
+        ],
+        "answer": "No solution",
+        "explanation": "The contradiction means no pair can satisfy both equations.",
+        "explanations": [
+            "The contradiction means no pair can satisfy both equations.",
+            "An identity such as 1 = 1 would indicate infinitely many solutions; 1 = −3 is false.",
+            "The x-terms cancel. There is no remaining equation that gives x = −4.",
+            "(0, 1) does not satisfy y = 2x − 3."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Substituting y = 2x + 1 into 2y = 4x + 2 gives 4x + 2 = 4x + 2. What does this mean?",
+        "choices": [
+            "No solution",
+            "Only (0, 1)",
+            "Every ordered pair in the plane",
+            "Infinitely many solutions on y = 2x + 1"
+        ],
+        "answer": "Infinitely many solutions on y = 2x + 1",
+        "explanation": "The equations describe the same line; every point on that line satisfies both.",
+        "explanations": [
+            "The statement is always true, not a contradiction.",
+            "(0, 1) works, but so does every other point on y = 2x + 1.",
+            "Pairs must still lie on y = 2x + 1; the identity does not erase the original condition.",
+            "The equations describe the same line; every point on that line satisfies both."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: solve y = 2x − 1 and x + y = 14.",
+        "choices": [
+            "(5, 10)",
+            "(7, 7)",
+            "(5, 9)",
+            "(9, 5)"
+        ],
+        "answer": "(5, 9)",
+        "explanation": "x + 2x − 1 = 14 gives x = 5, then y = 9.",
+        "explanations": [
+            "Remember to subtract 1 when finding y.",
+            "The pair satisfies the sum but not the other equation.",
+            "x + 2x − 1 = 14 gives x = 5, then y = 9.",
+            "These coordinates are reversed and fail y = 2x − 1."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: solve x = 3y + 1 and x − y = 7.",
+        "choices": [
+            "(9, 3)",
+            "(10, 3)",
+            "(3, 10)",
+            "(7, 2)"
+        ],
+        "answer": "(10, 3)",
+        "explanation": "3y + 1 − y = 7 gives 2y = 6, so y = 3 and x = 10.",
+        "explanations": [
+            "Include the +1 when computing x = 3y + 1.",
+            "3y + 1 − y = 7 gives 2y = 6, so y = 3 and x = 10.",
+            "The order is (x, y); these values are reversed.",
+            "This satisfies x = 3y + 1 but x − y is 5, not 7."
+        ]
+    }
+];
+
+        const feedback = {
+            correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
+            wrong: ['Not quite', 'Try again', 'Almost']
+        };
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        function showContent() {
+            const item = content[state.current];
+            
+            document.getElementById('mode-badge').className = 'mode-badge ' + item.mode;
+            document.getElementById('mode-badge').textContent = item.mode;
+
+            if (item.concept) {
+                let html = `<div class="concept-box"><div class="concept-text">${item.concept}</div></div>`;
+                document.getElementById('concept-section').innerHTML = html;
+            } else {
+                document.getElementById('concept-section').innerHTML = '';
+            }
+
+            document.getElementById('question-text').innerHTML = item.q;
+            document.getElementById('lesson-diagram').innerHTML = item.diagram || '';
+            
+            const choicesHTML = item.choices.map((c, i) => 
+                `<button class="choice" data-choice="${i}" data-letter="${letters[i]}">${c}</button>`
+            ).join('');
+            document.getElementById('choices').innerHTML = choicesHTML;
+            
+            document.querySelectorAll('.choice').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const choiceIndex = parseInt(this.getAttribute('data-choice'));
+                    selectChoice(item.choices[choiceIndex]);
+                });
+            });
+            
+            document.getElementById('continue-btn').classList.remove('show');
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            state.selected = null;
+        }
+
+        function selectChoice(choice) {
+            if (state.selected) return;
+            
+            state.selected = choice;
+            const item = content[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent;
+                
+                if (btnText === choice) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choice === item.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = item.explanation || feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.errors = (state.errors || 0) + 1;
+                            document.getElementById('feedback-text').textContent = item.explanations[item.choices.indexOf(choice)];
+                            state.streak = 0;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function nextContent() {
+            state.current++;
+            if (state.current < state.total) {
+                showContent();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === state.total && !state.errors;
+            
+            document.getElementById('victory-msg').textContent = perfect ? 
+                'Perfect practice! Every answer was correct on the first try.' : 
+                'Great work! You completed Figure 023!';
+            
+            let badgesHTML = '';
+            if (perfect) badgesHTML += '<div class="badge">Flawless</div>';
+            if (state.streak >= 5) badgesHTML += '<div class="badge">On Fire</div>';
+            
+            document.getElementById('victory-badges').innerHTML = badgesHTML || '<div class="badge">Complete</div>';
+            document.getElementById('victory').classList.add('show');
+            
+            const progress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+            if (!progress.completed.includes('figure-023')) {
+                progress.completed.push('figure-023');
+                progress.xp += 150;
+            }
+            localStorage.setItem('userProgress', JSON.stringify(progress));
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextContent);
+        
+        showContent();
+    </script>
+</body>
+</html>

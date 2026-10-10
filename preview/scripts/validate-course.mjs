@@ -21,5 +21,5 @@ for(const m of course)for(const lesson of m.lessons){
   else assert.equal(q.type,'tutorial');
  }
 }
-assert.equal(lessons,53);assert.equal(steps,581);assert(!answerMatches('',0));assert(!answerMatches('1b','b'));assert(answerMatches('b','b'));assert(answerMatches('−2',-2));
+assert.equal(lessons,58);assert.equal(steps,641);assert(!answerMatches('',0));assert(!answerMatches('1b','b'));assert(answerMatches('b','b'));assert(answerMatches('−2',-2));
 console.log(`Validated ${lessons} lessons, ${steps} steps and original content parity.`);

@@ -1,5 +1,5 @@
 import * as api from '../owner/client.js?v=ec991ac9ca14';
-import {course} from '../course.js?v=c922ec7ecf4c';
+import {course} from '../course.js?v=4cb03d5dcbbc';
 const app=document.querySelector('#classroom-app'),p=new URLSearchParams(location.search),s=p.get('school'),c=p.get('class');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const valid=id=>/^[A-Za-z0-9_-]{1,128}$/.test(id||'');

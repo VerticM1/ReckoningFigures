@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 021: Modeling Linear Systems</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1f2937;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #top-bar {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 300;
+        }
+
+        #progress-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #streak-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #progress-bg {
+            width: 100%;
+            height: 16px;
+            background: #374151;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 0 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .mode-badge.learn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .mode-badge.practice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .mode-badge.challenge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #10b981;
+        }
+
+        .concept-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        #question-text {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: #374151;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .choice::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #4b5563;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            color: #9ca3af;
+        }
+
+        .choice:hover {
+            background: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-2px);
+        }
+
+        .choice.selected {
+            border-color: #fbbf24;
+            background: #4b5563;
+        }
+
+        .choice.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.correct::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        .choice.incorrect::before {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .choice:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        #feedback {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .check-icon {
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .check-icon.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #feedback-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        #continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #1f2937;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #continue-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        #continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        #victory {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #victory.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .victory-content {
+            text-align: center;
+            padding: 40px;
+            max-width: 400px;
+        }
+
+        .victory-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: victoryBounce 0.8s ease;
+        }
+
+        @keyframes victoryBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #victory-msg {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        #victory-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #1f2937;
+            text-transform: uppercase;
+        }
+
+        .victory-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .victory-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="top-bar">
+            <button class="close-btn" onclick="window.location.href='module-3-simple.html'">×</button>
+            <div id="progress-container">
+                <div id="streak-label"></div>
+                <div id="progress-bg">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="mode-badge" id="mode-badge">learn</div>
+            <div id="concept-section"></div>
+            <div id="question-text"></div><div id="lesson-diagram"></div>
+            <div id="choices"></div>
+            
+            <div id="feedback">
+                <div class="check-icon">✓</div>
+                <div id="feedback-text"></div>
+            </div>
+            
+            <button id="continue-btn">Continue</button>
+        </div>
+
+        <div id="victory">
+            <div class="victory-content">
+                <div class="victory-icon">🎯</div>
+                <div id="victory-msg"></div>
+                <div id="victory-badges"></div>
+                <button class="victory-btn" onclick="window.location.href='module-3-simple.html'">Return to Module 3</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function checkPremiumAccess() {
+            const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            const isPremium = userProgress.premium === true;
+            
+            if (!isPremium) {
+                alert('⚠️ Module 3 requires Premium access.\n\nUpgrade to unlock all 70+ figures!');
+                window.location.href = 'main-menu-modules.html';
+                return;
+            }
+        })();
+
+        const state = {
+            current: 0,
+            total: 12,
+            correct: 0,
+            streak: 0,
+            selected: null
+        };
+
+        const content = [
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "Let a be the number of adult tickets and s the number of student tickets. There are 18 tickets total. Which equation models the count?",
+        "choices": [
+            "a − s = 18",
+            "18a + 18s = 1",
+            "a + s = 18",
+            "as = 18"
+        ],
+        "answer": "a + s = 18",
+        "explanation": "Adding the two ticket counts gives the total count of 18.",
+        "explanations": [
+            "A difference does not count all tickets.",
+            "18 is the total, not the price or coefficient of each ticket.",
+            "Adding the two ticket counts gives the total count of 18.",
+            "Multiply counts only if the relationship calls for a product; this is a total."
+        ],
+        "concept": "<strong>Define the unknowns</strong><p>A system uses the same variables in two equations. Each equation describes a relationship that must hold at the same time.</p><p>Example: if p and n count pens and notebooks and there are 7 items, p + n = 7.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "Adult tickets cost $12 and student tickets cost $7. With a adult tickets and s student tickets, the revenue is $161. Which equation models revenue?",
+        "choices": [
+            "19(a + s) = 161",
+            "12a + 7s = 161",
+            "a + s = 161",
+            "7a + 12s = 161"
+        ],
+        "answer": "12a + 7s = 161",
+        "explanation": "Each price multiplies its ticket count, and the two revenues add to $161.",
+        "explanations": [
+            "Each ticket has one price, not the sum of both prices.",
+            "Each price multiplies its ticket count, and the two revenues add to $161.",
+            "a + s counts tickets, not dollars.",
+            "The prices are attached to the wrong ticket types."
+        ],
+        "concept": "<strong>Match the units</strong><p>Price × count gives money. At $2 per pen and $5 per notebook, a $23 total gives 2p + 5n = 23. A count equation and a money equation express different relationships.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "A gym charges $15 plus $4 per visit; another charges $7 per visit. Which system compares their monthly costs C for v visits?",
+        "choices": [
+            "C = 15 + 4v and C = 7v",
+            "C = 19v and C = 7v",
+            "C = 15v + 4 and C = 7v",
+            "C = 15 + 4v and C = 7 + v"
+        ],
+        "answer": "C = 15 + 4v and C = 7v",
+        "explanation": "Use one cost equation for each gym, with the same visit count v and cost variable C.",
+        "explanations": [
+            "Use one cost equation for each gym, with the same visit count v and cost variable C.",
+            "The $15 fee is paid once, not on every visit.",
+            "The fixed fee and per-visit rate have been swapped.",
+            "The second gym charges $7 per visit, so multiply 7 by v."
+        ],
+        "concept": "<strong>Compare two models</strong><p>A starting fee is a constant; a rate multiplies the input. For example, C = 10 + 3v means a $10 fee plus $3 for each visit. At an intersection, both models have the same input and output.</p>"
+    },
+    {
+        "mode": "learn",
+        "phase": "guided",
+        "q": "A rectangle has perimeter 30 meters and length L is 3 meters more than width W. Which system models it?",
+        "choices": [
+            "L + W = 30 and L = W + 3",
+            "2L + 2W = 30 and W = L + 3",
+            "LW = 30 and L = W + 3",
+            "2L + 2W = 30 and L = W + 3"
+        ],
+        "answer": "2L + 2W = 30 and L = W + 3",
+        "explanation": "Perimeter counts two lengths and two widths. “3 more than width” means W + 3.",
+        "explanations": [
+            "L + W is half the perimeter.",
+            "This says the width is longer, reversing the relationship.",
+            "LW is area, not perimeter.",
+            "Perimeter counts two lengths and two widths. “3 more than width” means W + 3."
+        ],
+        "concept": "<strong>Translate carefully</strong><p>“5 more than y” means y + 5; “twice y” means 2y. A rectangle’s perimeter is 2L + 2W, while its area is LW.</p>"
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "A jar contains 14 quarters and dimes in total, worth $2.60. Let q and d be their counts. Which system fits?",
+        "choices": [
+            "q + d = 14 and 25q + 10d = 2.60",
+            "q − d = 14 and 0.25q + 0.10d = 2.60",
+            "q + d = 14 and 0.25q + 0.10d = 2.60",
+            "q + d = 2.60 and 0.25q + 0.10d = 14"
+        ],
+        "answer": "q + d = 14 and 0.25q + 0.10d = 2.60",
+        "explanation": "The first equation counts coins; the second totals their dollar values.",
+        "explanations": [
+            "25 and 10 are cents, but 2.60 is dollars. Use consistent units.",
+            "The total coin count uses addition, not subtraction.",
+            "The first equation counts coins; the second totals their dollar values.",
+            "The count total and money total are swapped."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Let x be the larger of two numbers and y the smaller. Their sum is 28 and their difference is 6. Which system fits?",
+        "choices": [
+            "xy = 28 and x − y = 6",
+            "x + y = 28 and x − y = 6",
+            "x + y = 6 and x − y = 28",
+            "x + y = 28 and y − x = 6"
+        ],
+        "answer": "x + y = 28 and x − y = 6",
+        "explanation": "The sum adds the numbers; larger minus smaller gives their positive difference.",
+        "explanations": [
+            "A sum is addition, not multiplication.",
+            "The sum adds the numbers; larger minus smaller gives their positive difference.",
+            "The sum and difference values are swapped.",
+            "Smaller minus larger is negative, not positive 6."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Plan A costs $8 plus $3 per hour. Plan B costs $5 per hour. Which equation finds when the costs are equal?",
+        "choices": [
+            "8 + 3h = 5h",
+            "8 + 3 = 5h",
+            "8h + 3 = 5h",
+            "8 + 3h + 5h = 0"
+        ],
+        "answer": "8 + 3h = 5h",
+        "explanation": "At equal cost, set the two cost expressions equal using the same number of hours h.",
+        "explanations": [
+            "At equal cost, set the two cost expressions equal using the same number of hours h.",
+            "The $3 rate must be multiplied by hours.",
+            "The $8 fee is fixed, not hourly.",
+            "We need equal costs, not a total cost of zero."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Notebooks cost $3 and pens cost $2. A purchase has 10 items and costs $24. Which equation belongs with n + p = 10?",
+        "choices": [
+            "2n + 3p = 24",
+            "n + p = 24",
+            "5(n + p) = 24",
+            "3n + 2p = 24"
+        ],
+        "answer": "3n + 2p = 24",
+        "explanation": "Multiply each item count by its price, then add to get $24.",
+        "explanations": [
+            "The notebook and pen prices have been reversed.",
+            "This uses a dollar total as an item count.",
+            "Not every item costs $5; prices depend on type.",
+            "Multiply each item count by its price, then add to get $24."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Does n = 4, p = 6 satisfy BOTH n + p = 10 and 3n + 2p = 24?",
+        "choices": [
+            "No; 3(4) + 2(6) is 30",
+            "Yes; satisfying just one equation is enough",
+            "Yes; 4 + 6 = 10 and 12 + 12 = 24",
+            "No; 4 + 6 is not 10"
+        ],
+        "answer": "Yes; 4 + 6 = 10 and 12 + 12 = 24",
+        "explanation": "A system solution must satisfy every equation, and this pair satisfies both.",
+        "explanations": [
+            "3(4) + 2(6) = 12 + 12 = 24.",
+            "The pair is a solution, but the reason is wrong: it must satisfy both equations.",
+            "A system solution must satisfy every equation, and this pair satisfies both.",
+            "4 + 6 is 10. Check the arithmetic in both equations."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "practice",
+        "q": "Cars and bicycles have 10 vehicles and 28 wheels total. Cars have 4 wheels and bicycles have 2. Which system uses c cars and b bicycles?",
+        "choices": [
+            "c + b = 10 and 6(c + b) = 28",
+            "c + b = 10 and 4c + 2b = 28",
+            "c + b = 28 and 4c + 2b = 10",
+            "c + b = 10 and 2c + 4b = 28"
+        ],
+        "answer": "c + b = 10 and 4c + 2b = 28",
+        "explanation": "The first relationship counts vehicles; the second counts wheels.",
+        "explanations": [
+            "Each vehicle has either 4 or 2 wheels, not 6.",
+            "The first relationship counts vehicles; the second counts wheels.",
+            "The vehicle and wheel totals are swapped.",
+            "Cars have 4 wheels and bicycles have 2, not the reverse."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: smoothies cost $5 and juices $3. Nine drinks cost $37. With s smoothies and j juices, which system fits?",
+        "choices": [
+            "s + j = 9 and 5s + 3j = 37",
+            "s + j = 37 and 5s + 3j = 9",
+            "s + j = 9 and 3s + 5j = 37",
+            "s − j = 9 and 5s + 3j = 37"
+        ],
+        "answer": "s + j = 9 and 5s + 3j = 37",
+        "explanation": "Count the nine drinks, then add $5 per smoothie and $3 per juice to get $37.",
+        "explanations": [
+            "Count the nine drinks, then add $5 per smoothie and $3 per juice to get $37.",
+            "The count and money totals are swapped.",
+            "The two drink prices are swapped.",
+            "Nine is the total number of drinks, not their difference."
+        ]
+    },
+    {
+        "mode": "practice",
+        "phase": "check",
+        "q": "Try it yourself: a rectangle has perimeter 44 cm and length L is twice width W. Which system fits?",
+        "choices": [
+            "LW = 44 and L = 2W",
+            "2L + 2W = 44 and L = W + 2",
+            "L + W = 44 and L = 2W",
+            "2L + 2W = 44 and L = 2W"
+        ],
+        "answer": "2L + 2W = 44 and L = 2W",
+        "explanation": "The perimeter counts all four sides, and “twice width” means 2W.",
+        "explanations": [
+            "LW measures area, but the given quantity is perimeter.",
+            "Twice width means multiply by 2, not add 2.",
+            "L + W counts only two of the four sides.",
+            "The perimeter counts all four sides, and “twice width” means 2W."
+        ]
+    }
+];
+
+        const feedback = {
+            correct: ['Perfect!', 'Excellent!', 'You got it!', 'Brilliant!', 'Yes!'],
+            wrong: ['Not quite', 'Try again', 'Almost']
+        };
+
+        const letters = ['A', 'B', 'C', 'D'];
+
+        function showContent() {
+            const item = content[state.current];
+            
+            document.getElementById('mode-badge').className = 'mode-badge ' + item.mode;
+            document.getElementById('mode-badge').textContent = item.mode;
+
+            if (item.concept) {
+                let html = `<div class="concept-box"><div class="concept-text">${item.concept}</div></div>`;
+                document.getElementById('concept-section').innerHTML = html;
+            } else {
+                document.getElementById('concept-section').innerHTML = '';
+            }
+
+            document.getElementById('question-text').innerHTML = item.q;
+            document.getElementById('lesson-diagram').innerHTML = item.diagram || '';
+            
+            const choicesHTML = item.choices.map((c, i) => 
+                `<button class="choice" data-choice="${i}" data-letter="${letters[i]}">${c}</button>`
+            ).join('');
+            document.getElementById('choices').innerHTML = choicesHTML;
+            
+            document.querySelectorAll('.choice').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const choiceIndex = parseInt(this.getAttribute('data-choice'));
+                    selectChoice(item.choices[choiceIndex]);
+                });
+            });
+            
+            document.getElementById('continue-btn').classList.remove('show');
+            document.getElementById('progress-fill').style.width = ((state.current / state.total) * 100) + '%';
+            
+            if (state.streak >= 2) {
+                document.getElementById('streak-label').textContent = state.streak + ' IN A ROW';
+            }
+            
+            document.getElementById('feedback-text').textContent = '';
+            document.querySelector('.check-icon').classList.remove('show');
+            state.selected = null;
+        }
+
+        function selectChoice(choice) {
+            if (state.selected) return;
+            
+            state.selected = choice;
+            const item = content[state.current];
+            const btns = document.querySelectorAll('.choice');
+            
+            btns.forEach(btn => {
+                btn.disabled = true;
+                const btnText = btn.textContent;
+                
+                if (btnText === choice) {
+                    btn.classList.add('selected');
+                    
+                    setTimeout(() => {
+                        if (choice === item.answer) {
+                            btn.classList.add('correct');
+                            state.correct++;
+                            state.streak++;
+                            
+                            const feedbackMsg = feedback.correct[Math.floor(Math.random() * feedback.correct.length)];
+                            document.getElementById('feedback-text').textContent = item.explanation || feedbackMsg;
+                            document.querySelector('.check-icon').classList.add('show');
+                            document.getElementById('continue-btn').classList.add('show');
+                            
+                        } else {
+                            btn.classList.add('incorrect');
+                            state.errors = (state.errors || 0) + 1;
+                            document.getElementById('feedback-text').textContent = item.explanations[item.choices.indexOf(choice)];
+                            state.streak = 0;
+                            document.getElementById('streak-label').textContent = '';
+                            
+                            setTimeout(() => {
+                                btn.classList.remove('selected', 'incorrect');
+                                btns.forEach(b => b.disabled = false);
+                                state.selected = null;
+                            }, 1200);
+                        }
+                    }, 300);
+                }
+            });
+        }
+
+        function nextContent() {
+            state.current++;
+            if (state.current < state.total) {
+                showContent();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const perfect = state.correct === state.total && !state.errors;
+            
+            document.getElementById('victory-msg').textContent = perfect ? 
+                'Perfect practice! Every answer was correct on the first try.' : 
+                'Great work! You completed Figure 021!';
+            
+            let badgesHTML = '';
+            if (perfect) badgesHTML += '<div class="badge">Flawless</div>';
+            if (state.streak >= 5) badgesHTML += '<div class="badge">On Fire</div>';
+            
+            document.getElementById('victory-badges').innerHTML = badgesHTML || '<div class="badge">Complete</div>';
+            document.getElementById('victory').classList.add('show');
+            
+            const progress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
+            if (!progress.completed.includes('figure-021')) {
+                progress.completed.push('figure-021');
+                progress.xp += 150;
+            }
+            localStorage.setItem('userProgress', JSON.stringify(progress));
+        }
+
+        document.getElementById('continue-btn').addEventListener('click', nextContent);
+        
+        showContent();
+    </script>
+</body>
+</html>
