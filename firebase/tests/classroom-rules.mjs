@@ -27,7 +27,7 @@ try{
  await assertSucceeds(setDoc(doc(teacher,...base,'assignments','hw'),assignment()));
  await assertFails(setDoc(doc(db('teacher2'),...base,'assignments','spoof'),{...assignment(),createdBy:'teacher2'}));
  await assertFails(setDoc(doc(teacher,...base,'assignments','missing'),{...assignment(),lessonIds:[9999]}));
- const premium=course.flatMap(u=>u.lessons).find(l=>l.premium);if(premium)await assertFails(setDoc(doc(teacher,...base,'assignments','premium'),{...assignment(),lessonIds:[premium.id]}));
+ const premium=course.flatMap(u=>u.lessons).find(l=>l.premium);if(premium)await assertSucceeds(setDoc(doc(teacher,...base,'assignments','premium'),{...assignment(),lessonIds:[premium.id]}));
  await assertFails(setDoc(doc(teacher,...base,'assignments','duplicate'),{...assignment(),lessonIds:[1,1]}));
  await assertFails(getDoc(doc(other,...base,'assignments','hw')));
  await assertSucceeds(getDocs(collection(student,...base,'assignments')));

@@ -46,6 +46,14 @@ match /schools/{s}/classes/{c} {
    && request.resource.data.due is string && request.resource.data.due.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
    && request.resource.data.createdBy == request.auth.uid && request.resource.data.createdAt == request.time;
   allow update, delete: if false;
+  // Read-only authorization probe; no stored document is needed. Always read from server.
+  // Historical assignment/result reads remain available when a license is inactive.
+  match /practice/{lesson} {
+   allow get: if classStudent(s,c) && licenseOpen(s)
+    && lesson.matches('^[1-9][0-9]?$') && int(lesson) in availableLessons()
+    && int(lesson) in get(/databases/$(database)/documents/schools/$(s)/classes/$(c)/assignments/$(a)).data.lessonIds;
+   allow list, create, update, delete: if false;
+  }
   match /results/{r} {
    allow read: if classManager(s,c) || (classStudent(s,c) && resource.data.uid == request.auth.uid);
    allow create: if classStudent(s,c) && licenseOpen(s)

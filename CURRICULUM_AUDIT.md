@@ -4,16 +4,18 @@ Status: technical content review completed; educator approval and full-course co
 
 ## Inventory and access
 
+School-license release prepared 2026-10-10: all 58 figures are eligible under an active Algebra 1 school license after the tested rules and classroom update are activated. The figures below reflect that release; production remains on the previous 18-figure classroom UI until rules activation is confirmed.
+
 | Unit | Planned | Existing | School assignable | Coverage finding |
 | --- | ---: | ---: | ---: | --- |
 | Linear equations | 12 | 12 | 12 | Add distributive-property/like-term multi-step problems; lesson 7 largely repeats two-step work. |
 | Linear inequalities | 6 | 6 | 6 | One-variable practice; coordinate-plane inequality graphing needs expansion. |
-| Systems of equations | 8 | 8 | 0 | Figures 020–024 added and technically checked; educator review remains open. All eight are premium. |
-| Quadratic equations | 8 | 8 | 0 | Existing premium practice; prerequisite order and depth need review. |
-| Polynomials | 8 | 8 | 0 | Existing premium practice; teach operations before factoring applications. |
-| Exponents and radicals | 8 | 8 | 0 | Existing premium practice; domain assumptions clarified. |
-| Functions | 8 | 8 | 0 | Existing premium practice; add exponential models and sequences. |
-| Total | 58 | 58 | 18 | 40 existing lessons are premium; all planned source files are present. |
+| Systems of equations | 8 | 8 | 8 | Figures 020–024 added and technically checked; educator review remains open. All eight are premium. |
+| Quadratic equations | 8 | 8 | 8 | Existing premium practice; prerequisite order and depth need review. |
+| Polynomials | 8 | 8 | 8 | Existing premium practice; teach operations before factoring applications. |
+| Exponents and radicals | 8 | 8 | 8 | Existing premium practice; domain assumptions clarified. |
+| Functions | 8 | 8 | 8 | Existing premium practice; add exponential models and sequences. |
+| Total | 58 | 58 | 58 | 40 figures are premium for individual use; all 58 are included in school licenses. |
 
 The importer contains 641 steps: 594 multiple choice, 24 fill blanks, 13 true/false, seven tutorials and three interactive number-line graphs. Lesson 2 adds one runtime challenge: 642 delivered steps, 635 scored. Step counts are not evidence of mastery or sufficient instructional depth. Access restrictions and assignment counts were not changed by this audit.
 
@@ -36,7 +38,7 @@ Run `npm run test:course`, `npm run test:curriculum`, and `npm run test:classroo
 1. Educator-review the newly added figures 020 Rate of Change, 021 Modeling Linear Systems, 022 Graphing Linear Systems, 023 Substitution, and 024 Elimination. These now include worked examples, fresh practice, two closing questions each, and feedback explaining every distractor. Closing questions have no worked example displayed, but permit retries and assistance; they are practice, not a validated independent assessment.
 2. Strengthen foundations: distributive property, combining like terms, fractional/negative coefficients, no/infinitely-many solutions, and coordinate-plane graph interpretation/construction. Teach quadratic methods before linear–quadratic systems; polynomial operations before factoring.
 3. Fill full-course gaps: exponential models and linear/exponential comparisons, arithmetic/geometric sequences, and statistics/data analysis (distributions, scatterplots, line of fit, association versus causation). Review absolute-value/piecewise work and other local requirements.
-4. Decide school entitlements for premium content before claiming schools can assign the whole course. Do not merely remove client locks; enforce the same entitlement in assignment creation and learner delivery.
+4. Activate and production-check the prepared school-license release. It enforces the Algebra 1 entitlement in assignment creation, fresh server-authorized starts and result submission. See `firebase/COURSE_ACCESS_RELEASE.md`.
 5. Obtain an educator’s course/standards mapping and approval, then run a supervised pilot with fresh independent checks. Record curriculum versions with future results.
 
 ## Comparison framework
@@ -62,3 +64,5 @@ The five new lessons inherit the systems unit’s premium status. There are stil
 | 022 Graphing Linear Systems | Read and verify intersections; parallel/coincident lines; vertical/horizontal lines | A new intersection and coincident-line classification |
 | 023 Substitution Method | Replace equal expressions; distribute; solve and back-substitute; identify contradictions/identities | Two fresh systems |
 | 024 Elimination Method | Add/subtract equations; scale every term; check ordered pairs; distinguish no/infinite solutions | Opposite coefficients and a system requiring scaling |
+
+School access update (2026-10-10): the new school release covers all 58 figures using existing Algebra 1 license records. Personal Premium and the browser-local demo remain unchanged. Automated rules and UI checks passed; production rules activation and live separate-account verification remain pending. Earlier 18-figure statements above describe the preceding content releases.

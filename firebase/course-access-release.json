@@ -1,0 +1,34 @@
+{
+  "status": "awaiting-user-rules-activation",
+  "sourceBranch": "redesign/mobile-preview",
+  "targetBranch": "main",
+  "stagedProductionPaths": [
+    "preview/owner/activate.html",
+    "preview/owner/access-rules.txt"
+  ],
+  "frontendPathsAfterActivation": [
+    "preview/app.js",
+    "preview/curriculum.html",
+    "preview/friends.html",
+    "preview/friends.js",
+    "preview/homework.js",
+    "preview/index.html",
+    "preview/owner/access-rules.txt",
+    "preview/owner/activate.html",
+    "preview/owner/client.js",
+    "preview/owner/index.html",
+    "preview/owner/owner.js",
+    "preview/school/classroom-api.js",
+    "preview/school/classroom.html",
+    "preview/school/classroom.js",
+    "preview/school/course-access.js",
+    "preview/school/index.html",
+    "preview/school/join.html",
+    "preview/school/join.js",
+    "preview/school/school.js",
+    "preview/school/staff-join.html",
+    "preview/school/staff-join.js",
+    "preview/support.html",
+    "preview/support.js"
+  ]
+}

@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {schoolCourseAccess,schoolLessonCatalog} from '../school/course-access.js';
+import {course} from '../course.js';
+const now=1000,stamp=value=>({toMillis:()=>value});
+const school={status:'pilot',license:{courses:['algebra1'],startsOn:stamp(1000),endsOn:stamp(2000)}};
+assert(schoolCourseAccess(school,now).open);
+assert(!schoolCourseAccess(school,999).open);
+assert(!schoolCourseAccess(school,2000).open);
+assert(schoolCourseAccess({...school,status:'active'},1999).open);
+for(const status of ['paused','archived','unknown'])assert(!schoolCourseAccess({...school,status},now).open);
+for(const courses of [[],['another-course'],null])assert(!schoolCourseAccess({...school,license:{...school.license,courses}},now).open);
+for(const bad of [null,{}, {status:'active',license:{}}, {...school,license:{...school.license,endsOn:stamp(NaN)}}])assert(!schoolCourseAccess(bad,now).open);
+assert.equal(schoolLessonCatalog(course).length,58);
+assert.equal(schoolLessonCatalog(course).filter(l=>l.premium).length,40);
+console.log('PASS full school catalog, course entitlement, license state and inclusive start/exclusive end boundaries.');

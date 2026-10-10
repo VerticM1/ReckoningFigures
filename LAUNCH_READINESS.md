@@ -70,3 +70,6 @@ Curriculum audit (2026-10-09): technical review and verified corrections complet
 
 
 Systems content update (2026-10-09): added figures 020–024 with 60 questions and eight coordinate graphs, specific correct/incorrect feedback, and 10 closing practice questions. All 58 planned figures now have source content; 40 remain premium and only 18 school-assignable. All 60 new keys and plotted lines passed independent checks. Educator review, broader coverage gaps and premium school entitlement work remain open. No Firebase activation is required for this content release.
+
+
+Full-course school access prepared (2026-10-10): existing active/pilot Algebra 1 licenses cover all 58 figures. Teacher assignment selection, server-authorized student starts and exact-count result rules are implemented and tested, including offline denial, expiry, suspension, missing entitlement and enrollment revocation. Saved history remains readable to authorized members. Source is ready; production keeps the existing classroom UI until the updated rules are published. See `firebase/COURSE_ACCESS_RELEASE.md`. No per-student Premium flag or school-record migration is needed.

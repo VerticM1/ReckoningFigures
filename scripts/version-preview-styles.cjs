@@ -1,5 +1,10 @@
 // Version the stylesheet URL so iPhone caches cannot mix new artwork with old CSS.
 const fs=require('fs'),crypto=require('crypto');
+// Version the shared school-entitlement helper before its consuming entry files.
+for(const file of ['preview/school/classroom.js','preview/homework.js']){
+ const value=fs.readFileSync(file,'utf8').replace(/from '(\.\/(?:school\/)?course-access\.js)(?:\?v=[^']*)?'/,(_,url)=>`from '${url}?v=${crypto.createHash('sha256').update(fs.readFileSync('preview/school/course-access.js')).digest('hex').slice(0,12)}'`);
+ fs.writeFileSync(file,value);
+}
 // Version shared curriculum dependencies before hashing their consuming entry files.
 for(const file of ['preview/app.js','preview/homework.js','preview/school/classroom.js','preview/organization/organization.js']){
  let content=fs.readFileSync(file,'utf8');
