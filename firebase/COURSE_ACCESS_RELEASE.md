@@ -1,11 +1,9 @@
 # Full-course school access — 2026-10-10
 
 ## Release status
-Implementation and tests are complete on `redesign/mobile-preview`. Production rules activation is pending: the Firebase CLI has no authorized account in this environment. The activation page and complete rules file are published first. Keep the existing classroom frontend on `main` until the user confirms publishing those rules, then publish the prepared frontend changes. No additional user approval is needed for that release.
+The user reported publishing the complete Firebase rules on 2026-10-11. The prepared classroom frontend is released with this update. This is user-reported rules activation, not an independent inspection of production Firebase. Automated permission/UI checks passed before release; the separate-account live check below remains pending.
 
-Open `/preview/owner/activate.html`, copy the complete rules into the existing Firebase project’s Firestore Rules editor, and Publish. The prepared file is `/preview/owner/access-rules.txt`. Back up current rules first and reconcile any user-added rules. The generated complete file retains privacy, progress, membership, enrollment, invitations, support and owner rules.
-
-After the user reports activation, fetch both branches and compare them. Publish the paths in `firebase/course-access-release.json` from the prepared source branch to `main`, preserving unrelated changes. Update this release status and curriculum review wording when done. Verify deployment and the actual live asset hashes. Then ask the user to verify one premium assignment with separate teacher and student accounts; do not claim independently verified production Firebase behavior.
+The release includes the paths recorded in `firebase/course-access-release.json`, preserving unrelated production files. Existing Algebra 1 licenses are reused. No per-student Premium flag or school-record migration is needed.
 
 ## Behavior
 - Existing `license.courses` containing `algebra1`, school status `pilot` or `active`, and an in-term license grant full school-course eligibility. All 58 shipped lessons are in the generated assignment/scoring catalog. No membership or license migration is necessary.

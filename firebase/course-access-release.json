@@ -1,5 +1,5 @@
 {
-  "status": "awaiting-user-rules-activation",
+  "status": "frontend-released-live-verification-pending",
   "sourceBranch": "redesign/mobile-preview",
   "targetBranch": "main",
   "stagedProductionPaths": [
@@ -30,5 +30,6 @@
     "preview/school/staff-join.js",
     "preview/support.html",
     "preview/support.js"
-  ]
+  ],
+  "rulesActivationReportedOn": "2026-10-11"
 }

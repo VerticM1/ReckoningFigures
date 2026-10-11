@@ -4,7 +4,7 @@ Status: technical content review completed; educator approval and full-course co
 
 ## Inventory and access
 
-School-license release prepared 2026-10-10: all 58 figures are eligible under an active Algebra 1 school license after the tested rules and classroom update are activated. The figures below reflect that release; production remains on the previous 18-figure classroom UI until rules activation is confirmed.
+School-license release 2026-10-11: the user reported publishing the rules, and the full-course classroom update is released. All 58 figures are eligible under an active Algebra 1 school license. Separate-account production verification remains pending.
 
 | Unit | Planned | Existing | School assignable | Coverage finding |
 | --- | ---: | ---: | ---: | --- |
@@ -65,4 +65,4 @@ The five new lessons inherit the systems unit’s premium status. There are stil
 | 023 Substitution Method | Replace equal expressions; distribute; solve and back-substitute; identify contradictions/identities | Two fresh systems |
 | 024 Elimination Method | Add/subtract equations; scale every term; check ordered pairs; distinguish no/infinite solutions | Opposite coefficients and a system requiring scaling |
 
-School access update (2026-10-10): the new school release covers all 58 figures using existing Algebra 1 license records. Personal Premium and the browser-local demo remain unchanged. Automated rules and UI checks passed; production rules activation and live separate-account verification remain pending. Earlier 18-figure statements above describe the preceding content releases.
+School access update (2026-10-10): the new school release covers all 58 figures using existing Algebra 1 license records. Personal Premium and the browser-local demo remain unchanged. Automated rules and UI checks passed; rules activation was subsequently reported by the user on 2026-10-11; live separate-account verification remains pending. Earlier 18-figure statements above describe the preceding content releases.

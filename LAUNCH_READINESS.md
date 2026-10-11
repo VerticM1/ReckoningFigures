@@ -73,3 +73,6 @@ Systems content update (2026-10-09): added figures 020–024 with 60 questions a
 
 
 Full-course school access prepared (2026-10-10): existing active/pilot Algebra 1 licenses cover all 58 figures. Teacher assignment selection, server-authorized student starts and exact-count result rules are implemented and tested, including offline denial, expiry, suspension, missing entitlement and enrollment revocation. Saved history remains readable to authorized members. Source is ready; production keeps the existing classroom UI until the updated rules are published. See `firebase/COURSE_ACCESS_RELEASE.md`. No per-student Premium flag or school-record migration is needed.
+
+
+School access release (2026-10-11): the user reported publishing the complete full-course rules. Released the prepared classroom update for all 58 figures under existing active Algebra 1 licenses. Rules activation is user-reported; separate-account production verification is still pending.
