@@ -1,5 +1,5 @@
 // Bundled through the shared Firebase client; do not initialize a second app.
-import {doc,getDoc,getDocs,collection,query,where,limit,setDoc,deleteDoc,serverTimestamp} from 'firebase/firestore';
+import {doc,getDoc,getDocFromServer,getDocs,collection,query,where,limit,setDoc,deleteDoc,serverTimestamp} from 'firebase/firestore';
 export function classroomAPI(db,auth){
  const current=()=>{if(!auth.currentUser)throw Error('Sign in again.');return auth.currentUser.uid;};
  const base=(s,c)=>['schools',s,'classes',c];
@@ -14,6 +14,12 @@ export function classroomAPI(db,auth){
   assignments:async(s,c)=>list(query(collection(db,...base(s,c),'assignments'),limit(100))),
   createAssignment:async(s,c,values)=>{const ref=doc(collection(db,...base(s,c),'assignments'));await setDoc(ref,{...values,createdBy:current(),createdAt:serverTimestamp()});return ref.id;},
   assignment:async(s,c,a)=>{const d=await getDoc(doc(db,...base(s,c),'assignments',a));if(!d.exists())throw Error('Assignment not found.');return {id:d.id,...d.data()};},
+  authorizePractice:async(s,c,a,lessonId)=>{
+   current();if(!Number.isInteger(lessonId)||lessonId<1||lessonId>99)throw Error('Invalid figure.');
+   // The rules authorize this read even though there is no document to return.
+   // A cached read must never grant a new start after license/enrollment revocation.
+   await getDocFromServer(doc(db,...base(s,c),'assignments',a,'practice',String(lessonId)));
+  },
   results:async(s,c,a,manager)=>list(query(collection(db,...base(s,c),'assignments',a,'results'),...(manager?[]:[where('uid','==',current())]),limit(1000))),
   submit:async(s,c,a,data)=>{const uid=current(),ref=doc(db,...base(s,c),'assignments',a,'results',uid+'_'+data.lessonId);
    // First completion is immutable. A retry or second device cannot duplicate it.

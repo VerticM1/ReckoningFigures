@@ -1,3 +1,4 @@
+import {schoolCourseAccess,schoolLessonCatalog} from './school/course-access.js?v=b1f8d392848e';
 import {course} from './course.js?v=4cb03d5dcbbc';
 const store='rfOrganizationDemoV1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -28,7 +29,7 @@ export const schoolHomeworkRequested=cloudParams.has('schoolHomework');
 export async function loadHomework(){
  if(!schoolHomeworkRequested)return homeworkContext();
  try{
-  cloudApi=await import('./owner/client.js?v=ec991ac9ca14');
+  cloudApi=await import('./owner/client.js?v=0842e0954dba');
   const user=await new Promise(resolve=>{const unsubscribe=cloudApi.observe(u=>{unsubscribe();resolve(u);});});
   if(!user)throw Error('Sign in through your class page, then open this assignment again.');
   const school=cloudParams.get('school'),classId=cloudParams.get('class'),assignmentId=cloudParams.get('schoolHomework');
@@ -45,11 +46,16 @@ export async function cloudHomeworkHome(app,context,start,art){
  app.innerHTML='<main class="finish"><p role="status">Loading your saved homework…</p></main>';
  try{
   if(cloudApi.currentUid()!==context.uid)throw Error('Your account changed. Return to class and sign in again.');
-  const access=await cloudApi.schoolContext(context.school),license=access.school.license,open=['pilot','active'].includes(access.school.status)&&license.startsOn.toMillis()<=Date.now()&&Date.now()<license.endsOn.toMillis();
+  const access=await cloudApi.schoolContext(context.school),entitlement=schoolCourseAccess(access.school),open=entitlement.open;
   const a=await cloudApi.classroom.assignment(context.school,context.classId,context.assignment.id),results=await cloudApi.classroom.results(context.school,context.classId,a.id,false);
-  const lessons=a.lessonIds.map(id=>course.flatMap(u=>u.lessons).find(l=>l.id===id)).filter(l=>l?.available&&!l.premium);
-  app.innerHTML=`<main class="homework-home page"><a class="hint-toggle" href="${back}">← Back to class</a><p class="notice">CONNECTED SCHOOL PRACTICE</p><section class="homework-hero">${art}<span class="eyebrow">HOMEWORK PRACTICE</span><h1>${esc(a.title)}</h1><p>Due ${esc(a.due)} · Work at your own pace.</p><p>${open?'Hints and examples are welcome.':'Your school license is inactive. Saved results remain available; ask your administrator to restore practice access.'}</p></section>${a.instructions?`<section class="homework-note"><strong>From your teacher</strong><p>${esc(a.instructions)}</p></section>`:''}<div class="homework-list">${lessons.map(l=>{const done=results.some(r=>r.lessonId===l.id);return `<article><div><span class="eyebrow">FIGURE ${l.id}</span><h2>${esc(l.title)}</h2><p>${done?'Completion saved to your class':l.questions.length+' original steps'}</p></div><button class="primary" data-cloud-lesson="${l.id}" ${open?'':'disabled'}>${done?'Practice again':'Start figure'}</button></article>`;}).join('')}</div><p class="notice">Your first saved completion, first-try answers and app support are shared with your teacher. Later practice does not replace that result. Outside help is unknown. Finish a figure and keep this page open until saving completes. Unfinished figures currently restart if you close the page.</p></main>`;
-  app.querySelectorAll('[data-cloud-lesson]').forEach(b=>b.onclick=()=>start(lessons.find(l=>l.id===Number(b.dataset.cloudLesson))));
+  const catalog=schoolLessonCatalog(course),lessons=a.lessonIds.map(id=>catalog.find(l=>l.id===id)).filter(Boolean);
+  app.innerHTML=`<main class="homework-home page"><a class="hint-toggle" href="${back}">← Back to class</a><p class="notice">CONNECTED SCHOOL PRACTICE</p><section class="homework-hero">${art}<span class="eyebrow">HOMEWORK PRACTICE</span><h1>${esc(a.title)}</h1><p>Due ${esc(a.due)} · Work at your own pace.</p><p>${open?'Hints and examples are welcome.':esc(entitlement.message)}</p></section>${a.instructions?`<section class="homework-note"><strong>From your teacher</strong><p>${esc(a.instructions)}</p></section>`:''}<p id="practice-access" class="notice" role="status"></p><div class="homework-list">${lessons.map(l=>{const done=results.some(r=>r.lessonId===l.id);return `<article><div><span class="eyebrow">FIGURE ${l.id}</span><h2>${esc(l.title)}</h2><p>${done?'Completion saved to your class':l.questions.length+' original steps'}</p></div><button class="primary" data-cloud-lesson="${l.id}" ${open?'':'disabled'}>${done?'Practice again':'Start figure'}</button></article>`;}).join('')}</div><p class="notice">Your first saved completion, first-try answers and app support are shared with your teacher. Later practice does not replace that result. Outside help is unknown. Finish a figure and keep this page open until saving completes. Unfinished figures currently restart if you close the page.</p></main>`;
+  app.querySelectorAll('[data-cloud-lesson]').forEach(b=>b.onclick=async()=>{
+   const lesson=lessons.find(l=>l.id===Number(b.dataset.cloudLesson)),status=app.querySelector('#practice-access');
+   app.querySelectorAll('[data-cloud-lesson]').forEach(button=>button.disabled=true);status.textContent='Checking school access…';
+   try{if(cloudApi.currentUid()!==context.uid)throw Error('Your account changed. Return to class and sign in again.');await cloudApi.classroom.authorizePractice(context.school,context.classId,a.id,lesson.id);if(cloudApi.currentUid()!==context.uid)throw Error('Your account changed. Return to class and sign in again.');start(lesson);}
+   catch(e){status.textContent=e.code==='permission-denied'?'Practice access could not be confirmed. Check your school license and class enrollment, or ask your administrator to activate the latest access update.':e.message||'Connect to the internet and try again.';app.querySelectorAll('[data-cloud-lesson]').forEach(button=>button.disabled=!open);}
+  });
  }catch(e){app.innerHTML=`<main class="finish"><h1>Could not load homework</h1><p>${esc(e.message)}</p><a class="primary" href="${back}">Return to class</a></main>`;}
 }
 export async function saveCloudHomework(context,lessonId,state,questions,seconds){

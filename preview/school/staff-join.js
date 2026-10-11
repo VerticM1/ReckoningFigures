@@ -1,4 +1,4 @@
-import * as api from '../owner/client.js?v=ec991ac9ca14';
+import * as api from '../owner/client.js?v=0842e0954dba';
 const app=document.querySelector('#join-app'),token=new URLSearchParams(location.search).get('invite');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let user,invitation,mode='register',busy=false,name='',epoch=0;

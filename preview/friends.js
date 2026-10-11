@@ -1,4 +1,4 @@
-import * as api from './owner/client.js?v=ec991ac9ca14';
+import * as api from './owner/client.js?v=0842e0954dba';
 const app=document.querySelector('#friends-app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const brand='<a class="org-brand" href="./"><img src="assets/brand-transparent.png" alt=""><span>Reckoning Figures<small>LEARN TOGETHER</small></span></a>';
