@@ -1101,177 +1101,377 @@ export const course = [
         "questions": [
           {
             "type": "multiple-choice",
-            "eq": "2x + 3 = 11",
-            "q": "What should we do first?",
+            "phase": "guided",
+            "eq": "3(x + 2) = 21",
+            "q": "Distribute, then solve the equation.",
+            "concept": "<strong>Multiply every term inside the parentheses.</strong><p>Example: 2(x + 3) = 14 becomes 2x + 6 = 14. Subtract 6, then divide by 2: x = 4. Check: 2(4 + 3) = 14.</p>",
             "choices": [
-              "Subtract 3 from both sides",
-              "Divide by 2",
-              "Add 3 to both sides"
+              "x = 7",
+              "x = 5",
+              "x = 19/3",
+              "x = 9"
             ],
-            "answer": 0
+            "answer": 1,
+            "explanation": "3x + 6 = 21, so 3x = 15 and x = 5. Check: 3(5 + 2) = 21.",
+            "explanations": [
+              "7 is the value of x + 2, not x alone. Subtract 2 after dividing by 3.",
+              "3x + 6 = 21, so 3x = 15 and x = 5. Check: 3(5 + 2) = 21.",
+              "The 3 multiplies both x and 2. The constant becomes 6, not 2.",
+              "After dividing by 3, x + 2 = 7. Subtract 2 instead of adding it."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "2x = 8",
-            "q": "After subtracting 3, what do we do next?",
+            "phase": "guided",
+            "eq": "4x + 3 + 2x = 21",
+            "q": "Combine like terms, then solve.",
+            "concept": "<strong>Combine terms with the same variable part.</strong><p>Example: 3x + 2 + 5x = 26 becomes 8x + 2 = 26, then 8x = 24 and x = 3. The constant 2 is not an x-term.</p>",
             "choices": [
-              "Divide both sides by 2",
-              "Subtract 2",
-              "Add 8"
+              "x = 2",
+              "x = 9",
+              "x = 3",
+              "x = 7/2"
             ],
-            "answer": 0
-          },
-          {
-            "type": "fill-blank",
-            "eq": "3x + 5 = 20",
-            "q": "Solve for <span class=\"var\">x</span>",
-            "answer": "5",
-            "placeholder": "x = ?"
-          },
-          {
-            "type": "true-false",
-            "eq": "4x + 7 = 23",
-            "q": "We should divide by 4 before subtracting 7",
-            "answer": false
+            "answer": 2,
+            "explanation": "4x + 2x = 6x. Then 6x + 3 = 21 gives 6x = 18 and x = 3.",
+            "explanations": [
+              "Do not combine the constant 3 with the x-coefficients. It stays a separate term.",
+              "4x and 2x are added, not subtracted. Their sum is 6x.",
+              "4x + 2x = 6x. Then 6x + 3 = 21 gives 6x = 18 and x = 3.",
+              "21/6 ignores the +3. Subtract 3 from both sides before dividing by 6."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "4x + 7 = 23",
-            "q": "Solve for <span class=\"var\">x</span>",
+            "phase": "guided",
+            "eq": "−(2x − 5) + 3 = 14",
+            "q": "Distribute the negative sign, then solve.",
+            "concept": "<strong>A minus sign outside parentheses multiplies every term by −1.</strong><p>Example: −(3x − 4) + 2 = 12 becomes −3x + 4 + 2 = 12. Then −3x = 6, so x = −2. In particular, −(−4) = +4.</p>",
             "choices": [
               "x = 3",
+              "x = −8",
+              "x = −11/2",
+              "x = −3"
+            ],
+            "answer": 3,
+            "explanation": "−2x + 5 + 3 = 14 simplifies to −2x = 6, so x = −3. Check: −(−6 − 5) + 3 = 14.",
+            "explanations": [
+              "After simplifying, divide 6 by −2, not by +2. The solution is negative.",
+              "The outside minus changes −5 to +5, not −5.",
+              "Do not drop the constant from the parentheses. Distributing gives −2x + 5.",
+              "−2x + 5 + 3 = 14 simplifies to −2x = 6, so x = −3. Check: −(−6 − 5) + 3 = 14."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "guided",
+            "eq": "(x + 2)/3 + x/6 = 4",
+            "q": "Clear the denominators, then solve. The whole expression x + 2 is divided by 3.",
+            "concept": "<strong>Multiply every term on both sides by a common denominator.</strong><p>Example: x/2 + x/4 = 6. Multiply every term by 4 to get 2x + x = 24, so x = 8. For (x + 2)/3, multiplying by 6 gives 2(x + 2), not 2x + 2.</p>",
+            "choices": [
+              "x = 20/3",
+              "x = 20",
               "x = 4",
-              "x = 5"
+              "x = 8"
             ],
-            "answer": 1
+            "answer": 0,
+            "explanation": "Multiply every term by 6: 2(x + 2) + x = 24. Then 3x + 4 = 24, so x = 20/3.",
+            "explanations": [
+              "Multiply every term by 6: 2(x + 2) + x = 24. Then 3x + 4 = 24, so x = 20/3.",
+              "20 is the value of 3x after subtracting 4. Divide by 3 to find x.",
+              "Multiply the right side by 6 too, and distribute 2 across x + 2. At x = 4, the left side is 8/3, not 4.",
+              "The constant becomes +4 after distributing 2(x + 2). Subtract it before dividing by 3."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "5x + 10 = 35",
-            "q": "Solve for <span class=\"var\">x</span>",
-            "choices": [
-              "x = 5",
-              "x = 6",
-              "x = 7"
-            ],
-            "answer": 0
-          },
-          {
-            "type": "fill-blank",
-            "eq": "6x + 8 = 38",
-            "q": "What is <span class=\"var\">x</span>?",
-            "answer": "5",
-            "placeholder": "x = ?"
-          },
-          {
-            "type": "multiple-choice",
-            "eq": "7x - 5 = 30",
-            "q": "Solve for <span class=\"var\">x</span>",
+            "phase": "practice",
+            "eq": "2(3x − 1) = 4x + 10",
+            "q": "Solve the equation with x on both sides.",
             "choices": [
               "x = 4",
-              "x = 5",
-              "x = 6"
+              "x = 6",
+              "x = 2",
+              "x = 12"
             ],
-            "answer": 1
+            "answer": 1,
+            "explanation": "Distribute: 6x − 2 = 4x + 10. Subtract 4x, add 2, then divide by 2: x = 6. Both sides equal 34.",
+            "explanations": [
+              "From 2x − 2 = 10, add 2 to both sides rather than subtracting it.",
+              "Distribute: 6x − 2 = 4x + 10. Subtract 4x, add 2, then divide by 2: x = 6. Both sides equal 34.",
+              "Subtract 4x from both sides before isolating x. At x = 2, the two sides are 10 and 18.",
+              "12 is the value of 2x after moving terms. Divide by the remaining coefficient 2."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "8x - 12 = 36",
-            "q": "Solve for <span class=\"var\">x</span>",
+            "phase": "practice",
+            "eq": "3(x + 2) = 3x + 4",
+            "q": "Which statement describes the solutions?",
+            "concept": "<strong>Sometimes the variable terms cancel.</strong><p>If simplifying leaves a false statement, such as 5 = 9, no value of x can work. Cancelling x does not mean x = 0.</p>",
             "choices": [
-              "x = 5",
-              "x = 6",
-              "x = 7"
+              "Every real number is a solution",
+              "Only x = 0 is a solution",
+              "There is no solution",
+              "Only x = −2 is a solution"
             ],
-            "answer": 1
+            "answer": 2,
+            "explanation": "Distribute to get 3x + 6 = 3x + 4. Subtract 3x from both sides: 6 = 4 is false, so there is no solution.",
+            "explanations": [
+              "Every real number works only when the remaining statement is always true. Here it is 6 = 4.",
+              "Cancelling x does not set x to zero. Substituting 0 gives 6 = 4, which is false.",
+              "Distribute to get 3x + 6 = 3x + 4. Subtract 3x from both sides: 6 = 4 is false, so there is no solution.",
+              "At x = −2, the left side is 0 and the right side is −2. The constant mismatch cannot be fixed by choosing x."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "practice",
+            "eq": "2(3x − 4) = 6x − 8",
+            "q": "Which statement describes the solutions?",
+            "concept": "<strong>An identity is true for every allowed input.</strong><p>If both sides simplify to the same expression, subtracting them gives 0 = 0. For these linear equations, with no variable denominators, every real number is then a solution.</p>",
+            "choices": [
+              "There is no solution",
+              "Only x = 0 is a solution",
+              "Only x = 4/3 is a solution",
+              "Every real number is a solution"
+            ],
+            "answer": 3,
+            "explanation": "Distribute the left side: 6x − 8 = 6x − 8. Both sides are identical for every real x, so there are infinitely many solutions.",
+            "explanations": [
+              "0 = 0 is true, not a contradiction. Matching expressions mean the equation holds for every real x.",
+              "Zero works, but it is not the only solution. Both sides match for every real x.",
+              "4/3 makes both sides zero, but other real numbers also work. The equation does not require either side to be zero.",
+              "Distribute the left side: 6x − 8 = 6x − 8. Both sides are identical for every real x, so there are infinitely many solutions."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "check",
+            "eq": "−2(x − 3) + 5x = 18",
+            "q": "Try it yourself: solve the equation.",
+            "choices": [
+              "x = 4",
+              "x = 8",
+              "x = 6",
+              "x = −4"
+            ],
+            "answer": 0,
+            "explanation": "Distribute and combine: −2x + 6 + 5x = 18 gives 3x + 6 = 18. Then x = 4. Check: −2(4 − 3) + 20 = 18.",
+            "explanations": [
+              "Distribute and combine: −2x + 6 + 5x = 18 gives 3x + 6 = 18. Then x = 4. Check: −2(4 − 3) + 20 = 18.",
+              "The product (−2)(−3) is +6, not −6.",
+              "Do not drop the +6 created by distribution. Subtract it before dividing by 3.",
+              "The combined coefficient is −2 + 5 = +3. Divide 12 by positive 3."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "check",
+            "eq": "(x + 4)/2 − x/4 = 5",
+            "q": "Try it yourself: solve. The whole expression x + 4 is divided by 2.",
+            "choices": [
+              "x = 20",
+              "x = 12",
+              "x = 16",
+              "x = 4"
+            ],
+            "answer": 1,
+            "explanation": "Multiply every term by 4: 2(x + 4) − x = 20. Then x + 8 = 20, so x = 12. Check: 16/2 − 12/4 = 8 − 3 = 5.",
+            "explanations": [
+              "20 is the right side after clearing denominators. The left side still includes the constant +8.",
+              "Multiply every term by 4: 2(x + 4) − x = 20. Then x + 8 = 20, so x = 12. Check: 16/2 − 12/4 = 8 − 3 = 5.",
+              "Distribute 2 to both terms: 2(x + 4) becomes 2x + 8, not 2x + 4.",
+              "The x/4 term is subtracted. After multiplying by 4, combine 2x − x, not 2x + x."
+            ]
           }
         ],
         "original": [
           {
             "type": "multiple-choice",
-            "eq": "2x + 3 = 11",
-            "q": "What should we do first?",
+            "phase": "guided",
+            "eq": "3(x + 2) = 21",
+            "q": "Distribute, then solve the equation.",
+            "concept": "<strong>Multiply every term inside the parentheses.</strong><p>Example: 2(x + 3) = 14 becomes 2x + 6 = 14. Subtract 6, then divide by 2: x = 4. Check: 2(4 + 3) = 14.</p>",
             "choices": [
-              "Subtract 3 from both sides",
-              "Divide by 2",
-              "Add 3 to both sides"
+              "x = 7",
+              "x = 5",
+              "x = 19/3",
+              "x = 9"
             ],
-            "answer": 0
+            "answer": 1,
+            "explanation": "3x + 6 = 21, so 3x = 15 and x = 5. Check: 3(5 + 2) = 21.",
+            "explanations": [
+              "7 is the value of x + 2, not x alone. Subtract 2 after dividing by 3.",
+              "3x + 6 = 21, so 3x = 15 and x = 5. Check: 3(5 + 2) = 21.",
+              "The 3 multiplies both x and 2. The constant becomes 6, not 2.",
+              "After dividing by 3, x + 2 = 7. Subtract 2 instead of adding it."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "2x = 8",
-            "q": "After subtracting 3, what do we do next?",
+            "phase": "guided",
+            "eq": "4x + 3 + 2x = 21",
+            "q": "Combine like terms, then solve.",
+            "concept": "<strong>Combine terms with the same variable part.</strong><p>Example: 3x + 2 + 5x = 26 becomes 8x + 2 = 26, then 8x = 24 and x = 3. The constant 2 is not an x-term.</p>",
             "choices": [
-              "Divide both sides by 2",
-              "Subtract 2",
-              "Add 8"
+              "x = 2",
+              "x = 9",
+              "x = 3",
+              "x = 7/2"
             ],
-            "answer": 0
-          },
-          {
-            "type": "fill-blank",
-            "eq": "3x + 5 = 20",
-            "q": "Solve for <span class=\"var\">x</span>",
-            "answer": "5",
-            "placeholder": "x = ?"
-          },
-          {
-            "type": "true-false",
-            "eq": "4x + 7 = 23",
-            "q": "We should divide by 4 before subtracting 7",
-            "answer": false
+            "answer": 2,
+            "explanation": "4x + 2x = 6x. Then 6x + 3 = 21 gives 6x = 18 and x = 3.",
+            "explanations": [
+              "Do not combine the constant 3 with the x-coefficients. It stays a separate term.",
+              "4x and 2x are added, not subtracted. Their sum is 6x.",
+              "4x + 2x = 6x. Then 6x + 3 = 21 gives 6x = 18 and x = 3.",
+              "21/6 ignores the +3. Subtract 3 from both sides before dividing by 6."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "4x + 7 = 23",
-            "q": "Solve for <span class=\"var\">x</span>",
+            "phase": "guided",
+            "eq": "−(2x − 5) + 3 = 14",
+            "q": "Distribute the negative sign, then solve.",
+            "concept": "<strong>A minus sign outside parentheses multiplies every term by −1.</strong><p>Example: −(3x − 4) + 2 = 12 becomes −3x + 4 + 2 = 12. Then −3x = 6, so x = −2. In particular, −(−4) = +4.</p>",
             "choices": [
               "x = 3",
+              "x = −8",
+              "x = −11/2",
+              "x = −3"
+            ],
+            "answer": 3,
+            "explanation": "−2x + 5 + 3 = 14 simplifies to −2x = 6, so x = −3. Check: −(−6 − 5) + 3 = 14.",
+            "explanations": [
+              "After simplifying, divide 6 by −2, not by +2. The solution is negative.",
+              "The outside minus changes −5 to +5, not −5.",
+              "Do not drop the constant from the parentheses. Distributing gives −2x + 5.",
+              "−2x + 5 + 3 = 14 simplifies to −2x = 6, so x = −3. Check: −(−6 − 5) + 3 = 14."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "guided",
+            "eq": "(x + 2)/3 + x/6 = 4",
+            "q": "Clear the denominators, then solve. The whole expression x + 2 is divided by 3.",
+            "concept": "<strong>Multiply every term on both sides by a common denominator.</strong><p>Example: x/2 + x/4 = 6. Multiply every term by 4 to get 2x + x = 24, so x = 8. For (x + 2)/3, multiplying by 6 gives 2(x + 2), not 2x + 2.</p>",
+            "choices": [
+              "x = 20/3",
+              "x = 20",
               "x = 4",
-              "x = 5"
+              "x = 8"
             ],
-            "answer": 1
+            "answer": 0,
+            "explanation": "Multiply every term by 6: 2(x + 2) + x = 24. Then 3x + 4 = 24, so x = 20/3.",
+            "explanations": [
+              "Multiply every term by 6: 2(x + 2) + x = 24. Then 3x + 4 = 24, so x = 20/3.",
+              "20 is the value of 3x after subtracting 4. Divide by 3 to find x.",
+              "Multiply the right side by 6 too, and distribute 2 across x + 2. At x = 4, the left side is 8/3, not 4.",
+              "The constant becomes +4 after distributing 2(x + 2). Subtract it before dividing by 3."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "5x + 10 = 35",
-            "q": "Solve for <span class=\"var\">x</span>",
-            "choices": [
-              "x = 5",
-              "x = 6",
-              "x = 7"
-            ],
-            "answer": 0
-          },
-          {
-            "type": "fill-blank",
-            "eq": "6x + 8 = 38",
-            "q": "What is <span class=\"var\">x</span>?",
-            "answer": "5",
-            "placeholder": "x = ?"
-          },
-          {
-            "type": "multiple-choice",
-            "eq": "7x - 5 = 30",
-            "q": "Solve for <span class=\"var\">x</span>",
+            "phase": "practice",
+            "eq": "2(3x − 1) = 4x + 10",
+            "q": "Solve the equation with x on both sides.",
             "choices": [
               "x = 4",
-              "x = 5",
-              "x = 6"
+              "x = 6",
+              "x = 2",
+              "x = 12"
             ],
-            "answer": 1
+            "answer": 1,
+            "explanation": "Distribute: 6x − 2 = 4x + 10. Subtract 4x, add 2, then divide by 2: x = 6. Both sides equal 34.",
+            "explanations": [
+              "From 2x − 2 = 10, add 2 to both sides rather than subtracting it.",
+              "Distribute: 6x − 2 = 4x + 10. Subtract 4x, add 2, then divide by 2: x = 6. Both sides equal 34.",
+              "Subtract 4x from both sides before isolating x. At x = 2, the two sides are 10 and 18.",
+              "12 is the value of 2x after moving terms. Divide by the remaining coefficient 2."
+            ]
           },
           {
             "type": "multiple-choice",
-            "eq": "8x - 12 = 36",
-            "q": "Solve for <span class=\"var\">x</span>",
+            "phase": "practice",
+            "eq": "3(x + 2) = 3x + 4",
+            "q": "Which statement describes the solutions?",
+            "concept": "<strong>Sometimes the variable terms cancel.</strong><p>If simplifying leaves a false statement, such as 5 = 9, no value of x can work. Cancelling x does not mean x = 0.</p>",
             "choices": [
-              "x = 5",
-              "x = 6",
-              "x = 7"
+              "Every real number is a solution",
+              "Only x = 0 is a solution",
+              "There is no solution",
+              "Only x = −2 is a solution"
             ],
-            "answer": 1
+            "answer": 2,
+            "explanation": "Distribute to get 3x + 6 = 3x + 4. Subtract 3x from both sides: 6 = 4 is false, so there is no solution.",
+            "explanations": [
+              "Every real number works only when the remaining statement is always true. Here it is 6 = 4.",
+              "Cancelling x does not set x to zero. Substituting 0 gives 6 = 4, which is false.",
+              "Distribute to get 3x + 6 = 3x + 4. Subtract 3x from both sides: 6 = 4 is false, so there is no solution.",
+              "At x = −2, the left side is 0 and the right side is −2. The constant mismatch cannot be fixed by choosing x."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "practice",
+            "eq": "2(3x − 4) = 6x − 8",
+            "q": "Which statement describes the solutions?",
+            "concept": "<strong>An identity is true for every allowed input.</strong><p>If both sides simplify to the same expression, subtracting them gives 0 = 0. For these linear equations, with no variable denominators, every real number is then a solution.</p>",
+            "choices": [
+              "There is no solution",
+              "Only x = 0 is a solution",
+              "Only x = 4/3 is a solution",
+              "Every real number is a solution"
+            ],
+            "answer": 3,
+            "explanation": "Distribute the left side: 6x − 8 = 6x − 8. Both sides are identical for every real x, so there are infinitely many solutions.",
+            "explanations": [
+              "0 = 0 is true, not a contradiction. Matching expressions mean the equation holds for every real x.",
+              "Zero works, but it is not the only solution. Both sides match for every real x.",
+              "4/3 makes both sides zero, but other real numbers also work. The equation does not require either side to be zero.",
+              "Distribute the left side: 6x − 8 = 6x − 8. Both sides are identical for every real x, so there are infinitely many solutions."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "check",
+            "eq": "−2(x − 3) + 5x = 18",
+            "q": "Try it yourself: solve the equation.",
+            "choices": [
+              "x = 4",
+              "x = 8",
+              "x = 6",
+              "x = −4"
+            ],
+            "answer": 0,
+            "explanation": "Distribute and combine: −2x + 6 + 5x = 18 gives 3x + 6 = 18. Then x = 4. Check: −2(4 − 3) + 20 = 18.",
+            "explanations": [
+              "Distribute and combine: −2x + 6 + 5x = 18 gives 3x + 6 = 18. Then x = 4. Check: −2(4 − 3) + 20 = 18.",
+              "The product (−2)(−3) is +6, not −6.",
+              "Do not drop the +6 created by distribution. Subtract it before dividing by 3.",
+              "The combined coefficient is −2 + 5 = +3. Divide 12 by positive 3."
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "phase": "check",
+            "eq": "(x + 4)/2 − x/4 = 5",
+            "q": "Try it yourself: solve. The whole expression x + 4 is divided by 2.",
+            "choices": [
+              "x = 20",
+              "x = 12",
+              "x = 16",
+              "x = 4"
+            ],
+            "answer": 1,
+            "explanation": "Multiply every term by 4: 2(x + 4) − x = 20. Then x + 8 = 20, so x = 12. Check: 16/2 − 12/4 = 8 − 3 = 5.",
+            "explanations": [
+              "20 is the right side after clearing denominators. The left side still includes the constant +8.",
+              "Multiply every term by 4: 2(x + 4) − x = 20. Then x + 8 = 20, so x = 12. Check: 16/2 − 12/4 = 8 − 3 = 5.",
+              "Distribute 2 to both terms: 2(x + 4) becomes 2x + 8, not 2x + 4.",
+              "The x/4 term is subtracted. After multiplying by 4, combine 2x − x, not 2x + x."
+            ]
           }
         ]
       },

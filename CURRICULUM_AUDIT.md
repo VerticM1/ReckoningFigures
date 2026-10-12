@@ -8,7 +8,7 @@ School-license release 2026-10-11: the user reported publishing the rules, and t
 
 | Unit | Planned | Existing | School assignable | Coverage finding |
 | --- | ---: | ---: | ---: | --- |
-| Linear equations | 12 | 12 | 12 | Add distributive-property/like-term multi-step problems; lesson 7 largely repeats two-step work. |
+| Linear equations | 12 | 12 | 12 | Figure 007 now covers distribution, like terms, signed/fractional coefficients and solution classifications; educator review remains. |
 | Linear inequalities | 6 | 6 | 6 | One-variable practice; coordinate-plane inequality graphing needs expansion. |
 | Systems of equations | 8 | 8 | 8 | Figures 020–024 added and technically checked; educator review remains open. All eight are premium. |
 | Quadratic equations | 8 | 8 | 8 | Existing premium practice; prerequisite order and depth need review. |
@@ -17,7 +17,7 @@ School-license release 2026-10-11: the user reported publishing the rules, and t
 | Functions | 8 | 8 | 8 | Existing premium practice; add exponential models and sequences. |
 | Total | 58 | 58 | 58 | 40 figures are premium for individual use; all 58 are included in school licenses. |
 
-The importer contains 641 steps: 594 multiple choice, 24 fill blanks, 13 true/false, seven tutorials and three interactive number-line graphs. Lesson 2 adds one runtime challenge: 642 delivered steps, 635 scored. Step counts are not evidence of mastery or sufficient instructional depth. Access restrictions and assignment counts were not changed by this audit.
+The importer contains 641 steps: 597 multiple choice, 22 fill blanks, 12 true/false, seven tutorials and three interactive number-line graphs. Lesson 2 adds one runtime challenge: 642 delivered steps, 635 scored. Step counts are not evidence of mastery or sufficient instructional depth. Access restrictions and assignment counts were not changed by this audit.
 
 ## Verified corrections
 
@@ -66,3 +66,6 @@ The five new lessons inherit the systems unit’s premium status. There are stil
 | 024 Elimination Method | Add/subtract equations; scale every term; check ordered pairs; distinguish no/infinite solutions | Opposite coefficients and a system requiring scaling |
 
 School access update (2026-10-10): the new school release covers all 58 figures using existing Algebra 1 license records. Personal Premium and the browser-local demo remain unchanged. Automated rules and UI checks passed; rules activation was subsequently reported by the user on 2026-10-11; live separate-account verification remains pending. Earlier 18-figure statements above describe the preceding content releases.
+
+
+Multi-step revision (2026-10-12): replaced figure 007’s repeated two-step items with nine reviewed practice items covering distribution, combining like terms, negative and fractional coefficients, variables on both sides, contradictions and identities. Worked examples, choice-specific explanations and two fresh closing questions are included. The scored count remains nine, so assignment scoring rules are unchanged. Existing saved completions are not regraded; assign figure 007 in a new assignment to collect fresh results. Educator approval and broader course gaps remain open. Run `npm run test:multistep` for independently derived key and distractor checks.

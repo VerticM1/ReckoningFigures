@@ -1,5 +1,5 @@
 {
-  "status": "frontend-released-live-verification-pending",
+  "status": "live-user-verified",
   "sourceBranch": "redesign/mobile-preview",
   "targetBranch": "main",
   "stagedProductionPaths": [
@@ -31,5 +31,6 @@
     "preview/support.html",
     "preview/support.js"
   ],
-  "rulesActivationReportedOn": "2026-10-11"
+  "rulesActivationReportedOn": "2026-10-11",
+  "liveFlowReportedOn": "2026-10-12"
 }

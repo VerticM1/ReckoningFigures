@@ -14,7 +14,8 @@
     "test:owner": "node firebase/build-classroom-catalog.mjs && node firebase/build-owner-test-rules.cjs && firebase emulators:exec --config firebase/owner-emulator.json --project demo-reckoning-owner --only firestore \"node firebase/tests/owner-rules.mjs && node firebase/tests/membership-rules.mjs && node firebase/tests/classroom-rules.mjs && node firebase/tests/course-access-rules.mjs && node firebase/tests/join-rules.mjs && node firebase/tests/staff-rules.mjs && node firebase/tests/privacy-rules.mjs && node firebase/tests/support-rules.mjs\"",
     "test:classroom-ui": "node --experimental-vm-modules preview/scripts/test-classroom.cjs",
     "test:curriculum": "node preview/scripts/test-curriculum.mjs",
-    "test:course-access": "node preview/scripts/test-course-access.mjs"
+    "test:course-access": "node preview/scripts/test-course-access.mjs",
+    "test:multistep": "node preview/scripts/test-multistep.mjs"
   },
   "dependencies": {
     "@capacitor/core": "8.5.2",

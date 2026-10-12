@@ -76,3 +76,8 @@ Full-course school access prepared (2026-10-10): existing active/pilot Algebra 1
 
 
 School access release (2026-10-11): the user reported publishing the complete full-course rules. Released the prepared classroom update for all 58 figures under existing active Algebra 1 licenses. Rules activation is user-reported; separate-account production verification is still pending.
+
+
+Multi-step revision (2026-10-12): replaced figure 007’s repeated two-step items with nine reviewed practice items covering distribution, combining like terms, negative and fractional coefficients, variables on both sides, contradictions and identities. Worked examples, choice-specific explanations and two fresh closing questions are included. The scored count remains nine, so assignment scoring rules are unchanged. Existing saved completions are not regraded; assign figure 007 in a new assignment to collect fresh results. Educator approval and broader course gaps remain open. Run `npm run test:multistep` for independently derived key and distractor checks.
+
+Live course-access validation (2026-10-12): the user confirmed assigning figure 020, completing it as a student, and seeing the teacher result. This is user-reported confirmation, not an independent inspection.

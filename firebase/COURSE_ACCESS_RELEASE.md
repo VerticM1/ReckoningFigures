@@ -1,7 +1,7 @@
 # Full-course school access — 2026-10-10
 
 ## Release status
-The user reported publishing the complete Firebase rules on 2026-10-11. The prepared classroom frontend is released with this update. This is user-reported rules activation, not an independent inspection of production Firebase. Automated permission/UI checks passed before release; the separate-account live check below remains pending.
+The user reported publishing the complete Firebase rules on 2026-10-11. The prepared classroom frontend is released with this update. This is user-reported rules activation, not an independent inspection of production Firebase. Automated permission/UI checks passed before release; the user confirmed the separate-account figure 020 assignment → student completion → teacher result flow on 2026-10-12.
 
 The release includes the paths recorded in `firebase/course-access-release.json`, preserving unrelated production files. Existing Algebra 1 licenses are reused. No per-student Premium flag or school-record migration is needed.
 
