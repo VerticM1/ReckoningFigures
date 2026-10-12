@@ -4,7 +4,7 @@ Status: technical content review completed; educator approval and full-course co
 
 ## Inventory and access
 
-School-license release 2026-10-11: the user reported publishing the rules, and the full-course classroom update is released. All 58 figures are eligible under an active Algebra 1 school license. Separate-account production verification remains pending.
+School-license release 2026-10-11: the user reported publishing the rules, and the full-course classroom update is released. All 58 figures are eligible under an active Algebra 1 school license. The user confirmed the figure 020 teacher/student flow on 2026-10-12.
 
 | Unit | Planned | Existing | School assignable | Coverage finding |
 | --- | ---: | ---: | ---: | --- |
@@ -14,10 +14,10 @@ School-license release 2026-10-11: the user reported publishing the rules, and t
 | Quadratic equations | 8 | 8 | 8 | Existing premium practice; prerequisite order and depth need review. |
 | Polynomials | 8 | 8 | 8 | Existing premium practice; teach operations before factoring applications. |
 | Exponents and radicals | 8 | 8 | 8 | Existing premium practice; domain assumptions clarified. |
-| Functions | 8 | 8 | 8 | Existing premium practice; add exponential models and sequences. |
-| Total | 58 | 58 | 58 | 40 figures are premium for individual use; all 58 are included in school licenses. |
+| Functions | 10 | 10 | 8 | 059–060 add exponential models and sequences; classroom activation pending. |
+| Total | 60 | 60 | 58 | 42 figures are premium for individual use; 059–060 await classroom activation. |
 
-The importer contains 641 steps: 597 multiple choice, 22 fill blanks, 12 true/false, seven tutorials and three interactive number-line graphs. Lesson 2 adds one runtime challenge: 642 delivered steps, 635 scored. Step counts are not evidence of mastery or sufficient instructional depth. Access restrictions and assignment counts were not changed by this audit.
+The importer contains 665 steps: 621 multiple choice, 22 fill blanks, 12 true/false, seven tutorials and three interactive number-line graphs. Lesson 2 adds one runtime challenge: 666 delivered steps, 659 scored. Step counts are not evidence of mastery or sufficient instructional depth. Access restrictions and assignment counts were not changed by this audit.
 
 ## Verified corrections
 
@@ -25,7 +25,7 @@ The versioned ledger `preview/curriculum-corrections.json` records 38 edits acro
 
 ## Verification and limits
 
-- Source/import parity checks cover all 58 existing lessons and 641 imported steps. This verifies transfer, not mathematical truth.
+- Source/import parity checks cover all 60 existing lessons and 665 imported steps. This verifies transfer, not mathematical truth.
 - Independent symbolic checks verify 192 answer keys: first-unit equation solutions, polynomial operations/factorizations, selected quadratic roots, exponent/radical identities, corrected systems intersections and inverse-choice uniqueness. Expressions are checked under the stated domain assumptions. This is not an exhaustive proof of all distractors or all prompts.
 - Regression checks cover missing inequality context, single-choice duplicate text, the changed answer controls and corrected wording/keys.
 - Reviewed question/key summaries and teaching explanations for gaps and obvious inaccuracies. An educator must still review every item, distractor, prerequisite, readability, accessibility and learning objective before a full-course claim.
@@ -69,3 +69,7 @@ School access update (2026-10-10): the new school release covers all 58 figures 
 
 
 Multi-step revision (2026-10-12): replaced figure 007’s repeated two-step items with nine reviewed practice items covering distribution, combining like terms, negative and fractional coefficients, variables on both sides, contradictions and identities. Worked examples, choice-specific explanations and two fresh closing questions are included. The scored count remains nine, so assignment scoring rules are unchanged. Existing saved completions are not regraded; assign figure 007 in a new assignment to collect fresh results. Educator approval and broader course gaps remain open. Run `npm run test:multistep` for independently derived key and distractor checks.
+
+## Exponential models and sequences — 2026-10-12
+
+Figures 059–060 add 24 questions with worked examples and four fresh closing questions. Numerical/model fixtures, full emulator permissions, and simulated classroom lesson flows pass. Individual Premium availability is released; school activation remains staged pending owner publication of the complete rules. See `firebase/MODELS_RELEASE.md`. Statistics/data analysis and educator review remain priorities.

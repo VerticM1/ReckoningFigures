@@ -544,15 +544,83 @@
                 </div>
             </div>
         </div>
+        <!-- Figure 059 -->
+        <div class="figure-card" id="figure-059" onclick="openFigure('figure-059')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 059</div>
+                <div class="complete-badge" id="badge-059" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Exponential Models</div>
+            <div class="figure-desc">Model growth and decay and compare linear and exponential change.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
+        <!-- Figure 060 -->
+        <div class="figure-card" id="figure-060" onclick="openFigure('figure-060')">
+            <div class="figure-header">
+                <div class="figure-number">Figure 060</div>
+                <div class="complete-badge" id="badge-060" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                    </svg>
+                    Complete
+                </div>
+            </div>
+            <div class="figure-title">Arithmetic and Geometric Sequences</div>
+            <div class="figure-desc">Connect patterns, explicit rules and recursive rules.</div>
+            <div class="figure-stats">
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                    <span>12 items</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2l-5 9h4l-4 11 13-11h-5l6-9z"/>
+                    </svg>
+                    <span>150 XP</span>
+                </div>
+                <div class="figure-stat">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>~10 min</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
         const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{"completed": [], "xp": 0}');
         
-        const module7Figures = ['figure-051', 'figure-052', 'figure-053', 'figure-054', 'figure-055', 'figure-056', 'figure-057', 'figure-058'];
+        const module7Figures = ['figure-051', 'figure-052', 'figure-053', 'figure-054', 'figure-055', 'figure-056', 'figure-057', 'figure-058', 'figure-059', 'figure-060'];
         
         const completedFigures = module7Figures.filter(f => userProgress.completed?.includes(f)).length;
-        const totalFigures = 8;
+        const totalFigures = 10;
         const progressPercent = Math.round((completedFigures / totalFigures) * 100);
         
         document.getElementById('progress-percent').textContent = progressPercent + '%';

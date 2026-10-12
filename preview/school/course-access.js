@@ -9,4 +9,5 @@ export function schoolCourseAccess(school,now=Date.now()){
  if(now>=end)return {open:false,message:'Your school license has expired. Saved results remain available; ask your administrator to renew access.'};
  return {open:true,message:'Algebra 1 included · All 58 figures'};
 }
-export const schoolLessonCatalog=course=>course.flatMap(unit=>unit.lessons).filter(l=>l.available&&l.questions?.length);
+// 059–060 are authored and individually available. Enable after rules activation is confirmed.
+export const schoolLessonCatalog=course=>course.flatMap(unit=>unit.lessons).filter(l=>l.available&&l.questions?.length&&l.id<=58);
