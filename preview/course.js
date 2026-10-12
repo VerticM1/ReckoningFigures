@@ -16902,6 +16902,1004 @@ export const course = [
             "answer": "10 months"
           }
         ]
+      },
+      {
+        "id": 59,
+        "title": "Exponential Models",
+        "source": "figure-059.html",
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "type": "multiple-choice",
+            "q": "A population starts at 100 and doubles each hour. How many are there after 3 hours?",
+            "eq": "",
+            "choices": [
+              "300",
+              "600",
+              "800",
+              "1600"
+            ],
+            "answer": 2,
+            "explanation": "Multiply once per hour: 100 → 200 → 400 → 800.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Multiply once per hour: 100 → 200 → 400 → 800.",
+              "Recheck the starting value and the number of changes. Multiply once per hour: 100 → 200 → 400 → 800.",
+              "Multiply once per hour: 100 → 200 → 400 → 800.",
+              "Recheck the starting value and the number of changes. Multiply once per hour: 100 → 200 → 400 → 800."
+            ],
+            "phase": "guided",
+            "concept": "Exponential change multiplies by a constant factor over equal intervals. Example: 40 tripling each day becomes 40, 120, 360. After t days, P(t) = 40 × 3^t."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "An amount grows by 20% each year. What is its yearly growth factor?",
+            "eq": "",
+            "choices": [
+              "0.20",
+              "0.80",
+              "1.02",
+              "1.20"
+            ],
+            "answer": 3,
+            "explanation": "Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+              "Recheck the starting value and the number of changes. Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+              "Recheck the starting value and the number of changes. Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+              "Keep 100% and add 20%: 1 + 0.20 = 1.20."
+            ],
+            "phase": "guided",
+            "concept": "For a rate r written as a decimal, growth uses 1 + r and decay uses 1 − r. Example: 15% growth uses 1.15; 15% decay uses 0.85."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A device is worth $500 initially and loses 10% of its value each year. Which model gives its value after t years?",
+            "eq": "",
+            "choices": [
+              "V(t) = 500 − 10t",
+              "V(t) = 500 × 0.90^t",
+              "V(t) = 500 × 1.10^t",
+              "V(t) = 500 × 0.10^t"
+            ],
+            "answer": 1,
+            "explanation": "A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+              "A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+              "Recheck the starting value and the number of changes. A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+              "Recheck the starting value and the number of changes. A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500."
+            ],
+            "phase": "guided",
+            "concept": "In y = a × b^t, a is the value at t = 0 and b is the factor for each unit of t. For positive a, b > 1 gives growth and 0 < b < 1 gives decay."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For P(t) = 80 × 1.25^t, where t is measured in years, what do 80 and 1.25 mean?",
+            "eq": "",
+            "choices": [
+              "Initially 80; grows 125% yearly",
+              "Initially 1.25; grows by 80 yearly",
+              "Initially 80; grows 25% yearly",
+              "Initially 80; grows by 1.25 yearly"
+            ],
+            "answer": 2,
+            "explanation": "80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+              "Recheck the starting value and the number of changes. 80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+              "80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+              "Recheck the starting value and the number of changes. 80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For A(t) = 200 × 0.80^t, what is A(2)?",
+            "eq": "",
+            "choices": [
+              "160",
+              "128",
+              "40",
+              "320"
+            ],
+            "answer": 1,
+            "explanation": "200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+              "200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+              "Recheck the starting value and the number of changes. 200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+              "Recheck the starting value and the number of changes. 200 × 0.80 × 0.80 = 128. Apply the factor twice."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "At equally spaced times 0, 1, 2, 3, values are 5, 15, 45, 135. Which model fits all four values?",
+            "eq": "",
+            "choices": [
+              "y = 5 + 10t",
+              "y = 3 × 5^t",
+              "y = 5 × 3^t",
+              "y = 5t^3"
+            ],
+            "answer": 2,
+            "explanation": "The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+              "Recheck the starting value and the number of changes. The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+              "The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+              "Recheck the starting value and the number of changes. The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t."
+            ],
+            "phase": "guided",
+            "concept": "Compare equal input intervals: constant differences suggest a linear model; a constant positive ratio other than 1 suggests an exponential model. Four data points support a model but do not prove how a real system will behave forever."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Plan L starts with $20 and adds $10 weekly. Plan E starts with $20 and doubles weekly. Which has more after 3 weeks?",
+            "eq": "",
+            "choices": [
+              "L: $50, E: $60; E has more",
+              "L: $60, E: $160; E has more",
+              "L: $50, E: $80; E has more",
+              "L: $50, E: $160; E has more"
+            ],
+            "answer": 3,
+            "explanation": "L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+              "Recheck the starting value and the number of changes. L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+              "Recheck the starting value and the number of changes. L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+              "L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A model predicts a plant triples in height every month forever. Which limitation is most reasonable?",
+            "eq": "",
+            "choices": [
+              "Real growth may slow because resources and space are limited",
+              "An exponential model must start at zero",
+              "Tripling is always linear growth",
+              "A model must exactly match every future observation"
+            ],
+            "answer": 0,
+            "explanation": "A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+            "explanations": [
+              "A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+              "Recheck the starting value and the number of changes. A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+              "Recheck the starting value and the number of changes. A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+              "Recheck the starting value and the number of changes. A model is an approximation. Space, nutrients and other constraints can change the growth rate."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A quantity decreases by 30% each day. Which factor represents one day of decay?",
+            "eq": "",
+            "choices": [
+              "0.30",
+              "1.30",
+              "0.70",
+              "0.03"
+            ],
+            "answer": 2,
+            "explanation": "100% − 30% = 70%, so the factor is 0.70.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 100% − 30% = 70%, so the factor is 0.70.",
+              "Recheck the starting value and the number of changes. 100% − 30% = 70%, so the factor is 0.70.",
+              "100% − 30% = 70%, so the factor is 0.70.",
+              "Recheck the starting value and the number of changes. 100% − 30% = 70%, so the factor is 0.70."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "At equally spaced times, one table has values 4, 9, 14, 19 and another has 4, 8, 16, 32. Which description fits?",
+            "eq": "",
+            "choices": [
+              "Both are linear",
+              "Both are exponential",
+              "First exponential; second linear",
+              "First linear; second exponential"
+            ],
+            "answer": 3,
+            "explanation": "The first adds 5 each step. The second multiplies by 2 each step.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The first adds 5 each step. The second multiplies by 2 each step.",
+              "Recheck the starting value and the number of changes. The first adds 5 each step. The second multiplies by 2 each step.",
+              "Recheck the starting value and the number of changes. The first adds 5 each step. The second multiplies by 2 each step.",
+              "The first adds 5 each step. The second multiplies by 2 each step."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A culture starts with 60 cells and grows by 50% each hour. Which model gives its predicted size after t hours?",
+            "eq": "",
+            "choices": [
+              "N(t) = 60 + 50t",
+              "N(t) = 60 × 1.50^t",
+              "N(t) = 60 × 0.50^t",
+              "N(t) = 1.50 × 60^t"
+            ],
+            "answer": 1,
+            "explanation": "Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+              "Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+              "Recheck the starting value and the number of changes. Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+              "Recheck the starting value and the number of changes. Start with 60 and multiply by 1 + 0.50 = 1.50 each hour."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A sample has mass 320 g and retains half its mass each hour. What mass remains after 3 hours?",
+            "eq": "",
+            "choices": [
+              "160 g",
+              "80 g",
+              "40 g",
+              "20 g"
+            ],
+            "answer": 2,
+            "explanation": "320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+              "Recheck the starting value and the number of changes. 320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+              "320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+              "Recheck the starting value and the number of changes. 320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40."
+            ],
+            "phase": "check"
+          }
+        ],
+        "original": [
+          {
+            "type": "multiple-choice",
+            "q": "A population starts at 100 and doubles each hour. How many are there after 3 hours?",
+            "eq": "",
+            "choices": [
+              "300",
+              "600",
+              "800",
+              "1600"
+            ],
+            "answer": 2,
+            "explanation": "Multiply once per hour: 100 → 200 → 400 → 800.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Multiply once per hour: 100 → 200 → 400 → 800.",
+              "Recheck the starting value and the number of changes. Multiply once per hour: 100 → 200 → 400 → 800.",
+              "Multiply once per hour: 100 → 200 → 400 → 800.",
+              "Recheck the starting value and the number of changes. Multiply once per hour: 100 → 200 → 400 → 800."
+            ],
+            "phase": "guided",
+            "concept": "Exponential change multiplies by a constant factor over equal intervals. Example: 40 tripling each day becomes 40, 120, 360. After t days, P(t) = 40 × 3^t."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "An amount grows by 20% each year. What is its yearly growth factor?",
+            "eq": "",
+            "choices": [
+              "0.20",
+              "0.80",
+              "1.02",
+              "1.20"
+            ],
+            "answer": 3,
+            "explanation": "Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+              "Recheck the starting value and the number of changes. Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+              "Recheck the starting value and the number of changes. Keep 100% and add 20%: 1 + 0.20 = 1.20.",
+              "Keep 100% and add 20%: 1 + 0.20 = 1.20."
+            ],
+            "phase": "guided",
+            "concept": "For a rate r written as a decimal, growth uses 1 + r and decay uses 1 − r. Example: 15% growth uses 1.15; 15% decay uses 0.85."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A device is worth $500 initially and loses 10% of its value each year. Which model gives its value after t years?",
+            "eq": "",
+            "choices": [
+              "V(t) = 500 − 10t",
+              "V(t) = 500 × 0.90^t",
+              "V(t) = 500 × 1.10^t",
+              "V(t) = 500 × 0.10^t"
+            ],
+            "answer": 1,
+            "explanation": "A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+              "A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+              "Recheck the starting value and the number of changes. A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500.",
+              "Recheck the starting value and the number of changes. A 10% loss leaves 90%, so multiply by 0.90 each year. The initial value is 500."
+            ],
+            "phase": "guided",
+            "concept": "In y = a × b^t, a is the value at t = 0 and b is the factor for each unit of t. For positive a, b > 1 gives growth and 0 < b < 1 gives decay."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For P(t) = 80 × 1.25^t, where t is measured in years, what do 80 and 1.25 mean?",
+            "eq": "",
+            "choices": [
+              "Initially 80; grows 125% yearly",
+              "Initially 1.25; grows by 80 yearly",
+              "Initially 80; grows 25% yearly",
+              "Initially 80; grows by 1.25 yearly"
+            ],
+            "answer": 2,
+            "explanation": "80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+              "Recheck the starting value and the number of changes. 80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+              "80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%.",
+              "Recheck the starting value and the number of changes. 80 is the initial value. A factor of 1.25 keeps the original 100% and adds 25%."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For A(t) = 200 × 0.80^t, what is A(2)?",
+            "eq": "",
+            "choices": [
+              "160",
+              "128",
+              "40",
+              "320"
+            ],
+            "answer": 1,
+            "explanation": "200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+              "200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+              "Recheck the starting value and the number of changes. 200 × 0.80 × 0.80 = 128. Apply the factor twice.",
+              "Recheck the starting value and the number of changes. 200 × 0.80 × 0.80 = 128. Apply the factor twice."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "At equally spaced times 0, 1, 2, 3, values are 5, 15, 45, 135. Which model fits all four values?",
+            "eq": "",
+            "choices": [
+              "y = 5 + 10t",
+              "y = 3 × 5^t",
+              "y = 5 × 3^t",
+              "y = 5t^3"
+            ],
+            "answer": 2,
+            "explanation": "The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+              "Recheck the starting value and the number of changes. The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+              "The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t.",
+              "Recheck the starting value and the number of changes. The value starts at 5 and each step multiplies by 3, so y = 5 × 3^t."
+            ],
+            "phase": "guided",
+            "concept": "Compare equal input intervals: constant differences suggest a linear model; a constant positive ratio other than 1 suggests an exponential model. Four data points support a model but do not prove how a real system will behave forever."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Plan L starts with $20 and adds $10 weekly. Plan E starts with $20 and doubles weekly. Which has more after 3 weeks?",
+            "eq": "",
+            "choices": [
+              "L: $50, E: $60; E has more",
+              "L: $60, E: $160; E has more",
+              "L: $50, E: $80; E has more",
+              "L: $50, E: $160; E has more"
+            ],
+            "answer": 3,
+            "explanation": "L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+              "Recheck the starting value and the number of changes. L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+              "Recheck the starting value and the number of changes. L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160.",
+              "L(3) = 20 + 10 × 3 = 50. E(3) = 20 × 2^3 = 160."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A model predicts a plant triples in height every month forever. Which limitation is most reasonable?",
+            "eq": "",
+            "choices": [
+              "Real growth may slow because resources and space are limited",
+              "An exponential model must start at zero",
+              "Tripling is always linear growth",
+              "A model must exactly match every future observation"
+            ],
+            "answer": 0,
+            "explanation": "A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+            "explanations": [
+              "A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+              "Recheck the starting value and the number of changes. A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+              "Recheck the starting value and the number of changes. A model is an approximation. Space, nutrients and other constraints can change the growth rate.",
+              "Recheck the starting value and the number of changes. A model is an approximation. Space, nutrients and other constraints can change the growth rate."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A quantity decreases by 30% each day. Which factor represents one day of decay?",
+            "eq": "",
+            "choices": [
+              "0.30",
+              "1.30",
+              "0.70",
+              "0.03"
+            ],
+            "answer": 2,
+            "explanation": "100% − 30% = 70%, so the factor is 0.70.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 100% − 30% = 70%, so the factor is 0.70.",
+              "Recheck the starting value and the number of changes. 100% − 30% = 70%, so the factor is 0.70.",
+              "100% − 30% = 70%, so the factor is 0.70.",
+              "Recheck the starting value and the number of changes. 100% − 30% = 70%, so the factor is 0.70."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "At equally spaced times, one table has values 4, 9, 14, 19 and another has 4, 8, 16, 32. Which description fits?",
+            "eq": "",
+            "choices": [
+              "Both are linear",
+              "Both are exponential",
+              "First exponential; second linear",
+              "First linear; second exponential"
+            ],
+            "answer": 3,
+            "explanation": "The first adds 5 each step. The second multiplies by 2 each step.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The first adds 5 each step. The second multiplies by 2 each step.",
+              "Recheck the starting value and the number of changes. The first adds 5 each step. The second multiplies by 2 each step.",
+              "Recheck the starting value and the number of changes. The first adds 5 each step. The second multiplies by 2 each step.",
+              "The first adds 5 each step. The second multiplies by 2 each step."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A culture starts with 60 cells and grows by 50% each hour. Which model gives its predicted size after t hours?",
+            "eq": "",
+            "choices": [
+              "N(t) = 60 + 50t",
+              "N(t) = 60 × 1.50^t",
+              "N(t) = 60 × 0.50^t",
+              "N(t) = 1.50 × 60^t"
+            ],
+            "answer": 1,
+            "explanation": "Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+              "Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+              "Recheck the starting value and the number of changes. Start with 60 and multiply by 1 + 0.50 = 1.50 each hour.",
+              "Recheck the starting value and the number of changes. Start with 60 and multiply by 1 + 0.50 = 1.50 each hour."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A sample has mass 320 g and retains half its mass each hour. What mass remains after 3 hours?",
+            "eq": "",
+            "choices": [
+              "160 g",
+              "80 g",
+              "40 g",
+              "20 g"
+            ],
+            "answer": 2,
+            "explanation": "320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. 320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+              "Recheck the starting value and the number of changes. 320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+              "320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40.",
+              "Recheck the starting value and the number of changes. 320 × (1/2)^3 = 40 g: 320 → 160 → 80 → 40."
+            ],
+            "phase": "check"
+          }
+        ]
+      },
+      {
+        "id": 60,
+        "title": "Arithmetic and Geometric Sequences",
+        "source": "figure-060.html",
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "type": "multiple-choice",
+            "q": "The arithmetic sequence begins 7, 11, 15, 19. What is its common difference?",
+            "eq": "",
+            "choices": [
+              "3",
+              "4",
+              "7",
+              "11"
+            ],
+            "answer": 1,
+            "explanation": "Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+              "Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+              "Recheck the starting value and the number of changes. Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+              "Recheck the starting value and the number of changes. Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4."
+            ],
+            "phase": "guided",
+            "concept": "An arithmetic sequence adds a constant difference d. A geometric sequence multiplies by a constant ratio r. Example: 2, 5, 8 has d = 3; 2, 6, 18 has r = 3."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For a₁ = 5 and common difference d = 3, which explicit rule gives the nth term, starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "aₙ = 5 + 3n",
+              "aₙ = 3 + 5(n − 1)",
+              "aₙ = 5 + 3(n − 1)",
+              "aₙ = 5 × 3^(n − 1)"
+            ],
+            "answer": 2,
+            "explanation": "Starting at term 1, reaching term n takes n − 1 additions of 3.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Starting at term 1, reaching term n takes n − 1 additions of 3.",
+              "Recheck the starting value and the number of changes. Starting at term 1, reaching term n takes n − 1 additions of 3.",
+              "Starting at term 1, reaching term n takes n − 1 additions of 3.",
+              "Recheck the starting value and the number of changes. Starting at term 1, reaching term n takes n − 1 additions of 3."
+            ],
+            "phase": "guided",
+            "concept": "Arithmetic: aₙ = a₁ + (n − 1)d. Geometric: aₙ = a₁ × r^(n − 1). The n − 1 counts transitions from the first term. Example: 4, 10, 16 has aₙ = 4 + 6(n − 1)."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "The arithmetic sequence starts at 20 and decreases by 4 each term. What is a₅?",
+            "eq": "",
+            "choices": [
+              "0",
+              "4",
+              "16",
+              "−4"
+            ],
+            "answer": 1,
+            "explanation": "a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+              "a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+              "Recheck the starting value and the number of changes. a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+              "Recheck the starting value and the number of changes. a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "The geometric sequence begins 3, 6, 12, 24. What is its common ratio?",
+            "eq": "",
+            "choices": [
+              "3",
+              "6",
+              "4",
+              "2"
+            ],
+            "answer": 3,
+            "explanation": "Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+              "Recheck the starting value and the number of changes. Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+              "Recheck the starting value and the number of changes. Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+              "Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For a₁ = 2 and common ratio r = 3, what is a₄?",
+            "eq": "",
+            "choices": [
+              "18",
+              "54",
+              "24",
+              "81"
+            ],
+            "answer": 1,
+            "explanation": "a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+              "a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+              "Recheck the starting value and the number of changes. a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+              "Recheck the starting value and the number of changes. a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which recursive rule produces 10, 7, 4, 1, … starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "a₁ = 10; aₙ = aₙ₋₁ − 3 for n ≥ 2",
+              "a₁ = 10; aₙ = 3aₙ₋₁ for n ≥ 2",
+              "a₁ = 7; aₙ = aₙ₋₁ − 3 for n ≥ 2",
+              "a₁ = 10; aₙ = aₙ₋₁ + 3 for n ≥ 2"
+            ],
+            "answer": 0,
+            "explanation": "The first term is 10. Each later term subtracts 3 from the previous term.",
+            "explanations": [
+              "The first term is 10. Each later term subtracts 3 from the previous term.",
+              "Recheck the starting value and the number of changes. The first term is 10. Each later term subtracts 3 from the previous term.",
+              "Recheck the starting value and the number of changes. The first term is 10. Each later term subtracts 3 from the previous term.",
+              "Recheck the starting value and the number of changes. The first term is 10. Each later term subtracts 3 from the previous term."
+            ],
+            "phase": "guided",
+            "concept": "A recursive rule needs a starting term and a rule using the previous term. Example: 5, 10, 20 is a₁ = 5 and aₙ = 2aₙ₋₁ for n ≥ 2. An explicit rule calculates a term directly from its index."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which recursive rule produces 81, 27, 9, 3, … starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "a₁ = 81; aₙ = aₙ₋₁ − 54 for n ≥ 2",
+              "a₁ = 27; aₙ = aₙ₋₁/3 for n ≥ 2",
+              "a₁ = 81; aₙ = aₙ₋₁/3 for n ≥ 2",
+              "a₁ = 81; aₙ = 3aₙ₋₁ for n ≥ 2"
+            ],
+            "answer": 2,
+            "explanation": "Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+              "Recheck the starting value and the number of changes. Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+              "Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+              "Recheck the starting value and the number of changes. Start at 81 and divide the previous term by 3 each time. The ratio is 1/3."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For the sequence aₙ = 6 + 2(n − 1), n = 1, 2, 3, …, which inputs belong to its stated domain?",
+            "eq": "",
+            "choices": [
+              "All real numbers",
+              "Only 1 and 2",
+              "All nonnegative real numbers",
+              "Positive integers only"
+            ],
+            "answer": 3,
+            "explanation": "The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+              "Recheck the starting value and the number of changes. The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+              "Recheck the starting value and the number of changes. The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+              "The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain."
+            ],
+            "phase": "guided",
+            "concept": "Sequences are functions with discrete indices. This lesson starts at n = 1. A time model starting at t = 0 uses an exponent t; a geometric sequence starting at n = 1 uses n − 1."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A theater has 12 seats in row 1, with 3 more seats in each next row. How many seats are in row 6?",
+            "eq": "",
+            "choices": [
+              "18",
+              "27",
+              "30",
+              "72"
+            ],
+            "answer": 1,
+            "explanation": "There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+              "There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+              "Recheck the starting value and the number of changes. There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+              "Recheck the starting value and the number of changes. There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which explicit rule gives 40, 20, 10, 5, … starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "aₙ = 40 × (1/2)^n",
+              "aₙ = 40 − 20(n − 1)",
+              "aₙ = 40 × (1/2)^(n − 1)",
+              "aₙ = 20 × 2^(n − 1)"
+            ],
+            "answer": 2,
+            "explanation": "The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+              "Recheck the starting value and the number of changes. The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+              "The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+              "Recheck the starting value and the number of changes. The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "An arithmetic sequence has a₁ = −2 and d = 5. What is a₇?",
+            "eq": "",
+            "choices": [
+              "33",
+              "28",
+              "23",
+              "−12"
+            ],
+            "answer": 1,
+            "explanation": "a₇ = −2 + 5(7 − 1) = 28.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₇ = −2 + 5(7 − 1) = 28.",
+              "a₇ = −2 + 5(7 − 1) = 28.",
+              "Recheck the starting value and the number of changes. a₇ = −2 + 5(7 − 1) = 28.",
+              "Recheck the starting value and the number of changes. a₇ = −2 + 5(7 − 1) = 28."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A geometric sequence has a₁ = 96 and r = 1/2. What is a₅?",
+            "eq": "",
+            "choices": [
+              "3",
+              "12",
+              "48",
+              "6"
+            ],
+            "answer": 3,
+            "explanation": "a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+              "Recheck the starting value and the number of changes. a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+              "Recheck the starting value and the number of changes. a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+              "a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term."
+            ],
+            "phase": "check"
+          }
+        ],
+        "original": [
+          {
+            "type": "multiple-choice",
+            "q": "The arithmetic sequence begins 7, 11, 15, 19. What is its common difference?",
+            "eq": "",
+            "choices": [
+              "3",
+              "4",
+              "7",
+              "11"
+            ],
+            "answer": 1,
+            "explanation": "Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+              "Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+              "Recheck the starting value and the number of changes. Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4.",
+              "Recheck the starting value and the number of changes. Subtract consecutive terms: 11 − 7 = 4, 15 − 11 = 4 and 19 − 15 = 4."
+            ],
+            "phase": "guided",
+            "concept": "An arithmetic sequence adds a constant difference d. A geometric sequence multiplies by a constant ratio r. Example: 2, 5, 8 has d = 3; 2, 6, 18 has r = 3."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For a₁ = 5 and common difference d = 3, which explicit rule gives the nth term, starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "aₙ = 5 + 3n",
+              "aₙ = 3 + 5(n − 1)",
+              "aₙ = 5 + 3(n − 1)",
+              "aₙ = 5 × 3^(n − 1)"
+            ],
+            "answer": 2,
+            "explanation": "Starting at term 1, reaching term n takes n − 1 additions of 3.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Starting at term 1, reaching term n takes n − 1 additions of 3.",
+              "Recheck the starting value and the number of changes. Starting at term 1, reaching term n takes n − 1 additions of 3.",
+              "Starting at term 1, reaching term n takes n − 1 additions of 3.",
+              "Recheck the starting value and the number of changes. Starting at term 1, reaching term n takes n − 1 additions of 3."
+            ],
+            "phase": "guided",
+            "concept": "Arithmetic: aₙ = a₁ + (n − 1)d. Geometric: aₙ = a₁ × r^(n − 1). The n − 1 counts transitions from the first term. Example: 4, 10, 16 has aₙ = 4 + 6(n − 1)."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "The arithmetic sequence starts at 20 and decreases by 4 each term. What is a₅?",
+            "eq": "",
+            "choices": [
+              "0",
+              "4",
+              "16",
+              "−4"
+            ],
+            "answer": 1,
+            "explanation": "a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+              "a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+              "Recheck the starting value and the number of changes. a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4.",
+              "Recheck the starting value and the number of changes. a₅ = 20 − 4(5 − 1) = 4. The terms are 20, 16, 12, 8, 4."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "The geometric sequence begins 3, 6, 12, 24. What is its common ratio?",
+            "eq": "",
+            "choices": [
+              "3",
+              "6",
+              "4",
+              "2"
+            ],
+            "answer": 3,
+            "explanation": "Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+              "Recheck the starting value and the number of changes. Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+              "Recheck the starting value and the number of changes. Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2.",
+              "Divide consecutive terms: 6/3 = 2, 12/6 = 2 and 24/12 = 2."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For a₁ = 2 and common ratio r = 3, what is a₄?",
+            "eq": "",
+            "choices": [
+              "18",
+              "54",
+              "24",
+              "81"
+            ],
+            "answer": 1,
+            "explanation": "a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+              "a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+              "Recheck the starting value and the number of changes. a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54.",
+              "Recheck the starting value and the number of changes. a₄ = 2 × 3^(4 − 1) = 54. The terms are 2, 6, 18, 54."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which recursive rule produces 10, 7, 4, 1, … starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "a₁ = 10; aₙ = aₙ₋₁ − 3 for n ≥ 2",
+              "a₁ = 10; aₙ = 3aₙ₋₁ for n ≥ 2",
+              "a₁ = 7; aₙ = aₙ₋₁ − 3 for n ≥ 2",
+              "a₁ = 10; aₙ = aₙ₋₁ + 3 for n ≥ 2"
+            ],
+            "answer": 0,
+            "explanation": "The first term is 10. Each later term subtracts 3 from the previous term.",
+            "explanations": [
+              "The first term is 10. Each later term subtracts 3 from the previous term.",
+              "Recheck the starting value and the number of changes. The first term is 10. Each later term subtracts 3 from the previous term.",
+              "Recheck the starting value and the number of changes. The first term is 10. Each later term subtracts 3 from the previous term.",
+              "Recheck the starting value and the number of changes. The first term is 10. Each later term subtracts 3 from the previous term."
+            ],
+            "phase": "guided",
+            "concept": "A recursive rule needs a starting term and a rule using the previous term. Example: 5, 10, 20 is a₁ = 5 and aₙ = 2aₙ₋₁ for n ≥ 2. An explicit rule calculates a term directly from its index."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which recursive rule produces 81, 27, 9, 3, … starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "a₁ = 81; aₙ = aₙ₋₁ − 54 for n ≥ 2",
+              "a₁ = 27; aₙ = aₙ₋₁/3 for n ≥ 2",
+              "a₁ = 81; aₙ = aₙ₋₁/3 for n ≥ 2",
+              "a₁ = 81; aₙ = 3aₙ₋₁ for n ≥ 2"
+            ],
+            "answer": 2,
+            "explanation": "Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+              "Recheck the starting value and the number of changes. Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+              "Start at 81 and divide the previous term by 3 each time. The ratio is 1/3.",
+              "Recheck the starting value and the number of changes. Start at 81 and divide the previous term by 3 each time. The ratio is 1/3."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For the sequence aₙ = 6 + 2(n − 1), n = 1, 2, 3, …, which inputs belong to its stated domain?",
+            "eq": "",
+            "choices": [
+              "All real numbers",
+              "Only 1 and 2",
+              "All nonnegative real numbers",
+              "Positive integers only"
+            ],
+            "answer": 3,
+            "explanation": "The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+              "Recheck the starting value and the number of changes. The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+              "Recheck the starting value and the number of changes. The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain.",
+              "The term number n takes the values 1, 2, 3, …; fractional indices are outside this stated sequence domain."
+            ],
+            "phase": "guided",
+            "concept": "Sequences are functions with discrete indices. This lesson starts at n = 1. A time model starting at t = 0 uses an exponent t; a geometric sequence starting at n = 1 uses n − 1."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A theater has 12 seats in row 1, with 3 more seats in each next row. How many seats are in row 6?",
+            "eq": "",
+            "choices": [
+              "18",
+              "27",
+              "30",
+              "72"
+            ],
+            "answer": 1,
+            "explanation": "There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+              "There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+              "Recheck the starting value and the number of changes. There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats.",
+              "Recheck the starting value and the number of changes. There are five increases from row 1 to row 6: 12 + 3 × 5 = 27 seats."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which explicit rule gives 40, 20, 10, 5, … starting at n = 1?",
+            "eq": "",
+            "choices": [
+              "aₙ = 40 × (1/2)^n",
+              "aₙ = 40 − 20(n − 1)",
+              "aₙ = 40 × (1/2)^(n − 1)",
+              "aₙ = 20 × 2^(n − 1)"
+            ],
+            "answer": 2,
+            "explanation": "The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+              "Recheck the starting value and the number of changes. The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+              "The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40.",
+              "Recheck the starting value and the number of changes. The first term is 40 and the ratio is 1/2. Use n − 1 so a₁ = 40."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "An arithmetic sequence has a₁ = −2 and d = 5. What is a₇?",
+            "eq": "",
+            "choices": [
+              "33",
+              "28",
+              "23",
+              "−12"
+            ],
+            "answer": 1,
+            "explanation": "a₇ = −2 + 5(7 − 1) = 28.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₇ = −2 + 5(7 − 1) = 28.",
+              "a₇ = −2 + 5(7 − 1) = 28.",
+              "Recheck the starting value and the number of changes. a₇ = −2 + 5(7 − 1) = 28.",
+              "Recheck the starting value and the number of changes. a₇ = −2 + 5(7 − 1) = 28."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A geometric sequence has a₁ = 96 and r = 1/2. What is a₅?",
+            "eq": "",
+            "choices": [
+              "3",
+              "12",
+              "48",
+              "6"
+            ],
+            "answer": 3,
+            "explanation": "a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+            "explanations": [
+              "Recheck the starting value and the number of changes. a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+              "Recheck the starting value and the number of changes. a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+              "Recheck the starting value and the number of changes. a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term.",
+              "a₅ = 96 × (1/2)^4 = 6. There are four halvings after the first term."
+            ],
+            "phase": "check"
+          }
+        ]
       }
     ]
   }

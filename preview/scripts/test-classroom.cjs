@@ -2,14 +2,14 @@ const {JSDOM}=require('jsdom'),fs=require('fs'),vm=require('vm'),path=require('p
 const root=path.resolve(__dirname,'..');
 const wait=()=>new Promise(r=>setTimeout(r,30));
 (async()=>{
- const {course}=await import(root+'/course.js');const {schoolCourseAccess}=await import(root+'/school/course-access.js');
+ const {course}=await import(root+'/course.js');const {schoolCourseAccess,schoolLessonCatalog}=await import(root+'/school/course-access.js');
  const licensed={name:'School',status:'pilot',license:{courses:['algebra1'],startsOn:{toMillis:()=>0},endsOn:{toMillis:()=>Date.now()+86400000}}};
  const dom=new JSDOM('<main id="classroom-app"></main>',{url:'https://example.org/preview/school/classroom.html?school=a&class=c',runScripts:'outside-only'});
  dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new dom.window.Event('close'));};
  let assignment,removed=false;
  const api={observe:fn=>{queueMicrotask(()=>fn({uid:'teacher'}));return ()=>{};},logout:async()=>{},invitations:{current:async()=>null},schoolContext:async()=>({school:licensed,member:{role:'teacher'}}),classroom:{classInfo:async()=>({name:'Class'}),assignments:async()=>assignment?[{id:'hw',...assignment}]:[],classRoster:async()=>removed?[]:[{id:'student',label:'Test student'}],enroll:async()=>{},unenroll:async()=>{removed=true;},createAssignment:async(s,c,v)=>{assignment=v;},results:async()=>[{uid:'student',lessonId:1,questions:9,firstTry:8,supportSteps:1}]}};
  let source=fs.readFileSync(root+'/school/classroom.js','utf8').replace(/^import .*;\n/gm,'');
- dom.window.Function('api','course','schoolCourseAccess',source)(api,course,schoolCourseAccess);await wait();
+ dom.window.Function('api','course','schoolCourseAccess','schoolLessonCatalog',source)(api,course,schoolCourseAccess,schoolLessonCatalog);await wait();
  const doc=dom.window.document;
  assert(doc.querySelector('summary').textContent.includes('guide'));doc.querySelector('#assign').click();
  doc.querySelector('#select-unit').click();const first=doc.querySelector('#selected-count').textContent;
