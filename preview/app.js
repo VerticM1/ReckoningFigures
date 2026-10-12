@@ -1,4 +1,4 @@
-import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=caf5793e2016';
+import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=7a6f440781ec';
 const homework=await loadHomework();
 import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js';
 import { soundButton, bindSoundButton } from './sound.js';
@@ -9,7 +9,7 @@ import { league, leagueHTML } from './practice-league.js';
 import { bolt, energyIcon, brandObject, homeWidgets, checkpointHTML } from './brand-art.js';
 import { coaching, mountCoaching, revealHint } from './coaching.js';
 import { pathArt } from './path-art.js';
-import { course } from './course.js?v=4cb03d5dcbbc';
+import { course } from './course.js?v=49ced59ef640';
 import { challenge, mountTwoStep } from './two-step.js';
 let solver=null;
 import { renderSpecial, graphMatches, answerMatches } from './lesson-types.js?v=1c71f0a295df';

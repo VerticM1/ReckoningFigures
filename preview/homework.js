@@ -1,5 +1,5 @@
 import {schoolCourseAccess,schoolLessonCatalog} from './school/course-access.js?v=b1f8d392848e';
-import {course} from './course.js?v=4cb03d5dcbbc';
+import {course} from './course.js?v=49ced59ef640';
 const store='rfOrganizationDemoV1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const homeworkRequested=['homeworkDemo','schoolHomework'].some(k=>new URLSearchParams(location.search).has(k));

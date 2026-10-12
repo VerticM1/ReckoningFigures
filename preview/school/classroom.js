@@ -1,6 +1,6 @@
 import {schoolCourseAccess} from './course-access.js?v=b1f8d392848e';
 import * as api from '../owner/client.js?v=0842e0954dba';
-import {course} from '../course.js?v=4cb03d5dcbbc';
+import {course} from '../course.js?v=49ced59ef640';
 const app=document.querySelector('#classroom-app'),p=new URLSearchParams(location.search),s=p.get('school'),c=p.get('class');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const valid=id=>/^[A-Za-z0-9_-]{1,128}$/.test(id||'');
