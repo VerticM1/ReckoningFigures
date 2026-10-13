@@ -1,4 +1,4 @@
-import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=4e924ee3f993';
+import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=3a25a0080703';
 const homework=await loadHomework();
 import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js';
 import { soundButton, bindSoundButton } from './sound.js';
