@@ -7,7 +7,7 @@ export function schoolCourseAccess(school,now=Date.now()){
  if(!Number.isFinite(start)||!Number.isFinite(end)||start>=end)return {open:false,message:'The school license dates need attention. Ask your administrator to check them.'};
  if(now<start)return {open:false,message:'Your school license has not started yet. Saved results remain available.'};
  if(now>=end)return {open:false,message:'Your school license has expired. Saved results remain available; ask your administrator to renew access.'};
- return {open:true,message:'Algebra 1 included · All 58 figures'};
+ return {open:true,message:'Algebra 1 included · All 60 figures'};
 }
-// 059–060 are authored and individually available. Enable after rules activation is confirmed.
-export const schoolLessonCatalog=course=>course.flatMap(unit=>unit.lessons).filter(l=>l.available&&l.questions?.length&&l.id<=58);
+// Rules activation for 059–060 was reported by the owner on 2026-10-13.
+export const schoolLessonCatalog=course=>course.flatMap(unit=>unit.lessons).filter(l=>l.available&&l.questions?.length);

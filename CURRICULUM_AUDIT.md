@@ -14,8 +14,8 @@ School-license release 2026-10-11: the user reported publishing the rules, and t
 | Quadratic equations | 8 | 8 | 8 | Existing premium practice; prerequisite order and depth need review. |
 | Polynomials | 8 | 8 | 8 | Existing premium practice; teach operations before factoring applications. |
 | Exponents and radicals | 8 | 8 | 8 | Existing premium practice; domain assumptions clarified. |
-| Functions | 10 | 10 | 8 | 059–060 add exponential models and sequences; classroom activation pending. |
-| Total | 60 | 60 | 58 | 42 figures are premium for individual use; 059–060 await classroom activation. |
+| Functions | 10 | 10 | 10 | 059–060 add exponential models and sequences; educator review remains. |
+| Total | 60 | 60 | 60 | 42 figures are premium for individual use; all 60 are school assignable. |
 
 The importer contains 665 steps: 621 multiple choice, 22 fill blanks, 12 true/false, seven tutorials and three interactive number-line graphs. Lesson 2 adds one runtime challenge: 666 delivered steps, 659 scored. Step counts are not evidence of mastery or sufficient instructional depth. Access restrictions and assignment counts were not changed by this audit.
 
@@ -73,3 +73,7 @@ Multi-step revision (2026-10-12): replaced figure 007’s repeated two-step item
 ## Exponential models and sequences — 2026-10-12
 
 Figures 059–060 add 24 questions with worked examples and four fresh closing questions. Numerical/model fixtures, full emulator permissions, and simulated classroom lesson flows pass. Individual Premium availability is released; school activation remains staged pending owner publication of the complete rules. See `firebase/MODELS_RELEASE.md`. Statistics/data analysis and educator review remain priorities.
+
+## Classroom activation — 2026-10-13
+
+The owner reported publishing the updated Firebase rules. Figures 059–060 are now enabled in the classroom catalog; all 60 figures are selectable under an active Algebra 1 license. This records user-reported rules activation, not independent production Firebase inspection. The live student completion → teacher result check remains pending.
