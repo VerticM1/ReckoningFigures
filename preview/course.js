@@ -17902,5 +17902,1152 @@ export const course = [
         ]
       }
     ]
+  },
+  {
+    "id": 8,
+    "name": "Statistics and Data Analysis",
+    "lessons": [
+      {
+        "id": 61,
+        "title": "Distributions and Summary Statistics",
+        "source": "figure-061.html",
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "type": "multiple-choice",
+            "q": "What is the mean of 2, 4, 4, 6, 9?",
+            "eq": "",
+            "choices": [
+              "4",
+              "5",
+              "6",
+              "25"
+            ],
+            "answer": 1,
+            "explanation": "Add the five values: 25. Divide by 5 to get a mean of 5.",
+            "explanations": [
+              "Check the definition and the group or values being described. Add the five values: 25. Divide by 5 to get a mean of 5.",
+              "Add the five values: 25. Divide by 5 to get a mean of 5.",
+              "Check the definition and the group or values being described. Add the five values: 25. Divide by 5 to get a mean of 5.",
+              "Check the definition and the group or values being described. Add the five values: 25. Divide by 5 to get a mean of 5."
+            ],
+            "phase": "guided",
+            "concept": "The mean shares the total equally. Example: 3, 5, 10 has mean (3 + 5 + 10)/3 = 6. The median is the middle of the ordered values."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "What is the median of 3, 7, 8, 12?",
+            "eq": "",
+            "choices": [
+              "7",
+              "8",
+              "7.5",
+              "9"
+            ],
+            "answer": 2,
+            "explanation": "With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+            "explanations": [
+              "Check the definition and the group or values being described. With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+              "Check the definition and the group or values being described. With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+              "With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+              "Check the definition and the group or values being described. With four ordered values, average the two middle values: (7 + 8)/2 = 7.5."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For 1, 2, 3, 4, 6, 8, 9, 11, what is the interquartile range? Use the medians of the lower four and upper four values.",
+            "eq": "",
+            "choices": [
+              "6",
+              "10",
+              "3",
+              "8.5"
+            ],
+            "answer": 0,
+            "explanation": "Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+            "explanations": [
+              "Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+              "Check the definition and the group or values being described. Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+              "Check the definition and the group or values being described. Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+              "Check the definition and the group or values being described. Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6."
+            ],
+            "phase": "guided",
+            "concept": "The range is maximum − minimum. The IQR is Q3 − Q1 and describes the middle half. Here, find each quartile as the median of its half of the ordered data. Another spread measure is mean absolute deviation (MAD): average the distances from the mean. Example: 1, 3, 5 has mean 3 and MAD (2 + 0 + 2)/3 = 4/3."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A data set changes from 4, 5, 6 to 4, 5, 60. Which measure changes less?",
+            "eq": "",
+            "choices": [
+              "Mean",
+              "Both change equally",
+              "Neither changes",
+              "Median"
+            ],
+            "answer": 3,
+            "explanation": "The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+            "explanations": [
+              "Check the definition and the group or values being described. The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+              "Check the definition and the group or values being described. The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+              "Check the definition and the group or values being described. The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+              "The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more."
+            ],
+            "phase": "guided",
+            "concept": "For a skewed distribution or one with extreme values, median and IQR are often useful summaries because they resist extreme values."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which interval contains the most observations?",
+            "eq": "",
+            "choices": [
+              "0–9 minutes",
+              "10–19 minutes",
+              "20–29 minutes",
+              "30–39 minutes"
+            ],
+            "answer": 1,
+            "explanation": "The frequency for 10–19 minutes is 7, the largest count.",
+            "explanations": [
+              "Check the definition and the group or values being described. The frequency for 10–19 minutes is 7, the largest count.",
+              "The frequency for 10–19 minutes is 7, the largest count.",
+              "Check the definition and the group or values being described. The frequency for 10–19 minutes is 7, the largest count.",
+              "Check the definition and the group or values being described. The frequency for 10–19 minutes is 7, the largest count."
+            ],
+            "phase": "practice",
+            "diagram": "<div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Reading-time distribution</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Time interval</th><th scope=\"col\" style=\"padding:8px\">Frequency</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">0–9 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">2</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">10–19 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">7</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">20–29 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">4</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">30–39 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">1</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Most commute times are between 10 and 20 minutes, with a few near 90 minutes. What shape does this describe?",
+            "eq": "",
+            "choices": [
+              "Symmetric",
+              "Left-skewed",
+              "Right-skewed",
+              "Uniform"
+            ],
+            "answer": 2,
+            "explanation": "The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+            "explanations": [
+              "Check the definition and the group or values being described. The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+              "Check the definition and the group or values being described. The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+              "The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+              "Check the definition and the group or values being described. The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Groups A and B have the same median. A has IQR 4 and B has IQR 10. Which statement follows?",
+            "eq": "",
+            "choices": [
+              "B has a higher mean",
+              "A has a larger range",
+              "Every B value exceeds every A value",
+              "The middle half of B is more spread out"
+            ],
+            "answer": 3,
+            "explanation": "A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+            "explanations": [
+              "Check the definition and the group or values being described. A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+              "Check the definition and the group or values being described. A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+              "Check the definition and the group or values being described. A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+              "A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "What is the mean absolute deviation of 2, 4, 6? First find distances from their mean.",
+            "eq": "",
+            "choices": [
+              "2",
+              "4/3",
+              "4",
+              "0"
+            ],
+            "answer": 1,
+            "explanation": "The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+            "explanations": [
+              "Check the definition and the group or values being described. The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+              "The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+              "Check the definition and the group or values being described. The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+              "Check the definition and the group or values being described. The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "The five-number summary is minimum 2, Q1 5, median 8, Q3 11, maximum 20. What are the IQR and range?",
+            "eq": "",
+            "choices": [
+              "IQR 6; range 18",
+              "IQR 8; range 20",
+              "IQR 16; range 18",
+              "IQR 6; range 20"
+            ],
+            "answer": 0,
+            "explanation": "IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+            "explanations": [
+              "IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+              "Check the definition and the group or values being described. IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+              "Check the definition and the group or values being described. IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+              "Check the definition and the group or values being described. IQR = 11 − 5 = 6. Range = 20 − 2 = 18."
+            ],
+            "phase": "check"
+          }
+        ],
+        "original": [
+          {
+            "type": "multiple-choice",
+            "q": "What is the mean of 2, 4, 4, 6, 9?",
+            "eq": "",
+            "choices": [
+              "4",
+              "5",
+              "6",
+              "25"
+            ],
+            "answer": 1,
+            "explanation": "Add the five values: 25. Divide by 5 to get a mean of 5.",
+            "explanations": [
+              "Check the definition and the group or values being described. Add the five values: 25. Divide by 5 to get a mean of 5.",
+              "Add the five values: 25. Divide by 5 to get a mean of 5.",
+              "Check the definition and the group or values being described. Add the five values: 25. Divide by 5 to get a mean of 5.",
+              "Check the definition and the group or values being described. Add the five values: 25. Divide by 5 to get a mean of 5."
+            ],
+            "phase": "guided",
+            "concept": "The mean shares the total equally. Example: 3, 5, 10 has mean (3 + 5 + 10)/3 = 6. The median is the middle of the ordered values."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "What is the median of 3, 7, 8, 12?",
+            "eq": "",
+            "choices": [
+              "7",
+              "8",
+              "7.5",
+              "9"
+            ],
+            "answer": 2,
+            "explanation": "With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+            "explanations": [
+              "Check the definition and the group or values being described. With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+              "Check the definition and the group or values being described. With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+              "With four ordered values, average the two middle values: (7 + 8)/2 = 7.5.",
+              "Check the definition and the group or values being described. With four ordered values, average the two middle values: (7 + 8)/2 = 7.5."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "For 1, 2, 3, 4, 6, 8, 9, 11, what is the interquartile range? Use the medians of the lower four and upper four values.",
+            "eq": "",
+            "choices": [
+              "6",
+              "10",
+              "3",
+              "8.5"
+            ],
+            "answer": 0,
+            "explanation": "Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+            "explanations": [
+              "Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+              "Check the definition and the group or values being described. Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+              "Check the definition and the group or values being described. Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6.",
+              "Check the definition and the group or values being described. Q1 = (2 + 3)/2 = 2.5; Q3 = (8 + 9)/2 = 8.5. IQR = 8.5 − 2.5 = 6."
+            ],
+            "phase": "guided",
+            "concept": "The range is maximum − minimum. The IQR is Q3 − Q1 and describes the middle half. Here, find each quartile as the median of its half of the ordered data. Another spread measure is mean absolute deviation (MAD): average the distances from the mean. Example: 1, 3, 5 has mean 3 and MAD (2 + 0 + 2)/3 = 4/3."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A data set changes from 4, 5, 6 to 4, 5, 60. Which measure changes less?",
+            "eq": "",
+            "choices": [
+              "Mean",
+              "Both change equally",
+              "Neither changes",
+              "Median"
+            ],
+            "answer": 3,
+            "explanation": "The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+            "explanations": [
+              "Check the definition and the group or values being described. The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+              "Check the definition and the group or values being described. The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+              "Check the definition and the group or values being described. The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more.",
+              "The median remains 5. The mean changes from 5 to 23. A large extreme value affects the mean more."
+            ],
+            "phase": "guided",
+            "concept": "For a skewed distribution or one with extreme values, median and IQR are often useful summaries because they resist extreme values."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which interval contains the most observations?",
+            "eq": "",
+            "choices": [
+              "0–9 minutes",
+              "10–19 minutes",
+              "20–29 minutes",
+              "30–39 minutes"
+            ],
+            "answer": 1,
+            "explanation": "The frequency for 10–19 minutes is 7, the largest count.",
+            "explanations": [
+              "Check the definition and the group or values being described. The frequency for 10–19 minutes is 7, the largest count.",
+              "The frequency for 10–19 minutes is 7, the largest count.",
+              "Check the definition and the group or values being described. The frequency for 10–19 minutes is 7, the largest count.",
+              "Check the definition and the group or values being described. The frequency for 10–19 minutes is 7, the largest count."
+            ],
+            "phase": "practice",
+            "diagram": "<div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Reading-time distribution</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Time interval</th><th scope=\"col\" style=\"padding:8px\">Frequency</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">0–9 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">2</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">10–19 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">7</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">20–29 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">4</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">30–39 minutes</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">1</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Most commute times are between 10 and 20 minutes, with a few near 90 minutes. What shape does this describe?",
+            "eq": "",
+            "choices": [
+              "Symmetric",
+              "Left-skewed",
+              "Right-skewed",
+              "Uniform"
+            ],
+            "answer": 2,
+            "explanation": "The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+            "explanations": [
+              "Check the definition and the group or values being described. The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+              "Check the definition and the group or values being described. The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+              "The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster.",
+              "Check the definition and the group or values being described. The few large values create a long tail toward the right. Skew is named for the tail, not the main cluster."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Groups A and B have the same median. A has IQR 4 and B has IQR 10. Which statement follows?",
+            "eq": "",
+            "choices": [
+              "B has a higher mean",
+              "A has a larger range",
+              "Every B value exceeds every A value",
+              "The middle half of B is more spread out"
+            ],
+            "answer": 3,
+            "explanation": "A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+            "explanations": [
+              "Check the definition and the group or values being described. A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+              "Check the definition and the group or values being described. A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+              "Check the definition and the group or values being described. A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges.",
+              "A larger IQR means the middle 50% spans a wider interval. It does not determine the means or ranges."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "What is the mean absolute deviation of 2, 4, 6? First find distances from their mean.",
+            "eq": "",
+            "choices": [
+              "2",
+              "4/3",
+              "4",
+              "0"
+            ],
+            "answer": 1,
+            "explanation": "The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+            "explanations": [
+              "Check the definition and the group or values being described. The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+              "The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+              "Check the definition and the group or values being described. The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3.",
+              "Check the definition and the group or values being described. The mean is 4. Distances are 2, 0, 2, so MAD = (2 + 0 + 2)/3 = 4/3."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "The five-number summary is minimum 2, Q1 5, median 8, Q3 11, maximum 20. What are the IQR and range?",
+            "eq": "",
+            "choices": [
+              "IQR 6; range 18",
+              "IQR 8; range 20",
+              "IQR 16; range 18",
+              "IQR 6; range 20"
+            ],
+            "answer": 0,
+            "explanation": "IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+            "explanations": [
+              "IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+              "Check the definition and the group or values being described. IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+              "Check the definition and the group or values being described. IQR = 11 − 5 = 6. Range = 20 − 2 = 18.",
+              "Check the definition and the group or values being described. IQR = 11 − 5 = 6. Range = 20 − 2 = 18."
+            ],
+            "phase": "check"
+          }
+        ]
+      },
+      {
+        "id": 62,
+        "title": "Scatterplots and Lines of Fit",
+        "source": "figure-062.html",
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "type": "multiple-choice",
+            "q": "What association is suggested by the plotted practice hours and scores?",
+            "eq": "",
+            "choices": [
+              "Negative",
+              "No pattern",
+              "Positive",
+              "Perfect causation"
+            ],
+            "answer": 2,
+            "explanation": "Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+            "explanations": [
+              "Check the definition and the group or values being described. Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+              "Check the definition and the group or values being described. Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+              "Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+              "Check the definition and the group or values being described. Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation."
+            ],
+            "phase": "guided",
+            "concept": "A scatterplot pairs two numerical variables. Describe direction, shape and strength. Points rising from left to right suggest positive association.",
+            "diagram": "<svg viewBox=\"0 0 360 260\" role=\"img\" aria-label=\"Scatterplot: practice hours versus score\" style=\"width:100%;max-width:480px;display:block;margin:auto\"><path d=\"M45 20V220H330\" fill=\"none\" stroke=\"currentColor\"/><text x=\"45\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">0</text><text x=\"99\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">1</text><text x=\"153\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">2</text><text x=\"207\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">3</text><text x=\"261\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">4</text><text x=\"315\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">5</text><text x=\"36\" y=\"224\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">0</text><text x=\"36\" y=\"184\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">20</text><text x=\"36\" y=\"144\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">40</text><text x=\"36\" y=\"104\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">60</text><text x=\"36\" y=\"64\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">80</text><text x=\"36\" y=\"24\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">100</text><circle cx=\"99\" cy=\"130\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"153\" cy=\"110\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"207\" cy=\"96\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"261\" cy=\"68\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"315\" cy=\"56\" r=\"5\" fill=\"#36c6e5\"/><text x=\"180\" y=\"258\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"12\">Practice hours</text><text x=\"48\" y=\"13\" fill=\"currentColor\" font-size=\"12\">Score</text></svg><div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Plotted values</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Hours</th><th scope=\"col\" style=\"padding:8px\">Score</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">1</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">45</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">2</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">55</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">3</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">62</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">4</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">76</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">5</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">82</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A fitted line is score = 8h + 40. What does its slope mean?",
+            "eq": "",
+            "choices": [
+              "Each extra hour is associated with 8 more predicted score points",
+              "The starting score is 8",
+              "Every student gains exactly 40 points per hour",
+              "Eight hours guarantees a score of 100"
+            ],
+            "answer": 0,
+            "explanation": "The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+            "explanations": [
+              "The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+              "Check the definition and the group or values being described. The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+              "Check the definition and the group or values being described. The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+              "Check the definition and the group or values being described. The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student."
+            ],
+            "phase": "guided",
+            "concept": "A fitted line summarizes a roughly linear trend. Its slope has units of output per input; its intercept predicts the output at input zero."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Using score = 8h + 40, what score is predicted for h = 4 hours?",
+            "eq": "",
+            "choices": [
+              "48",
+              "32",
+              "80",
+              "72"
+            ],
+            "answer": 3,
+            "explanation": "Substitute h = 4: 8 × 4 + 40 = 72.",
+            "explanations": [
+              "Check the definition and the group or values being described. Substitute h = 4: 8 × 4 + 40 = 72.",
+              "Check the definition and the group or values being described. Substitute h = 4: 8 × 4 + 40 = 72.",
+              "Check the definition and the group or values being described. Substitute h = 4: 8 × 4 + 40 = 72.",
+              "Substitute h = 4: 8 × 4 + 40 = 72."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "At h = 4, the observed score is 75 and the predicted score is 72. What is the residual?",
+            "eq": "",
+            "choices": [
+              "−3",
+              "3",
+              "147",
+              "72"
+            ],
+            "answer": 1,
+            "explanation": "Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+            "explanations": [
+              "Check the definition and the group or values being described. Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+              "Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+              "Check the definition and the group or values being described. Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+              "Check the definition and the group or values being described. Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line."
+            ],
+            "phase": "guided",
+            "concept": "Residuals measure vertical differences: observed − predicted. Positive means above the fitted line; negative means below it."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Data were collected for 1–5 practice hours. Predicting a score at 12 hours is what?",
+            "eq": "",
+            "choices": [
+              "Interpolation",
+              "A measured value",
+              "Extrapolation",
+              "A guaranteed result"
+            ],
+            "answer": 2,
+            "explanation": "Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+            "explanations": [
+              "Check the definition and the group or values being described. Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+              "Check the definition and the group or values being described. Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+              "Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+              "Check the definition and the group or values being described. Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which correlation coefficient indicates the strongest negative linear association?",
+            "eq": "",
+            "choices": [
+              "−0.92",
+              "−0.20",
+              "0.05",
+              "0.87"
+            ],
+            "answer": 0,
+            "explanation": "The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+            "explanations": [
+              "The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+              "Check the definition and the group or values being described. The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+              "Check the definition and the group or values being described. The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+              "Check the definition and the group or values being described. The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association."
+            ],
+            "phase": "guided",
+            "concept": "Correlation r ranges from −1 to 1. Its sign gives direction; magnitude gives linear strength. A value near zero does not rule out a curved relationship."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Residuals from a fitted line form a clear U-shaped pattern. What does that suggest?",
+            "eq": "",
+            "choices": [
+              "The line fits perfectly",
+              "A curved model may fit better",
+              "The data prove causation",
+              "Every prediction is too high"
+            ],
+            "answer": 1,
+            "explanation": "A systematic curved residual pattern suggests the straight-line model misses structure.",
+            "explanations": [
+              "Check the definition and the group or values being described. A systematic curved residual pattern suggests the straight-line model misses structure.",
+              "A systematic curved residual pattern suggests the straight-line model misses structure.",
+              "Check the definition and the group or values being described. A systematic curved residual pattern suggests the straight-line model misses structure.",
+              "Check the definition and the group or values being described. A systematic curved residual pattern suggests the straight-line model misses structure."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A fitted line predicts y = 3x + 7. At x = 5 the observed value is 19. What is the residual?",
+            "eq": "",
+            "choices": [
+              "3",
+              "22",
+              "−3",
+              "12"
+            ],
+            "answer": 2,
+            "explanation": "The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+            "explanations": [
+              "Check the definition and the group or values being described. The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+              "Check the definition and the group or values being described. The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+              "The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+              "Check the definition and the group or values being described. The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A model based on observations from x = 2 through x = 10 predicts at x = 6. Which description is correct?",
+            "eq": "",
+            "choices": [
+              "Extrapolation, guaranteed accurate",
+              "Interpolation, guaranteed accurate",
+              "Extrapolation, still uncertain",
+              "Interpolation, still uncertain"
+            ],
+            "answer": 3,
+            "explanation": "Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+            "explanations": [
+              "Check the definition and the group or values being described. Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+              "Check the definition and the group or values being described. Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+              "Check the definition and the group or values being described. Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+              "Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty."
+            ],
+            "phase": "check"
+          }
+        ],
+        "original": [
+          {
+            "type": "multiple-choice",
+            "q": "What association is suggested by the plotted practice hours and scores?",
+            "eq": "",
+            "choices": [
+              "Negative",
+              "No pattern",
+              "Positive",
+              "Perfect causation"
+            ],
+            "answer": 2,
+            "explanation": "Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+            "explanations": [
+              "Check the definition and the group or values being described. Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+              "Check the definition and the group or values being described. Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+              "Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation.",
+              "Check the definition and the group or values being described. Scores tend to increase as practice hours increase. The scatterplot suggests positive association, not proof of causation."
+            ],
+            "phase": "guided",
+            "concept": "A scatterplot pairs two numerical variables. Describe direction, shape and strength. Points rising from left to right suggest positive association.",
+            "diagram": "<svg viewBox=\"0 0 360 260\" role=\"img\" aria-label=\"Scatterplot: practice hours versus score\" style=\"width:100%;max-width:480px;display:block;margin:auto\"><path d=\"M45 20V220H330\" fill=\"none\" stroke=\"currentColor\"/><text x=\"45\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">0</text><text x=\"99\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">1</text><text x=\"153\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">2</text><text x=\"207\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">3</text><text x=\"261\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">4</text><text x=\"315\" y=\"238\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"middle\">5</text><text x=\"36\" y=\"224\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">0</text><text x=\"36\" y=\"184\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">20</text><text x=\"36\" y=\"144\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">40</text><text x=\"36\" y=\"104\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">60</text><text x=\"36\" y=\"64\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">80</text><text x=\"36\" y=\"24\" fill=\"currentColor\" font-size=\"12\" text-anchor=\"end\">100</text><circle cx=\"99\" cy=\"130\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"153\" cy=\"110\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"207\" cy=\"96\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"261\" cy=\"68\" r=\"5\" fill=\"#36c6e5\"/><circle cx=\"315\" cy=\"56\" r=\"5\" fill=\"#36c6e5\"/><text x=\"180\" y=\"258\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"12\">Practice hours</text><text x=\"48\" y=\"13\" fill=\"currentColor\" font-size=\"12\">Score</text></svg><div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Plotted values</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Hours</th><th scope=\"col\" style=\"padding:8px\">Score</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">1</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">45</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">2</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">55</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">3</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">62</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">4</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">76</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">5</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">82</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A fitted line is score = 8h + 40. What does its slope mean?",
+            "eq": "",
+            "choices": [
+              "Each extra hour is associated with 8 more predicted score points",
+              "The starting score is 8",
+              "Every student gains exactly 40 points per hour",
+              "Eight hours guarantees a score of 100"
+            ],
+            "answer": 0,
+            "explanation": "The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+            "explanations": [
+              "The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+              "Check the definition and the group or values being described. The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+              "Check the definition and the group or values being described. The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student.",
+              "Check the definition and the group or values being described. The slope is 8 score points per hour. It describes predicted change, not a guarantee for each student."
+            ],
+            "phase": "guided",
+            "concept": "A fitted line summarizes a roughly linear trend. Its slope has units of output per input; its intercept predicts the output at input zero."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Using score = 8h + 40, what score is predicted for h = 4 hours?",
+            "eq": "",
+            "choices": [
+              "48",
+              "32",
+              "80",
+              "72"
+            ],
+            "answer": 3,
+            "explanation": "Substitute h = 4: 8 × 4 + 40 = 72.",
+            "explanations": [
+              "Check the definition and the group or values being described. Substitute h = 4: 8 × 4 + 40 = 72.",
+              "Check the definition and the group or values being described. Substitute h = 4: 8 × 4 + 40 = 72.",
+              "Check the definition and the group or values being described. Substitute h = 4: 8 × 4 + 40 = 72.",
+              "Substitute h = 4: 8 × 4 + 40 = 72."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "At h = 4, the observed score is 75 and the predicted score is 72. What is the residual?",
+            "eq": "",
+            "choices": [
+              "−3",
+              "3",
+              "147",
+              "72"
+            ],
+            "answer": 1,
+            "explanation": "Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+            "explanations": [
+              "Check the definition and the group or values being described. Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+              "Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+              "Check the definition and the group or values being described. Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line.",
+              "Check the definition and the group or values being described. Residual = observed − predicted = 75 − 72 = 3. The point is above the fitted line."
+            ],
+            "phase": "guided",
+            "concept": "Residuals measure vertical differences: observed − predicted. Positive means above the fitted line; negative means below it."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Data were collected for 1–5 practice hours. Predicting a score at 12 hours is what?",
+            "eq": "",
+            "choices": [
+              "Interpolation",
+              "A measured value",
+              "Extrapolation",
+              "A guaranteed result"
+            ],
+            "answer": 2,
+            "explanation": "Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+            "explanations": [
+              "Check the definition and the group or values being described. Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+              "Check the definition and the group or values being described. Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+              "Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes.",
+              "Check the definition and the group or values being described. Twelve hours is outside the observed 1–5 hour range. Extrapolation may be unreliable if the trend changes."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which correlation coefficient indicates the strongest negative linear association?",
+            "eq": "",
+            "choices": [
+              "−0.92",
+              "−0.20",
+              "0.05",
+              "0.87"
+            ],
+            "answer": 0,
+            "explanation": "The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+            "explanations": [
+              "The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+              "Check the definition and the group or values being described. The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+              "Check the definition and the group or values being described. The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association.",
+              "Check the definition and the group or values being described. The negative sign gives direction, and a magnitude close to 1 indicates stronger linear association."
+            ],
+            "phase": "guided",
+            "concept": "Correlation r ranges from −1 to 1. Its sign gives direction; magnitude gives linear strength. A value near zero does not rule out a curved relationship."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Residuals from a fitted line form a clear U-shaped pattern. What does that suggest?",
+            "eq": "",
+            "choices": [
+              "The line fits perfectly",
+              "A curved model may fit better",
+              "The data prove causation",
+              "Every prediction is too high"
+            ],
+            "answer": 1,
+            "explanation": "A systematic curved residual pattern suggests the straight-line model misses structure.",
+            "explanations": [
+              "Check the definition and the group or values being described. A systematic curved residual pattern suggests the straight-line model misses structure.",
+              "A systematic curved residual pattern suggests the straight-line model misses structure.",
+              "Check the definition and the group or values being described. A systematic curved residual pattern suggests the straight-line model misses structure.",
+              "Check the definition and the group or values being described. A systematic curved residual pattern suggests the straight-line model misses structure."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A fitted line predicts y = 3x + 7. At x = 5 the observed value is 19. What is the residual?",
+            "eq": "",
+            "choices": [
+              "3",
+              "22",
+              "−3",
+              "12"
+            ],
+            "answer": 2,
+            "explanation": "The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+            "explanations": [
+              "Check the definition and the group or values being described. The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+              "Check the definition and the group or values being described. The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+              "The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3.",
+              "Check the definition and the group or values being described. The prediction is 3 × 5 + 7 = 22. Residual = 19 − 22 = −3."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A model based on observations from x = 2 through x = 10 predicts at x = 6. Which description is correct?",
+            "eq": "",
+            "choices": [
+              "Extrapolation, guaranteed accurate",
+              "Interpolation, guaranteed accurate",
+              "Extrapolation, still uncertain",
+              "Interpolation, still uncertain"
+            ],
+            "answer": 3,
+            "explanation": "Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+            "explanations": [
+              "Check the definition and the group or values being described. Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+              "Check the definition and the group or values being described. Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+              "Check the definition and the group or values being described. Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty.",
+              "Six is inside the observed range, so this is interpolation. A model prediction still has uncertainty."
+            ],
+            "phase": "check"
+          }
+        ]
+      },
+      {
+        "id": 63,
+        "title": "Association and Statistical Claims",
+        "source": "figure-063.html",
+        "available": true,
+        "premium": true,
+        "questions": [
+          {
+            "type": "multiple-choice",
+            "q": "A survey finds that students who practice more tend to score higher. What can this survey alone establish?",
+            "eq": "",
+            "choices": [
+              "Practice is the only cause of higher scores",
+              "An association, but not proof that practice caused the difference",
+              "Every student improves equally",
+              "There is no useful information"
+            ],
+            "answer": 1,
+            "explanation": "An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+            "explanations": [
+              "Check the definition and the group or values being described. An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+              "An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+              "Check the definition and the group or values being described. An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+              "Check the definition and the group or values being described. An observational survey can show association. Other differences between students may explain some or all of the pattern."
+            ],
+            "phase": "guided",
+            "concept": "Association means variables vary together. Causation means changing one produces a change in another. Observational data alone usually cannot rule out alternative explanations."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Ice-cream sales and swimming rescues both rise in summer. Which is a plausible confounding variable?",
+            "eq": "",
+            "choices": [
+              "Receipt color",
+              "The spelling of ice cream",
+              "The number of letters in rescue",
+              "Hot weather"
+            ],
+            "answer": 3,
+            "explanation": "Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+            "explanations": [
+              "Check the definition and the group or values being described. Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+              "Check the definition and the group or values being described. Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+              "Check the definition and the group or values being described. Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+              "Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which study design best supports testing whether a new study method causes higher scores?",
+            "eq": "",
+            "choices": [
+              "Randomly assign volunteers to methods, keep other conditions similar, then compare scores",
+              "Compare students who chose different methods",
+              "Ask only the top-scoring students",
+              "Compare two unrelated schools without other information"
+            ],
+            "answer": 0,
+            "explanation": "Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+            "explanations": [
+              "Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+              "Check the definition and the group or values being described. Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+              "Check the definition and the group or values being described. Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+              "Check the definition and the group or values being described. Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone."
+            ],
+            "phase": "guided",
+            "concept": "Random sampling supports representing a population. Random assignment supports comparing treatments causally. They serve different purposes."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A principal wants all students’ views of school lunch. Which sample is most likely to represent the school?",
+            "eq": "",
+            "choices": [
+              "Only friends of the principal",
+              "Only students buying lunch today",
+              "A random sample from the full student roster",
+              "Only students who complain online"
+            ],
+            "answer": 2,
+            "explanation": "Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+            "explanations": [
+              "Check the definition and the group or values being described. Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+              "Check the definition and the group or values being described. Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+              "Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+              "Check the definition and the group or values being described. Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Among club members in the table, what fraction chose walking?",
+            "eq": "",
+            "choices": [
+              "18/40",
+              "18/30",
+              "18/60",
+              "30/60"
+            ],
+            "answer": 1,
+            "explanation": "Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+            "explanations": [
+              "Check the definition and the group or values being described. Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+              "Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+              "Check the definition and the group or values being described. Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+              "Check the definition and the group or values being described. Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%."
+            ],
+            "phase": "guided",
+            "concept": "For a conditional proportion, restrict the denominator to the named group.",
+            "diagram": "<div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Survey of 60 students</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Group</th><th scope=\"col\" style=\"padding:8px\">Walk</th><th scope=\"col\" style=\"padding:8px\">Bus</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Club member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">18</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">12</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Not a member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">6</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">24</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "In this table, which comparison correctly describes walking rates?",
+            "eq": "",
+            "choices": [
+              "Members 60%; nonmembers 20%",
+              "Members 30%; nonmembers 10%",
+              "Both groups 40%",
+              "Members 18%; nonmembers 6%"
+            ],
+            "answer": 0,
+            "explanation": "Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+            "explanations": [
+              "Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+              "Check the definition and the group or values being described. Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+              "Check the definition and the group or values being described. Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+              "Check the definition and the group or values being described. Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample."
+            ],
+            "phase": "practice",
+            "diagram": "<div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Survey of 60 students</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Group</th><th scope=\"col\" style=\"padding:8px\">Walk</th><th scope=\"col\" style=\"padding:8px\">Bus</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Club member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">18</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">12</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Not a member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">6</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">24</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "From the same survey, can we conclude joining the club causes students to walk?",
+            "eq": "",
+            "choices": [
+              "Yes, because 60 is greater than 20",
+              "Yes, because there are 60 students",
+              "No, because the group sizes are equal",
+              "No; this observational association does not establish cause"
+            ],
+            "answer": 3,
+            "explanation": "Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+            "explanations": [
+              "Check the definition and the group or values being described. Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+              "Check the definition and the group or values being described. Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+              "Check the definition and the group or values being described. Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+              "Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "An online poll shared only in a basketball fan group finds 90% prefer basketball. What is the main problem with applying that result to the whole city?",
+            "eq": "",
+            "choices": [
+              "The percentage must be impossible",
+              "Ninety percent proves everyone agrees",
+              "The sample is likely biased toward basketball fans",
+              "All online surveys are always useless"
+            ],
+            "answer": 2,
+            "explanation": "The poll reaches a selected group whose interests may differ from the city’s population.",
+            "explanations": [
+              "Check the definition and the group or values being described. The poll reaches a selected group whose interests may differ from the city’s population.",
+              "Check the definition and the group or values being described. The poll reaches a selected group whose interests may differ from the city’s population.",
+              "The poll reaches a selected group whose interests may differ from the city’s population.",
+              "Check the definition and the group or values being described. The poll reaches a selected group whose interests may differ from the city’s population."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Volunteers are randomly assigned to two study methods. One group improves more. Which conclusion is most defensible?",
+            "eq": "",
+            "choices": [
+              "The better method must work for every student everywhere",
+              "The experiment supports a causal effect under its conditions; broader generalization needs care",
+              "The result proves the volunteers represent all students",
+              "Random assignment makes measurements unnecessary"
+            ],
+            "answer": 1,
+            "explanation": "Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+            "explanations": [
+              "Check the definition and the group or values being described. Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+              "Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+              "Check the definition and the group or values being described. Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+              "Check the definition and the group or values being described. Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited."
+            ],
+            "phase": "check"
+          }
+        ],
+        "original": [
+          {
+            "type": "multiple-choice",
+            "q": "A survey finds that students who practice more tend to score higher. What can this survey alone establish?",
+            "eq": "",
+            "choices": [
+              "Practice is the only cause of higher scores",
+              "An association, but not proof that practice caused the difference",
+              "Every student improves equally",
+              "There is no useful information"
+            ],
+            "answer": 1,
+            "explanation": "An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+            "explanations": [
+              "Check the definition and the group or values being described. An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+              "An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+              "Check the definition and the group or values being described. An observational survey can show association. Other differences between students may explain some or all of the pattern.",
+              "Check the definition and the group or values being described. An observational survey can show association. Other differences between students may explain some or all of the pattern."
+            ],
+            "phase": "guided",
+            "concept": "Association means variables vary together. Causation means changing one produces a change in another. Observational data alone usually cannot rule out alternative explanations."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Ice-cream sales and swimming rescues both rise in summer. Which is a plausible confounding variable?",
+            "eq": "",
+            "choices": [
+              "Receipt color",
+              "The spelling of ice cream",
+              "The number of letters in rescue",
+              "Hot weather"
+            ],
+            "answer": 3,
+            "explanation": "Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+            "explanations": [
+              "Check the definition and the group or values being described. Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+              "Check the definition and the group or values being described. Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+              "Check the definition and the group or values being described. Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues.",
+              "Hot weather can increase both ice-cream purchases and swimming activity. Their association does not show that ice cream causes rescues."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Which study design best supports testing whether a new study method causes higher scores?",
+            "eq": "",
+            "choices": [
+              "Randomly assign volunteers to methods, keep other conditions similar, then compare scores",
+              "Compare students who chose different methods",
+              "Ask only the top-scoring students",
+              "Compare two unrelated schools without other information"
+            ],
+            "answer": 0,
+            "explanation": "Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+            "explanations": [
+              "Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+              "Check the definition and the group or values being described. Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+              "Check the definition and the group or values being described. Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone.",
+              "Check the definition and the group or values being described. Random assignment helps balance other factors between treatment groups. It strengthens causal inference; it does not guarantee the result applies to everyone."
+            ],
+            "phase": "guided",
+            "concept": "Random sampling supports representing a population. Random assignment supports comparing treatments causally. They serve different purposes."
+          },
+          {
+            "type": "multiple-choice",
+            "q": "A principal wants all students’ views of school lunch. Which sample is most likely to represent the school?",
+            "eq": "",
+            "choices": [
+              "Only friends of the principal",
+              "Only students buying lunch today",
+              "A random sample from the full student roster",
+              "Only students who complain online"
+            ],
+            "answer": 2,
+            "explanation": "Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+            "explanations": [
+              "Check the definition and the group or values being described. Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+              "Check the definition and the group or values being described. Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+              "Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias.",
+              "Check the definition and the group or values being described. Random selection from the full roster gives every student a chance to be included. Nonresponse can still introduce bias."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Among club members in the table, what fraction chose walking?",
+            "eq": "",
+            "choices": [
+              "18/40",
+              "18/30",
+              "18/60",
+              "30/60"
+            ],
+            "answer": 1,
+            "explanation": "Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+            "explanations": [
+              "Check the definition and the group or values being described. Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+              "Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+              "Check the definition and the group or values being described. Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%.",
+              "Check the definition and the group or values being described. Restrict to club members: 18 walking out of 18 + 12 = 30 members. The conditional proportion is 18/30 = 60%."
+            ],
+            "phase": "guided",
+            "concept": "For a conditional proportion, restrict the denominator to the named group.",
+            "diagram": "<div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Survey of 60 students</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Group</th><th scope=\"col\" style=\"padding:8px\">Walk</th><th scope=\"col\" style=\"padding:8px\">Bus</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Club member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">18</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">12</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Not a member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">6</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">24</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "In this table, which comparison correctly describes walking rates?",
+            "eq": "",
+            "choices": [
+              "Members 60%; nonmembers 20%",
+              "Members 30%; nonmembers 10%",
+              "Both groups 40%",
+              "Members 18%; nonmembers 6%"
+            ],
+            "answer": 0,
+            "explanation": "Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+            "explanations": [
+              "Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+              "Check the definition and the group or values being described. Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+              "Check the definition and the group or values being described. Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample.",
+              "Check the definition and the group or values being described. Members: 18/30 = 60%. Nonmembers: 6/30 = 20%. The different conditional rates indicate association in this sample."
+            ],
+            "phase": "practice",
+            "diagram": "<div style=\"overflow:auto\"><table style=\"margin:16px auto;border-collapse:collapse\"><caption>Survey of 60 students</caption><thead><tr><th scope=\"col\" style=\"padding:8px\">Group</th><th scope=\"col\" style=\"padding:8px\">Walk</th><th scope=\"col\" style=\"padding:8px\">Bus</th></tr></thead><tbody><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Club member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">18</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">12</td></tr><tr><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">Not a member</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">6</td><td style=\"padding:8px;text-align:center;border-top:1px solid #888\">24</td></tr></tbody></table></div>"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "From the same survey, can we conclude joining the club causes students to walk?",
+            "eq": "",
+            "choices": [
+              "Yes, because 60 is greater than 20",
+              "Yes, because there are 60 students",
+              "No, because the group sizes are equal",
+              "No; this observational association does not establish cause"
+            ],
+            "answer": 3,
+            "explanation": "Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+            "explanations": [
+              "Check the definition and the group or values being described. Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+              "Check the definition and the group or values being described. Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+              "Check the definition and the group or values being described. Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel.",
+              "Club membership was not randomly assigned. Distance from school or other factors could influence both membership and travel."
+            ],
+            "phase": "practice"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "An online poll shared only in a basketball fan group finds 90% prefer basketball. What is the main problem with applying that result to the whole city?",
+            "eq": "",
+            "choices": [
+              "The percentage must be impossible",
+              "Ninety percent proves everyone agrees",
+              "The sample is likely biased toward basketball fans",
+              "All online surveys are always useless"
+            ],
+            "answer": 2,
+            "explanation": "The poll reaches a selected group whose interests may differ from the city’s population.",
+            "explanations": [
+              "Check the definition and the group or values being described. The poll reaches a selected group whose interests may differ from the city’s population.",
+              "Check the definition and the group or values being described. The poll reaches a selected group whose interests may differ from the city’s population.",
+              "The poll reaches a selected group whose interests may differ from the city’s population.",
+              "Check the definition and the group or values being described. The poll reaches a selected group whose interests may differ from the city’s population."
+            ],
+            "phase": "check"
+          },
+          {
+            "type": "multiple-choice",
+            "q": "Volunteers are randomly assigned to two study methods. One group improves more. Which conclusion is most defensible?",
+            "eq": "",
+            "choices": [
+              "The better method must work for every student everywhere",
+              "The experiment supports a causal effect under its conditions; broader generalization needs care",
+              "The result proves the volunteers represent all students",
+              "Random assignment makes measurements unnecessary"
+            ],
+            "answer": 1,
+            "explanation": "Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+            "explanations": [
+              "Check the definition and the group or values being described. Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+              "Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+              "Check the definition and the group or values being described. Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited.",
+              "Check the definition and the group or values being described. Random assignment strengthens the treatment comparison. Volunteers may not represent all students, so generalization remains limited."
+            ],
+            "phase": "check"
+          }
+        ]
+      }
+    ]
   }
 ];

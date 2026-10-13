@@ -21,7 +21,7 @@ try{
   for(const [uid,role] of [['teacher','teacher'],['teacher2','teacher'],['student','student'],['other','student']])await setDoc(doc(d,'schools','licensed','members',uid),{role,state:'active'});
   await setDoc(doc(d,...base),{name:'Math',teacherUid:'teacher'});await setDoc(doc(d,...base,'students','student'),{label:'Student'});
  });
- assert.equal(lessons.length,60);assert.equal(lessons.filter(l=>l.premium).length,42);
+ assert.equal(lessons.length,63);assert.equal(lessons.filter(l=>l.premium).length,45);
  await assertSucceeds(setDoc(doc(teacher,...base,'assignments','all'),assignment(lessons.map(l=>l.id))));
  // Every currently shipped figure can be opened and completed through a licensed assignment.
  for(const l of lessons){
@@ -37,8 +37,8 @@ try{
  for(const who of ['other','teacher','teacher2'])await assertFails(classroomAPI(db(who),{currentUser:{uid:who}}).authorizePractice('licensed','math','all',58));
  await assertFails(getDocFromServer(doc(env.unauthenticatedContext().firestore(),...base,'assignments','all','practice','58')));
  await assertFails(setDoc(doc(student,...base,'assignments','all','practice','58'),{allowed:true}));
- for(const id of ['0','61','058','1.0','not-a-lesson'])await assertFails(getDocFromServer(doc(student,...base,'assignments','all','practice',id)));
- await assertFails(setDoc(doc(teacher,...base,'assignments','unknown'),assignment([61])));
+ for(const id of ['0','64','058','1.0','not-a-lesson'])await assertFails(getDocFromServer(doc(student,...base,'assignments','all','practice',id)));
+ await assertFails(setDoc(doc(teacher,...base,'assignments','unknown'),assignment([64])));
  await assertSucceeds(setDoc(doc(teacher,...base,'assignments','pending'),assignment([58])));
  const pending=doc(student,...base,'assignments','pending','results','student_58');
  for(const change of [{status:'paused'},{status:'archived'},{'license.endsOn':time(-86400000)},{'license.startsOn':time(86400000)},{'license.courses':[]}]){
@@ -59,5 +59,5 @@ try{
  await assertFails(api.authorizePractice('licensed','math','all',58));await assertFails(setDoc(pending,payload(last)));
  await unrestricted(d=>setDoc(doc(d,...base,'students','student'),{label:'Student'}));
  await assertSucceeds(api.authorizePractice('licensed','math','pending',58));await assertSucceeds(setDoc(pending,payload(last)));
- console.log('PASS all 60 licensed figures, server-only start authorization, premium results, missing entitlement, license dates, suspension, cross-class/school isolation and revocation.');
+ console.log('PASS all 63 licensed figures, server-only start authorization, premium results, missing entitlement, license dates, suspension, cross-class/school isolation and revocation.');
 }finally{await env.cleanup();}

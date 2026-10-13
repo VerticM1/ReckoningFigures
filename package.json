@@ -16,7 +16,8 @@
     "test:curriculum": "node preview/scripts/test-curriculum.mjs",
     "test:course-access": "node preview/scripts/test-course-access.mjs",
     "test:multistep": "node preview/scripts/test-multistep.mjs",
-    "test:models": "node preview/scripts/test-model-lessons.mjs"
+    "test:models": "node preview/scripts/test-model-lessons.mjs",
+    "test:statistics": "node preview/scripts/test-statistics.mjs"
   },
   "dependencies": {
     "@capacitor/core": "8.5.2",
