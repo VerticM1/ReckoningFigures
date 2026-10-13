@@ -93,3 +93,7 @@ The owner reported publishing the updated Firebase rules. Figures 059–060 are 
 ## Statistics unit — 2026-10-13
 
 Figures 061–063 are available for individual Premium practice. The complete rules are prepared and emulator-tested for 63 figures; school assignment UI remains limited to 60 pending publication. See `firebase/STATISTICS_RELEASE.md`.
+
+## Statistics classroom activation — 2026-10-13
+
+The owner reported publishing the complete updated rules. The classroom catalog now includes all 63 figures. This is user-reported Firebase activation, not independent inspection of production rules. Live student completion and teacher-report verification remains pending.

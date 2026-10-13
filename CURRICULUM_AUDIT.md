@@ -15,8 +15,8 @@ School-license release 2026-10-11: the user reported publishing the rules, and t
 | Polynomials | 8 | 8 | 8 | Existing premium practice; teach operations before factoring applications. |
 | Exponents and radicals | 8 | 8 | 8 | Existing premium practice; domain assumptions clarified. |
 | Functions | 10 | 10 | 10 | 059–060 add exponential models and sequences; educator review remains. |
-| Statistics and data analysis | 3 | 3 | 0 | Introductory distributions, scatterplots, fitted lines and statistical claims; classroom activation pending. |
-| Total | 63 | 63 | 60 | 45 figures are premium for individual use; 061–063 await classroom activation. |
+| Statistics and data analysis | 3 | 3 | 3 | Introductory distributions, scatterplots, fitted lines and statistical claims; educator review remains. |
+| Total | 63 | 63 | 63 | 45 figures are premium for individual use; all 63 are school assignable. |
 
 The importer contains 692 steps: 648 multiple choice, 22 fill blanks, 12 true/false, seven tutorials and three interactive number-line graphs. Lesson 2 adds one runtime challenge: 693 delivered steps, 686 scored. Step counts are not evidence of mastery or sufficient instructional depth. Access restrictions and assignment counts were not changed by this audit.
 
@@ -82,3 +82,7 @@ The owner reported publishing the updated Firebase rules. Figures 059–060 are 
 ## Statistics unit — 2026-10-13
 
 Figures 061–063 add 27 questions with six fresh closing questions. A labeled scatterplot has the same values in an accessible table; frequency and two-way tables support data interpretation. Introductory coverage includes center/spread, skew, conditional proportions, residuals, interpolation/extrapolation, sampling and random assignment. This is not full statistical or state-specific course coverage. Classroom activation is staged; see `firebase/STATISTICS_RELEASE.md`.
+
+## Statistics classroom activation — 2026-10-13
+
+The owner reported publishing the complete updated rules. The classroom catalog now includes all 63 figures. This is user-reported Firebase activation, not independent inspection of production rules. Live student completion and teacher-report verification remains pending.

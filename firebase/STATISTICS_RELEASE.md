@@ -1,8 +1,8 @@
 # Statistics and data analysis — 2026-10-13
 
-Figures 061–063 form Unit 8, with nine scored questions each. They cover distributions and summaries, scatterplots and fitted lines, and association/statistical claims. Individual Premium access is preserved. School assignments remain at 60 figures until activation.
+Figures 061–063 form Unit 8, with nine scored questions each. They cover distributions and summaries, scatterplots and fitted lines, and association/statistical claims. Individual Premium access is preserved. School assignments now include all 63 figures following owner-reported rules publication.
 
-## Activate
+## Original activation procedure (completed)
 1. Open `/preview/owner/activate.html`. Publish its complete tested rules in Firebase, reconciling any custom changes first.
 2. Confirm publication. Remove `&&l.id<=60` from `schoolLessonCatalog` in `preview/school/course-access.js`. Update classroom catalog tests, licensed figure counts, owner and curriculum copy to 63; rebuild and publish.
 3. In a licensed class, assign the new unit. Complete one new figure as an enrolled student and check the teacher report.
@@ -17,3 +17,7 @@ Existing lesson IDs, question counts, assignments and saved results are unchange
 - Existing 60-figure classroom selector remains tested independently.
 
 Next priorities: educator review, coordinate-plane inequalities and instructional ordering. Statistics extensions include richer distribution plots and deeper model comparison. Full-course certification is not claimed.
+
+## Statistics classroom activation — 2026-10-13
+
+The owner reported publishing the complete updated rules. The classroom catalog now includes all 63 figures. This is user-reported Firebase activation, not independent inspection of production rules. Live student completion and teacher-report verification remains pending.
