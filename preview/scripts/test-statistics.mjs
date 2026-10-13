@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {course} from '../course.js';
+import {JSDOM} from 'jsdom';
+const lesson=id=>course.flatMap(u=>u.lessons).find(l=>l.id===id);
+const question=(id,n)=>lesson(id).questions[n-1];
+const key=(id,n)=>{const q=question(id,n);return q.choices[q.answer];};
+const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;
+const median=a=>{a=[...a].sort((x,y)=>x-y);return a.length%2?a[(a.length-1)/2]:mean(a.slice(a.length/2-1,a.length/2+1));};
+const number=s=>{s=s.replaceAll('−','-');return s.includes('/')?s.split('/').map(Number).reduce((a,b)=>a/b):Number(s);};
+const numeric=(id,n,value)=>{const q=question(id,n);assert.deepEqual(q.choices.map((c,i)=>Math.abs(number(c)-value)<1e-9?i:-1).filter(i=>i>=0),[q.answer]);};
+numeric(61,1,mean([2,4,4,6,9]));numeric(61,2,median([3,7,8,12]));numeric(61,3,median([6,8,9,11])-median([1,2,3,4]));
+assert.equal(median([4,5,6]),median([4,5,60]));assert.notEqual(mean([4,5,6]),mean([4,5,60]));assert.equal(key(61,4),'Median');
+assert.equal(key(61,5),['0–9 minutes','10–19 minutes','20–29 minutes','30–39 minutes'][[2,7,4,1].indexOf(Math.max(2,7,4,1))]);
+assert.equal(key(61,6),'Right-skewed');assert.equal(key(61,7),'The middle half of B is more spread out');numeric(61,8,mean([2,4,6].map(x=>Math.abs(x-mean([2,4,6])))));assert.equal(key(61,9),`IQR ${11-5}; range ${20-2}`);
+assert.equal(key(62,1),'Positive');assert.equal(key(62,2),'Each extra hour is associated with 8 more predicted score points');numeric(62,3,8*4+40);numeric(62,4,75-(8*4+40));assert.equal(key(62,5),'Extrapolation');numeric(62,6,Math.min(-.92,-.20,.05,.87));assert.equal(key(62,7),'A curved model may fit better');numeric(62,8,19-(3*5+7));assert.equal(key(62,9),'Interpolation, still uncertain');
+const claims={1:'An association, but not proof that practice caused the difference',2:'Hot weather',3:'Randomly assign volunteers to methods, keep other conditions similar, then compare scores',4:'A random sample from the full student roster',7:'No; this observational association does not establish cause',8:'The sample is likely biased toward basketball fans',9:'The experiment supports a causal effect under its conditions; broader generalization needs care'};
+for(const [n,text] of Object.entries(claims))assert.equal(key(63,Number(n)),text);
+numeric(63,5,18/(18+12));assert.equal(key(63,6),`Members ${18/30*100}%; nonmembers ${6/30*100}%`);
+for(const id of [61,62,63]){const l=lesson(id);assert.equal(l.questions.length,9);assert(l.premium);assert(l.questions.slice(-2).every(q=>q.phase==='check'&&!q.concept));for(const q of l.questions){assert.equal(q.explanations.length,4);assert(q.explanation);assert.equal(new Set(q.choices).size,4);}}
+const doc=new JSDOM(question(62,1).diagram).window.document;assert.equal(doc.querySelectorAll('circle').length,5);assert(doc.querySelector('svg').getAttribute('aria-label'));assert.equal(doc.querySelectorAll('tbody tr').length,5);
+const points=[...doc.querySelectorAll('tbody tr')].map(row=>[...row.cells].map(c=>Number(c.textContent)));const circles=[...doc.querySelectorAll('circle')];points.forEach(([x,y],i)=>{assert.equal(Number(circles[i].getAttribute('cx')),45+x*54);assert.equal(Number(circles[i].getAttribute('cy')),220-y*2);});
+assert.equal(course.length,8);assert.equal(course.at(-1).lessons.length,3);
+console.log('PASS 27 statistics keys, computed summaries/residuals/proportions, conceptual regression assertions, accessible scatterplot/data parity and new unit.');

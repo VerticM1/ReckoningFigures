@@ -89,3 +89,7 @@ Live course-access validation (2026-10-12): the user confirmed assigning figure 
 ## Classroom activation — 2026-10-13
 
 The owner reported publishing the updated Firebase rules. Figures 059–060 are now enabled in the classroom catalog; all 60 figures are selectable under an active Algebra 1 license. This records user-reported rules activation, not independent production Firebase inspection. The live student completion → teacher result check remains pending.
+
+## Statistics unit — 2026-10-13
+
+Figures 061–063 are available for individual Premium practice. The complete rules are prepared and emulator-tested for 63 figures; school assignment UI remains limited to 60 pending publication. See `firebase/STATISTICS_RELEASE.md`.

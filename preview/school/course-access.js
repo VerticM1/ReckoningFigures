@@ -10,4 +10,4 @@ export function schoolCourseAccess(school,now=Date.now()){
  return {open:true,message:'Algebra 1 included · All 60 figures'};
 }
 // Rules activation for 059–060 was reported by the owner on 2026-10-13.
-export const schoolLessonCatalog=course=>course.flatMap(unit=>unit.lessons).filter(l=>l.available&&l.questions?.length);
+export const schoolLessonCatalog=course=>course.flatMap(unit=>unit.lessons).filter(l=>l.available&&l.questions?.length&&l.id<=60);

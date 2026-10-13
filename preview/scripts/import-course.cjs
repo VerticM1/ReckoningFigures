@@ -1,7 +1,7 @@
 const fs=require('fs'),vm=require('vm'),path=require('path');const root=path.resolve(__dirname,'../..');
 const evaluate=(text,name)=>{const m=text.match(new RegExp('const '+name+' = (\\[[\\s\\S]*?\\n\\s*\\]);'));if(!m)return null;return JSON.parse(JSON.stringify(vm.runInNewContext(m[1].replaceAll("rectangle's","rectangle\\'s"),{}, {timeout:1000})));};
 const modules=[];const types={};
-for(let id=1;id<=7;id++){
+for(let id=1;id<=8;id++){
  const html=fs.readFileSync(path.join(root,`module-${id}-simple.html`),'utf8');const name=html.match(/<title>Module \d+: (.*?)(?: - Reckoning Figures)?<\/title>/)[1];
  let figures=evaluate(html,'figures');if(!figures){figures=[...html.matchAll(/class="figure-card" id="figure-(\d+)"[\s\S]*?class="figure-title">([^<]+)</g)].map(m=>({num:Number(m[1]),title:m[2],file:`figure-${m[1]}.html`}));}
  const lessons=figures.map(f=>{const file=path.join(root,f.file),lesson={id:Number(f.num),title:f.title,source:f.file};if(!fs.existsSync(file))return {...lesson,available:false,questions:[]};const text=fs.readFileSync(file,'utf8');let items=evaluate(text,'problems'),format='problems';if(!items){items=evaluate(text,'content');format='content';}if(!items)throw Error('No content '+f.file);
