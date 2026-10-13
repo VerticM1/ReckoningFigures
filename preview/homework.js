@@ -1,4 +1,4 @@
-import {schoolCourseAccess,schoolLessonCatalog} from './school/course-access.js?v=c2898a00849a';
+import {schoolCourseAccess,schoolLessonCatalog} from './school/course-access.js?v=b234d6e61657';
 import {course} from './course.js?v=30a94d20bfe1';
 const store='rfOrganizationDemoV1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

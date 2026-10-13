@@ -85,3 +85,7 @@ Live course-access validation (2026-10-12): the user confirmed assigning figure 
 ## Figures 059–060 — 2026-10-12
 
 24 exponential-model and sequence questions are ready. Individual practice ships with existing Premium access; classroom assignments remain at 58 figures until the prepared Firebase rules are published and the classroom catalog gate is removed. See `firebase/MODELS_RELEASE.md` for verification and activation.
+
+## Classroom activation — 2026-10-13
+
+The owner reported publishing the updated Firebase rules. Figures 059–060 are now enabled in the classroom catalog; all 60 figures are selectable under an active Algebra 1 license. This records user-reported rules activation, not independent production Firebase inspection. The live student completion → teacher result check remains pending.

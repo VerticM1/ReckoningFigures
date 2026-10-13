@@ -10,6 +10,6 @@ assert(schoolCourseAccess({...school,status:'active'},1999).open);
 for(const status of ['paused','archived','unknown'])assert(!schoolCourseAccess({...school,status},now).open);
 for(const courses of [[],['another-course'],null])assert(!schoolCourseAccess({...school,license:{...school.license,courses}},now).open);
 for(const bad of [null,{}, {status:'active',license:{}}, {...school,license:{...school.license,endsOn:stamp(NaN)}}])assert(!schoolCourseAccess(bad,now).open);
-assert.equal(schoolLessonCatalog(course).length,58);
-assert.equal(schoolLessonCatalog(course).filter(l=>l.premium).length,40);
+assert.equal(schoolLessonCatalog(course).length,60);
+assert.equal(schoolLessonCatalog(course).filter(l=>l.premium).length,42);
 console.log('PASS full school catalog, course entitlement, license state and inclusive start/exclusive end boundaries.');

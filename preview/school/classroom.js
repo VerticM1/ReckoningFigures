@@ -1,4 +1,4 @@
-import {schoolCourseAccess,schoolLessonCatalog} from './course-access.js?v=c2898a00849a';
+import {schoolCourseAccess,schoolLessonCatalog} from './course-access.js?v=b234d6e61657';
 import * as api from '../owner/client.js?v=0842e0954dba';
 import {course} from '../course.js?v=30a94d20bfe1';
 const app=document.querySelector('#classroom-app'),p=new URLSearchParams(location.search),s=p.get('school'),c=p.get('class');
