@@ -1,3 +1,10 @@
+// Keep brand entry assets fresh across deployments.
+{
+ const fs=require('fs'),crypto=require('crypto');
+ const hash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').slice(0,12);
+ const app='preview/app.js';fs.writeFileSync(app,fs.readFileSync(app,'utf8').replace(/from '\.\/onboarding\.js(?:\?v=[^']*)?'/,`from './onboarding.js?v=${hash('preview/onboarding.js')}'`));
+ for(const file of ['preview/get-started.html','preview/curriculum.html','preview/owner/activate.html']){let html=fs.readFileSync(file,'utf8');html=html.replace(/document-brand\.css(?:\?v=[^"]*)?/g,`document-brand.css?v=${hash('preview/document-brand.css')}`).replace(/workspace\.css(?:\?v=[^"]*)?/g,`workspace.css?v=${hash('preview/workspace.css')}`);fs.writeFileSync(file,html);}
+}
 // Version the stylesheet URL so iPhone caches cannot mix new artwork with old CSS.
 const fs=require('fs'),crypto=require('crypto');
 // Version the shared school-entitlement helper before its consuming entry files.
