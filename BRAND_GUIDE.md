@@ -18,3 +18,6 @@ Reference principles: Duolingo official identity typography, imagery and shape-l
 
 ## Revised direction
 Use dimensional inventions and imaginative architecture (brand-invention.webp and brand-architecture.webp) instead of the rejected flat math-world.svg illustration. Artwork is conceptual, not an accurate mechanism or construction guide. White is the default for school/owner/support/information pages; the Light mode / Dark mode control remembers the choice on this browser. Learner pages retain their existing dark treatment. Original generated previews were converted to WebP for delivery without changing their composition.
+
+## Current illustration direction
+Replace glossy isolated-object renders with textured editorial mathematical landscapes. Use assets/math-discovery.webp: an original winding path, contour hills, arches and floating polyhedra in cyan, midnight and gold. The supplied reference informed atmosphere and texture only; its composition was not copied. Existing page layout and appearance controls are preserved. Generated with the built-in image tool, then format-converted to WebP for the website.
