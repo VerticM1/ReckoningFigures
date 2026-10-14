@@ -15,3 +15,6 @@ Voice: warm, direct, specific. Explain the next action. Do not promise mastery, 
 For future emails: bolt + wordmark, clear subject, one primary action and a support route. Email delivery and branded sender setup remain pending; this guide does not configure them.
 
 Reference principles: Duolingo official identity typography, imagery and shape-language guidance. Our logo, palette and math artwork remain Reckoning Figures originals.
+
+## Revised direction
+Use dimensional inventions and imaginative architecture (brand-invention.webp and brand-architecture.webp) instead of the rejected flat math-world.svg illustration. Artwork is conceptual, not an accurate mechanism or construction guide. White is the default for school/owner/support/information pages; the Light mode / Dark mode control remembers the choice on this browser. Learner pages retain their existing dark treatment. Original generated previews were converted to WebP for delivery without changing their composition.

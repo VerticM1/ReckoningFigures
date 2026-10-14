@@ -1,0 +1,28 @@
+/* Shared appearance, loaded after page styles. */
+.rf-appearance{max-width:1200px;margin:0 auto;padding:12px 22px 0;display:flex;justify-content:flex-end}
+.rf-theme-toggle{font:800 12px Nunito,system-ui,sans-serif;min-height:44px;padding:10px 16px;border:1px solid #57717b;border-radius:100px;background:#18262d;color:#eef5f6;cursor:pointer}
+.rf-theme-toggle:focus-visible{outline:3px solid #0583a0;outline-offset:3px}
+.rf-world,.welcome-world{border-radius:24px}
+.rf-document .rf-world{width:min(100%,420px)}
+.welcome-world{width:min(100%,300px);max-height:260px;object-fit:cover}
+html[data-theme=light]{background:#fff;color-scheme:light}
+html[data-theme=light] body{--staff-bg:#fff;--staff-panel:#fff;--staff-line:#d7e2e6;--staff-muted:#52646c;--staff-gold:#8a6417;--bg:#fff;--panel:#f6f9fa;--line:#d7e2e6;--muted:#52646c;background:#fff!important;color:#192e38}
+html[data-theme=light] :is(h1,h2,h3,h4,strong,label,summary){color:#192e38!important}
+html[data-theme=light] :is(p,li,td,th,small,.intro,.section-note,.panel-note,.staff-subtle,.staff-summary,.join-meta,.org-sidebar-note,.org-footer,.org-storage,.staff-help,.rf-caption,footer){color:#52646c!important}
+html[data-theme=light] :is(.rf-brand,.org-brand){color:#192e38!important}
+html[data-theme=light] :is(.rf-brand small,.org-brand small,.org-kicker,.label,.stamp,.staff-badge){color:#00738c!important}
+html[data-theme=light] :is(.org-panel,.staff-card,.staff-empty,.org-stats article,.org-sidebar,.workspace-name,.owner-stage,.org-demo-banner,.rf-document section,.class-card,.assignment-card,.question-preview,.curriculum-unit,.student-preview,.focus-panel,.support-draft,.homework-settings,.practice-history){background:#f6f9fa!important;border-color:#d7e2e6!important;color:#192e38;box-shadow:none}
+html[data-theme=light] :is(dialog,#school-editor,#member-editor){background:#fff;color:#192e38;border-color:#bdcdd4}
+html[data-theme=light] :is(input,select,textarea){background:#fff!important;color:#192e38!important;border-color:#a6bac3!important}
+html[data-theme=light] input::placeholder,html[data-theme=light] textarea::placeholder{color:#657982}
+html[data-theme=light] :is(.org-button,.rf-theme-toggle){background:#fff;color:#243e4b;border-color:#b6cbd4}
+html[data-theme=light] :is(.org-primary,.rf-document .button){background:#087e99!important;color:#fff!important;border-color:#087e99!important;box-shadow:none}
+html[data-theme=light] :is(.org-primary,.rf-document .button):hover{background:#05647b!important}
+html[data-theme=light] :is(.org-text-button,.staff-close,.editor-close,a){color:#006d85}
+html[data-theme=light] :is(.staff-tabs button,.org-sidebar nav button){color:#52646c;background:transparent}
+html[data-theme=light] :is(.staff-tabs button[aria-selected=true],.org-sidebar nav button.active){color:#006d85;background:#e4f4f8;border-color:#087e99;box-shadow:none}
+html[data-theme=light] :is(td,th,.owner-header,.staff-tabs,.owner-school-list article){border-color:#d7e2e6}
+html[data-theme=light] :is(.staff-error,.form-error,#member-error,#sign-error){color:#a52d22!important}
+html[data-theme=light] .staff-toast{background:#143d4c;color:#fff}
+html[data-theme=light] .staff-toast strong{color:#fff!important}
+@media(max-width:650px){.rf-appearance{padding:8px 18px 0}.rf-document .rf-world{max-width:320px}}
