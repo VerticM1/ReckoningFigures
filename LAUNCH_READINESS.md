@@ -1,5 +1,7 @@
 # Reckoning Figures launch readiness
 
+Current logistics and go/no-go checklist: `PILOT_LOGISTICS.md` (2026-10-13). Email delivery, school entry/recovery and live operational checks are launch gates; do not interpret lesson availability as pilot approval.
+
 This is an implementation checklist, not a claim of school or App Store readiness.
 The learner preview and connected school/class assignment path are implemented. The older educator demo and its support drafts remain browser-local; connected school support is implemented separately. The user confirmed student class-link enrollment works. Staff invitations are implemented and tested locally; production rules activation and a full separate-account assignment test were subsequently confirmed by the user on 2026-10-09.
 
