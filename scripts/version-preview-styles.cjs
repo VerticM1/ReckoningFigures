@@ -97,3 +97,6 @@ for(const url of ['styles.css','organization/organization.css','workspace.css','
  const start='"'+url,at=supportHTML.indexOf(start);if(at>=0){const end=supportHTML.indexOf('"',at+1);supportHTML=supportHTML.slice(0,at)+start+'?v='+digest('preview/'+url)+supportHTML.slice(end);}
 }
 fs.writeFileSync('preview/support.html',supportHTML);
+
+// Version the shared appearance controls wherever included.
+for(const folder of ['preview','preview/owner','preview/school','preview/organization'])for(const name of fs.readdirSync(folder).filter(n=>n.endsWith('.html'))){const file=folder+'/'+name;let html=fs.readFileSync(file,'utf8');for(const asset of ['theme.css','theme.js'])html=html.replace(new RegExp(asset.replace('.','\\.')+'(?:\\?v=[^" ]*)?','g'),asset+'?v='+digest('preview/'+asset));fs.writeFileSync(file,html);}

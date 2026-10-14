@@ -1,6 +1,6 @@
 import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=3a25a0080703';
 const homework=await loadHomework();
-import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js?v=c62577f11aee';
+import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js?v=0abf65e019df';
 import { soundButton, bindSoundButton } from './sound.js';
 import { celebrateFinish } from './celebrations.js';
 import { getClient, showAccount } from './account.js';
