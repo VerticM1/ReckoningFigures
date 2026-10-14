@@ -9,3 +9,15 @@
 .rf-document{font-family:Nunito,system-ui,sans-serif!important;background:radial-gradient(ellipse at 85% 0,#273136 0,transparent 45%),#101719!important}
 .rf-document main{border-top:3px solid #79dbed}
 @media(max-width:500px){.rf-brand{gap:9px}.rf-brand img{width:34px;height:44px}.rf-brand small{font-size:9px}}
+
+/* One illustration language: geometry, useful inventions, and a spark of discovery. */
+.rf-document h1{font-family:Fredoka,Nunito,sans-serif!important;font-weight:500!important;letter-spacing:-.035em}
+.rf-document h2{font-family:Fredoka,Nunito,sans-serif!important;font-weight:450!important}
+.rf-document .rf-world{display:block;width:min(100%,720px);height:auto;margin:30px auto 12px}
+.rf-document .rf-caption{color:#b8cbd1;text-align:center;font-size:13px;margin:0 0 30px}
+.rf-document .button{font-weight:800;border-radius:12px;border-color:#65d8f0;color:#101719;background:#65d8f0;box-shadow:0 3px 0 #277d91}
+.rf-document .button:hover{background:#9be8f7}
+.rf-document section:target{border-color:#65d8f0;scroll-margin-top:20px}
+.rf-document section{background:#18262d;border-color:#344a54}
+.rf-document .label,.rf-document .stamp{color:#ffd15c}
+.rf-document .metrics strong{font-family:Fredoka,Nunito,sans-serif;color:#ffd15c}
