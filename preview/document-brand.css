@@ -1,0 +1,11 @@
+/* Shared identity for school guides and operational pages. */
+@font-face{font-family:Nunito;src:url('assets/fonts/nunito.woff2') format('woff2');font-weight:200 1000;font-display:swap}
+@font-face{font-family:Fredoka;src:url('assets/fonts/fredoka.woff2') format('woff2');font-weight:300 700;font-display:swap}
+.rf-brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none!important;color:#f1f0e8!important;min-height:56px}
+.rf-brand img{width:42px;height:54px;object-fit:contain;flex-shrink:0}
+.rf-brand strong{display:block;font:500 clamp(19px,4vw,24px)/1.1 Fredoka,system-ui,sans-serif;letter-spacing:-.3px}
+.rf-brand small{display:block;margin-top:6px;font:800 10px/1.4 Nunito,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#79dbed}
+.rf-brand:focus-visible{outline:3px solid #79dbed;outline-offset:5px;border-radius:6px}
+.rf-document{font-family:Nunito,system-ui,sans-serif!important;background:radial-gradient(ellipse at 85% 0,#273136 0,transparent 45%),#101719!important}
+.rf-document main{border-top:3px solid #79dbed}
+@media(max-width:500px){.rf-brand{gap:9px}.rf-brand img{width:34px;height:44px}.rf-brand small{font-size:9px}}
