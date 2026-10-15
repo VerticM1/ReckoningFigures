@@ -100,3 +100,10 @@ fs.writeFileSync('preview/support.html',supportHTML);
 
 // Version the shared appearance controls wherever included.
 for(const folder of ['preview','preview/owner','preview/school','preview/organization'])for(const name of fs.readdirSync(folder).filter(n=>n.endsWith('.html'))){const file=folder+'/'+name;let html=fs.readFileSync(file,'utf8');for(const asset of ['theme.css','theme.js'])html=html.replace(new RegExp(asset.replace('.','\\.')+'(?:\\?v=[^" ]*)?','g'),asset+'?v='+digest('preview/'+asset));fs.writeFileSync(file,html);}
+
+for(const file of ['preview/school/recover.js'])fs.writeFileSync(file,fs.readFileSync(file,'utf8').replace(/from '\.\.\/owner\/client\.js(?:\?v=[^']*)?'/,`from '../owner/client.js?v=${digest('preview/owner/client.js')}'`));
+fs.writeFileSync('preview/school/school.js',fs.readFileSync('preview/school/school.js','utf8').replace(/from '\.\/recent-schools\.js(?:\?v=[^']*)?'/,`from './recent-schools.js?v=${digest('preview/school/recent-schools.js')}'`));
+fs.writeFileSync('preview/owner/email-preview.js',fs.readFileSync('preview/owner/email-preview.js','utf8').replace(/from '\.\/email-templates\.js(?:\?v=[^']*)?'/,`from './email-templates.js?v=${digest('preview/owner/email-templates.js')}'`));
+for(const file of ['preview/school/index.html','preview/school/recover.html','preview/owner/pilot-operations.html','preview/owner/email-preview.html']){
+ let html=fs.readFileSync(file,'utf8');const path=require('path');html=html.replace(/(href|src)="([^"?]+\.(?:css|js))(?:\?v=[^"]*)?"/g,(match,attr,url)=>{const local=path.resolve(path.dirname(file),url);return fs.existsSync(local)?`${attr}="${url}?v=${digest(local)}"`:match});fs.writeFileSync(file,html);
+}
