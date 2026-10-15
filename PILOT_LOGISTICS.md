@@ -18,7 +18,7 @@ Status: NOT cleared for real-student launch. School access is implemented; autom
 | Student signup | Account creation and in-app admission | No welcome/confirmation email; do not claim one was sent |
 | School pilot request | Not connected | Landing form, secure storage, owner notification and acknowledgement |
 | Support reply | Saved thread and owner inbox | No email notification; define inbox checking routine |
-| School-login password recovery | Not exposed in the connected school login | Add a recovery route and test successful return; do not confuse it with other app account screens |
+| School-login password recovery | Firebase reset request linked from school, owner and staff-invitation sign-in | Live inbox delivery and reset/sign-in completion still need testing |
 
 ## Target onboarding flow
 School landing page → request pilot → acknowledgement → owner approval → school/license creation → staff invitation email → verified account → school workspace → class → student join link → assignment → saved result.
@@ -58,3 +58,11 @@ Official implementation references:
 
 ## Go/no-go
 Go only when the selected lessons have educator approval, the actual teacher/student/support loop passes, the pilot's devices/accessibility needs are tested, school/privacy arrangements are confirmed, and backup/recovery and support responsibility are established. The initial local test environment disconnected during this audit; no new browser or production-delivery pass is claimed.
+
+## 2026-10-15 implementation update
+- School, owner and staff invitation sign-in now link to a Firebase password-reset request page. Existing Firebase sender configuration is used. Live inbox delivery and reset completion remain unverified.
+- Generic school entry now supports sign-in and My schools: up to 12 school links saved per account on this browser after a successful membership check. Every open still checks membership. Forget removes only the shortcut. This is not cross-device membership discovery; a new browser still needs the school link once.
+- Owner workspace links Pilot operations (session routine, support handling, incident response and isolated restore drill) and Email previews (six fictional templates with HTML/text downloads).
+- Getting-started guide includes returning-user and password recovery instructions.
+- See EMAIL_SETUP.md for the trusted mail dispatcher and delivery checklist. No automated email sender is connected, no messages were sent, no production backup was activated and no restore drill was run.
+- Support responder, response target, pilot details, privacy arrangements and recovery targets still require owner/school decisions. Operational instructions are prepared, not proof of operational readiness.

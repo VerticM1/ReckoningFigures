@@ -1,4 +1,4 @@
-import * as api from './owner/client.js?v=0842e0954dba';
+import * as api from './owner/client.js?v=4c054e62dd68';
 const app=document.querySelector('#support-app'),params=new URLSearchParams(location.search),schoolId=params.get('school');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels={open:'Open',waiting:'Waiting for school',resolved:'Resolved'};

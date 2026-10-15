@@ -1,5 +1,5 @@
 import {schoolCourseAccess,schoolLessonCatalog} from './course-access.js?v=adbdfbf2944b';
-import * as api from '../owner/client.js?v=0842e0954dba';
+import * as api from '../owner/client.js?v=4c054e62dd68';
 import {course} from '../course.js?v=2d2a9cb4f1db';
 const app=document.querySelector('#classroom-app'),p=new URLSearchParams(location.search),s=p.get('school'),c=p.get('class');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
