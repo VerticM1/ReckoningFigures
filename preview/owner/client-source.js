@@ -67,3 +67,6 @@ export const support=supportAPI(db,auth);
 
 // Firebase hosts the reset action; no custom domain or client-side mail credentials required.
 export const resetPassword=email=>sendPasswordResetEmail(auth,email);
+
+import {pilotAPI} from '../pilot-api.js';
+export const pilot=pilotAPI(db,auth);

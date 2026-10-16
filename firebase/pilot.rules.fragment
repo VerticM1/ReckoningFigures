@@ -1,0 +1,19 @@
+match /pilotApplications/{uid} {
+ allow get: if request.auth != null && (request.auth.uid == uid || platformOwner());
+ allow list: if request.auth != null && platformOwner() && request.query.limit <= 200;
+ allow create: if request.auth != null && request.auth.uid == uid && request.auth.token.email_verified == true
+ && request.resource.data.keys().hasAll(['uid','email','name','school','role','students','goal','status','createdAt','updatedAt','consent'])
+ && request.resource.data.keys().hasOnly(['uid','email','name','school','role','students','goal','status','createdAt','updatedAt','consent'])
+ && request.resource.data.uid == uid && request.resource.data.email == request.auth.token.email
+ && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 80
+ && request.resource.data.school is string && request.resource.data.school.size() > 0 && request.resource.data.school.size() <= 120
+ && request.resource.data.role in ['teacher','administrator']
+ && request.resource.data.students is int && request.resource.data.students >= 1 && request.resource.data.students <= 10000
+ && request.resource.data.goal is string && request.resource.data.goal.size() <= 1000
+ && request.resource.data.status == 'submitted' && request.resource.data.consent == true
+ && request.resource.data.createdAt == request.time && request.resource.data.updatedAt == request.time;
+ allow update: if request.auth != null && platformOwner()
+ && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','updatedAt'])
+ && request.resource.data.status in ['submitted','reviewing','invited','closed'] && request.resource.data.updatedAt == request.time;
+ allow delete: if false;
+}
