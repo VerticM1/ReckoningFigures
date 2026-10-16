@@ -66,3 +66,13 @@ Go only when the selected lessons have educator approval, the actual teacher/stu
 - Getting-started guide includes returning-user and password recovery instructions.
 - See EMAIL_SETUP.md for the trusted mail dispatcher and delivery checklist. No automated email sender is connected, no messages were sent, no production backup was activated and no restore drill was run.
 - Support responder, response target, pilot details, privacy arrangements and recovery targets still require owner/school decisions. Operational instructions are prepared, not proof of operational readiness.
+
+## Pre-launch email verification and access checklist (2026-10-16)
+- [ ] Brand Firebase verification emails with the Reckoning Figures sender name and subject. Connect the custom sending domain after purchase and verify delivery.
+- [ ] Explain in the pilot form, confirmation and staff invitation: email verification confirms ownership of an account email; accepting a school invitation grants school access. Pilot approval alone does not grant school membership.
+- [ ] Verify a test account once through the pilot application, then accept a staff invitation using the exact same account/email. Confirm no redundant verification is required.
+- [ ] Sign out and sign back in on a second browser/device with that account. Confirm verified status persists while school membership is still checked.
+- [ ] Confirm unverified accounts receive a clear verification action; verified Google accounts skip redundant verification. Check changed-email/new-account flows separately.
+- [ ] Verify pilot review → school setup → staff invitation → invitation acceptance. Document any remaining manual owner steps and keep status labels distinct from actual access grants.
+
+Status: user reported Firebase rules published and pilot submission working on 2026-10-16. Cross-flow verification reuse, branded-email delivery and the complete school invitation handoff remain acceptance checks, not yet confirmed.
