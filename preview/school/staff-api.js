@@ -5,7 +5,7 @@ export function staffAPI(db,auth){
  return {
   get:async t=>{const d=await getDoc(ref(t));if(!d.exists())throw Error('Invitation not found.');return {token:t,...d.data()};},
   list:async s=>(await getDocs(query(collection(db,'staffInvites'),where('schoolId','==',s),limit(100)))).docs.map(d=>({token:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.toMillis()||0)-(a.createdAt?.toMillis()||0)),
-  create:async(s,schoolName,email,role)=>{const uid=actor(),r=doc(collection(db,'staffInvites'));email=email.trim().toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Enter a valid email address.');await setDoc(r,{schoolId:s,schoolName,email,role,createdBy:uid,createdAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+7*86400000),state:'pending',acceptedBy:null,acceptedAt:null});return r.id;},
+  create:async(s,schoolName,email,role,requestToken=null)=>{const uid=actor(),r=requestToken?ref(requestToken):doc(collection(db,'staffInvites'));email=email.trim().toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Enter a valid email address.');await setDoc(r,{schoolId:s,schoolName,email,role,createdBy:uid,createdAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(Date.now()+7*86400000),state:'pending',acceptedBy:null,acceptedAt:null});return r.id;},
   revoke:t=>updateDoc(ref(t),{state:'revoked'}),
   accept:async(t,label)=>{const uid=actor();label=label.trim();if(!label||label.length>80)throw Error('Enter your name (1–80 characters).');let schoolId;await runTransaction(db,async tx=>{
    const r=ref(t),d=await tx.get(r);if(!d.exists())throw Error('Invitation not found.');const i=d.data();schoolId=i.schoolId;

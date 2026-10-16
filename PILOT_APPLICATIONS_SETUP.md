@@ -18,3 +18,10 @@ Tracking is dormant until the ID is configured and a visitor explicitly allows i
 The owner inbox counts at most the most recent 200 saved applications by current review status. These counts are not all-time visitor, account-registration, class-enrollment, or retention statistics. Invited is a manual review label; it does not send an invitation or create access.
 
 Remaining external setup: Firebase rule publication and live smoke test; GA4 account/data stream ID; domain and email provider; automatic transactional email delivery; public privacy/contact review.
+
+## Inbox approval (2026-10-16)
+Owner inbox now provides Approve & invite. Confirm prefilled school, applicant email, role, seat limit and UTC pilot dates. This creates an audited pilot school, prepares an email-bound staff invitation, then marks the application invited. Copy the generated link and share it manually. The recipient still accepts the invitation; no email is sent automatically.
+
+Existing permissions are used; this update does not require new Firestore rules. School and invitation IDs are deterministic per application so retries and concurrent approval clicks reuse the same records. This is a recoverable multi-step process, not a single atomic transaction. A failure after school creation preserves the school; retry completes the remaining steps. Existing schools and invitation roles are never overwritten by retries. A revoked or expired invitation directs the owner to the school to issue a replacement. Approval creates a new school per application; adding applicants to an existing shared school remains a separate staff invitation workflow.
+
+Local verification: approval/retry/concurrency/partial-failure tests, inbox control and prefill checks, and Firestore staff/pilot access tests passed. Production owner approval → recipient acceptance remains to be verified with test accounts.
