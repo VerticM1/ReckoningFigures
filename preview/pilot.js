@@ -1,4 +1,4 @@
-import {observe,googleLogin,logout,pilot} from './owner/client.js';
+import {observe,googleLogin,logout,pilot} from './owner/client.js?v=pilot-20261016';
 const identity=document.querySelector('#identity'),status=document.querySelector('#status'),form=document.querySelector('#application'),result=document.querySelector('#result');let generation=0;
 const error=e=>e.code==='permission-denied'?'Applications are not open yet. Your request was not saved. Please check back after activation.':e.message||'Unable to connect. Please try again.';
 function button(label,action){const b=document.createElement('button');b.className='button primary';b.textContent=label;b.onclick=async()=>{b.disabled=true;try{await action();}catch(e){status.textContent=error(e);}finally{b.disabled=false;}};return b;}
