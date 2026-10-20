@@ -8,3 +8,5 @@ ios/App/build/
 
 # Local Firebase emulator logs
 *-debug.log
+.env*
+.secret.local

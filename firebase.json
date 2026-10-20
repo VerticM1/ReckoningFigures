@@ -1,0 +1,9 @@
+{
+  "functions": [{
+    "source": "functions",
+    "codebase": "school-mail",
+    "runtime": "nodejs22",
+    "ignore": ["node_modules", ".git", "*-debug.log", "test", ".env*"],
+    "predeploy": ["npm --prefix \"$RESOURCE_DIR\" test"]
+  }]
+}

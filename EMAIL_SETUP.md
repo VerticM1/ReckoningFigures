@@ -1,6 +1,6 @@
 # Email preparation and connection checklist
 
-Prepared 2026-10-15. No provider provisioned, no automated invitations/welcome/support notifications enabled, and no live messages sent during implementation.
+Updated 2026-10-20. Owner reports Resend domain verification and RESEND_API_KEY stored in Google Secret Manager. The school email backend is implemented in functions/ but has not been deployed or live-tested from this workspace. See EMAIL_DEPLOYMENT.md for exact deployment and acceptance steps. Firebase verification/reset branding, support notifications and provider webhooks remain separate work.
 
 ## Prepared assets
 - `preview/owner/email-templates.js`: HTML and plain-text renderer for staff invitation, verification, staff welcome, password reset, support reply and pilot acknowledgement.
@@ -14,7 +14,7 @@ Prepared 2026-10-15. No provider provisioned, no automated invitations/welcome/s
 4. Send invitations only after the invitation write succeeds. Fetch school, recipient email, role and exact expiration from the stored invite. Never trust client-supplied roles or recipients. Generate secure Firebase action links via trusted SDK if using a custom sender for auth mail.
 5. Send staff welcome only after membership is confirmed active. No student email template or automated student mail is enabled by this release.
 6. Support notifications must check ticket ownership and authorized staff recipients. Include no request body, student names, results or private ticket content.
-7. Pilot acknowledgement only after the request is durably stored. The public pilot-request form is not connected yet; the prepared template does not grant school access.
+7. Pilot acknowledgement only after the request is durably stored. The public pilot-request form is connected to Firestore; the backend's creation trigger sends acknowledgement after deployment. This template does not grant school access.
 8. Use an outbox event ID and provider idempotency key, track queued/sent/failed states, retry transient failures with bounds, verify webhook signatures, and suppress repeated sends or bounced recipients. Separate “queued” from “delivered” in UI language.
 
 ## Delivery acceptance
