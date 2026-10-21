@@ -29,7 +29,7 @@ The command deploys only the school-mail codebase. It does not replace Firestore
 - New staffInvites record: branded invitation to its saved recipient, including invitations created by Approve & invite.
 - Staff invitation changes pending to accepted: branded welcome only when matching active membership and verified account still exist.
 
-Links use the currently deployed GitHub Pages site until custom-domain hosting is confirmed. Existing invitations are not emailed retroactively. Browser success messages still confirm saved invitations, not email delivery. Verification/reset messages remain Firebase-managed; fully branded auth messages and support notifications are a separate rollout.
+Email links now use https://reckoningfigures.com/ after HTTPS page checks on October 21, 2026. Redeploy the school-mail functions to activate this change. Existing sent emails retain their original links. Existing invitations are not emailed retroactively. Browser success messages still confirm saved invitations, not email delivery. Verification/reset messages remain Firebase-managed; fully branded auth messages and support notifications are a separate rollout.
 
 ## Reliability and operations
 
@@ -47,3 +47,18 @@ State `sent` means Resend accepted the message, not proof of inbox delivery. Ins
 6. Confirm repeated approval does not duplicate emails; revoked/expired invitations still deny access.
 
 Unit tests run automatically before deployment and cover recipient permissions, escaping, revoked/expired/inactive access, duplicate/concurrent events, bounded retries, stable provider requests, and permanent failures. They use fake transport; no real emails are sent by tests. Production IAM, trigger delivery and inbox placement require the live acceptance test above.
+
+## Domain cutover — October 21, 2026
+
+Owner confirmed live pilot acknowledgement, invitation acceptance, school access and welcome email on October 21. Domain DNS now points to GitHub Pages. The mail base URL has been changed to the custom domain; this update requires function redeployment:
+
+```bash
+cd ~/reckoning-mail-20261020
+git pull --ff-only
+npm ci --prefix functions
+npx firebase-tools@latest deploy --project reckoningfigures-bbdae --only functions:school-mail
+```
+
+Public HTTPS routes and assets can be checked without signing in. Actual Firebase sign-in and school access on the custom domain still require an owner test. Ensure reckoningfigures.com and www.reckoningfigures.com are in Firebase Authentication authorized domains. Keep the existing Firebase authDomain configuration.
+
+Analytics keeps measurement ID G-B1SGPTYM48 and sends the current origin/path after consent. Update the GA web stream Website URL to https://reckoningfigures.com and confirm a consenting visit in Realtime. New-origin consent must be chosen again. HTTPS enforcement remains a GitHub Pages setting; enable when available. Verification and reset mail still use Firebase's existing sender.

@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { renderEmail } from './email-templates.js';
 
-export const BASE = 'https://verticm1.github.io/ReckoningFigures/';
+export const BASE = 'https://reckoningfigures.com/';
 export const WINDOW = 20 * 60 * 60 * 1000; // shorter than Resend's 24h idempotency retention
 export const MAX_ATTEMPTS = 8;
 export const hash = value => createHash('sha256').update(value).digest('hex');
