@@ -75,3 +75,6 @@ export const pilot=pilotAPI(db,auth);
 export const applyVerification=code=>applyActionCode(auth,code);
 export const checkReset=code=>verifyPasswordResetCode(auth,code);
 export const finishReset=(code,password)=>confirmPasswordReset(auth,code,password);
+
+import {getFunctions,httpsCallable} from 'firebase/functions';
+export const family=data=>httpsCallable(getFunctions(app,'us-central1'),'familyHub')(data).then(result=>result.data);

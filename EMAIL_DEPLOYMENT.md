@@ -88,3 +88,6 @@ Validation: 13 backend unit tests; pilot UI fake-API flow test; action-page DOM 
 
 ### Activation confirmed — 21 October 2026
 Owner confirmed deployment. A non-sending unauthenticated verification request reached accountEmail and correctly returned UNAUTHENTICATED. Branded email flag is now enabled and both client bundles rebuilt. Live email receipt, reset completion and verification remain user acceptance checks; no test email was sent by this activation check.
+
+## Deploy prepared familyHub callable
+The same codebase now includes familyHub. Deploy using the existing commands above; no new secret or Firestore rules are required. Then enable the staged family dashboard flag. The family service sends no emails, charges no payments and grants no Premium entitlement. See FAMILY_PRODUCT_PLAN.md for acceptance checks and current limitations.

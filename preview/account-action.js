@@ -1,7 +1,7 @@
 import {applyVerification,checkReset,finishReset} from './owner/client.js?v=account-mail-20261021';
 const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),code=params.get('oobCode'),mode=params.get('mode');
 let next='/preview/school/';
-try{const u=new URL(params.get('next')||next,location.origin);if(u.origin===location.origin&&['/preview/pilot.html','/preview/school/','/preview/school/staff-join.html','/preview/school/join.html','/preview/owner/','/preview/'].includes(u.pathname))next=u.pathname+u.search;}catch{}
+try{const u=new URL(params.get('next')||next,location.origin);if(u.origin===location.origin&&['/preview/family/dashboard.html','/preview/family/link.html','/preview/pilot.html','/preview/school/','/preview/school/staff-join.html','/preview/school/join.html','/preview/owner/','/preview/'].includes(u.pathname))next=u.pathname+u.search;}catch{}
 // Remove the one-time code from the address bar; this page never loads analytics.
 history.replaceState(null,'',location.pathname);
 $('continue').href=next;

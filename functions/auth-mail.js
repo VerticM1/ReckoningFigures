@@ -6,7 +6,7 @@ const BASE='https://reckoningfigures.com';
 const hash=s=>createHash('sha256').update(s).digest('hex');
 export function returnPath(value){
  try {const u=new URL(value,BASE);if(u.origin!==BASE)return '/preview/school/';
- if(!['/preview/pilot.html','/preview/school/','/preview/school/staff-join.html','/preview/school/join.html','/preview/owner/','/preview/'].includes(u.pathname))return '/preview/school/';
+ if(!['/preview/family/dashboard.html','/preview/family/link.html','/preview/pilot.html','/preview/school/','/preview/school/staff-join.html','/preview/school/join.html','/preview/owner/','/preview/'].includes(u.pathname))return '/preview/school/';
  const clean=new URL(u.pathname,BASE);for(const key of ['invite','school']){const v=u.searchParams.get(key);if(v&&/^[A-Za-z0-9_-]{1,128}$/.test(v))clean.searchParams.set(key,v);}return clean.pathname+clean.search;
  }catch{return '/preview/school/';}
 }

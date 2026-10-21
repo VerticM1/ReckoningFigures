@@ -19,3 +19,19 @@ Next implementation stages:
 5. Real family acceptance test covering two children, authorization isolation, assignments, accurate progress and subscription access. Payment test environment before accepting money.
 
 Pending decisions: actual prices and discounts; individual learner versus parent purchaser onboarding; seat reassignment rules; age/consent flow; notification defaults; mobile release channel. Do not infer these from the approved course coverage and seat-count model.
+
+## Family linking release — 21 October 2026
+
+Prepared `familyHub` callable and `/preview/family/dashboard.html` / `link.html`.
+- Existing verified parent/student accounts, separate sign-ins. Parent account registration is available; this release does not create child accounts.
+- Parent chooses a nickname and confirms guardian status, then receives a private 24-hour invitation. This attestation is not identity/guardianship verification or a replacement for age-appropriate consent.
+- Student signs in and explicitly agrees to share existing and future synced independent-learning progress. Parent sees the requesting student's email and confirms before any progress is returned.
+- One household per student in this first release; maximum four linked/pending slots per parent. A student disconnects before switching households. No premium entitlement or paid seat is created.
+- Only sanitized completed Algebra 1 figure IDs (1–63), practice-day count, and last practice day are returned. No school reports, raw progress objects, passwords, email notification preferences, or fabricated accuracy.
+- Both sides can disconnect. Removal preserves the student account and progress but stops future dashboard reads. Previously viewed information cannot be recalled.
+- Hashed 256-bit invitation tokens; one-time atomic claim; concurrent claim rejection; expiration; parent confirmation; slot constraints. Student sees parent email before consent. Raw invitation exists only in the generated link and browser state, not stored in the database. Lost links must be removed and regenerated. Invitation creation is limited to one per parent per 10 seconds.
+- Private server-only collections: familyHomes, familyStudents, familyLinks. Current client rules grant no access; no new broad Firestore rule is required. familyHub reads only the authenticated parent's home and students with matching active family membership. All calls require a live enabled, verified account.
+
+Activation: deploy school-mail codebase (now also containing familyHub), then set `ENABLED=true` in `preview/family/dashboard.js` and publish it. The owner client bundle includes the callable wrapper but linking stays disabled until activation. The new family routes are also added to the account-email return-path allowlist.
+
+Validation: 20 backend tests passed (7 family cases), plus family DOM flow and account action tests. Real authenticated parent/student linking and disconnection remain deployment acceptance tests. No real invitation was sent or account created during development. Assignments and notification delivery are separate next milestones. School pilot progress is independent of this family release.
