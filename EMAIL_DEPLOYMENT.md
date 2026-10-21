@@ -62,3 +62,26 @@ npx firebase-tools@latest deploy --project reckoningfigures-bbdae --only functio
 Public HTTPS routes and assets can be checked without signing in. Actual Firebase sign-in and school access on the custom domain still require an owner test. Ensure reckoningfigures.com and www.reckoningfigures.com are in Firebase Authentication authorized domains. Keep the existing Firebase authDomain configuration.
 
 Analytics keeps measurement ID G-B1SGPTYM48 and sends the current origin/path after consent. Update the GA web stream Website URL to https://reckoningfigures.com and confirm a consenting visit in Realtime. New-origin consent must be chosen again. HTTPS enforcement remains a GitHub Pages setting; enable when available. Verification and reset mail still use Firebase's existing sender.
+
+## Branded authentication emails — 21 October 2026
+
+New `accountEmail` callable in `school-mail` sends verification/reset messages using Resend from **Reckoning Figures <support@reckoningfigures.com>**. Firebase Admin generates the one-time codes; `/preview/account-action.html` applies them on our domain. No custom Firebase Hosting domain is needed for this handler. Only approved local return paths are supported. The handler removes the code from the address bar and has no analytics or third-party assets.
+
+Rollout is staged: `preview/auth-mail.js` currently has `BRANDED_EMAIL_ENABLED=false`. This preserves Firebase delivery until the callable is deployed. Deploy from the existing Cloud Shell checkout:
+
+```bash
+cd ~/reckoning-mail-20261020
+git pull --ff-only
+npm ci --prefix functions
+npx firebase-tools@latest deploy --project reckoningfigures-bbdae --only functions:school-mail
+```
+
+After deployment, switch the flag to true, rebuild BOTH `npm run build:owner` and `npm run build:vendor`, and publish the source and website branches. Test reset using an existing controlled account, plus verification on an unverified controlled account. No extra mailbox is needed for the reset test. Do not disable a real user's verification to manufacture a test. Confirmation of prior school invitation/welcome delivery is not confirmation of this new authentication endpoint.
+
+The callable requires sign-in for verification and derives its recipient from the live account. Reset uses a neutral response for missing, disabled, limited, and provider-failure cases; no account-existence disclosure is intentional. Private Firestore `authMailLimits` counters enforce a 60-second recipient cooldown, 4 requests per recipient per hour, 20 per IP per hour, and 100 aggregate per hour. Limits count attempts, not delivery. No client rules should grant access to this collection. Provider errors log only a generic event/kind; codes and emails are never logged or persisted by this sender. These are pilot limits, to be reviewed before increasing volume. No App Check enforcement is configured yet.
+
+Pilot page now polls verification every 5 seconds while visible and checks on window focus. Clicking Submit with a complete application while unverified records intent only in that page; when Firebase confirms verification, the page submits with the existing explicit consent. Closing/reloading the page clears that pending intent. No automatic verification bypass exists. Resend is available as a secondary action.
+
+Deliverability: keep Resend domain verified; inspect Resend's Insights and receiving mailbox headers for SPF/DKIM/DMARC failures. Disable open/click tracking for authentication mail in Resend settings (dashboard action still required; not changed by this code). DNS and sender reputation affect spam placement; branded templates cannot guarantee inbox placement. Do not alter Microsoft 365 MX or replace existing SPF blindly. The specific spam cause has not been confirmed without message headers. Firebase-native messages outside these app entry points are not rerouted by this change.
+
+Validation: 13 backend unit tests; pilot UI fake-API flow test; action-page DOM tests for verification, redirect restriction, code removal, mismatched passwords and expired reset links. Live delivery of the new callable remains pending deployment and activation.

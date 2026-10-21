@@ -28,3 +28,9 @@ export const staffWelcomeEmail = onDocumentUpdated({ ...options, document: 'staf
   if (before?.state !== 'pending' || after?.state !== 'accepted') return;
   return dispatch('welcome', event.params.token, millis(after.acceptedAt));
 });
+
+import { onCall } from 'firebase-functions/v2/https';
+import { createAuthMailer } from './auth-mail.js';
+export const accountEmail = onCall({region:'us-central1',secrets:[resendKey],memory:'256MiB',timeoutSeconds:60,minInstances:0,maxInstances:1,concurrency:10,
+ cors:['https://reckoningfigures.com','https://www.reckoningfigures.com','https://verticm1.github.io']},
+ createAuthMailer({db,auth:getAuth(),key:()=>resendKey.value()}));

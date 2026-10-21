@@ -1,5 +1,6 @@
+import {accountMail} from './auth-mail.js';
 import {initializeApp} from 'firebase/app';
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,sendPasswordResetEmail} from 'firebase/auth';
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut} from 'firebase/auth';
 import {getFirestore,doc,runTransaction} from 'firebase/firestore';
 import {mergeProgress} from './sync-model.js';
 const app=initializeApp({apiKey:'AIzaSyA3uLzOVcNw9cFQ37pHnktHAVbBRASXico',authDomain:'reckoningfigures-bbdae.firebaseapp.com',projectId:'reckoningfigures-bbdae',appId:'1:174051558845:web:d459a96c6d94c108e63ed4'});
@@ -8,7 +9,7 @@ export const observe=callback=>onAuthStateChanged(auth,callback);
 export const login=(email,password)=>signInWithEmailAndPassword(auth,email,password);
 export const register=(email,password)=>createUserWithEmailAndPassword(auth,email,password);
 export const logout=()=>signOut(auth);
-export const reset=email=>sendPasswordResetEmail(auth,email);
+export const reset=email=>accountMail(auth,'reset',email);
 export async function sync(uid,local){
  if(auth.currentUser?.uid!==uid)throw Error('Sign in again before syncing.');
  const ref=doc(db,'users',uid,'appProgress','v2');

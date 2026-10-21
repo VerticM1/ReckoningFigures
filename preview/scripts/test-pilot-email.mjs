@@ -19,15 +19,15 @@ async function fixture(){
 {
  const f=await fixture();await f.auth();assert.equal(f.count().verifyCount,1);assert.equal(f.d.getElementById('school').value,'Test School');assert.equal(f.d.getElementById('account-password').value,'');
  f.click('submit-request');await tick();assert.equal(f.count().submits,0);
- f.verify();[...f.d.querySelectorAll('#verification button')].find(b=>b.textContent==='I’ve verified my email').click();await tick();f.click('submit-request');await tick();assert.equal(f.count().submits,1);assert.equal(f.d.getElementById('result').hidden,false);assert.equal(f.d.getElementById('application').hidden,true);
+ f.verify();f.dom.window.dispatchEvent(new f.dom.window.Event('focus'));await tick();await tick();assert.equal(f.count().submits,1);assert.equal(f.d.getElementById('result').hidden,false);assert.equal(f.d.getElementById('application').hidden,true);f.dom.window.close();
 }
 {
- const f=await fixture();f.click('account-mode');await f.auth();assert.equal(f.count().verifyCount,0);f.click('submit-request');await tick();assert.equal(f.count().submits,1);
+ const f=await fixture();f.click('account-mode');await f.auth();assert.equal(f.count().verifyCount,0);f.click('submit-request');await tick();assert.equal(f.count().submits,1);f.dom.window.close();
 }
 {
- const f=await fixture();f.api.register=async()=>{throw{code:'auth/email-already-in-use'};};await f.auth();assert.equal(f.d.getElementById('email-continue').textContent,'Sign in');assert.equal(f.d.getElementById('forgot-password').hidden,false);assert.equal(f.d.getElementById('school').value,'Test School');
+ const f=await fixture();f.api.register=async()=>{throw{code:'auth/email-already-in-use'};};await f.auth();assert.equal(f.d.getElementById('email-continue').textContent,'Sign in');assert.equal(f.d.getElementById('forgot-password').hidden,false);assert.equal(f.d.getElementById('school').value,'Test School');f.dom.window.close();
 }
 {
- const f=await fixture();f.click('google-continue');await tick();assert.match(f.d.getElementById('status').textContent,/not configured/);assert.equal(f.d.getElementById('email-continue').disabled,false);await f.auth();assert.equal(f.count().verifyCount,1);
+ const f=await fixture();f.click('google-continue');await tick();assert.match(f.d.getElementById('status').textContent,/not configured/);assert.equal(f.d.getElementById('email-continue').disabled,false);await f.auth();assert.equal(f.count().verifyCount,1);f.dom.window.close();
 }
 console.log('Pilot email flow passed: signup, verification gate, submit, existing account, duplicate account and Google failure recovery.');

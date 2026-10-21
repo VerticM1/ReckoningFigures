@@ -1,5 +1,6 @@
+import {accountMail} from '../auth-mail.js';
 import {initializeApp} from 'firebase/app';
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail,reload,getIdToken} from 'firebase/auth';
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword,applyActionCode,verifyPasswordResetCode,confirmPasswordReset,reload,getIdToken} from 'firebase/auth';
 import {getFirestore,doc,getDoc,getDocs,collection,query,orderBy,limit,runTransaction,serverTimestamp,Timestamp} from 'firebase/firestore';
 const app=initializeApp({apiKey:'AIzaSyA3uLzOVcNw9cFQ37pHnktHAVbBRASXico',authDomain:'reckoningfigures-bbdae.firebaseapp.com',projectId:'reckoningfigures-bbdae',appId:'1:174051558845:web:d459a96c6d94c108e63ed4'});
 import {rememberSchool} from '../school/recent-schools.js';
@@ -56,7 +57,7 @@ export const invitations=joinAPI(db,auth);
 
 import {staffAPI} from "../school/staff-api.js";
 export const staffInvitations=staffAPI(db,auth);
-export const verifyEmail=()=>sendEmailVerification(auth.currentUser);
+export const verifyEmail=()=>accountMail(auth,'verify');
 export async function refreshIdentity(){await reload(auth.currentUser);await getIdToken(auth.currentUser,true);return auth.currentUser;}
 
 import {socialAPI} from '../social-api.js';
@@ -65,8 +66,12 @@ export const social=socialAPI(db,auth);
 import {supportAPI} from '../support-api.js';
 export const support=supportAPI(db,auth);
 
-// Firebase hosts the reset action; no custom domain or client-side mail credentials required.
-export const resetPassword=email=>sendPasswordResetEmail(auth,email);
+// Credentials and email delivery remain on the trusted backend.
+export const resetPassword=email=>accountMail(auth,'reset',email);
 
 import {pilotAPI} from '../pilot-api.js';
 export const pilot=pilotAPI(db,auth);
+
+export const applyVerification=code=>applyActionCode(auth,code);
+export const checkReset=code=>verifyPasswordResetCode(auth,code);
+export const finishReset=(code,password)=>confirmPasswordReset(auth,code,password);

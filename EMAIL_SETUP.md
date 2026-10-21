@@ -22,3 +22,6 @@ Test with explicitly authorized test inboxes: correct sender/reply-to, subject, 
 
 ## Required values
 Owned domain, verified sender, monitored reply-to, provider configuration, allowed application origins, support ownership and agreed response target. None is invented here.
+
+### October 21 authentication rollout
+Branded verification and reset implementation is prepared; see EMAIL_DEPLOYMENT.md for staged activation. Backend deployment and live tests are still required. Pilot verification detection and navigation arrow removal can publish independently. New-domain school invitation, sign-in, and welcome flow was confirmed working by the owner before this change; analytics setup was also reported done.

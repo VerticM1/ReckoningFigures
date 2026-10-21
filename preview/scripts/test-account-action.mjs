@@ -1,0 +1,12 @@
+import {readFileSync} from 'node:fs';
+import assert from 'node:assert/strict';
+import {JSDOM} from 'jsdom';
+const html=readFileSync(new URL('../account-action.html',import.meta.url),'utf8'),source=readFileSync(new URL('../account-action.js',import.meta.url),'utf8').replace(/^import .*;\n/,'');
+const run=new (Object.getPrototypeOf(async function(){}).constructor)('document','location','history','applyVerification','checkReset','finishReset',source);
+const fixture=url=>new JSDOM(html,{url:'https://reckoningfigures.com/preview/account-action.html'+url});
+let dom=fixture('?mode=verifyEmail&oobCode=test&next=https://evil.test');let applied;
+await run(dom.window.document,dom.window.location,dom.window.history,async c=>applied=c,()=>{},()=>{});assert.equal(applied,'test');assert.equal(dom.window.location.search,'');assert.equal(dom.window.document.getElementById('continue').getAttribute('href'),'/preview/school/');assert.equal(dom.window.document.getElementById('title').textContent,'Email verified.');dom.window.close();
+dom=fixture('?mode=resetPassword&oobCode=test');let saved;
+await run(dom.window.document,dom.window.location,dom.window.history,()=>{},async()=>{},async(c,p)=>saved=p);
+const d=dom.window.document;d.getElementById('password').value='password123';d.getElementById('confirm').value='different';await d.getElementById('reset').onsubmit({preventDefault(){}});assert.equal(saved,undefined);d.getElementById('confirm').value='password123';await d.getElementById('reset').onsubmit({preventDefault(){}});assert.equal(saved,'password123');assert.equal(d.getElementById('password').value,'');assert.equal(d.getElementById('title').textContent,'Password updated.');dom.window.close();
+dom=fixture('?mode=resetPassword&oobCode=expired');await run(dom.window.document,dom.window.location,dom.window.history,()=>{},async()=>{throw Error();},()=>{});assert.equal(dom.window.document.getElementById('reset').hidden,true);dom.window.close();console.log('Account action tests passed: verification, redirect allowlist, code removal, password confirmation and expired links.');
