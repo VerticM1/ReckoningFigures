@@ -1,6 +1,6 @@
 export function mountPilot(api, doc=document) {
  const $=id=>doc.getElementById(id), form=$('application'), status=$('status'), submit=$('submit-request');
- let currentUser=null, generation=0, mode='register', authBusy=false;
+ let currentUser=null, generation=0, mode='register', authBusy=false, checking=false, pendingSubmit=false;
  const notify=message=>{status.textContent=message;status.focus();};
  const errors={
   'auth/unauthorized-domain':'Sign-in is not configured for this website address. Please contact schools@reckoningfigures.com.',
@@ -22,13 +22,13 @@ export function mountPilot(api, doc=document) {
  function button(label,action){const b=doc.createElement('button');b.type='button';b.className='button secondary';b.textContent=label;b.onclick=async()=>{b.disabled=true;try{await action();}catch(e){notify(error(e));}finally{b.disabled=false;}};return b;}
  function show(data){form.hidden=true;$('result').hidden=false;$('result').replaceChildren();const h=doc.createElement('h2');h.textContent='Your request is saved.';const p=doc.createElement('p');p.textContent=`Status: ${data.status}. Return with this account to check progress. For a new request, look for a confirmation email from Reckoning Figures Schools. Check spam if needed.`;$('result').append(h,p);}
  async function renderUser(user){
-  const version=++generation;currentUser=user;$('identity').replaceChildren();$('verification').replaceChildren();$('account-panel').hidden=!!user;form.hidden=false;$('result').hidden=true;submit.disabled=false;submit.textContent='Submit pilot request →';$('submit-note').hidden=!!user;
+  const version=++generation;currentUser=user;$('identity').replaceChildren();$('verification').replaceChildren();$('account-panel').hidden=!!user;form.hidden=false;$('result').hidden=true;submit.disabled=false;submit.textContent='Submit pilot request';$('submit-note').hidden=!!user;
   if(!user)return;
   $('account-password').value='';
   $('identity').append(doc.createTextNode(`Application email: ${user.email}. `),button('Use another account',async()=>{await api.logout();notify('Sign in with the email you want to use for this application.');}));
   if(!user.emailVerified){
-   const p=doc.createElement('p');p.textContent=`Verify ${user.email} before submitting. Open the link in your inbox, then return here.`;
-   $('verification').append(p,button('Send verification email',async()=>{await api.verifyEmail();notify('Verification email sent. Check your inbox and spam folder, then choose I’ve verified my email.');}),button('I’ve verified my email',async()=>{const refreshed=await api.refreshIdentity();await renderUser(refreshed);notify(refreshed.emailVerified?'Email verified. You can submit your request now.':'Your email is not verified yet. Open the link in your inbox first.');}));return;
+   const p=doc.createElement('p');p.textContent=`Check your inbox at ${user.email}. Open the verification link; this page will update automatically. You can finish your application while you wait.`;
+   $('verification').append(p,button('Resend email',async()=>{await api.verifyEmail();notify('Verification email sent. Open the link in your inbox. This page will detect it automatically.');}));return;
   }
   try{const saved=await api.pilot.mine();if(version===generation&&saved)show(saved);}catch(e){if(version===generation)notify(error(e));}
  }
@@ -37,8 +37,8 @@ export function mountPilot(api, doc=document) {
  async function authenticate(action,registering=false){
   if(authBusy)return;authBusy=true;$('account-form').querySelectorAll('button').forEach(b=>b.disabled=true);
   try{const result=await action();await renderUser(result.user);
-   if(registering&&!result.user.emailVerified){try{await api.verifyEmail();notify('Account created. Check your inbox for the verification link, then return here.');}catch(e){notify('Your account was created, but the verification email could not be sent. Choose Send verification email to try again.');}}
-   else notify(result.user.emailVerified?'Signed in. Review your details, then submit your pilot request.':'Signed in. Verify your email using the buttons above before submitting.');
+   if(registering&&!result.user.emailVerified){try{await api.verifyEmail();notify('Account created. Check your inbox for the verification link, then return here.');}catch(e){notify('Your account was created, but the verification email could not be sent. Choose Resend email to try again.');}}
+   else notify(result.user.emailVerified?'Signed in. Review your details, then submit your pilot request.':'Signed in. Check your inbox for the verification link. This page will update automatically.');
   }catch(e){notify(error(e));if(e.code==='auth/email-already-in-use'){mode='login';updateMode();}}
   finally{authBusy=false;$('account-form').querySelectorAll('button').forEach(b=>b.disabled=false);}
  }
@@ -48,17 +48,28 @@ export function mountPilot(api, doc=document) {
   if(!$('account-email').reportValidity())return;const b=$('forgot-password');b.disabled=true;
   try{await api.resetPassword($('account-email').value.trim());notify('If this email has an account, a password-reset link has been sent. Check your inbox and spam folder.');}catch(e){notify(error(e));}finally{b.disabled=false;}
  };
- api.observe(user=>{if(!authBusy)renderUser(user);});
+ async function checkVerification(){
+  if(checking||authBusy||!currentUser||currentUser.emailVerified)return;
+  checking=true;const previous=currentUser,version=generation;
+  try{const refreshed=await api.refreshIdentity();if(version!==generation||currentUser!==previous)return;
+   if(refreshed?.emailVerified){await renderUser(refreshed);notify('Email verified. Your account is ready.');if(pendingSubmit){pendingSubmit=false;form.requestSubmit();}}
+  }catch{/* A temporary connection failure should not interrupt the application. */}finally{checking=false;}
+ }
+ doc.defaultView.addEventListener('focus',checkVerification);
+ doc.addEventListener('visibilitychange',()=>{if(!doc.hidden)checkVerification();});
+ const poll=doc.defaultView.setInterval(()=>{if(!doc.hidden)checkVerification();},5000);
+ doc.defaultView.addEventListener('pagehide',()=>doc.defaultView.clearInterval(poll),{once:true});
+ api.observe(user=>{if(!authBusy){if(!user)pendingSubmit=false;renderUser(user);}});
  form.addEventListener('submit',async e=>{
   e.preventDefault();if(authBusy)return;
   if(!form.checkValidity()){const invalid=form.querySelector('input:invalid,select:invalid,textarea:invalid');notify(invalid?.type==='checkbox'?'Please check the consent box before submitting.':'Please complete the required fields with valid values.');invalid?.focus();form.reportValidity();return;}
   if(!currentUser){notify('Create an account or sign in above to submit. You can use your school email or Google.');$('account-email').focus();return;}
-  if(!currentUser.emailVerified){notify('Verify your email using the buttons above before submitting.');$('verification').scrollIntoView?.({block:'center',behavior:'smooth'});return;}
+  if(!currentUser.emailVerified){pendingSubmit=true;submit.textContent='Waiting for email verification…';notify('Check your inbox for the verification link. This page will update automatically.');$('verification').scrollIntoView?.({block:'center',behavior:'smooth'});return;}
   const version=generation,values=Object.fromEntries(new doc.defaultView.FormData(form));form.querySelector('fieldset').disabled=true;notify('Saving your request…');const slow=setTimeout(()=>notify('Still waiting for the connection. Keep this page open; your request has not been confirmed yet.'),12000);
   try{await api.pilot.submit(values);if(version!==generation)return;show(await api.pilot.mine());doc.defaultView.dispatchEvent(new doc.defaultView.Event('rf:pilot-submitted'));status.textContent='';}catch(e){if(version===generation)notify(error(e));}finally{clearTimeout(slow);form.querySelector('fieldset').disabled=false;}
  });
 }
 if(typeof document!=='undefined'){
- try{mountPilot(await import('./owner/client.js?v=pilot-email-20261020'));}
+ try{mountPilot(await import('./owner/client.js?v=account-mail-20261021'));}
  catch{document.getElementById('status').textContent='Secure submission could not load. Refresh the page to try again.';document.getElementById('submit-request').textContent='Submission unavailable';}
 }

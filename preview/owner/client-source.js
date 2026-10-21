@@ -1,7 +1,9 @@
+import {accountMail} from '../auth-mail.js';
 import {initializeApp} from 'firebase/app';
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword,sendEmailVerification,reload,getIdToken} from 'firebase/auth';
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,signOut,createUserWithEmailAndPassword,applyActionCode,verifyPasswordResetCode,confirmPasswordReset,reload,getIdToken} from 'firebase/auth';
 import {getFirestore,doc,getDoc,getDocs,collection,query,orderBy,limit,runTransaction,serverTimestamp,Timestamp} from 'firebase/firestore';
 const app=initializeApp({apiKey:'AIzaSyA3uLzOVcNw9cFQ37pHnktHAVbBRASXico',authDomain:'reckoningfigures-bbdae.firebaseapp.com',projectId:'reckoningfigures-bbdae',appId:'1:174051558845:web:d459a96c6d94c108e63ed4'});
+import {rememberSchool} from '../school/recent-schools.js';
 const auth=getAuth(app),db=getFirestore(app);
 export const observe=cb=>onAuthStateChanged(auth,cb);
 export const login=(email,password)=>signInWithEmailAndPassword(auth,email,password);
@@ -22,6 +24,7 @@ export async function schoolContext(schoolId){
  const owner=await access(),member=await getDoc(doc(db,'schools',schoolId,'members',uid));
  if(!owner&&(!member.exists()||member.data().state!=='active'))throw Error('This account has not been added to this school, or its access was removed.');
  const s=await getDoc(doc(db,'schools',schoolId));if(!s.exists())throw Error('School not found.');
+ rememberSchool(uid,{id:s.id,...s.data()});
  return {school:{id:s.id,...s.data()},member:member.exists()?member.data():null,owner,uid};
 }
 export async function members(schoolId){const s=await getDocs(query(collection(db,'schools',schoolId,'members'),orderBy('label'),limit(500)));return s.docs.map(d=>({uid:d.id,...d.data()}));}
@@ -54,7 +57,7 @@ export const invitations=joinAPI(db,auth);
 
 import {staffAPI} from "../school/staff-api.js";
 export const staffInvitations=staffAPI(db,auth);
-export const verifyEmail=()=>sendEmailVerification(auth.currentUser);
+export const verifyEmail=()=>accountMail(auth,'verify');
 export async function refreshIdentity(){await reload(auth.currentUser);await getIdToken(auth.currentUser,true);return auth.currentUser;}
 
 import {socialAPI} from '../social-api.js';
@@ -62,3 +65,13 @@ export const social=socialAPI(db,auth);
 
 import {supportAPI} from '../support-api.js';
 export const support=supportAPI(db,auth);
+
+// Credentials and email delivery remain on the trusted backend.
+export const resetPassword=email=>accountMail(auth,'reset',email);
+
+import {pilotAPI} from '../pilot-api.js';
+export const pilot=pilotAPI(db,auth);
+
+export const applyVerification=code=>applyActionCode(auth,code);
+export const checkReset=code=>verifyPasswordResetCode(auth,code);
+export const finishReset=(code,password)=>confirmPasswordReset(auth,code,password);
