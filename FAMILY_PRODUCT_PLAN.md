@@ -35,3 +35,6 @@ Prepared `familyHub` callable and `/preview/family/dashboard.html` / `link.html`
 Activation: deploy school-mail codebase (now also containing familyHub), then set `ENABLED=true` in `preview/family/dashboard.js` and publish it. The owner client bundle includes the callable wrapper but linking stays disabled until activation. The new family routes are also added to the account-email return-path allowlist.
 
 Validation: 20 backend tests passed (7 family cases), plus family DOM flow and account action tests. Real authenticated parent/student linking and disconnection remain deployment acceptance tests. No real invitation was sent or account created during development. Assignments and notification delivery are separate next milestones. School pilot progress is independent of this family release.
+
+### Activation — 21 October 2026
+Owner confirmed familyHub deployment. Non-sending endpoint check returned the expected UNAUTHENTICATED response. Dashboard flag is enabled and both family entry pages use a fresh script version. Actual two-account linking, progress display and disconnection remain live acceptance checks; no student or family records were created by this activation.

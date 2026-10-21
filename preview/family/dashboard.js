@@ -1,5 +1,5 @@
 import * as api from '../owner/client.js?v=family-link-20261021';
-const ENABLED=false; // Activate after familyHub deployment is confirmed.
+const ENABLED=true; // familyHub deployment confirmed on 21 October 2026.
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const linking=location.pathname.endsWith('/link.html'),code=new URLSearchParams(location.hash.slice(1)).get('invite');
 let user=null,version=0,busy=false,registering=false;
