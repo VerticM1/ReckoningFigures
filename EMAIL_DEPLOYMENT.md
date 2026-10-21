@@ -67,7 +67,7 @@ Analytics keeps measurement ID G-B1SGPTYM48 and sends the current origin/path af
 
 New `accountEmail` callable in `school-mail` sends verification/reset messages using Resend from **Reckoning Figures <support@reckoningfigures.com>**. Firebase Admin generates the one-time codes; `/preview/account-action.html` applies them on our domain. No custom Firebase Hosting domain is needed for this handler. Only approved local return paths are supported. The handler removes the code from the address bar and has no analytics or third-party assets.
 
-Rollout is staged: `preview/auth-mail.js` currently has `BRANDED_EMAIL_ENABLED=false`. This preserves Firebase delivery until the callable is deployed. Deploy from the existing Cloud Shell checkout:
+Rollout is staged: `preview/auth-mail.js` initially used `BRANDED_EMAIL_ENABLED=false`. This preserves Firebase delivery until the callable is deployed. Deploy from the existing Cloud Shell checkout:
 
 ```bash
 cd ~/reckoning-mail-20261020
@@ -85,3 +85,6 @@ Pilot page now polls verification every 5 seconds while visible and checks on wi
 Deliverability: keep Resend domain verified; inspect Resend's Insights and receiving mailbox headers for SPF/DKIM/DMARC failures. Disable open/click tracking for authentication mail in Resend settings (dashboard action still required; not changed by this code). DNS and sender reputation affect spam placement; branded templates cannot guarantee inbox placement. Do not alter Microsoft 365 MX or replace existing SPF blindly. The specific spam cause has not been confirmed without message headers. Firebase-native messages outside these app entry points are not rerouted by this change.
 
 Validation: 13 backend unit tests; pilot UI fake-API flow test; action-page DOM tests for verification, redirect restriction, code removal, mismatched passwords and expired reset links. Live delivery of the new callable remains pending deployment and activation.
+
+### Activation confirmed — 21 October 2026
+Owner confirmed deployment. A non-sending unauthenticated verification request reached accountEmail and correctly returned UNAUTHENTICATED. Branded email flag is now enabled and both client bundles rebuilt. Live email receipt, reset completion and verification remain user acceptance checks; no test email was sent by this activation check.
