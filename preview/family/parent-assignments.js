@@ -1,4 +1,4 @@
-import {FAMILY_ASSIGNMENTS_ENABLED} from './assignment-config.js';
+import {FAMILY_ASSIGNMENTS_ENABLED} from './assignment-config.js?v=assignments-live-20261022';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function attachAssignments(root,api){
  if(!FAMILY_ASSIGNMENTS_ENABLED)return;

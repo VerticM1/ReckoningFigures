@@ -1,4 +1,4 @@
-import {attachAssignments} from './parent-assignments.js';
+import {attachAssignments} from './parent-assignments.js?v=assignments-live-20261022';
 import * as api from '../owner/client.js?v=family-link-20261021';
 const ENABLED=true; // familyHub deployment confirmed on 21 October 2026.
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
