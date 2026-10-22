@@ -1,0 +1,16 @@
+html[data-learner-theme] body{background:var(--bg)}
+html[data-learner-theme] .learn-shell,html[data-learner-theme] .learn-main,html[data-learner-theme] .learn-top,html[data-learner-theme] .sidebar{background:var(--bg)}
+html[data-learner-theme] .unit-banner,html[data-learner-theme] .learn-dialog,html[data-learner-theme] .node-preview,html[data-learner-theme] .family-assigned{background:var(--panel);border-color:var(--line);color:#f1f5f9}
+html[data-learner-theme] .nav .active{color:var(--blue);border-color:var(--blue);background:var(--panel)}
+html[data-learner-theme] .energy-flame .energy-shape>path:first-child{fill:var(--flame);stroke:var(--gold)}
+html[data-learner-theme] .energy-flame .energy-shape>path:nth-child(2){fill:var(--gold)}
+html[data-learner-theme] .energy-flame .energy-shape>path:nth-child(3){fill:#fff1f8}
+.appearance-button{margin-top:0!important;color:var(--blue)!important}
+.theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:22px 0}
+.theme-options button{display:flex;align-items:center;gap:10px;text-align:left;min-height:64px;padding:12px;border:2px solid var(--line);border-radius:16px;background:var(--bg);color:#f1f5f9;font:inherit;cursor:pointer}
+.theme-options button[aria-pressed=true]{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.theme-options button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.theme-swatch{width:30px;height:30px;border:3px solid;border-radius:50%;display:grid;place-items:center;flex-shrink:0}.theme-swatch i{width:12px;height:12px;border-radius:50%}.theme-note{font-size:13px;color:#bfcbd7}
+.assignment-status{color:var(--blue);font-weight:700}.assignment-status.completed{color:#9cdeac}.assignment-progress{display:block;width:100%;height:10px;margin:12px 0;accent-color:#9cdeac;border:0;border-radius:8px;overflow:hidden;background:var(--line)}.assignment-progress::-webkit-progress-bar{background:var(--line)}.assignment-progress::-webkit-progress-value{background:#9cdeac}.assignment-progress::-moz-progress-bar{background:#9cdeac}
+
+.figure-completed{display:block;color:#9cdeac;font-weight:700;font-size:14px;margin-top:6px}.homework-completion{margin:20px 0;padding:16px 20px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}

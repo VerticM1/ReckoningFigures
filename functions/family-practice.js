@@ -22,7 +22,7 @@ export function createFamilyPractice({db,auth,now=Date.now,random=randomUUID}){
  const allowed=l=>l&&!l.premium||l&&premium;
  const availableIds=lessons.filter(allowed).map(l=>l.id);
  if(action==='parentList')return {tasks:tasks.map(publicTask),catalog,availableIds};
- if(action==='studentList')return {paired:true,tasks:tasks.filter(t=>!t.cancelled&&taskStatus(t)!=='Completed').map(t=>({...publicTask(t),availableIds:t.lessonIds.filter(id=>availableIds.includes(id))}))};
+ if(action==='studentList')return {paired:true,tasks:tasks.filter(t=>!t.cancelled).map(t=>({...publicTask(t),availableIds:t.lessonIds.filter(id=>availableIds.includes(id))}))};
  if(action==='create'){
  if(!validId(data.id))fail('invalid-argument','Invalid assignment identifier.');
  let selected,title;if(data.kind==='unit'){const u=catalog.find(u=>u.id===data.selection);selected=u?.lessons;title=u?.name;}else if(data.kind==='figure'){const l=lessons.find(l=>l.id===data.selection);selected=l?[l]:null;title=l?'Figure '+l.id+' · '+l.title:null;}

@@ -99,3 +99,11 @@ Figures 061–063 are available for individual Premium practice. The complete ru
 ## Statistics classroom activation — 2026-10-13
 
 The owner reported publishing the complete updated rules. The classroom catalog now includes all 63 figures. This is user-reported Firebase activation, not independent inspection of production rules. Live student completion and teacher-report verification remains pending.
+
+
+## 22 October: homepage themes and assignment completion
+- Added device-saved Original, Pink Fire, Spring, Summer, Autumn, Winter and automatic Northern Hemisphere seasonal homepage palettes.
+- Parent assignments now show progress and a green Completed state; completed tasks remain visible only while the student has an active parent connection. Deploy updated school-mail functions to enable completed-task retention.
+- Controlled pilot: confirm one live parent assignment through completion after deployment.
+- Full paid family launch remains gated on billing and server-enforced entitlements, agreed pricing, child onboarding, and parent completion notifications. Educator review and privacy/accessibility/operations checks must be signed off before broad launch.
+- Completion indicators apply to all learners: independent course paths show explicit green Completed labels and unit progress; school homework shows assignment progress and saved figure checks. Parent linkage is required only for parent-assigned tasks.
