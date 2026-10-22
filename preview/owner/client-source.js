@@ -78,3 +78,4 @@ export const finishReset=(code,password)=>confirmPasswordReset(auth,code,passwor
 
 import {getFunctions,httpsCallable} from 'firebase/functions';
 export const family=data=>httpsCallable(getFunctions(app,'us-central1'),'familyHub')(data).then(result=>result.data);
+export const familyPractice=data=>httpsCallable(getFunctions(app,'us-central1'),'familyPractice')(data).then(result=>result.data);

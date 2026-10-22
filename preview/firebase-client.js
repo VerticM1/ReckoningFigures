@@ -15,3 +15,6 @@ export async function sync(uid,local){
  const ref=doc(db,'users',uid,'appProgress','v2');
  return runTransaction(db,async tx=>{const snapshot=await tx.get(ref);const merged=mergeProgress(local,snapshot.exists()?snapshot.data():{});const {xp,cloud,completedLessons,visits,practiceDays,sessions}=merged;tx.set(ref,{xp,cloud,completedLessons,visits,practiceDays,sessions,schemaVersion:2});return merged;});
 }
+
+import {getFunctions,httpsCallable} from 'firebase/functions';
+export const familyPractice=data=>httpsCallable(getFunctions(app,'us-central1'),'familyPractice')(data).then(result=>result.data);

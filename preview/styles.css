@@ -70,3 +70,4 @@
 .welcome-world{display:block;width:min(100%,480px);height:auto;margin:12px auto 24px}
 
 .welcome-world{width:min(100%,280px);max-height:240px;object-fit:cover;border-radius:24px}
+.family-assigned{margin:18px 0 24px;padding:22px;border:1px solid var(--blue,#5ed8f3);border-radius:18px;background:var(--panel,#152630)}.family-assigned h2{font-size:23px;margin:8px 0 16px}.family-assigned h3{font-size:16px;margin:12px 0 6px}.family-assigned p{font-size:14px;line-height:1.6}.family-assigned article+article{border-top:1px solid #40515a;margin-top:18px;padding-top:12px}.family-assigned article>div{display:flex;flex-wrap:wrap;gap:10px}.family-assigned button{min-height:44px;padding:10px 14px;border:1px solid #40515a;border-radius:9px}.family-assigned button:disabled{opacity:.55}.family-save-status:empty{display:none}

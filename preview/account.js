@@ -1,5 +1,5 @@
 let clientPromise;
-export const getClient=()=>clientPromise||(clientPromise=import('./vendor/firebase.js'));
+export const getClient=()=>clientPromise||(clientPromise=import('./vendor/firebase.js?v=family-practice-20261021'));
 export function showAccount(dialog,{user,status,onSync,onImport}){
  const content=dialog.querySelector('#dialog-body');content.innerHTML='<div class="account"><span class="eyebrow">YOUR PROGRESS</span><h2>Keep your momentum.</h2><p class="account-status" role="status"></p><div class="account-body"></div></div>';
  const message=content.querySelector('.account-status');message.textContent=user?`Signed in as ${user.email}. ${status}`:'Play as a guest, or sign in to keep progress across devices.';
