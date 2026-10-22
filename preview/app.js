@@ -1,4 +1,4 @@
-import {mountStudentAssignments,clearFamilyAssignments,saveFamilyAssignment} from './family/student-assignments.js';
+import {mountStudentAssignments,clearFamilyAssignments,saveFamilyAssignment} from './family/student-assignments.js?v=assignments-live-20261022';
 let familyRun=null;
 import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=1379d027d00c';
 const homework=await loadHomework();
