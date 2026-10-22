@@ -2,7 +2,7 @@ import {mountStudentAssignments,clearFamilyAssignments,saveFamilyAssignment} fro
 let familyRun=null;
 import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=1379d027d00c';
 const homework=await loadHomework();
-import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js?v=algebra-spark-20261022';
+import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js?v=equation-orbits-20261022';
 import { soundButton, bindSoundButton } from './sound.js';
 import { celebrateFinish } from './celebrations.js';
 import { getClient, showAccount } from './account.js';
