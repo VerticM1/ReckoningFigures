@@ -38,3 +38,7 @@ export const accountEmail = onCall({region:'us-central1',secrets:[resendKey],mem
 import {createFamilyService} from './family.js';
 export const familyHub = onCall({region:'us-central1',memory:'256MiB',timeoutSeconds:60,minInstances:0,maxInstances:1,concurrency:10,
  cors:['https://reckoningfigures.com','https://www.reckoningfigures.com','https://verticm1.github.io']},createFamilyService({db,auth:getAuth()}));
+
+import {createFamilyPractice} from './family-practice.js';
+export const familyPractice = onCall({region:'us-central1',memory:'256MiB',timeoutSeconds:60,minInstances:0,maxInstances:1,concurrency:10,
+ cors:['https://reckoningfigures.com','https://www.reckoningfigures.com','https://verticm1.github.io']},createFamilyPractice({db,auth:getAuth()}));

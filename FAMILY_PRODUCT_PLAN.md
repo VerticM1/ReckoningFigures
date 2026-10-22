@@ -38,3 +38,19 @@ Validation: 20 backend tests passed (7 family cases), plus family DOM flow and a
 
 ### Activation — 21 October 2026
 Owner confirmed familyHub deployment. Non-sending endpoint check returned the expected UNAUTHENTICATED response. Dashboard flag is enabled and both family entry pages use a fresh script version. Actual two-account linking, progress display and disconnection remain live acceptance checks; no student or family records were created by this activation.
+
+## Parent assignments — prepared 21 October 2026
+
+New `familyPractice` callable handles parent list/create/cancel and student list/start/complete. All operations require a live verified enabled account, active matching parent/student membership and the same family-link hash. Assignment data lives in private `familyWork/{linkHash}` documents; reconnecting creates a new scope and never reveals old assignments. No Firestore client access is granted.
+
+Parents select a figure or complete unit and optional date. Status is Not started, In progress, Completed or Cancelled. Creation uses an idempotent request ID. Up to 20 unfinished assignments per link; when creating, retain the most recent 20 completed/cancelled records plus unfinished work. This is a recent-history view, not a permanent report archive. Current catalog is Algebra 1 only; Pre-Algebra is not built yet.
+
+Student home includes no visible parent-assignment section unless the server confirms an active pairing AND at least one unfinished, uncancelled task. Guests, pending links, empty task lists and disconnected users see nothing. Section refreshes on focus and every 30 seconds while visible; network errors hide stale content. Starting and saving independently recheck linkage/cancellation/access. School homework takes its existing separate route and is unchanged.
+
+Each assigned figure requires a new server-issued practice session and a fresh completion from the lesson flow. Historic completedLessons never satisfy a new task. Completion retries are idempotent. These are app-reported completions, not proof of unaided work or proctored scores. Failed completion saves show a retry message and do not claim assignment success. New practice still contributes to normal personal progress, which syncs through the existing account mechanism.
+
+Premium is checked server-side using private `familyEntitlements/{studentUid}`: status active, courses containing algebra1, plus plan lifetime or monthly with a numeric future expiresAt in epoch milliseconds. No payment integration currently writes these documents. Do not trust the original localStorage Premium flag or manually grant access through the client. Until paid access is connected, the first two free units (figures 1–18) can be assigned; Premium selections are disabled. Entitlement loss also blocks in-flight completion. Parents cannot unlock Premium by assigning it.
+
+Deploy using the existing school-mail command, which includes the new familyPractice export. Then set `FAMILY_ASSIGNMENTS_ENABLED=true` in `preview/family/assignment-config.js` and publish; no bundle rebuild is needed for that flag. Dashboard/home assets and both SDK bundles are prepared. Parent linking remains active during this staged rollout. No new secrets or rules needed.
+
+Tests: 27 backend tests passed, including fresh reassignment, active-link isolation, unit progress, cancellation, disconnect/reconnect isolation, Premium checks, retries and stale sessions. Parent/student DOM tests cover conditional rendering, consent-preserving existing linking UI, unit selection, optional date, locked selections, errors/retry, cancellation, and account-bound saving. Real two-account assignment completion remains the post-deploy acceptance check. Completion emails/notifications are still not connected.

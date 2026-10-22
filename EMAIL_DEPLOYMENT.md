@@ -91,3 +91,6 @@ Owner confirmed deployment. A non-sending unauthenticated verification request r
 
 ## Deploy prepared familyHub callable
 The same codebase now includes familyHub. Deploy using the existing commands above; no new secret or Firestore rules are required. Then enable the staged family dashboard flag. The family service sends no emails, charges no payments and grants no Premium entitlement. See FAMILY_PRODUCT_PLAN.md for acceptance checks and current limitations.
+
+## Parent assignment backend
+`familyPractice` is included in the school-mail codebase. Deploy the usual command after pulling the prepared update, then activate the static assignment-config flag. Existing familyHub linking remains active. No new secrets or Firestore rule publication is required; assignments and entitlements are server-only collections.
