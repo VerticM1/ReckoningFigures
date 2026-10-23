@@ -60,3 +60,7 @@ Owner confirmed deployment. familyPractice returned the expected UNAUTHENTICATED
 
 ## Family release preparation — 22 October 2026
 New 13+ student signup route, email verification return route, completion feed and optional branded emails are prepared. Under-13 signup is closed pending an appropriate consent process. Parent confirmation still precedes progress sharing. Notifications derive from synced completed figures and are deduplicated per confirmed family link, with no student details in email. Billing is staged and disabled pending Stripe setup and approved prices. See FAMILY_BILLING_SETUP.md for the proposed $10k monthly-profit model, deployment and remaining acceptance gates. Proposed prices are not approved or published.
+
+
+## Approved pricing and revised profit goal
+Owner approved USD monthly totals of $7.99 / $12.99 / $16.99 / $19.99 and lifetime totals of $149 / $229 / $299 / $349 for 1 / 2 / 3 / 4 students respectively. This supersedes earlier unapproved pricing notes. Monthly profit goal revised to $5,000. Course coverage is unchanged: lifetime includes all future released courses. Public plan selector now displays approved amounts; checkout remains disabled pending Stripe setup and acceptance. See FAMILY_BILLING_SETUP.md for corrected planning arithmetic.

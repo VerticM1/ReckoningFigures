@@ -5,19 +5,19 @@
 - Completion activity and opt-in email delivery are prepared in school-mail. Deploy to activate. Existing families should save the completion-update preference once to establish the observation start time. No historical backfill. Updates represent newly synced completions, including imported progress; they do not prove a lesson was completed at notification time. Multiple newly synced figures in one write generate one generic email. First completion per figure per parent link is deduplicated; repeat practice does not send another message. Recent feed retains 40 items per link, dashboard 40 total. Disconnects and email opt-out are rechecked immediately before delivery. Delivery cannot retract an already accepted email.
 - Added private familyActivity, familyNotifications and familyPurchases collections; client rules must continue denying direct access.
 - Paid access in the redesigned learner homepage is now checked against the backend, not a browser Premium flag. Static lesson assets and the legacy original app remain a paid-launch security review item; this is not a complete content-delivery paywall.
-- Stripe billing source and disabled client controls are prepared. Not yet exported/deployed, not tested against a real Stripe sandbox, no real charges possible from these controls. Stripe prices remain blank and no public prices are published.
+- Stripe billing source and disabled client controls are prepared. Not yet exported/deployed, not tested against a real Stripe sandbox, no real charges possible from these controls. Stripe prices remain blank and approved public prices are displayed; purchases remain closed.
 
-## Proposed prices — NOT approved
+## Approved prices — owner confirmed
 | Students | Monthly total | Monthly per student | Lifetime total |
 |---|---:|---:|---:|
-| 1 | $14.99 | $14.99 | $299 |
-| 2 | $24.99 | $12.50 | $499 |
-| 3 | $31.99 | $10.66 | $649 |
-| 4 | $37.99 | $9.50 | $749 |
+| 1 | $7.99 | $7.99 | $149 |
+| 2 | $12.99 | $6.50 | $229 |
+| 3 | $16.99 | $5.66 | $299 |
+| 4 | $19.99 | $5.00 | $349 |
 
 Lifetime permanently includes Pre-Algebra, Algebra 1 and all future released courses for the chosen number of learners. Only Algebra 1 exists today. Lifetime sales create future support/hosting obligations; do not count them as recurring monthly revenue.
 
-Owner goal: at least $10,000 monthly profit. Illustrative calculation, not forecast: 60% one-student, 25% two-student, 10% three-student and 5% four-student subscribers yields $20.34 average monthly revenue per paying household. At US domestic card fees of 2.9% + $0.30 and Stripe Billing pay-as-you-go 0.7%, contribution before other costs is $19.30776/account/month. With an ASSUMED $3,000/month for all remaining operating costs, 674 active paying households generate about $10,013 pre-income-tax operating profit. Actual hosting, customer support, acquisition costs, refunds, tax tooling and churn may change this substantially. Owner salary must be included in expenses if profit is intended after salary. Sources checked 22 October: https://stripe.com/pricing and https://stripe.com/billing/pricing .
+Owner revised goal: $5,000 monthly profit. Illustrative calculation, not forecast: 60% one-student, 25% two-student, 10% three-student and 5% four-student subscribers gives $10.74 average monthly revenue per household. Using the previously checked fee assumption (2.9% + $0.30 domestic card processing, plus 0.7% Billing), contribution is $10.05336/month before other expenses. At assumed other expenses of $1,000/month, 597 active paying households are needed for $5,000 pre-income-tax operating profit; at $2,000/month, 697 households. This corrects the earlier conversational estimate of $10.84 average revenue. Actual expenses, refunds, acquisition costs and churn must be measured; include owner salary in expenses if applicable. Lifetime sales are not recurring revenue. Fee sources previously checked: https://stripe.com/pricing and https://stripe.com/billing/pricing .
 
 ## Activate notifications first
 Use the existing Cloud Shell checkout:
