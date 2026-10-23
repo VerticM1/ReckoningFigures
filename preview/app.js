@@ -6,7 +6,7 @@ const homework=await loadHomework();
 import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js?v=equation-orbits-20261022';
 import { soundButton, bindSoundButton } from './sound.js';
 import { celebrateFinish } from './celebrations.js';
-import { getClient, showAccount } from './account.js';
+import { getClient, showAccount } from './account.js?v=student-signup-20261022';
 import { prepareProgress, mergeProgress, earnXP } from './sync-model.js';
 import { league, leagueHTML } from './practice-league.js';
 import { bolt, energyIcon, brandObject, homeWidgets, checkpointHTML } from './brand-art.js';
@@ -72,9 +72,9 @@ function home(){
  mountStudentAssignments({anchor:app.querySelector('.learning-plan-link'),getUser:()=>accountUser,getApi:getClient,course,start});
  const openDialog=(html)=>{document.querySelector('#learn-dialog').classList.remove('league-dialog');document.querySelector('#dialog-body').innerHTML=html;document.querySelector('#learn-dialog').showModal();};
  mountThemePicker(app.querySelector('.learning-plan-link'),openDialog);
- const launch=(i)=>{const lesson=lessons[i];if(!lesson.available){openDialog('<div class="figure-detail"><h2>Lesson not available yet</h2><p>This lesson file is missing from the original project. Your progress is safe; choose another figure.</p></div>');return;}
- let premium=false;try{premium=JSON.parse(localStorage.getItem('userProgress')||'{}').premium===true;}catch{}
- if(lesson.premium&&!premium){openDialog('<div class="figure-detail"><h2>Premium lesson</h2><p>This lesson requires Premium access in the original app. That requirement is preserved here.</p><a class="small-link" href="../main-menu-modules.html">Open the original app</a></div>');return;}start(lesson);};
+ const launch=async(i)=>{const lesson=lessons[i];if(!lesson.available){openDialog('<div class="figure-detail"><h2>Lesson not available yet</h2><p>This lesson file is missing from the original project. Your progress is safe; choose another figure.</p></div>');return;}
+ if(lesson.premium){const uid=accountUser?.uid;if(!uid){openDialog('<h2>Keep learning with Premium</h2><p>Sign in to check your access.</p><a href="family/">Explore plans</a>');return;}try{const access=await(await getClient()).familyPractice({action:'access'});if(accountUser?.uid!==uid)return;if(!access.premium){openDialog('<h2>Premium figure</h2><p>This figure requires an active Premium plan. Your free practice remains available.</p><a href="family/">Explore plans</a>');return;}}catch{openDialog('<h2>Could not check access</h2><p>Check your connection and try again. Your progress is safe.</p>');return;}}
+ start(lesson);};
  document.querySelector('#edit-learning-plan').onclick=openWelcome;
  document.querySelector('#start').onclick=()=>launch(current);
  document.querySelectorAll('[data-figure]').forEach(button=>button.onclick=()=>{const i=Number(button.dataset.figure);if(i===current){document.querySelector('#start').focus();return;}openDialog(`<div class="figure-detail"><span class="eyebrow">FIGURE ${String(lessons[i].id).padStart(3,'0')}</span><h2>${figures[i]}</h2><p>${!lessons[i].available?'The original source file is missing.':progress.completedLessons.includes(lessons[i].id)?'Revisit this figure and strengthen your skills.':'Practice this figure in the redesigned lesson experience.'}</p><button class="primary" id="launch-figure">${lessons[i].available?'Open lesson':'View availability'}</button></div>`);document.querySelector('#launch-figure').onclick=()=>{document.querySelector('#learn-dialog').close();launch(i);};});
