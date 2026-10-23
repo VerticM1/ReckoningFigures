@@ -5,7 +5,7 @@
 - Completion activity and opt-in email delivery are prepared in school-mail. Deploy to activate. Existing families should save the completion-update preference once to establish the observation start time. No historical backfill. Updates represent newly synced completions, including imported progress; they do not prove a lesson was completed at notification time. Multiple newly synced figures in one write generate one generic email. First completion per figure per parent link is deduplicated; repeat practice does not send another message. Recent feed retains 40 items per link, dashboard 40 total. Disconnects and email opt-out are rechecked immediately before delivery. Delivery cannot retract an already accepted email.
 - Added private familyActivity, familyNotifications and familyPurchases collections; client rules must continue denying direct access.
 - Paid access in the redesigned learner homepage is now checked against the backend, not a browser Premium flag. Static lesson assets and the legacy original app remain a paid-launch security review item; this is not a complete content-delivery paywall.
-- Stripe billing source and disabled client controls are prepared. Not yet exported/deployed, not tested against a real Stripe sandbox, no real charges possible from these controls. Stripe prices remain blank and approved public prices are displayed; purchases remain closed.
+- Stripe billing source and disabled client controls are prepared. Not yet exported/deployed, not tested against a real Stripe sandbox, no real charges possible from these controls. Eight approved sandbox prices are now configured; purchases remain closed.
 
 ## Approved prices — owner confirmed
 | Students | Monthly total | Monthly per student | Lifetime total |
@@ -41,3 +41,19 @@ After deployment: use an existing linked parent account, enable completion email
 8. Before live release: approve taxes/refund/terms policy, enable receipts, review webhook reconciliation/recovery, finalize seat reassignment/resubscription, prevent legacy Premium bypass, finish privacy/consent review, then separately configure live keys/prices/webhook and reverify live readiness.
 
 This document records remaining setup and acceptance checks, not a claim of paid-launch readiness.
+
+## Stripe planner review — 23 October 2026
+
+Connected account: `acct_1UTipEQp6yeVUeiY` (Reckoning Figures sandbox, livemode false). Accepted planner guide: `iguide_61VdBm9ANpJ7SOh5g41Qp6yeVUeiY`. Created and retrieved all eight USD prices and verified approved amounts and monthly/one-time types. IDs are recorded in functions/billing-config.js; enabled remains false. No checkout payment or deployed webhook has been tested.
+
+Plan: hosted Checkout with fixed household bundles (quantity 1); Billing for monthly subscriptions; Customer Portal for payment updates, invoices and cancellation; one-time Checkout with invoice creation for lifetime purchases. Firebase verified webhooks remain the authority for access. School invoicing is a later workflow. Tax requires business location, registration, product tax code and inclusive/exclusive pricing review before activation. No tax registrations or automatic_tax settings were created.
+
+Remaining implementation checks before enabling checkout:
+- Replace fixed card payment methods with Dashboard-managed dynamic methods after repairing order rollover. The current 40-minute pending timeout can overwrite an unresolved order. Reconcile/expire old sessions before allowing new orders, preserving completed sessions with delayed payments. Test retries and late webhooks.
+- Add invoice_creation for lifetime purchases and configure invoice branding.
+- Verify flexible billing mode and integration identifier against installed SDK/API before adding parameters.
+- Add webhook event filtering, async failure handling and replay tests. Verify subscription quantity as well as price; preserve signature, environment, server price and paid-invoice checks.
+- Resolve cancelled-subscription repurchase, customer reuse and seat reassignment before paid launch.
+- Configure Customer Portal and sandbox secrets. Deploy after checkout fixes, then run step 7 acceptance tests. Browser redirects never grant access.
+
+Next owner setup: store the sandbox restricted API key privately using Firebase Secret Manager (step 3). Do not paste credentials into chat or source. Connecting Stripe to ChatGPT does not supply a server key to Firebase. Public billing stays disabled until fixes and sandbox tests pass.
