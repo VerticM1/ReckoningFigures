@@ -17,9 +17,11 @@ export function createFamilyService({db,auth,now=Date.now,token=()=>randomBytes(
  const linkRef=()=>{if(typeof code!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(code))fail('invalid-argument','This family invitation is incomplete.');return db.doc('familyLinks/'+digest(code));};
  if(action==='dashboard')return db.runTransaction(async tx=>{
  const [h,m]=await Promise.all([tx.get(home),tx.get(mine)]),slots=h.data()?.slots||[null,null,null,null];
- const children=await Promise.all(slots.map(async(s,i)=>{if(!s)return {slot:i,state:'empty'};const result={slot:i,label:s.label,state:s.state,expiresAt:s.expiresAt};if(s.state==='pending')result.studentEmail=s.studentEmail;if(s.state==='active'){const membership=await tx.get(db.doc('familyStudents/'+s.studentUid));if(membership.data()?.parentUid!==uid||membership.data()?.state!=='active')return {slot:i,state:'empty'};result.progress=progressSummary((await tx.get(db.doc('users/'+s.studentUid+'/appProgress/v2'))).data());}return result;}));
- return {children,sharing:m.exists?{state:m.data().state,parentEmail:m.data().parentEmail}:null};
+ const children=await Promise.all(slots.map(async(s,i)=>{if(!s)return {slot:i,state:'empty'};const result={slot:i,label:s.label,state:s.state,expiresAt:s.expiresAt};if(s.state==='pending')result.studentEmail=s.studentEmail;if(s.state==='active'){const membership=await tx.get(db.doc('familyStudents/'+s.studentUid));if(membership.data()?.parentUid!==uid||membership.data()?.state!=='active'||membership.data()?.hash!==s.hash||membership.data()?.slot!==i)return {slot:i,state:'empty'};result.progress=progressSummary((await tx.get(db.doc('users/'+s.studentUid+'/appProgress/v2'))).data());}return result;}));
+ const feeds=await Promise.all(slots.map(async(s,i)=>s?.state==='active'&&children[i].state==='active'?((await tx.get(db.doc('familyActivity/'+s.hash))).data()?.items||[]).map(item=>({...item,slot:i,label:s.label})):[]));
+ return {notifications:{email:h.data()?.notifications?.email===true},activity:feeds.flat().sort((a,b)=>b.at-a.at).slice(0,40),children,sharing:m.exists?{state:m.data().state,parentEmail:m.data().parentEmail}:null};
  });
+ if(action==='notifications'){if(typeof request.data.email!=='boolean')fail('invalid-argument','Choose an email preference.');await db.runTransaction(async tx=>{const h=(await tx.get(home)).data();tx.set(home,{slots:(h?.slots||[null,null,null,null]).map(s=>s?.state==='active'&&!s.activeSince?{...s,activeSince:now()}:s),notifications:{email:request.data.email,enabledAt:request.data.email?(h?.notifications?.email?h.notifications.enabledAt:now()):0}},{merge:true});});return {ok:true};}
  if(action==='invite'){
  const i=index(),name=safeLabel(label);if(!name||name.length>40)fail('invalid-argument','Enter a nickname of 1–40 characters.');if(request.data.guardian!==true)fail('failed-precondition','Confirm you are the parent or guardian.');
  const raw=token(),hash=digest(raw),expiresAt=now()+86400000;
@@ -38,7 +40,7 @@ export function createFamilyService({db,auth,now=Date.now,token=()=>randomBytes(
  }
  if(action==='approve'||action==='remove'){
  const i=index();await db.runTransaction(async tx=>{const h=(await tx.get(home)).data(),slots=h?.slots,s=slots?.[i];if(!s)fail('not-found','This link no longer exists.');const student=s.studentUid?db.doc('familyStudents/'+s.studentUid):null,m=student?(await tx.get(student)).data():null;
- if(action==='approve'){if(s.state!=='pending'||s.expiresAt<=now()||m?.parentUid!==uid||m?.hash!==s.hash)fail('failed-precondition','This request is unavailable. Remove it and create a new invitation.');slots[i]={...s,state:'active'};tx.set(student,{state:'active'},{merge:true});tx.set(db.doc('familyLinks/'+s.hash),{state:'accepted'},{merge:true});}
+ if(action==='approve'){if(s.state!=='pending'||s.expiresAt<=now()||m?.parentUid!==uid||m?.hash!==s.hash)fail('failed-precondition','This request is unavailable. Remove it and create a new invitation.');slots[i]={...s,state:'active',activeSince:now()};tx.set(student,{state:'active'},{merge:true});tx.set(db.doc('familyLinks/'+s.hash),{state:'accepted'},{merge:true});}
  else{slots[i]=null;if(m?.parentUid===uid&&m?.hash===s.hash)tx.delete(student);tx.set(db.doc('familyLinks/'+s.hash),{state:'revoked'},{merge:true});}
  tx.set(home,{slots},{merge:true});});return {ok:true};
  }

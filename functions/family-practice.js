@@ -1,3 +1,4 @@
+import {learnerAccess} from './billing.js';
 import {randomUUID} from 'node:crypto';
 import {HttpsError} from 'firebase-functions/v2/https';
 import {catalog} from './family-catalog.js';
@@ -10,7 +11,9 @@ const publicTask=t=>({id:t.id,title:t.title,lessonIds:t.lessonIds,due:t.due,crea
 export function createFamilyPractice({db,auth,now=Date.now,random=randomUUID}){
  return async request=>{
  const uid=request.auth?.uid;if(!uid)fail('unauthenticated','Sign in to continue.');const user=await auth.getUser(uid);if(user.disabled||!user.emailVerified)fail('permission-denied','Verify your email first.');
- const data=request.data||{},action=data.action,parentAction=['parentList','create','cancel'].includes(action);if(![...['parentList','create','cancel'],'studentList','start','complete'].includes(action))fail('invalid-argument','Unknown assignment action.');
+ const data=request.data||{},action=data.action;
+ if(action==='access')return db.runTransaction(async tx=>({premium:await learnerAccess(tx,db,uid,now())}));
+ const parentAction=['parentList','create','cancel'].includes(action);if(![...['parentList','create','cancel'],'studentList','start','complete'].includes(action))fail('invalid-argument','Unknown assignment action.');
  return db.runTransaction(async tx=>{
  let membership,home,slot,studentUid;
  if(parentAction){if(!Number.isInteger(data.slot)||data.slot<0||data.slot>3)fail('invalid-argument','Choose a student.');home=(await tx.get(db.doc('familyHomes/'+uid))).data();slot=home?.slots?.[data.slot];studentUid=slot?.studentUid;if(studentUid)membership=(await tx.get(db.doc('familyStudents/'+studentUid))).data();}
@@ -18,7 +21,7 @@ export function createFamilyPractice({db,auth,now=Date.now,random=randomUUID}){
  const paired=slot?.state==='active'&&membership?.state==='active'&&slot.studentUid===studentUid&&slot.hash===membership.hash&&(!parentAction||membership.parentUid===uid);
  if(!paired){if(action==='studentList')return {paired:false,tasks:[]};fail('permission-denied','This parent connection is no longer active.');}
  const work=db.doc('familyWork/'+membership.hash),record=(await tx.get(work)).data()||{},tasks=record.tasks||[];
- const entitlement=(await tx.get(db.doc('familyEntitlements/'+studentUid))).data(),premium=premiumAccess(entitlement,now());
+ const entitlement=(await tx.get(db.doc('familyEntitlements/'+studentUid))).data(),premium=premiumAccess(entitlement,now())||await learnerAccess(tx,db,studentUid,now());
  const allowed=l=>l&&!l.premium||l&&premium;
  const availableIds=lessons.filter(allowed).map(l=>l.id);
  if(action==='parentList')return {tasks:tasks.map(publicTask),catalog,availableIds};

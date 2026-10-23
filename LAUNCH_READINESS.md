@@ -107,3 +107,8 @@ The owner reported publishing the complete updated rules. The classroom catalog 
 - Controlled pilot: confirm one live parent assignment through completion after deployment.
 - Full paid family launch remains gated on billing and server-enforced entitlements, agreed pricing, child onboarding, and parent completion notifications. Educator review and privacy/accessibility/operations checks must be signed off before broad launch.
 - Completion indicators apply to all learners: independent course paths show explicit green Completed labels and unit progress; school homework shows assignment progress and saved figure checks. Parent linkage is required only for parent-assigned tasks.
+
+### Family billing/onboarding/update preparation
+- Prepared 13+ student signup and optional completion emails/private activity feed; user must deploy new notification exports and test real receipt. Under-13 consent remains a gate.
+- Staged Stripe checkout/webhook/portal and backend access source, disabled and unexported pending Stripe sandbox setup, approved prices and acceptance tests. Do not describe billing as live.
+- See FAMILY_BILLING_SETUP.md for setup, cost assumptions and outstanding paid-launch gates including legacy/static-content access, resubscription and seat changes.

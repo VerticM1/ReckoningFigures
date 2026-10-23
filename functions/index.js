@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
-import { onDocumentCreated, onDocumentUpdated } from 'firebase-functions/v2/firestore';
+import { onDocumentCreated, onDocumentUpdated, onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { defineSecret } from 'firebase-functions/params';
 import { millis } from './mail.js';
 import { createDispatcher } from './dispatcher.js';
@@ -42,3 +42,8 @@ export const familyHub = onCall({region:'us-central1',memory:'256MiB',timeoutSec
 import {createFamilyPractice} from './family-practice.js';
 export const familyPractice = onCall({region:'us-central1',memory:'256MiB',timeoutSeconds:60,minInstances:0,maxInstances:1,concurrency:10,
  cors:['https://reckoningfigures.com','https://www.reckoningfigures.com','https://verticm1.github.io']},createFamilyPractice({db,auth:getAuth()}));
+
+import {createCompletionRecorder} from './family-notifications.js';
+const recordCompletion=createCompletionRecorder({db});
+export const familyProgressUpdates=onDocumentWritten({region:'us-central1',document:'users/{uid}/appProgress/v2',retry:true,maxInstances:1},event=>recordCompletion({uid:event.params.uid,before:event.data?.before.data(),after:event.data?.after.data(),at:event.data?.after.updateTime?.toMillis()}));
+export const familyCompletionEmail=onDocumentCreated({...options,document:'familyNotifications/{id}'},event=>dispatch('family',event.params.id,event.data?.data().at));

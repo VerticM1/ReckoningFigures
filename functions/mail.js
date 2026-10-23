@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import {prepareCompletionMail} from './family-notifications.js';
 import { renderEmail } from './email-templates.js';
 
 export const BASE = 'https://reckoningfigures.com/';
@@ -15,7 +16,7 @@ export const licenseOpen = (school, now) => school && ['pilot', 'active'].includ
 export async function prepareMail(kind, id, { read, user }, now = Date.now()) {
   if (!validId(id)) return null;
   let to, data, school;
-  if (kind === 'pilot') {
+  if(kind==='family'){to=await prepareCompletionMail(id,{read,user});if(!to)return null;data={actionUrl:BASE+'preview/family/dashboard.html'};} else if (kind === 'pilot') {
     const app = await read(`pilotApplications/${id}`);
     if (!app || app.uid !== id || !app.consent || app.status === 'closed') return null;
     const account = await user(id);
@@ -46,9 +47,9 @@ export async function prepareMail(kind, id, { read, user }, now = Date.now()) {
   } else return null;
   if (!validEmail(to)) return null;
   const rendered = renderEmail(kind, { ...data, logoUrl: `${BASE}preview/assets/brand-transparent.png`,
-    helpText: 'Need help? Reply to this email to contact the Reckoning Figures schools team.' });
-  return { from: 'Reckoning Figures Schools <schools@reckoningfigures.com>',
-    to: [to.toLowerCase()], reply_to: 'schools@reckoningfigures.com', ...rendered };
+    helpText: kind==='family'?'Manage completion emails in your parent workspace. Reply to support@reckoningfigures.com for help.':'Need help? Reply to this email to contact the Reckoning Figures schools team.' });
+  return { from: kind==='family'?'Reckoning Figures <support@reckoningfigures.com>':'Reckoning Figures Schools <schools@reckoningfigures.com>',
+    to: [to.toLowerCase()], reply_to: kind==='family'?'support@reckoningfigures.com':'schools@reckoningfigures.com', ...rendered };
 }
 
 export function claimDecision(record, eventTime, now) {

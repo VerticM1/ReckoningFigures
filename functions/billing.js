@@ -1,0 +1,53 @@
+import {HttpsError} from 'firebase-functions/v2/https';
+import {randomUUID} from 'node:crypto';
+const fail=(code,message)=>{throw new HttpsError(code,message);};
+const BASE='https://reckoningfigures.com/preview/family/';
+export const purchaseActive=(p,now=Date.now())=>p?.status==='active'&&!p.paymentReview&&(p.plan==='lifetime'||p.plan==='monthly'&&p.expiresAt>now);
+export async function learnerAccess(tx,db,uid,now=Date.now()){
+ const own=(await tx.get(db.doc('familyPurchases/'+uid))).data();if(own?.audience==='self'&&purchaseActive(own,now))return true;
+ const m=(await tx.get(db.doc('familyStudents/'+uid))).data();if(m?.state!=='active')return false;
+ const h=(await tx.get(db.doc('familyHomes/'+m.parentUid))).data(),p=(await tx.get(db.doc('familyPurchases/'+m.parentUid))).data(),slot=h?.slots?.[m.slot];
+ return Boolean(p?.audience==='family'&&purchaseActive(p,now)&&m.slot<p.seats&&slot?.state==='active'&&slot.studentUid===uid&&slot.hash===m.hash);
+}
+export function createBilling({db,auth,stripe,config,now=Date.now,uuid=randomUUID}){
+ return async request=>{
+ const uid=request.auth?.uid;if(!uid)fail('unauthenticated','Sign in first.');const account=await auth.getUser(uid);if(account.disabled||!account.emailVerified)fail('permission-denied','Verify your email first.');
+ const data=request.data||{},ref=db.doc('familyPurchases/'+uid);
+ if(data.action==='access')return db.runTransaction(async tx=>({premium:await learnerAccess(tx,db,uid,now())}));
+ if(data.action==='status'){const p=(await ref.get()).data();return {enabled:config.enabled,active:purchaseActive(p,now()),plan:p?.plan||null,seats:p?.seats||0,audience:p?.audience||null,expiresAt:p?.expiresAt||null,test:!config.live};}
+ if(!config.enabled)fail('failed-precondition','Payments are not open yet.');
+ if(data.action==='portal'){const p=(await ref.get()).data();if(!p?.customer)fail('failed-precondition','No billing account found.');return {url:(await stripe.billingPortal.sessions.create({customer:p.customer,return_url:BASE+'dashboard.html'})).url};}
+ if(data.action!=='checkout')fail('invalid-argument','Unknown billing action.');
+ const {plan,seats,audience}=data,price=config.prices[plan]?.[seats];if(!['monthly','lifetime'].includes(plan)||!Number.isInteger(seats)||seats<1||seats>4||!['self','family'].includes(audience)||audience==='self'&&seats!==1||!price)fail('invalid-argument','Choose an available plan.');
+ const verified=await stripe.prices.retrieve(price);if(!verified.active||verified.livemode!==config.live||verified.currency!==config.currency||(plan==='monthly'?(verified.recurring?.interval!=='month'||verified.recurring.interval_count!==1):Boolean(verified.recurring)))fail('failed-precondition','This plan is not configured correctly.');
+ // One checkout per account. A pending session is resumed, never duplicated on double-click/retry.
+ const order=await db.runTransaction(async tx=>{const p=(await tx.get(ref)).data();if(p?.subscription||p?.paymentReview)fail('failed-precondition','Manage your existing billing account before starting another purchase.');if(purchaseActive(p,now()))fail('failed-precondition','You already have an active plan. Open Manage billing.');if(p?.order&&p.pendingUntil>now()){if(p.plan!==plan||p.seats!==seats||p.audience!==audience)fail('failed-precondition','Finish your open checkout or wait 40 minutes before changing plans.');return p;}
+ const next={order:uuid(),uid,plan,seats,audience,status:'pending',price,pendingUntil:now()+40*60000,checkoutEmail:account.email};tx.set(ref,next);return next;});
+ const session=await stripe.checkout.sessions.create({mode:plan==='monthly'?'subscription':'payment',payment_method_types:['card'],line_items:[{price,quantity:1}],customer_email:order.checkoutEmail,client_reference_id:uid,metadata:{uid,order:order.order},...(plan==='monthly'?{subscription_data:{metadata:{uid,order:order.order}}}:{customer_creation:'always',payment_intent_data:{metadata:{uid,order:order.order}}}),success_url:BASE+'dashboard.html?checkout=returned',cancel_url:BASE+'?checkout=cancelled',expires_at:Math.floor((order.pendingUntil-5*60000)/1000)},{idempotencyKey:'checkout-'+order.order});
+ await db.runTransaction(async tx=>{const p=(await tx.get(ref)).data();if(p?.order===order.order)tx.set(ref,{session:session.id},{merge:true});});return {url:session.url,test:!config.live};
+ };
+}
+// Re-read current Stripe objects instead of trusting a redirect or out-of-order event snapshot.
+export function createBillingWebhook({db,stripe,config,secret,now=Date.now}){
+ return async (req,res)=>{
+ let event;try{event=stripe.webhooks.constructEvent(req.rawBody,req.headers['stripe-signature'],secret());}catch{return res.status(400).send('Invalid signature');}
+ if(event.livemode!==config.live)return res.status(400).send('Wrong payment environment');
+ try{
+ const object=event.data.object;let uid=object.metadata?.uid,order=object.metadata?.order;
+ if(!uid&&object.charge){const charge=await stripe.charges.retrieve(typeof object.charge==='string'?object.charge:object.charge.id);if(charge.payment_intent){const intent=await stripe.paymentIntents.retrieve(charge.payment_intent);uid=intent.metadata?.uid;order=intent.metadata?.order;}if(!uid)object.customer=charge.customer;}
+
+ if(!uid&&object.customer){const matches=await db.collection('familyPurchases').where('customer','==',typeof object.customer==='string'?object.customer:object.customer.id).limit(1).get();const p=matches.docs[0]?.data();uid=p?.uid;order=p?.order;}
+ if(!uid||!order)return res.status(200).send('Ignored');
+ const ref=db.doc('familyPurchases/'+uid),p=(await ref.get()).data();if(p?.order!==order)return res.status(200).send('Old order');
+ const sessionId=p.session||(object.object==='checkout.session'?object.id:null);if(!sessionId)throw Error('Checkout not recorded yet');
+ const session=await stripe.checkout.sessions.retrieve(sessionId);if(session.metadata?.uid!==uid||session.metadata?.order!==order)throw Error('Order mismatch');
+ let status='inactive',expiresAt=0;
+ if(p.plan==='monthly'&&session.subscription){const sub=await stripe.subscriptions.retrieve(session.subscription,{expand:['latest_invoice']});const item=sub.items.data[0];if(sub.items.data.length!==1||item.price.id!==p.price)throw Error('Unexpected subscription price');expiresAt=item.current_period_end*1000;status=sub.status==='active'&&sub.latest_invoice?.status==='paid'&&expiresAt>now()?'active':'inactive';}
+ if(p.plan==='lifetime'&&session.payment_status==='paid'&&session.payment_intent){const intent=await stripe.paymentIntents.retrieve(session.payment_intent,{expand:['latest_charge']});if(intent.status==='succeeded'&&!intent.latest_charge?.refunded&&!intent.latest_charge?.amount_refunded&&!intent.latest_charge?.disputed)status='active';}
+ // Refunds/disputes create a persistent review hold; later duplicate events cannot restore access.
+ const review=['charge.refunded','charge.dispute.created','charge.dispute.updated'].includes(event.type);
+ await db.runTransaction(async tx=>{const current=(await tx.get(ref)).data();if(current?.order!==order)return;tx.set(ref,{status:review||current.paymentReview?'inactive':status,paymentReview:Boolean(review||current.paymentReview),expiresAt,customer:typeof session.customer==='string'?session.customer:session.customer?.id||null,session:session.id,subscription:typeof session.subscription==='string'?session.subscription:null,updatedAt:now()},{merge:true});});
+ return res.status(200).send('OK');
+ }catch{return res.status(500).send('Please retry');}
+ };
+}

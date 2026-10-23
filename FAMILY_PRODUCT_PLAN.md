@@ -57,3 +57,6 @@ Tests: 27 backend tests passed, including fresh reassignment, active-link isolat
 
 ### Assignment activation — 22 October 2026
 Owner confirmed deployment. familyPractice returned the expected UNAUTHENTICATED response to a non-mutating unauthenticated availability check. Assignment flag enabled and entry/module URLs refreshed to avoid stale disabled settings. No family records or assignments were created by activation. Live two-account assignment completion remains the acceptance check.
+
+## Family release preparation — 22 October 2026
+New 13+ student signup route, email verification return route, completion feed and optional branded emails are prepared. Under-13 signup is closed pending an appropriate consent process. Parent confirmation still precedes progress sharing. Notifications derive from synced completed figures and are deduplicated per confirmed family link, with no student details in email. Billing is staged and disabled pending Stripe setup and approved prices. See FAMILY_BILLING_SETUP.md for the proposed $10k monthly-profit model, deployment and remaining acceptance gates. Proposed prices are not approved or published.
