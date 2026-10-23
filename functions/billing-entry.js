@@ -1,4 +1,4 @@
-// Staged deployment entry. Export from index.js only after sandbox configuration and tests.
+// Requires STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET in Secret Manager.
 import Stripe from 'stripe';
 import {getFirestore} from 'firebase-admin/firestore';
 import {getAuth} from 'firebase-admin/auth';

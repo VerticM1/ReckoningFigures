@@ -5,7 +5,7 @@
 - Completion activity and opt-in email delivery are prepared in school-mail. Deploy to activate. Existing families should save the completion-update preference once to establish the observation start time. No historical backfill. Updates represent newly synced completions, including imported progress; they do not prove a lesson was completed at notification time. Multiple newly synced figures in one write generate one generic email. First completion per figure per parent link is deduplicated; repeat practice does not send another message. Recent feed retains 40 items per link, dashboard 40 total. Disconnects and email opt-out are rechecked immediately before delivery. Delivery cannot retract an already accepted email.
 - Added private familyActivity, familyNotifications and familyPurchases collections; client rules must continue denying direct access.
 - Paid access in the redesigned learner homepage is now checked against the backend, not a browser Premium flag. Static lesson assets and the legacy original app remain a paid-launch security review item; this is not a complete content-delivery paywall.
-- Stripe billing source and disabled client controls are prepared. Not yet exported/deployed, not tested against a real Stripe sandbox, no real charges possible from these controls. Eight approved sandbox prices are now configured; purchases remain closed.
+- Stripe billing source and disabled client controls are prepared. Exported for deployment but not yet deployed or tested with a real sandbox payment, no real charges possible from these controls. Eight approved sandbox prices are now configured; purchases remain closed.
 
 ## Approved prices — owner confirmed
 | Students | Monthly total | Monthly per student | Lifetime total |
@@ -57,3 +57,21 @@ Remaining implementation checks before enabling checkout:
 - Configure Customer Portal and sandbox secrets. Deploy after checkout fixes, then run step 7 acceptance tests. Browser redirects never grant access.
 
 Next owner setup: store the sandbox restricted API key privately using Firebase Secret Manager (step 3). Do not paste credentials into chat or source. Connecting Stripe to ChatGPT does not supply a server key to Firebase. Public billing stays disabled until fixes and sandbox tests pass.
+
+## Webhook and checkout implementation — 23 October 2026
+
+Owner screenshot confirms STRIPE_SECRET_KEY version 1 was stored. Key validity and permissions remain untested.
+
+Implemented dynamic payment methods, flexible monthly billing, lifetime invoice creation, a stable integration identifier, session resumption and fail-closed order rollover. A prior order is replaced only when Stripe confirms its session expired; complete/processing payments stay mapped to their original order. A creation attempt without a recorded session after the local timeout requires support reconciliation rather than risking another charge. Cancelled subscriptions and failed completed sessions still require manual review before repurchase. Customer reuse/seat changes remain launch follow-ups.
+
+Webhook now filters supported event types, handles async success/failure by checking current payment state, and checks environment, price and bundle quantity. Refund/dispute holds remain persistent. Billing functions are exported; enabled:false and the disabled public controls remain unchanged. Local tests use mocked Stripe responses, not a real checkout.
+
+Created sandbox webhook `we_1UTo3NQp6yeVUeiYIOkODpyl` with API version 2026-09-30.endive, matching installed Stripe SDK 23.0.1. Destination: https://us-central1-reckoningfigures-bbdae.cloudfunctions.net/familyBillingWebhook . Includes all events in BILLING_EVENTS in billing.js (including async failure and expiration). Endpoint awaits Firebase deployment, so deliveries before deployment can fail.
+
+Next: open this endpoint in the Stripe sandbox Workbench/Webhooks, reveal its signing secret privately, and store it:
+
+```bash
+npx firebase-tools@latest functions:secrets:set STRIPE_WEBHOOK_SECRET --project reckoningfigures-bbdae
+```
+
+After both secrets exist, pull redesign/mobile-preview in the existing Cloud Shell checkout, install functions dependencies and deploy the two billing functions. Do not enable public purchases as part of this deployment. Verify signed event delivery and restricted key permissions; then prepare an owner-only sandbox checkout test path before enabling any test checkout. Tax, portal configuration, live payments, remaining lifecycle gates and real payment acceptance tests are still pending.

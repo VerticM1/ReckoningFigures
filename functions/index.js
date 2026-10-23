@@ -47,3 +47,6 @@ import {createCompletionRecorder} from './family-notifications.js';
 const recordCompletion=createCompletionRecorder({db});
 export const familyProgressUpdates=onDocumentWritten({region:'us-central1',document:'users/{uid}/appProgress/v2',retry:true,maxInstances:1},event=>recordCompletion({uid:event.params.uid,before:event.data?.before.data(),after:event.data?.after.data(),at:event.data?.after.updateTime?.toMillis()}));
 export const familyCompletionEmail=onDocumentCreated({...options,document:'familyNotifications/{id}'},event=>dispatch('family',event.params.id,event.data?.data().at));
+
+// Billing stays disabled in config until sandbox acceptance checks pass.
+export {familyBilling,familyBillingWebhook} from './billing-entry.js';
