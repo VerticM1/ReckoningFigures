@@ -1,0 +1,13 @@
+import {observe,login,googleLogin,logout} from '../owner/client.js?v=family-link-20261021';
+import {billingCall} from './billing-client.js';
+const $=id=>document.getElementById(id),form=$('purchase');let user=null,generation=0;
+const amounts={monthly:[7.99,12.99,16.99,19.99],lifetime:[149,229,299,349]};
+function price(){const self=form.elements.audience.value==='self';if(self)form.elements.seats.value='1';form.elements.seats.disabled=self;const plan=form.elements.plan.value;$('price').textContent=`$${amounts[plan][Number(form.elements.seats.value)-1].toFixed(2)} USD ${plan==='monthly'?'per month':'one time'} — sandbox only`;}
+form.addEventListener('change',price);price();
+async function refresh(){const current=user,version=generation;if(!current)return;const state=await billingCall(current,{action:'status',sandbox:true});if(version!==generation)return;if(!state.test||!state.enabled)throw Error('Sandbox checkout is not enabled. Deploy the latest billing function.');const access=await billingCall(current,{action:'access',sandbox:true});if(version!==generation)return;$('testing').hidden=false;$('message').textContent='Owner access verified. Stripe sandbox only.';$('result').textContent=`Payment: ${state.active?'active':'not active'}${state.plan?' · '+state.plan+' · '+state.seats+' student(s)':''}\nYour learner access: ${access.premium?'Premium unlocked':'Free access'}${state.audience==='family'?'\nThis purchase covers linked student seats; check the linked student account separately.':''}`;$('checkout').disabled=state.active;}
+observe(async value=>{user=value;generation++;$('testing').hidden=true;$('login').hidden=Boolean(value);$('message').textContent=value?'Checking owner access…':'Sign in with your verified owner account.';if(value)try{await refresh();}catch(e){$('message').textContent=e.message;}});
+$('login').onsubmit=async e=>{e.preventDefault();try{await login(e.target.elements.email.value,e.target.elements.password.value);e.target.reset();}catch(e){$('message').textContent=e.message;}};
+$('google').onclick=()=>googleLogin().catch(e=>$('message').textContent=e.message);
+$('logout').onclick=()=>logout();
+$('refresh').onclick=async()=>{try{await refresh();}catch(e){$('message').textContent=e.message;}};
+form.onsubmit=async e=>{e.preventDefault();$('checkout').disabled=true;try{const r=await billingCall(user,{action:'checkout',sandbox:true,plan:form.elements.plan.value,audience:form.elements.audience.value,seats:Number(form.elements.seats.value)});const url=new URL(r.url);if(!r.test||url.protocol!=='https:'||url.hostname!=='checkout.stripe.com')throw Error('Expected a Stripe sandbox checkout.');location.assign(url.href);}catch(e){$('message').textContent=e.message;$('checkout').disabled=false;}};

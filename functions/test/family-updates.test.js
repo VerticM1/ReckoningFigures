@@ -43,3 +43,15 @@ test('monthly entitlement requires a paid current invoice and exactly one approv
  invoice='paid';await handle({headers:{}},res);assert.equal(f.docs.get('familyPurchases/parent').status,'active');
  quantity=2;await handle({headers:{}},res);assert.equal(status,500);
 });
+test('private sandbox checkout requires active owner and cannot bypass live-mode closure',async()=>{
+ const f=fixture();const config={enabled:false,live:false,currency:'usd',amounts:{monthly:{1:799}},prices:{monthly:{1:'p'}}};let creates=0;
+ const stripe={prices:{retrieve:async()=>({active:true,livemode:false,currency:'usd',unit_amount:799,recurring:{interval:'month',interval_count:1}})},checkout:{sessions:{create:async args=>{creates++;assert.equal(args.subscription_data.billing_mode.type,'flexible');assert.match(args.success_url,/sandbox.html/);return {id:'cs',status:'open',url:'https://checkout.stripe.com/test'};}}}};
+ const service=createBilling({...f,config,stripe,auth:{getUser:async()=>({emailVerified:true,email:'owner@example.com'})}});
+ const req={auth:{uid:'owner'},data:{action:'checkout',sandbox:true,plan:'monthly',seats:1,audience:'self'}};
+ await assert.rejects(service(req),{code:'permission-denied'});
+ f.docs.set('platformOwners/owner',{active:false});await assert.rejects(service(req),{code:'permission-denied'});
+ f.docs.set('platformOwners/owner',{active:true});config.live=true;await assert.rejects(service(req),{code:'permission-denied'});
+ config.live=false;await assert.rejects(service({...req,data:{...req.data,sandbox:false}}),{code:'failed-precondition'});
+ await service(req);assert.equal(creates,1);assert.equal(config.enabled,false);
+ f.docs.get('platformOwners/owner').active=false;await assert.rejects(service({...req,data:{action:'status',sandbox:true}}),{code:'permission-denied'});
+});

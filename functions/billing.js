@@ -13,10 +13,13 @@ export function createBilling({db,auth,stripe,config,now=Date.now,uuid=randomUUI
  return async request=>{
  const uid=request.auth?.uid;if(!uid)fail('unauthenticated','Sign in first.');const account=await auth.getUser(uid);if(account.disabled||!account.emailVerified)fail('permission-denied','Verify your email first.');
  const data=request.data||{},ref=db.doc('familyPurchases/'+uid);
+ const sandbox=data.sandbox===true;
+ if(sandbox){const owner=(await db.doc('platformOwners/'+uid).get()).data();if(config.live||owner?.active!==true)fail('permission-denied','Sandbox checkout is available only to the active platform owner.');}
+ const returnBase=sandbox?BASE+'sandbox.html':null;
  if(data.action==='access')return db.runTransaction(async tx=>({premium:await learnerAccess(tx,db,uid,now())}));
- if(data.action==='status'){const p=(await ref.get()).data();return {enabled:config.enabled,active:purchaseActive(p,now()),plan:p?.plan||null,seats:p?.seats||0,audience:p?.audience||null,expiresAt:p?.expiresAt||null,test:!config.live};}
- if(!config.enabled)fail('failed-precondition','Payments are not open yet.');
- if(data.action==='portal'){const p=(await ref.get()).data();if(!p?.customer)fail('failed-precondition','No billing account found.');return {url:(await stripe.billingPortal.sessions.create({customer:p.customer,return_url:BASE+'dashboard.html'})).url};}
+ if(data.action==='status'){const p=(await ref.get()).data();return {enabled:config.enabled||sandbox,active:purchaseActive(p,now()),plan:p?.plan||null,seats:p?.seats||0,audience:p?.audience||null,expiresAt:p?.expiresAt||null,test:!config.live};}
+ if(!config.enabled&&!sandbox)fail('failed-precondition','Payments are not open yet.');
+ if(data.action==='portal'){const p=(await ref.get()).data();if(!p?.customer)fail('failed-precondition','No billing account found.');return {url:(await stripe.billingPortal.sessions.create({customer:p.customer,return_url:returnBase||BASE+'dashboard.html'})).url};}
  if(data.action!=='checkout')fail('invalid-argument','Unknown billing action.');
  const {plan,seats,audience}=data,price=config.prices[plan]?.[seats];if(!['monthly','lifetime'].includes(plan)||!Number.isInteger(seats)||seats<1||seats>4||!['self','family'].includes(audience)||audience==='self'&&seats!==1||!price)fail('invalid-argument','Choose an available plan.');
  const verified=await stripe.prices.retrieve(price);if(!verified.active||verified.livemode!==config.live||verified.currency!==config.currency||verified.unit_amount!==config.amounts?.[plan]?.[seats]||(plan==='monthly'?(verified.recurring?.interval!=='month'||verified.recurring.interval_count!==1):Boolean(verified.recurring)))fail('failed-precondition','This plan is not configured correctly.');
@@ -41,9 +44,9 @@ export function createBilling({db,auth,stripe,config,now=Date.now,uuid=randomUUI
     return p;
    }
   }
-  const next={order:uuid(),uid,plan,seats,audience,status:'pending',price,pendingUntil:now()+40*60000,checkoutEmail:account.email};tx.set(ref,next);return next;
+  const next={order:uuid(),uid,plan,seats,audience,status:'pending',price,pendingUntil:now()+40*60000,checkoutEmail:account.email,sandbox};tx.set(ref,next);return next;
  });
- const session=order.session?await stripe.checkout.sessions.retrieve(order.session):await stripe.checkout.sessions.create({mode:plan==='monthly'?'subscription':'payment',integration_identifier:'reckoning_figures_web_qmzvtrpa',line_items:[{price,quantity:1}],customer_email:order.checkoutEmail,client_reference_id:uid,metadata:{uid,order:order.order},...(plan==='monthly'?{subscription_data:{billing_mode:{type:'flexible'},metadata:{uid,order:order.order}}}:{customer_creation:'always',invoice_creation:{enabled:true},payment_intent_data:{metadata:{uid,order:order.order}}}),success_url:BASE+'dashboard.html?checkout=returned',cancel_url:BASE+'?checkout=cancelled',expires_at:Math.floor((order.pendingUntil-5*60000)/1000)},{idempotencyKey:'checkout-'+order.order});
+ const session=order.session?await stripe.checkout.sessions.retrieve(order.session):await stripe.checkout.sessions.create({mode:plan==='monthly'?'subscription':'payment',integration_identifier:'reckoning_figures_web_qmzvtrpa',line_items:[{price,quantity:1}],customer_email:order.checkoutEmail,client_reference_id:uid,metadata:{uid,order:order.order},...(plan==='monthly'?{subscription_data:{billing_mode:{type:'flexible'},metadata:{uid,order:order.order}}}:{customer_creation:'always',invoice_creation:{enabled:true},payment_intent_data:{metadata:{uid,order:order.order}}}),success_url:order.sandbox?BASE+'sandbox.html?checkout=returned':BASE+'dashboard.html?checkout=returned',cancel_url:order.sandbox?BASE+'sandbox.html?checkout=cancelled':BASE+'?checkout=cancelled',expires_at:Math.floor((order.pendingUntil-5*60000)/1000)},{idempotencyKey:'checkout-'+order.order});
  if(session.status!=='open'||!session.url)fail('failed-precondition','Your checkout is being confirmed or has expired. Please refresh your account.');
  await db.runTransaction(async tx=>{const p=(await tx.get(ref)).data();if(p?.order===order.order)tx.set(ref,{session:session.id},{merge:true});});return {url:session.url,test:!config.live};
  };

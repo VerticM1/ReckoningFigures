@@ -75,3 +75,10 @@ npx firebase-tools@latest functions:secrets:set STRIPE_WEBHOOK_SECRET --project 
 ```
 
 After both secrets exist, pull redesign/mobile-preview in the existing Cloud Shell checkout, install functions dependencies and deploy the two billing functions. Do not enable public purchases as part of this deployment. Verify signed event delivery and restricted key permissions; then prepare an owner-only sandbox checkout test path before enabling any test checkout. Tax, portal configuration, live payments, remaining lifecycle gates and real payment acceptance tests are still pending.
+
+## Owner-only sandbox test path
+Owner reported successful deployment and signed Stripe test delivery. An unsigned remote probe returned 400 Invalid signature; the callable required sign-in. This verifies endpoint reachability, not a completed purchase or key permissions.
+
+`/preview/family/sandbox.html` now provides sign-in, plan selection, test Checkout and manual access refresh. Every sandbox request requires a verified, enabled user and platformOwners/{uid}.active === true checked by the backend. The override is refused in live mode and does not change enabled:false or public controls. Start Monthly / Me / 1 student; a confirmed payment should show active and Premium unlocked after return. Family purchases require separately checking the linked student's account. No real checkout was executed during development.
+
+Deploy updated familyBilling (the webhook is unchanged), then open the page with the existing owner account. Use only Stripe test payment details. Existing-purchase restrictions still apply. Sandbox entitlements currently use familyPurchases, so inventory and remove/migrate test purchases before any live-mode rollout; never mix this test data with live customer entitlements.
