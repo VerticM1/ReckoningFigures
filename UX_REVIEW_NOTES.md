@@ -15,3 +15,11 @@ Historical avatar idea retained for design exploration, not yet implemented:
 Scope interpretation: unit grouping applies to Practice. The Learn path remains sequential. An expanded library layout elsewhere can be considered after reviewing this version.
 
 Validation: practice behavior tests (including unit disclosure), progress/league tests, mobile build/sync and mobile asset/navigation checks. No visual device test completed. Owner explicitly authorized publishing these changes and the earlier iOS foundation to VerticM1/ReckoningFigures on 24 October 2026.
+
+
+## Character avatars — October 24, 2026
+- Approved cartoon direction applied as six nameless character choices in onboarding.
+- Choice appears in Profile navigation, profile settings, final welcome step and the learner’s simulated-league row. All six are available; no unlock requirement introduced.
+- Settings work for guests and signed-in learners. Choice is stored per account on this device; cross-device character sync is still pending. Existing learners can choose from Profile without repeating onboarding.
+- Sprite atlas generated from approved concept, encoded as WebP (~131 KB); image is decorative, picker buttons have descriptive accessible labels.
+- Verified onboarding, selection/change, reload, account isolation, storage-unavailable fallback, profile billing regression, practice, progress sync and mobile asset build. Device visual review remains to do.

@@ -1,0 +1,11 @@
+const ids=['teal','gold','coral','blue','purple','green'];
+const descriptions=['Curly hair and flowers on teal','Glasses and a smile on gold','Red cap and long beard on coral','Dark hair and mustache on blue','Dark curls and a smile on purple','Silver hair and beard on green'];
+let scope='guest';const memory=new Map();
+const key=()=>`rfCharacterV1:${scope}`;
+export function setAvatarScope(uid){scope=uid||'guest';}
+export function selectedAvatar(){try{const id=localStorage.getItem(key());return ids.includes(id)?id:(memory.get(scope)||null);}catch{return memory.get(scope)||null;}}
+export function saveAvatar(id){if(!ids.includes(id))return false;memory.set(scope,id);let stored=true;try{localStorage.setItem(key(),id);}catch{stored=false;}window.dispatchEvent(new CustomEvent('rf:avatar-change'));return stored;}
+export function avatarHTML(id=selectedAvatar(),extra=''){const index=ids.indexOf(id);return index<0?`<span class="rf-avatar rf-avatar-empty ${extra}" aria-hidden="true">?</span>`:`<span class="rf-avatar rf-avatar-${index} ${extra}" aria-hidden="true"></span>`;}
+export function avatarPickerHTML(selected=selectedAvatar()){return `<div class="avatar-grid" role="group" aria-label="Choose your character">${ids.map((id,i)=>`<button type="button" class="avatar-choice" data-avatar="${id}" aria-label="${descriptions[i]}" aria-pressed="${selected===id}">${avatarHTML(id)}<span class="avatar-check" aria-hidden="true">✓</span></button>`).join('')}</div>`;}
+export function bindAvatarPicker(root,onChoose){root.querySelectorAll('[data-avatar]').forEach(button=>button.addEventListener('click',()=>onChoose(button.dataset.avatar)));}
+export function mountAvatarSettings(root){if(!root)return;const render=()=>{root.innerHTML=`<div class="avatar-settings-heading">${avatarHTML()}<div><h2>Your character</h2><p>Make it yours. Change it anytime.</p></div></div>${avatarPickerHTML()}<p class="avatar-save-note" role="status">Your choice is saved for this profile on this device.</p>`;bindAvatarPicker(root,id=>{const stored=saveAvatar(id);render();root.querySelector(`[data-avatar="${id}"]`).focus({preventScroll:true});root.querySelector('[role="status"]').textContent=stored?'Character saved. Your profile icon is updated.':'Character selected for this visit. Device storage is unavailable.';});};render();}

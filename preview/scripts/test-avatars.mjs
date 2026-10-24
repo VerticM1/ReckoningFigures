@@ -1,0 +1,15 @@
+import {JSDOM} from 'jsdom';import fs from 'node:fs';import assert from 'node:assert/strict';
+const dom=new JSDOM('<div id="app"></div><section id="settings"></section>',{url:'https://reckoningfigures.com/preview/',runScripts:'outside-only'}),w=dom.window;
+w.scrollTo=()=>{};w.bolt=()=>'';w.energyIcon=()=>'';
+const script=fs.readFileSync('preview/avatars.js','utf8').replace(/export /g,'');
+w.eval(script+'\nwindow.api={setAvatarScope,selectedAvatar,saveAvatar,avatarHTML,mountAvatarSettings};');
+const a=w.api;a.setAvatarScope('guest');assert.equal(a.selectedAvatar(),null);assert.equal(a.saveAvatar('bad'),false);
+a.saveAvatar('gold');a.setAvatarScope('alice');assert.equal(a.selectedAvatar(),null);a.saveAvatar('blue');a.setAvatarScope('bob');assert.equal(a.selectedAvatar(),null);a.setAvatarScope('alice');assert.equal(a.selectedAvatar(),'blue');
+a.mountAvatarSettings(w.document.querySelector('#settings'));w.document.querySelector('[data-avatar="purple"]').click();assert.equal(a.selectedAvatar(),'purple');assert.equal(w.document.querySelector('[data-avatar="purple"]').getAttribute('aria-pressed'),'true');
+a.setAvatarScope('fresh');let result;w.finish=action=>result=action;
+w.eval(fs.readFileSync('preview/onboarding.js','utf8').replace(/^import .*;\n/gm,'').replace(/export /g,'')+'\nshowOnboarding(document.querySelector("#app"),{onFinish:window.finish});');
+const click=s=>w.document.querySelector('#app '+s).click();click('.onboarding-next');assert.equal(w.document.querySelector('.onboarding-next').disabled,true);click('[data-value="new"]');click('.onboarding-next');click('[data-value="5"]');click('.onboarding-next');assert.equal(w.document.querySelectorAll('#app [data-avatar]').length,6);assert.equal(w.document.querySelector('.onboarding-next').disabled,true);click('[data-avatar="coral"]');click('.onboarding-next');assert.ok(w.document.querySelector('.avatar-ready .rf-avatar-2'));click('.onboarding-next');assert.equal(result,'lesson');assert.equal(a.selectedAvatar(),'coral');assert.equal(w.localStorage.getItem('rfCharacterV1:fresh'),'coral');
+assert.doesNotMatch(w.document.querySelector('#app').textContent,/Lovelace|Johnson|Leonardo|Tesla|Ramanujan|Escher/);
+const reload=new JSDOM('',{url:'https://reckoningfigures.com',runScripts:'outside-only'});reload.window.localStorage.setItem('rfCharacterV1:fresh','coral');reload.window.eval(script+'\nsetAvatarScope("fresh");window.choice=selectedAvatar();');assert.equal(reload.window.choice,'coral');
+Object.defineProperty(w,'localStorage',{get(){throw Error('storage blocked');}});a.setAvatarScope('private');assert.equal(a.saveAvatar('green'),false);assert.equal(a.selectedAvatar(),'green');
+console.log('PASS character selection, onboarding completion, profile changes, reload, account isolation, nameless UI and unavailable storage.');
