@@ -45,7 +45,7 @@ test('monthly entitlement requires a paid current invoice and exactly one approv
 });
 test('private sandbox checkout requires active owner and cannot bypass live-mode closure',async()=>{
  const f=fixture();const config={enabled:false,live:false,currency:'usd',amounts:{monthly:{1:799}},prices:{monthly:{1:'p'}}};let creates=0;
- const stripe={prices:{retrieve:async()=>({active:true,livemode:false,currency:'usd',unit_amount:799,recurring:{interval:'month',interval_count:1}})},checkout:{sessions:{create:async args=>{creates++;assert.equal(args.subscription_data.billing_mode.type,'flexible');assert.match(args.success_url,/sandbox.html/);return {id:'cs',status:'open',url:'https://checkout.stripe.com/test'};}}}};
+ const stripe={prices:{retrieve:async()=>({active:true,livemode:false,currency:'usd',unit_amount:799,recurring:{interval:'month',interval_count:1}})},checkout:{sessions:{create:async args=>{creates++;assert.equal(args.subscription_data.billing_mode.type,'flexible');assert.match(args.success_url,/success.html\?session_id=\{CHECKOUT_SESSION_ID\}/);return {id:'cs',status:'open',url:'https://checkout.stripe.com/test'};}}}};
  const service=createBilling({...f,config,stripe,auth:{getUser:async()=>({emailVerified:true,email:'owner@example.com'})}});
  const req={auth:{uid:'owner'},data:{action:'checkout',sandbox:true,plan:'monthly',seats:1,audience:'self'}};
  await assert.rejects(service(req),{code:'permission-denied'});

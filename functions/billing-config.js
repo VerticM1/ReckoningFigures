@@ -2,6 +2,7 @@
 export const billingConfig={
   "enabled": false,
   "live": false,
+  "portalConfiguration": "bpc_1UTtpXQp6yeVUeiYTn5v2R0B",
   "currency": "usd",
   "amounts": {
     "monthly": {
