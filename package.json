@@ -5,7 +5,7 @@
   "scripts": {
     "build:vendor": "esbuild preview/firebase-client.js --bundle --format=esm --minify --outfile=preview/vendor/firebase.js",
     "build": "npm run build:owner && node scripts/version-preview-styles.cjs && npm run build:vendor && node scripts/build-mobile.cjs",
-    "ios:sync": "npm run build && cap sync ios",
+    "ios:sync": "npm run build:ios && cap sync ios",
     "ios:open": "cap open ios",
     "test:course": "node preview/scripts/validate-course.mjs",
     "test:sync": "node preview/scripts/test-sync.mjs",
@@ -18,11 +18,16 @@
     "test:multistep": "node preview/scripts/test-multistep.mjs",
     "test:models": "node preview/scripts/test-model-lessons.mjs",
     "test:statistics": "node preview/scripts/test-statistics.mjs",
-    "test:access-logistics": "node preview/scripts/test-access-logistics.mjs"
+    "test:access-logistics": "node preview/scripts/test-access-logistics.mjs",
+    "build:ios": "node scripts/build-mobile.cjs",
+    "test:ios": "node scripts/test-mobile.mjs"
   },
   "dependencies": {
+    "@capacitor/app": "8.1.2",
     "@capacitor/core": "8.5.2",
+    "@capacitor/haptics": "8.0.2",
     "@capacitor/ios": "8.5.2",
+    "@capacitor/network": "8.0.1",
     "firebase": "12.19.0"
   },
   "devDependencies": {

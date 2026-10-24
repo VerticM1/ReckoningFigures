@@ -1,15 +1,15 @@
-import {mountPractice} from './practice.js?v=20261023';
+import {mountPractice} from './practice.js?v=unit-groups-20261024';
 import {mountThemePicker} from './learner-themes.js?v=20261022';
 import {mountStudentAssignments,clearFamilyAssignments,saveFamilyAssignment} from './family/student-assignments.js?v=completed-20261022';
 let familyRun=null;
 import {homeworkRequested,loadHomework,homeworkHome,saveHomework} from './homework.js?v=progress-20261022';
 const homework=await loadHomework();
 import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js?v=equation-orbits-20261022';
-import { soundButton, bindSoundButton } from './sound.js';
+import { stopSound, soundButton, bindSoundButton } from './sound.js';
 import { celebrateFinish } from './celebrations.js';
 import { getClient, showAccount } from './account.js?v=profile-20261024';
 import { prepareProgress, mergeProgress, earnXP } from './sync-model.js';
-import { league, leagueHTML } from './practice-league.js';
+import { league, leagueHTML } from './practice-league.js?v=20261024';
 import { bolt, energyIcon, brandObject, homeWidgets, checkpointHTML } from './brand-art.js';
 import { coaching, mountCoaching, revealHint } from './coaching.js';
 import { pathArt } from './path-art.js';
@@ -138,6 +138,7 @@ async function check(){
  if(state.checked){state.transitioning=true;document.querySelector('#check').disabled=true;transitionQuestion(()=>{state.index++;if(state.index===problems.length)finish();else question();});return;}
  if(state.selected===null||state.selected==='')return;
  const p=problems[state.index];const correct=p.type==='graph'?graphMatches(state.selected,p.answer):p.type==='fill-blank'?answerMatches(state.selected,p.answer):state.selected===p.answer;
+ document.dispatchEvent(new CustomEvent('rf:answer',{detail:{correct}}));
  state.attempts++;
  const feedback=document.querySelector('.feedback');const button=document.querySelector('#check');
  if(correct){if(state.questionErrors===0)state.firstTry++;state.checked=true;state.combo++;feedback.className='feedback';feedback.innerHTML='<strong>'+([3,5,7].includes(state.combo)?bolt()+state.combo+' in a row!':'That’s it. Nicely solved!')+'</strong>';const explanation=document.createElement('span');explanation.textContent=activeLesson.id===1?coaching[state.index][1]:(p.explanation||'Correct. Keep building on what you know.');feedback.append(explanation);document.querySelector('.selected')?.classList.add('correct');document.querySelectorAll('.choice,.answer,.graph-controls input,.graph-controls select').forEach(el=>el.disabled=true);button.textContent=state.index===problems.length-1?'Finish lesson':'Continue';const width=(state.index+1)/problems.length*100;document.querySelector('.fill').style.width=width+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',state.index+1);button.focus();answerMotion(true,state.combo);if(solver){state.challengeIndependent=state.index===9?(!solver.usedHint&&state.questionErrors===0):state.challengeIndependent;state.transitioning=true;button.disabled=true;await solver.success();state.transitioning=false;button.disabled=false;}}
@@ -179,3 +180,6 @@ if(!homeworkRequested)getClient().then(client=>client.observe(user=>{
 window.addEventListener('online',()=>queueSync());
 
 window.addEventListener('hashchange',()=>{if(!homeworkRequested&&['#practice','#learn',''].includes(location.hash)){home();window.scrollTo(0,0);}});
+
+window.addEventListener('rf:pause',stopSound);
+window.addEventListener('rf:resume',()=>{if(accountUser&&!syncBusy)syncAccount().catch(()=>{});});
