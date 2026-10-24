@@ -2,3 +2,5 @@
 
 /* Warm gold keeps emphasis legible against the light page backgrounds. */
 .about-hero em.copy-accent,.copy-accent{color:#856000}.copy-highlight{color:#27382e;background:#fff0a8;padding:.04em .18em;border-radius:.15em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+
+.founder-portrait{grid-column:1/-1;width:min(100%,340px);margin:0 auto}.founder-portrait img{display:block;width:100%;height:auto;border-radius:20px}.founder-portrait figcaption{margin-top:14px;text-align:center;font-size:14px;line-height:1.6;color:#526269}
