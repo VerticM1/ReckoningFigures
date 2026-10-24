@@ -7,7 +7,7 @@ const homework=await loadHomework();
 import { learningPlan, needsWelcome, showOnboarding } from './onboarding.js?v=equation-orbits-20261022';
 import { soundButton, bindSoundButton } from './sound.js';
 import { celebrateFinish } from './celebrations.js';
-import { getClient, showAccount } from './account.js?v=student-signup-20261022';
+import { getClient, showAccount } from './account.js?v=profile-20261024';
 import { prepareProgress, mergeProgress, earnXP } from './sync-model.js';
 import { league, leagueHTML } from './practice-league.js';
 import { bolt, energyIcon, brandObject, homeWidgets, checkpointHTML } from './brand-art.js';
