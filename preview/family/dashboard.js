@@ -1,3 +1,4 @@
+import {mountAgeScreen} from '../age-screen.js?v=20261024';
 import {mountBilling} from './billing-client.js?v=20261022';
 import {attachAssignments} from './parent-assignments.js?v=assignments-live-20261022';
 import * as api from '../owner/client.js?v=family-link-20261021';
@@ -11,7 +12,7 @@ function error(e){const messages={'auth/invalid-credential':'The email or passwo
 async function perform(button,fn){button.disabled=true;try{await fn();}catch(e){notify(error(e));}finally{if(button.isConnected)button.disabled=false;}}
 function login(){
  $('workspace').replaceChildren();
- if(registering&&(linking||studentSignup)&&ageBand!=='older'){$('account').innerHTML='<h2>Before you create an account</h2><p>Select your age group. We do not need your birthday.</p><button id="age-younger">Under 13</button><button id="age-older">13 or older</button><p id="age-info" role="status"></p><button id="age-login" class="secondary">I already have an account</button>';$('age-younger').onclick=()=>{$('age-info').textContent='New accounts for children under 13 are not open yet. Ask your parent or guardian to help with your learning options.';$('age-older').disabled=true;};$('age-older').onclick=()=>{ageBand='older';login();};$('age-login').onclick=()=>{registering=false;login();};return;}
+ if(registering&&(linking||studentSignup)&&ageBand!=='older'){mountAgeScreen($('account'),{onEligible:()=>{ageBand='older';login();},onLogin:()=>{registering=false;login();}});return;}
  $('account').innerHTML=`<form id="login"><h2>${registering?(linking||studentSignup?'Create your student account':'Create your parent account'):'Sign in'}</h2><label>Email<input name="email" type="email" required autocomplete="username" maxlength="254"></label><label>Password<input name="password" type="password" required minlength="${registering?6:1}" autocomplete="${registering?'new-password':'current-password'}"></label><button>${registering?'Create account':'Sign in'}</button></form><div class="toolbar">${'<button id="mode" class="secondary">'+(registering?'Already have an account? Sign in':linking||studentSignup?'Create a student account':'Create a parent account')+'</button>'}<button id="forgot" class="secondary">Forgot password?</button></div>`;
  $('mode')?.addEventListener('click',()=>{registering=!registering;login();});
  $('login').onsubmit=e=>{e.preventDefault();const f=e.currentTarget,values=new FormData(f);perform(f.querySelector('button'),async()=>{const r=await (registering?api.register:api.login)(values.get('email'),values.get('password'));if(registering&&!r.user.emailVerified){try{await api.verifyEmail();notify('Account created. Open the verification email, then return here.');}catch{notify('Account created. Use Resend email to request verification.');}}});};
