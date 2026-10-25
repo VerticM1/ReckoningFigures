@@ -1,0 +1,7 @@
+import assert from 'node:assert/strict';
+import {ageBand,mountAgeScreen} from '../age-screen.js';
+import {JSDOM} from 'jsdom';
+const now=new Date(2026,9,24);
+assert.equal(ageBand(2013,9,0,now),'older');assert.equal(ageBand(2013,11,0,now),'younger');assert.equal(ageBand(2013,10,0,now),'day');assert.equal(ageBand(2013,10,24,now),'older');assert.equal(ageBand(2013,10,25,now),'younger');assert.equal(ageBand(2027,1,0,now),'invalid');assert.equal(ageBand(0,0,0,now),'invalid');
+for(const school of [false,true]){const d=new JSDOM('<div id="host"></div>',{url:'https://example.com'});let allowed=0;const host=d.window.document.querySelector('#host');mountAgeScreen(host,{school,onEligible:()=>allowed++,onLogin:()=>{}});assert.equal(host.querySelector('[name=month]').value,'');assert.equal(host.querySelector('[name=year]').value,'');assert.equal(host.querySelector('[type=email]'),null);host.querySelector('[name=month]').value='1';host.querySelector('[name=year]').value=String(new Date().getFullYear()-8);host.querySelector('form').dispatchEvent(new d.window.Event('submit',{cancelable:true}));assert.equal(allowed,0);assert.match(host.textContent,/No account has been created/);assert.equal(host.querySelector('form'),null);assert.equal(d.window.localStorage.length,0);}
+console.log('PASS neutral defaults, birthday boundary, invalid dates, school/family blocked paths and no persisted birth data');
