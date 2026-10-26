@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {JSDOM} from 'jsdom';
+import {course} from '../course.js';
+import {schoolCourseAccess,schoolLessonCatalog} from '../school/course-access.js';
+import {recommendations,digest,digestText} from '../school/progress-insights.js';
+const dom=new JSDOM('<main id="classroom-app"></main>',{url:'https://example.test/preview/school/classroom.html?school=s&class=c',runScripts:'outside-only'});
+const assignments=[{id:'all',title:'Whole class',lessonIds:[1],due:'2026-12-01'},{id:'mine',title:'My practice',lessonIds:[2],due:'2026-12-01',recipientIds:['student']},{id:'other',title:'Other practice',lessonIds:[3],due:'2026-12-01',recipientIds:['other']}];
+const api={observe:fn=>fn({uid:'student'}),logout:async()=>{},schoolContext:async()=>({member:{role:'student'},school:{status:'pilot',license:{courses:['algebra1'],startsOn:{toMillis:()=>0},endsOn:{toMillis:()=>Date.now()+86400000}}}}),classroom:{classInfo:async()=>({name:'Test class'}),assignments:async()=>assignments}};
+const source=readFileSync(new URL('../school/classroom.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+dom.window.Function('api','course','schoolCourseAccess','schoolLessonCatalog','recommendations','digest','digestText',source)(api,course,schoolCourseAccess,schoolLessonCatalog,recommendations,digest,digestText);
+await new Promise(r=>setTimeout(r,30));
+const text=dom.window.document.body.textContent;
+assert(text.includes('Whole class'));assert(text.includes('My practice'));assert(!text.includes('Other practice'));assert(!dom.window.document.querySelector('#weekly-progress'));assert(!dom.window.document.querySelector('[data-report]'));
+dom.window.close();console.log('PASS student sees whole-class and own targeted work only; educator reports and digest controls absent');

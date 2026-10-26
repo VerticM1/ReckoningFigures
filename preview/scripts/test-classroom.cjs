@@ -2,14 +2,14 @@ const {JSDOM}=require('jsdom'),fs=require('fs'),vm=require('vm'),path=require('p
 const root=path.resolve(__dirname,'..');
 const wait=()=>new Promise(r=>setTimeout(r,30));
 (async()=>{
- const {course}=await import(root+'/course.js');const {schoolCourseAccess,schoolLessonCatalog}=await import(root+'/school/course-access.js');
+ const {recommendations,digest,digestText}=await import(root+'/school/progress-insights.js');const {course}=await import(root+'/course.js');const {schoolCourseAccess,schoolLessonCatalog}=await import(root+'/school/course-access.js');
  const licensed={name:'School',status:'pilot',license:{courses:['algebra1'],startsOn:{toMillis:()=>0},endsOn:{toMillis:()=>Date.now()+86400000}}};
  const dom=new JSDOM('<main id="classroom-app"></main>',{url:'https://example.org/preview/school/classroom.html?school=a&class=c',runScripts:'outside-only'});
  dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new dom.window.Event('close'));};
  let assignment,removed=false;
  const api={observe:fn=>{queueMicrotask(()=>fn({uid:'teacher'}));return ()=>{};},logout:async()=>{},invitations:{current:async()=>null},schoolContext:async()=>({school:licensed,member:{role:'teacher'}}),classroom:{classInfo:async()=>({name:'Class'}),assignments:async()=>assignment?[{id:'hw',...assignment}]:[],classRoster:async()=>removed?[]:[{id:'student',label:'Test student'}],enroll:async()=>{},unenroll:async()=>{removed=true;},createAssignment:async(s,c,v)=>{assignment=v;},results:async()=>[{uid:'student',lessonId:1,questions:9,firstTry:8,supportSteps:1}]}};
  let source=fs.readFileSync(root+'/school/classroom.js','utf8').replace(/^import .*;\n/gm,'');
- dom.window.Function('api','course','schoolCourseAccess','schoolLessonCatalog',source)(api,course,schoolCourseAccess,schoolLessonCatalog);await wait();
+ dom.window.Function('api','course','schoolCourseAccess','schoolLessonCatalog','recommendations','digest','digestText',source)(api,course,schoolCourseAccess,schoolLessonCatalog,recommendations,digest,digestText);await wait();
  const doc=dom.window.document;
  assert(doc.querySelector('summary').textContent.includes('guide'));doc.querySelector('#assign').click();
  doc.querySelector('#select-unit').click();const first=doc.querySelector('#selected-count').textContent;
@@ -17,8 +17,8 @@ const wait=()=>new Promise(r=>setTimeout(r,30));
  doc.querySelector('#select-unit').click();
  for(let unit=2;unit<course.length;unit++){doc.querySelector('#unit').value=String(unit);doc.querySelector('#unit').dispatchEvent(new dom.window.Event('change'));doc.querySelector('#select-unit').click();}
  const form=doc.querySelector('#assignment');form.elements.title.value='Test practice';form.elements.due.value='2026-12-01';form.dispatchEvent(new dom.window.Event('submit',{cancelable:true}));await wait();assert.equal(assignment.lessonIds.length,63);assert(assignment.lessonIds.includes(20)&&assignment.lessonIds.includes(58)&&assignment.lessonIds.includes(59)&&assignment.lessonIds.includes(60)&&[61,62,63].every(id=>assignment.lessonIds.includes(id)));assert(new Set(assignment.lessonIds).size===assignment.lessonIds.length);
- doc.querySelector('[data-report]').click();await wait();assert(doc.body.textContent.includes('1 steps'));
- doc.querySelector('.staff-close').click();doc.querySelector('[data-tab=students]').click();doc.querySelector('[data-remove]').click();await wait();assert(removed);licensed.status='paused';doc.querySelector('#refresh').click();await wait();assert(doc.querySelector('#assign').disabled);assert(doc.body.textContent.includes('Saved results remain available'));dom.window.close();
+ doc.querySelector('[data-report]').click();await wait();assert(doc.body.textContent.includes('1 steps'));assert(doc.querySelector('[data-suggestion]'));doc.querySelector('[data-suggestion] button').click();await wait();assert.deepEqual([...assignment.recipientIds],['student']);assert.equal(assignment.lessonIds.length,1);assert.equal(doc.querySelector('[data-suggestion] button').textContent,'Assigned');
+ doc.querySelector('.staff-close').click();doc.querySelector('#weekly-progress').click();await wait();assert(doc.querySelector('#digest-preview').textContent.includes('Weekly practice summary'));assert(doc.querySelector('#digest-preview').textContent.includes('not recorded'));doc.querySelector('.staff-close').click();doc.querySelector('[data-tab=students]').click();doc.querySelector('[data-remove]').click();await wait();assert(removed);licensed.status='paused';doc.querySelector('#refresh').click();await wait();assert(doc.querySelector('#assign').disabled);assert(doc.body.textContent.includes('Saved results remain available'));dom.window.close();
  console.log('PASS class controls, cross-unit selection, assignment save, report and roster removal');
  // Execute the actual lesson modules in a DOM with only the Firebase transport mocked.
  const lessonDom=new JSDOM('<main id="app"></main>',{url:'https://example.org/preview/?schoolHomework=hw&school=a&class=c',runScripts:'outside-only',pretendToBeVisual:true});
@@ -35,7 +35,7 @@ const wait=()=>new Promise(r=>setTimeout(r,30));
  }
  assert(w.document.querySelector('.celebration-screen'),'Finish celebration absent');
  w.document.querySelector('#claim').click();await wait();assert(w.document.querySelector('#save-status').textContent.includes('Result not saved'));assert(!w.document.querySelector('#claim').disabled);
- fail=false;w.document.querySelector('#claim').click();await wait();assert(saved);assert.equal(saved.lessonId,1);assert.equal(saved.firstTry,course[0].lessons[0].questions.length);assert(w.document.body.textContent.includes('Completion saved to your class'));
+ fail=false;w.document.querySelector('#claim').click();await wait();assert(saved);assert.equal(saved.lessonId,1);assert.equal(saved.firstTry,course[0].lessons[0].questions.length);assert(w.document.querySelector('.figure-completed').textContent.includes('Saved to your class'));
  w.document.querySelector('[data-cloud-lesson="58"]').click();await wait();
  const premium=course.flatMap(u=>u.lessons).find(l=>l.id===58);assert(!w.localStorage.getItem('userProgress'));
  for(const q of premium.questions){w.document.querySelectorAll('.choice')[q.answer].click();w.document.querySelector('#check').click();w.document.querySelector('#check').click();await wait();}

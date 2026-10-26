@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {course} from '../course.js';
+import {recommendations,digest,digestText} from '../school/progress-insights.js';
+const people=[{id:'a'}],row={uid:'a',lessonId:2,questions:10,firstTry:4,supportSteps:2,assignmentId:'old',completedAt:'2026-10-20T12:00:00Z'};
+let rec=recommendations([row,{...row,uid:'removed'}],people,course);assert.equal(rec.length,1);assert.equal(rec[0].students.length,1);assert.equal(rec[0].prerequisite.id,1);
+assert.equal(recommendations([{...row,questions:0}],people,course).length,0);
+assert.equal(recommendations([row,{...row,firstTry:10,supportSteps:0,completedAt:'2026-10-23T12:00:00Z'}],people,course).length,0);
+const later={...row,assignmentId:'new',firstTry:9,supportSteps:0,completedAt:'2026-10-26T00:00:00Z'},foreign={...later,uid:'b',firstTry:2};
+const data=digest({rows:[row,later,foreign],uid:'a',course,start:Date.parse('2026-10-21'),end:Date.parse('2026-10-27')});
+assert.equal(data.count,1);assert.equal(data.comparisons[0].before,40);assert.equal(data.comparisons[0].after,90);assert.equal(data.strengths.length,1);assert.equal(data.next,null);
+const text=digestText(data,{name:'Student',start:'2026-10-21',end:'2026-10-26',locale:'unsupported'});assert(text.includes('40% to 90%'));assert(text.includes('not recorded'));
+assert.equal(digest({rows:[row,{...later,questions:11}],uid:'a',course,start:0,end:Date.parse('2026-10-27')}).comparisons.length,0);
+assert.equal(digest({rows:[{...row,completedAt:null}],uid:'a',course,start:0,end:Date.now()}).count,0);
+assert.equal(digest({rows:[later],uid:'a',course,start:0,end:Date.parse('2026-10-26')}).count,0);
+console.log('PASS recommendation evidence, latest result, roster filtering, digest privacy, UTC boundaries, comparable repeats, and language fallback');
