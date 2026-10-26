@@ -12,7 +12,7 @@ export function classroomAPI(db,auth){
   enroll:async(s,c,uid,label)=>{if(!/^[A-Za-z0-9_-]{1,128}$/.test(uid))throw Error('Enter the existing student account UID.');await setDoc(doc(db,...base(s,c),'students',uid),{label:label.trim(),addedAt:serverTimestamp()});},
   unenroll:async(s,c,uid)=>deleteDoc(doc(db,...base(s,c),'students',uid)),
   assignments:async(s,c)=>list(query(collection(db,...base(s,c),'assignments'),limit(100))),
-  createAssignment:async(s,c,values)=>{const ref=doc(collection(db,...base(s,c),'assignments'));await setDoc(ref,{...values,createdBy:current(),createdAt:serverTimestamp()});return ref.id;},
+  createAssignment:async(s,c,values,requestId)=>{const col=collection(db,...base(s,c),'assignments'),ref=requestId?doc(col,requestId):doc(col),uid=current();try{await setDoc(ref,{...values,createdBy:uid,createdAt:serverTimestamp()});}catch(error){if(!requestId)throw error;const saved=await getDoc(ref);if(!saved.exists()||saved.data().createdBy!==uid||!Object.keys(values).every(k=>JSON.stringify(saved.data()[k])===JSON.stringify(values[k])))throw error;}return ref.id;},
   assignment:async(s,c,a)=>{const d=await getDoc(doc(db,...base(s,c),'assignments',a));if(!d.exists())throw Error('Assignment not found.');return {id:d.id,...d.data()};},
   authorizePractice:async(s,c,a,lessonId)=>{
    current();if(!Number.isInteger(lessonId)||lessonId<1||lessonId>99)throw Error('Invalid figure.');
