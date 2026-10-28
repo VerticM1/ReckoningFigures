@@ -1,4 +1,4 @@
-import {mountAgeScreen} from '../age-screen.js?v=20261024';
+import {mountAgeScreen} from '../age-screen.js?v=20261028-13plus';
 import * as api from '../owner/client.js?v=4c054e62dd68';
 const app=document.querySelector('#join-app'),token=new URLSearchParams(location.search).get('invite');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
