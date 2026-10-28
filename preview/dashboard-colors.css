@@ -1,0 +1,18 @@
+/* Shared accents: color supports hierarchy; labels still convey every state. */
+.teacher-dashboard .teacher-sidebar,.family-dashboard .family-sidebar{border-top:5px solid #23a496}
+.teacher-dashboard .teacher-sidebar nav [aria-current],.family-dashboard .family-sidebar nav .is-current{background:#d9f2e9;color:#15554c;box-shadow:inset 3px 0 #138575}
+.teacher-dashboard .staff-summary{border-top:4px solid #dea92e;background:linear-gradient(110deg,#fff8df,#eef8f4)}
+.teacher-dashboard .staff-summary strong{color:#087369}
+.teacher-dashboard .teacher-next>h2{background:linear-gradient(110deg,#154253,#19766c);color:white!important}
+.teacher-dashboard .teacher-task:nth-of-type(1){border-left:4px solid #42b6a4}.teacher-dashboard .teacher-task:nth-of-type(2){border-left:4px solid #9381ce}.teacher-dashboard .teacher-task-note{border-left:4px solid #e0b444}
+.teacher-dashboard .staff-card{border-top:4px solid #2b9f95!important}.teacher-dashboard .staff-card:nth-child(3n+2){border-top-color:#8d7cce!important}.teacher-dashboard .staff-card:nth-child(3n){border-top-color:#dfb34d!important}
+.family-dashboard .child-card>.tag,.family-dashboard .learner-heading{background:#185a61}.family-dashboard .child-card>.tag{color:#c3f0e5}.family-dashboard .learner-heading h2{color:white}
+.family-dashboard .learner-metrics{gap:8px;border:0}.family-dashboard .learner-metrics>div{background:#e0f3ec;padding:16px!important;border:0;border-radius:12px}.family-dashboard .learner-metrics>div:nth-child(2){background:#e9e5fa}.family-dashboard .learner-metrics>div:nth-child(3){background:#fff0c9}.family-dashboard .learner-metrics span{color:#40565e}
+.family-dashboard .assign-next{background:#fff5d9;border-color:#e6cd83}.family-dashboard .family-updates{border-top:4px solid #8c7ac5}.family-dashboard .task{border-left:4px solid #489cae}.family-dashboard .task-completed{border-left-color:#278259}.family-dashboard .family-heading button{background:#dff3ed;color:#18544d;border-color:#acd7ca}.family-dashboard h1 em{color:#966000}
+/* Student accents inherit the student's selected palette, including seasonal themes. */
+.learn-shell .unit-banner{border-top:4px solid var(--gold);background:linear-gradient(115deg,var(--panel),color-mix(in srgb,var(--blue) 14%,var(--panel)))}
+.learn-shell .next-unit{border-left:4px solid var(--blue);border-radius:16px;padding:24px;background:color-mix(in srgb,var(--blue) 9%,var(--panel))}
+.learn-shell .learning-plan-link{border-color:var(--gold)}.learn-shell .topstats .gold{border:1px solid var(--gold)}
+body:not(.teacher-dashboard) .staff-card{border-top:4px solid #35a699}body:not(.teacher-dashboard) .staff-card:nth-child(2n){border-top-color:#a58bdc}
+html[data-theme=dark] .teacher-dashboard .staff-summary{background:#233a3d}html[data-theme=dark] .teacher-dashboard .staff-summary strong{color:#9be7d5}html[data-theme=dark] .teacher-sidebar nav [aria-current]{background:#234f47;color:#cff5e7}
+@media(max-width:720px){.family-dashboard .learner-metrics{gap:5px}.family-dashboard .learner-metrics>div{padding:12px 7px!important}.family-dashboard .learner-metrics .last-practice{font-size:16px}}
