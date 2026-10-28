@@ -1,8 +1,8 @@
-// Approved sandbox catalog. Never put API keys here.
+// Verified live catalog. Checkout remains closed pending deployment verification.
 export const billingConfig={
   "enabled": false,
-  "live": false,
-  "portalConfiguration": "bpc_1UTtpXQp6yeVUeiYTn5v2R0B",
+  "live": true,
+  "portalConfiguration": "",
   "currency": "usd",
   "amounts": {
     "monthly": {
@@ -20,16 +20,16 @@ export const billingConfig={
   },
   "prices": {
     "monthly": {
-      "1": "price_1UTnqtQp6yeVUeiY2rNrvRbS",
-      "2": "price_1UTnr8Qp6yeVUeiYYExMMiwu",
-      "3": "price_1UTnrCQp6yeVUeiYPZPkpB0n",
-      "4": "price_1UTnrGQp6yeVUeiYapotd6aj"
+      "1": "price_1UVZTLJApbuYT1oUFbIcJ8jq",
+      "2": "price_1UVZTQJApbuYT1oUiQ6So00g",
+      "3": "price_1UVZTLJApbuYT1oUKWEb7M9j",
+      "4": "price_1UVZTPJApbuYT1oU9HiY3pS8"
     },
     "lifetime": {
-      "1": "price_1UTnu7Qp6yeVUeiY43Ufgkxl",
-      "2": "price_1UTnuBQp6yeVUeiYyzlnI3cK",
-      "3": "price_1UTnuEQp6yeVUeiYrWtFqbOm",
-      "4": "price_1UTnuKQp6yeVUeiY6UadVSeH"
+      "1": "price_1UVZTLJApbuYT1oUrW2O0hOG",
+      "2": "price_1UVZTPJApbuYT1oU1zUfLfr8",
+      "3": "price_1UVZTLJApbuYT1oUiovwXKHl",
+      "4": "price_1UVZTPJApbuYT1oU9laDjmJF"
     }
   }
 };
