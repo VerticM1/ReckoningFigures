@@ -1,8 +1,8 @@
-// Verified live catalog. Checkout remains closed pending deployment verification.
+// Verified live catalog. Public checkout stays closed until deployment is verified.
 export const billingConfig={
   "enabled": false,
   "live": true,
-  "portalConfiguration": "",
+  "portalConfiguration": "bpc_1UVdaWJApbuYT1oUidsRV9JP",
   "currency": "usd",
   "amounts": {
     "monthly": {
