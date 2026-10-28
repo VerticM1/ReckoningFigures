@@ -1,6 +1,6 @@
-// Verified live catalog. Public checkout stays closed until deployment is verified.
+// Verified live catalog. Public checkout enabled for the 13+ pilot.
 export const billingConfig={
-  "enabled": false,
+  "enabled": true,
   "live": true,
   "portalConfiguration": "bpc_1UVdaWJApbuYT1oUidsRV9JP",
   "currency": "usd",

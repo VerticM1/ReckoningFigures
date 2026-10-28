@@ -1,5 +1,5 @@
 // Enable only after Stripe sandbox acceptance and approved price configuration.
-export const BILLING_ENABLED=false;
+export const BILLING_ENABLED=true;
 export async function billingCall(user,data){
  if(!user?.emailVerified)throw Error('Sign in and verify your email first.');
  const response=await fetch('https://us-central1-reckoningfigures-bbdae.cloudfunctions.net/familyBilling',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+await user.getIdToken()},body:JSON.stringify({data})});
