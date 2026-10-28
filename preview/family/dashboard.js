@@ -1,4 +1,4 @@
-import {mountAgeScreen} from '../age-screen.js?v=20261024';
+import {mountAgeScreen} from '../age-screen.js?v=20261028-13plus';
 import {mountBilling} from './billing-client.js?v=20261022';
 import {attachAssignments} from './parent-assignments.js?v=20261026-parent-ux';
 import * as api from '../owner/client.js?v=family-link-20261021';
