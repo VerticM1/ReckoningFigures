@@ -3,7 +3,7 @@ export const BILLING_ENABLED=true;
 export async function billingCall(user,data){
  if(!user?.emailVerified)throw Error('Sign in and verify your email first.');
  const response=await fetch('https://us-central1-reckoningfigures-bbdae.cloudfunctions.net/familyBilling',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+await user.getIdToken()},body:JSON.stringify({data})});
- const body=await response.json();if(!response.ok||body.error)throw Error(body.error?.message||'Could not connect to billing.');return body.result;
+ const body=await response.json();if(!response.ok||body.error)throw Error(body.error?.status==='INTERNAL'?'Billing is temporarily unavailable. Please try again or contact support@reckoningfigures.com.':body.error?.message||'Could not connect to billing.');return body.result;
 }
 export async function mountBilling(host,user){
  if(!BILLING_ENABLED)return;const panel=document.createElement('section');panel.className='link-card';panel.innerHTML='<h2>Your plan</h2><p role="status">Loading billing…</p>';host.prepend(panel);
