@@ -1,5 +1,32 @@
 # Reckoning Figures launch readiness
 
+## Current reconciliation — 30 October 2026
+
+This section supersedes historical checklist statuses below. It is a technical readiness record, not legal certification or App Store approval.
+
+### Completed functional acceptance
+- [x] Live checkout, Premium activation, profile plan and Stripe billing portal — confirmed by Emmanuel on 29 October.
+- [x] Signup, email verification and saved progress after returning — confirmed by Emmanuel on 30 October.
+- [x] Parent linking and school assignment flow — Emmanuel reported both passed on 30 October.
+- [x] Independent live guest lesson: Figure 001 completed; 140 XP, completion marker and streak persisted across reload.
+- [x] Local validation: 46 backend tests, eight Firestore emulator permission suites, progress-sync/access-logistics/course-access suites and six age-boundary assertions passed.
+Do not ask for new email accounts or repeat these tests without a regression. User confirmation is distinguished from independent production inspection.
+
+### Actual remaining decisions and evidence
+- Purchase information: preview/terms.html on the preview branch still says public purchases are closed and final purchase/refund terms are unfinished. Bring public copy into agreement with live billing after Emmanuel chooses refund terms; do not invent a refund commitment. Live billing success does not resolve this.
+- School enrollment: preview/privacy.html still says school data-handling and retention arrangements are to be finalized. Confirm these arrangements for the specific pilot school and record the manual request-handling procedure. Local export/deletion tests are not a completed production operational rehearsal.
+- Pilot operations: record cohort/teacher, selected educator-approved figures, devices, and recovery/rollback readiness. Existing support ownership is Emmanuel, weekday monitoring, target initial response within two business days. Do not ask him to reconfirm that decision.
+- Existing evidence does not independently verify deployed rules, backup restoration or full device/accessibility acceptance. Keep these as unverified operational items, not failed functionality or new feature work.
+
+### Can wait
+iOS/TestFlight/App Store release, new courses, avatar cross-device improvements, extra themes and expanded marketing/design work are outside the first web pilot.
+
+### Decision
+Functional web walkthrough: complete. Unconditional paid/school launch sign-off: not established by the available records. Resolve purchase-policy consistency and school-specific operational arrangements; no additional functional test accounts are requested.
+
+
+## Historical implementation checklist
+
 Current logistics and go/no-go checklist: `PILOT_LOGISTICS.md` (2026-10-13). Email delivery, school entry/recovery and live operational checks are launch gates; do not interpret lesson availability as pilot approval.
 
 This is an implementation checklist, not a claim of school or App Store readiness.
