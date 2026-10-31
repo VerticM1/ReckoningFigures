@@ -57,7 +57,7 @@ export function createBilling({db,auth,stripe,config,now=Date.now,uuid=randomUUI
  await db.runTransaction(async tx=>{const p=(await tx.get(ref)).data();if(p?.order===order.order)tx.set(ref,{session:session.id},{merge:true});});return {url:session.url,test:!config.live};
  };
 }
-export const BILLING_EVENTS=['checkout.session.completed','checkout.session.async_payment_succeeded','checkout.session.async_payment_failed','checkout.session.expired','customer.subscription.updated','customer.subscription.deleted','invoice.paid','invoice.payment_failed','charge.refunded','charge.dispute.created','charge.dispute.updated'];
+export const BILLING_EVENTS=['checkout.session.completed','checkout.session.async_payment_succeeded','checkout.session.async_payment_failed','checkout.session.expired','customer.subscription.updated','customer.subscription.deleted','customer.subscription.paused','invoice.paid','invoice.payment_failed','charge.refunded','charge.dispute.created','charge.dispute.updated','charge.dispute.closed'];
 // Re-read current Stripe objects instead of trusting a redirect or out-of-order event snapshot.
 export function createBillingWebhook({db,stripe,config,secret,now=Date.now}){
  return async (req,res)=>{
@@ -65,10 +65,17 @@ export function createBillingWebhook({db,stripe,config,secret,now=Date.now}){
  if(!BILLING_EVENTS.includes(event.type))return res.status(200).send('Ignored');
  if(event.livemode!==config.live)return res.status(400).send('Wrong payment environment');
  try{
- const object=event.data.object;let uid=object.metadata?.uid,order=object.metadata?.order;
- if(!uid&&object.charge){const charge=await stripe.charges.retrieve(typeof object.charge==='string'?object.charge:object.charge.id);if(charge.payment_intent){const intent=await stripe.paymentIntents.retrieve(charge.payment_intent);uid=intent.metadata?.uid;order=intent.metadata?.order;}if(!uid)object.customer=charge.customer;}
+ const object=event.data.object;let uid=object.metadata?.uid,order=object.metadata?.order,customer=object.customer;
+ // A refund contains a Charge, while a dispute contains a charge reference.
+ // Resolve the original order before falling back to the customer's current purchase.
+ if(!uid&&(object.charge||object.payment_intent)){
+  const charge=object.charge?await stripe.charges.retrieve(typeof object.charge==='string'?object.charge:object.charge.id):object;
+  if(charge.payment_intent){const intent=await stripe.paymentIntents.retrieve(typeof charge.payment_intent==='string'?charge.payment_intent:charge.payment_intent.id);uid=intent.metadata?.uid;order=intent.metadata?.order;}
+  if(!uid)customer=charge.customer;
+ }
+ if(!uid&&object.parent?.subscription_details?.metadata){uid=object.parent.subscription_details.metadata.uid;order=object.parent.subscription_details.metadata.order;}
 
- if(!uid&&object.customer){const matches=await db.collection('familyPurchases').where('customer','==',typeof object.customer==='string'?object.customer:object.customer.id).limit(1).get();const p=matches.docs[0]?.data();uid=p?.uid;order=p?.order;}
+ if(!uid&&customer){const matches=await db.collection('familyPurchases').where('customer','==',typeof customer==='string'?customer:customer.id).limit(1).get();const p=matches.docs[0]?.data();uid=p?.uid;order=p?.order;}
  if(!uid||!order)return res.status(200).send('Ignored');
  const ref=db.doc('familyPurchases/'+uid),p=(await ref.get()).data();if(p?.order!==order)return res.status(200).send('Old order');
  const sessionId=p.session||(object.object==='checkout.session'?object.id:null);if(!sessionId)throw Error('Checkout not recorded yet');
@@ -78,7 +85,7 @@ export function createBillingWebhook({db,stripe,config,secret,now=Date.now}){
  if(p.plan==='monthly'&&session.subscription){const sub=await stripe.subscriptions.retrieve(session.subscription,{expand:['latest_invoice']});const item=sub.items.data[0];if(sub.items.data.length!==1||item.price.id!==p.price||item.quantity!==1)throw Error('Unexpected subscription price');expiresAt=item.current_period_end*1000;status=sub.status==='active'&&sub.latest_invoice?.status==='paid'&&expiresAt>now()?'active':'inactive';}
  if(p.plan==='lifetime'&&session.payment_status==='paid'&&session.payment_intent){const intent=await stripe.paymentIntents.retrieve(session.payment_intent,{expand:['latest_charge']});if(intent.status==='succeeded'&&intent.latest_charge&&!intent.latest_charge.refunded&&!intent.latest_charge?.amount_refunded&&!intent.latest_charge?.disputed)status='active';}
  // Refunds/disputes create a persistent review hold; later duplicate events cannot restore access.
- const review=['charge.refunded','charge.dispute.created','charge.dispute.updated'].includes(event.type);
+ const review=['charge.refunded','charge.dispute.created','charge.dispute.updated','charge.dispute.closed'].includes(event.type);
  await db.runTransaction(async tx=>{const current=(await tx.get(ref)).data();if(current?.order!==order)return;tx.set(ref,{status:review||current.paymentReview?'inactive':status,paymentReview:Boolean(review||current.paymentReview),expiresAt,customer:typeof session.customer==='string'?session.customer:session.customer?.id||null,session:session.id,subscription:typeof session.subscription==='string'?session.subscription:null,updatedAt:now()},{merge:true});});
  return res.status(200).send('OK');
  }catch{return res.status(500).send('Please retry');}

@@ -30,3 +30,11 @@
 - Parent path: link two separate verified accounts, confirm both sides, assign figure, complete it and verify parent report and opted-in completion email.
 - School path: follow a real classroom invitation, confirm right classroom, complete assigned figure and verify teacher report.
 - No new real account or email recipient was created in this audit. Those checks require user-controlled accounts/inboxes and classroom invitation.
+
+## Follow-up reconciliation
+
+`LAUNCH_READINESS.md` records Emmanuel's 30 October confirmation that signup/email verification/saved progress, parent linking and school assignments passed. Preserve those as user-confirmed; the older remaining-walkthrough list above is not a request to create new accounts or repeat completed checks.
+
+Remaining independent evidence for priority 2: cross-device cloud state for the same account; actual opted-in parent email receipt and opt-out suppression; keyboard/screen-reader/reduced-motion checks through a complete signed-in lesson and dashboards; offline/interrupted-save recovery without duplicate results; deployed-rule enforcement between separate existing accounts; isolated backup/restore rehearsal. Local emulators and mocked browsers cover parts of these but do not prove separate-device production behavior.
+
+Use existing user-controlled accounts and devices. Record device/browser, timestamp, expected/actual result and evidence privately. Never put student details, tokens or exported records in this public repository. Priority 3 remains on hold until both priority 1 and priority 2 are closed.

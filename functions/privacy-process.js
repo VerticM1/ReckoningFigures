@@ -5,8 +5,18 @@ export function references(value,uid,email){if(typeof value==='string')return va
 export function ownPath(path,uid){const parts=path.split('/');return ownCollections.has(parts[0])&&parts[1]===uid;}
 function clean(value){if(Array.isArray(value))return value.map(clean);if(value&&typeof value==='object'){if(typeof value.toDate==='function')return value.toDate().toISOString();return Object.fromEntries(Object.entries(value).filter(([k])=>!privateFields.has(k)).map(([k,v])=>[k,clean(v)]));}return value;}
 export function planPrivacy(account,records){
- const owned=[],review=[];
- for(const r of records){if(ownPath(r.path,account.uid))owned.push(r);else if(r.path.split('/').includes(account.uid)||references(r.data,account.uid,account.email))review.push({path:r.path,reason:'Shared, billing, notification, social or unclassified reference: manual review required.'});}
+ const owned=[],review=[],hashes=new Set();
+ const direct=r=>r.path.split('/').includes(account.uid)||references(r.data,account.uid,account.email);
+ // Assignments/activity are keyed by link hash and contain no UID. Include them
+ // while the link still exists, including revoked links, before any unlinking.
+ for(const r of records){
+  const [collection,id]=r.path.split('/');
+  if(collection==='familyLinks'&&direct(r))hashes.add(id);
+  if(collection==='familyStudents'&&direct(r)&&r.data.hash)hashes.add(r.data.hash);
+  if(collection==='familyNotifications'&&direct(r)&&r.data.linkHash)hashes.add(r.data.linkHash);
+  if(collection==='familyHomes')for(const slot of r.data.slots||[])if(slot?.hash&&(id===account.uid||slot.studentUid===account.uid||references(slot,account.uid,account.email)))hashes.add(slot.hash);
+ }
+ for(const r of records){const [collection,id]=r.path.split('/');const linked=(['familyWork','familyActivity'].includes(collection)&&hashes.has(id))||(collection==='familyNotifications'&&hashes.has(r.data.linkHash));if(ownPath(r.path,account.uid))owned.push(r);else if(direct(r)||linked)review.push({path:r.path,reason:'Shared, billing, notification, social or unclassified reference: manual review required.'});}
  return {uid:account.uid,owned,review,canDelete:review.length===0,scope:'Firestore inventory and Firebase Authentication only; provider logs, backups and device storage require separate handling.'};
 }
 export function exportAccount(account,plan){

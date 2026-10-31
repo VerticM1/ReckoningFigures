@@ -8,3 +8,18 @@ function fixture(extra=[]){let docs=[...records,...extra],disabled=false,revoked
 test('confirmation and review guards prevent mutations',async()=>{let f=fixture();await assert.rejects(executeDeletion({...f,uid:'alice',confirmation:'wrong'}));assert.equal(f.state().disabled,false);f=fixture([{path:'familyStudents/alice',data:{}}]);await assert.rejects(executeDeletion({...f,uid:'alice',confirmation:'DELETE alice'}),/Manual review/);assert.equal(f.state().disabled,false);});
 test('isolated deletion disables/revokes, deletes only owned records, verifies then deletes auth',async()=>{const f=fixture();const r=await executeDeletion({...f,uid:'alice',confirmation:'DELETE alice'});assert.equal(r.externalCleanupRequired,true);assert.equal(f.state().deleted,true);assert.deepEqual(f.state().docs,[records[1]]);});
 test('new reference after disable stops deletion',async()=>{const f=fixture();let n=0;const inventory=async()=>++n===1?planPrivacy(account,records):planPrivacy(account,[...records,{path:'schools/s/members/alice',data:{}}]);await assert.rejects(executeDeletion({...f,inventory,uid:'alice',confirmation:'DELETE alice'}),/References changed/);assert.equal(f.state().disabled,true);assert.equal(f.state().deleted,false);assert.equal(f.state().docs.length,2);});
+
+test('hash-keyed family assignments and activity are inventoried through revoked links',()=>{
+ const p=planPrivacy(account,[...records,
+  {path:'familyLinks/link-a',data:{parentUid:'alice',state:'revoked'}},
+  {path:'familyWork/link-a',data:{tasks:[]}},
+  {path:'familyActivity/link-a',data:{items:[]}},
+  {path:'familyNotifications/n',data:{linkHash:'link-a'}},
+  {path:'familyWork/unrelated',data:{tasks:[]}}]);
+ assert.deepEqual(p.review.map(r=>r.path),['familyLinks/link-a','familyWork/link-a','familyActivity/link-a','familyNotifications/n']);
+ assert.equal(p.canDelete,false);
+});
+test('student inventory follows only their slot, not sibling learning history',()=>{
+ const p=planPrivacy(account,[{path:'familyHomes/parent',data:{slots:[{studentUid:'alice',hash:'a'},{studentUid:'bob',hash:'b'}]}},{path:'familyWork/a',data:{}},{path:'familyWork/b',data:{}}]);
+ assert.deepEqual(p.review.map(r=>r.path),['familyHomes/parent','familyWork/a']);
+});
