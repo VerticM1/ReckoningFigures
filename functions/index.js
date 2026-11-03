@@ -50,3 +50,16 @@ export const familyCompletionEmail=onDocumentCreated({...options,document:'famil
 
 // Billing stays disabled in config until sandbox acceptance checks pass.
 export {familyBilling,familyBillingWebhook} from './billing-entry.js';
+
+// Marketing is opt-in and separately activated; existing service emails are unchanged.
+import {onRequest} from 'firebase-functions/v2/https';
+import {createMarketing} from './marketing.js';
+const marketing=createMarketing({db,auth:getAuth(),key:()=>resendKey.value()});
+export const marketingHub=onCall({region:'us-central1',secrets:[resendKey],timeoutSeconds:120,maxInstances:1,concurrency:10,
+ cors:['https://reckoningfigures.com','https://www.reckoningfigures.com','https://verticm1.github.io']},marketing.call);
+export const marketingUnsubscribe=onRequest({region:'us-central1',secrets:[resendKey],timeoutSeconds:120,maxInstances:1},async(req,res)=>{
+ res.set('Cache-Control','no-store');
+ if(req.method!=='POST')return res.status(405).send('Use the unsubscribe link in your email.');
+ try{await marketing.unsubscribe(req.query.id,req.query.token);return res.status(200).send('Unsubscribed');}
+ catch{return res.status(503).send('Please retry or contact support@reckoningfigures.com.');}
+});
