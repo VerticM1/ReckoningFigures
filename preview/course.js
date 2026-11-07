@@ -2403,7 +2403,7 @@ export const course = [
         "title": "Inequality Basics",
         "source": "figure-013.html",
         "available": true,
-        "premium": false,
+        "premium": true,
         "questions": [
           {
             "eq": "5 = 5",
@@ -2603,7 +2603,7 @@ export const course = [
         "title": "Multiply & Divide Rules",
         "source": "figure-014.html",
         "available": true,
-        "premium": false,
+        "premium": true,
         "questions": [
           {
             "eq": "2x < 10",
@@ -2803,7 +2803,7 @@ export const course = [
         "title": "Multi-Step Inequalities",
         "source": "figure-015.html",
         "available": true,
-        "premium": false,
+        "premium": true,
         "questions": [
           {
             "eq": "2x + 5 < 15",
@@ -3003,7 +3003,7 @@ export const course = [
         "title": "Graphing Inequalities",
         "source": "figure-016.html",
         "available": true,
-        "premium": false,
+        "premium": true,
         "questions": [
           {
             "mode": "tutorial",
@@ -3324,7 +3324,7 @@ export const course = [
         "title": "Compound Inequalities",
         "source": "figure-017.html",
         "available": true,
-        "premium": false,
+        "premium": true,
         "questions": [
           {
             "eq": "-3 < x < 5",
@@ -3508,7 +3508,7 @@ export const course = [
         "title": "Word Problems",
         "source": "figure-018.html",
         "available": true,
-        "premium": false,
+        "premium": true,
         "questions": [
           {
             "eq": "x ≥ 18",
