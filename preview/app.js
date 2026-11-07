@@ -74,9 +74,7 @@ function home(){
  mountStudentAssignments({anchor:app.querySelector('.learning-plan-link'),getUser:()=>accountUser,getApi:getClient,course,start});
  const openDialog=(html)=>{document.querySelector('#learn-dialog').classList.remove('league-dialog');document.querySelector('#dialog-body').innerHTML=html;document.querySelector('#learn-dialog').showModal();};
  mountThemePicker(app.querySelector('.learning-plan-link'),openDialog);
- const launch=async(i,lesson=lessons[i])=>{if(!lesson.available){openDialog('<div class="figure-detail"><h2>Lesson not available yet</h2><p>This lesson file is missing from the original project. Your progress is safe; choose another figure.</p></div>');return;}
- if(lesson.premium){const uid=accountUser?.uid;if(!uid){openDialog('<h2>Keep learning with Premium</h2><p>Sign in to check your access.</p><a href="family/">Explore plans</a>');return;}try{const access=await(await getClient()).familyPractice({action:'access'});if(accountUser?.uid!==uid)return;if(!access.premium){openDialog('<h2>Premium figure</h2><p>This figure requires an active Premium plan. Your free practice remains available.</p><a href="family/">Explore plans</a>');return;}}catch{openDialog('<h2>Could not check access</h2><p>Check your connection and try again. Your progress is safe.</p>');return;}}
- start(lesson);};
+ const launch=async(i,lesson=lessons[i])=>start(lesson);
  document.querySelector('#edit-learning-plan').onclick=openWelcome;
  document.querySelector('#start').onclick=()=>launch(current);
  document.querySelectorAll('[data-figure]').forEach(button=>button.onclick=()=>{const i=Number(button.dataset.figure);if(i===current){document.querySelector('#start').focus();return;}openDialog(`<div class="figure-detail"><span class="eyebrow">FIGURE ${String(lessons[i].id).padStart(3,'0')}</span><h2>${figures[i]}</h2><p>${!lessons[i].available?'The original source file is missing.':progress.completedLessons.includes(lessons[i].id)?'Revisit this figure and strengthen your skills.':'Practice this figure in the redesigned lesson experience.'}</p><button class="primary" id="launch-figure">${lessons[i].available?'Open lesson':'View availability'}</button></div>`);document.querySelector('#launch-figure').onclick=()=>{document.querySelector('#learn-dialog').close();launch(i);};});
@@ -98,7 +96,28 @@ function home(){
  }
  document.title=location.hash==='#practice'?'Reckoning Figures · Practice':'Reckoning Figures · Learn';
 }
-function start(lesson=activeLesson,assignment=null){clearFamilyAssignments();familyRun=assignment;activeLesson=lesson;problems=lesson.id===2?[...lesson.questions,challenge]:lesson.questions;window.scrollTo(0,0);state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false,combo:0,transitioning:false,hintsUsed:0,challengeIndependent:false,firstTry:0,supportSteps:new Set(),sessionId:crypto.randomUUID()};question();}
+async function start(lesson=activeLesson,assignment=null){
+ // Homework and verified parent/school assignment sessions retain their existing access rules.
+ if(!homeworkRequested&&!assignment){
+  const showGate=(heading,body,url)=>{
+   let d=document.getElementById('rf-access-gate');
+   if(!d){d=document.createElement('dialog');d.id='rf-access-gate';d.style.cssText='max-width:440px;width:calc(100% - 32px);padding:28px;border:1px solid #a4b9c2;border-radius:18px;background:#fff;color:#102e3b';document.body.append(d);}
+   d.replaceChildren();
+   const h=document.createElement('h2');h.textContent=heading;const p=document.createElement('p');p.textContent=body;d.append(h,p);
+   if(url){const link=document.createElement('a');link.href=url;link.textContent='Continue';d.append(link);}
+   const close=document.createElement('button');close.type='button';close.textContent='Not now';close.style.marginLeft='20px';close.onclick=()=>d.close();d.append(close);d.showModal();
+  };
+  if(!lesson.available){showGate('Lesson unavailable','This lesson is not available yet.');return;}
+  if(lesson.id!==1&&!accountUser){showGate('Sign in to keep learning','Create a free account or sign in to unlock the remaining Unit 1 lessons.','family/student.html');return;}
+  if(lesson.id>=13){
+   const uid=accountUser.uid;
+   try{const access=await(await getClient()).familyPractice({action:'access'});
+    if(accountUser?.uid!==uid)return;
+    if(!access.premium){showGate('Premium required','Unit 2 and beyond require a Premium plan.','family/');return;}
+   }catch{showGate('Access check unavailable','Please check your connection and try again.');return;}
+  }
+ }
+ clearFamilyAssignments();familyRun=assignment;activeLesson=lesson;problems=lesson.id===2?[...lesson.questions,challenge]:lesson.questions;window.scrollTo(0,0);state={index:0,selected:null,checked:false,attempts:0,errors:0,started:Date.now(),claimed:false,combo:0,transitioning:false,hintsUsed:0,challengeIndependent:false,firstTry:0,supportSteps:new Set(),sessionId:crypto.randomUUID()};question();}
 function question(){
  solver=null;const p=problems[state.index]; state.selected=null;state.checked=false;state.transitioning=false;state.questionErrors=0;
  app.innerHTML=`<main class="lesson"><header class="lesson-header">${soundButton()}<button class="icon-btn" id="exit" aria-label="Exit lesson">×</button><div class="track" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="${problems.length}" aria-valuenow="${state.index}"><div class="fill" style="width:${state.index/problems.length*100}%"></div></div><span class="combo" aria-label="${state.combo} correct answers in a row">${bolt()} ${state.combo}</span><span class="count">${state.index+1} / ${problems.length}</span></header><section class="question"><span class="eyebrow" style="color:var(--blue)">Figure ${String(activeLesson.id).padStart(3,'0')} · ${activeLesson.title}${p.phase==='check'?' · Try it yourself':''}</span><h1 tabindex="-1">${p.q}</h1><div class="equation" aria-label="${p.eq}"><span class="equation-text">${p.eq}</span><span class="energy-reward" aria-hidden="true"></span></div><div class="lesson-concept"></div><div class="lesson-diagram"></div><div class="choices"></div></section><footer class="lesson-footer"><div class="feedback" role="status" aria-live="polite"></div><button class="primary" id="check" disabled>Check answer</button></footer></main>`;
