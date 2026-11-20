@@ -4,6 +4,14 @@ export async function approvePilot(api,row,values,progress=()=>{}) {
  if(!await api.access())throw Error('Platform owner access is required.');
  if(!/^[A-Za-z0-9_-]{1,100}$/.test(row.id))throw Error('Invalid application identifier.');
  if(row.status==='closed')throw Error('Reopen the application before approving it.');
+ // Enforce approved pilot terms before any write. The backend must enforce these too.
+ const seats=Number(values.seats);
+ if(!Number.isInteger(seats)||seats<1||seats>30)throw Error('Free classroom pilots are limited to 30 student seats.');
+ if(values.plan&&values.plan!=='pilot')throw Error('Pilot approval cannot assign a paid plan.');
+ const start=Date.parse(values.startsOn+'T00:00:00Z'),end=Date.parse(values.endsOn+'T00:00:00Z');
+ if(!Number.isFinite(start)||!Number.isFinite(end)||end-start!==30*86400000)throw Error('The free pilot must run for exactly 30 days (end date exclusive, UTC).');
+ const today=new Date().toISOString().slice(0,10);
+ if(values.startsOn!==today)throw Error('A new pilot must start today (UTC).');
  const id='pilot_'+row.id,token='pilot_'+row.id+'_staff';
  const all=await api.schools();let school=all.find(s=>s.id===id);
  if(!school){
